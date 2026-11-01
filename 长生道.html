@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v1.0.0 · built 2026-11-01T15:22:23.394Z · 单文件离线可玩 -->
+<!-- 《长生道》 v1.0.1 · built 2026-11-01T15:32:54.300Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -1081,7 +1081,7 @@ textarea.savelink {
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "1.0.0";
+const GAME_VERSION = "1.0.1";
 const SAVE_SCHEMA = 1;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -1309,6 +1309,18 @@ ACHIEVEMENTS.forEach(a => { ACHIEVEMENT_MAP[a.id] = a; });
 
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "1.0.1",
+    date: "2026-11-01",
+    title: "上线补丁",
+    items: [
+      "《长生道》正式上线，手机浏览器打开即玩",
+      "修复「重入轮回」清档后，旧存档被备份自动读回的异常",
+      "闭关归来弹窗改为优先展示，离线收益不再被成就遮挡",
+      "新增站点图标，添加到主屏幕更像一个 App",
+      "页面启用传输压缩，弱网下打开更快",
+    ],
+  },
   {
     version: "1.0.0",
     date: "2026-11-01",
