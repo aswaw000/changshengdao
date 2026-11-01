@@ -1,0 +1,2656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#0a0f13">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>长生道 · 挂机修仙</title>
+<!-- 《长生道》 v1.0.0 · built 2026-11-01T15:22:23.394Z · 单文件离线可玩 -->
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
+<style>
+/* =====================================================================
+ * 《长生道》· styles.css —— 水墨仙侠 · 深色手机优先
+ * ===================================================================== */
+:root {
+  --bg: #070b0e;
+  --bg-2: #0d151a;
+  --panel: rgba(17, 28, 34, 0.86);
+  --panel-2: rgba(23, 37, 44, 0.9);
+  --line: rgba(120, 180, 190, 0.15);
+  --line-strong: rgba(150, 210, 220, 0.28);
+  --gold: #e6c273;
+  --gold-soft: #f5dfa9;
+  --gold-dim: #a8873f;
+  --jade: #6fd3c0;
+  --jade-dim: #2f6d66;
+  --text: #dce8ea;
+  --muted: #7d95a0;
+  --danger: #e27070;
+  --success: #8ed3a0;
+  --radius: 16px;
+  --radius-sm: 11px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --font-title: "STKaiti", "KaiTi", "Kaiti SC", "Songti SC", "Noto Serif SC", serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans SC", sans-serif;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0; padding: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+body {
+  background:
+    radial-gradient(130% 70% at 50% -8%, rgba(38, 82, 92, 0.55) 0%, rgba(11, 20, 25, 0.9) 46%, #070b0e 100%),
+    radial-gradient(90% 50% at 85% 110%, rgba(24, 62, 68, 0.35) 0%, transparent 70%);
+  background-attachment: fixed;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  height: 100dvh;
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.rz { user-select: none; }
+
+/* ============================ 顶栏 ============================ */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px 10px;
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(12, 22, 27, 0.9), rgba(12, 22, 27, 0.55));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 20;
+  flex: none;
+}
+
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+
+.brand-logo {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  font-size: 21px;
+  color: var(--gold);
+  border: 1px solid rgba(230, 194, 115, 0.45);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, rgba(230, 194, 115, 0.22), rgba(230, 194, 115, 0.04));
+  box-shadow: 0 0 18px rgba(230, 194, 115, 0.18), inset 0 0 10px rgba(230, 194, 115, 0.08);
+  flex: none;
+}
+
+.brand-name {
+  font-family: var(--font-title);
+  font-size: 21px;
+  letter-spacing: 3px;
+  color: var(--gold-soft);
+  line-height: 1.1;
+  text-shadow: 0 0 16px rgba(230, 194, 115, 0.25);
+}
+
+.brand-sub {
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 1.2px;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.res-chips { display: flex; align-items: center; gap: 7px; flex: none; }
+
+.chip {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(10, 18, 22, 0.7);
+  font-size: 12.5px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.chip b { font-weight: 600; color: var(--gold-soft); font-size: 12.5px; }
+.chip-icon { font-size: 12px; opacity: 0.9; }
+
+/* ============================ 主视图 ============================ */
+main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 14px 24px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+main::-webkit-scrollbar { display: none; }
+
+.tab-panel { display: none; animation: fadeUp 0.28s ease; }
+.tab-panel.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================ 卡片 ============================ */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  margin-bottom: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.card-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 10px;
+  font-family: var(--font-title);
+  font-size: 15.5px;
+  letter-spacing: 2px;
+  color: var(--gold-soft);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed rgba(120, 180, 190, 0.16);
+}
+.card-hint {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* ============================ 修炼主卡 ============================ */
+.realm-card {
+  position: relative;
+  text-align: center;
+  padding: 18px 14px 16px;
+  margin-bottom: 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(150, 210, 220, 0.16);
+  background:
+    radial-gradient(80% 60% at 50% 0%, rgba(38, 92, 96, 0.45) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(18, 32, 38, 0.92), rgba(11, 19, 23, 0.94));
+  box-shadow: var(--shadow), inset 0 0 40px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.realm-card::before {
+  content: "";
+  position: absolute; inset: -40%;
+  background: radial-gradient(circle at 50% 50%, rgba(111, 211, 192, 0.08), transparent 60%);
+  animation: breathe 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes breathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
+}
+
+.realm-ring {
+  position: relative;
+  width: 168px; height: 168px;
+  margin: 2px auto 6px;
+}
+
+.realm-ring svg {
+  width: 100%; height: 100%;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.ring-track {
+  fill: none;
+  stroke: rgba(120, 180, 190, 0.13);
+  stroke-width: 5;
+}
+
+.ring-progress {
+  fill: none;
+  stroke: url(#ringGrad);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 351.86;
+  stroke-dashoffset: 351.86;
+  transition: stroke-dashoffset 0.4s linear;
+  filter: drop-shadow(0 0 6px rgba(111, 211, 192, 0.55));
+}
+
+.ring-inner {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 0 26px;
+  gap: 6px;
+}
+
+.realm-name {
+  font-family: var(--font-title);
+  font-size: 26px;
+  letter-spacing: 3px;
+  color: var(--gold-soft);
+  text-shadow: 0 0 20px rgba(230, 194, 115, 0.35);
+  transition: color 0.3s;
+}
+
+.realm-motto {
+  font-size: 10.5px;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.exp-meta {
+  display: flex; justify-content: space-between;
+  font-size: 11.5px;
+  color: var(--muted);
+  margin: 4px 2px 6px;
+  font-variant-numeric: tabular-nums;
+}
+.exp-meta span:first-child { color: var(--text); }
+
+.exp-bar {
+  height: 7px;
+  border-radius: 99px;
+  background: rgba(120, 180, 190, 0.12);
+  overflow: hidden;
+  margin: 0 2px 12px;
+  border: 1px solid rgba(120, 180, 190, 0.1);
+}
+.exp-bar i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #4fb8a8, #7fe3cf 55%, #e6c273);
+  box-shadow: 0 0 12px rgba(127, 227, 207, 0.55);
+  transition: width 0.35s linear;
+}
+
+.buff-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 0;
+  margin-bottom: 10px;
+}
+.buff-row:empty { display: none; }
+
+.buff-pill {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 99px;
+  border: 1px solid rgba(230, 194, 115, 0.35);
+  background: rgba(230, 194, 115, 0.08);
+  color: var(--gold-soft);
+  letter-spacing: 0.5px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.stat-grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+.stat {
+  display: flex; flex-direction: column;
+  gap: 4px;
+  padding: 9px 6px;
+  border-radius: var(--radius-sm);
+  background: rgba(9, 16, 20, 0.55);
+  border: 1px solid rgba(120, 180, 190, 0.1);
+  min-width: 0;
+}
+.stat label {
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stat b {
+  font-size: 14px;
+  color: var(--jade);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================ 按钮 ============================ */
+.btn {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: 52px;
+  padding: 9px 22px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  font-family: var(--font-ui);
+  color: var(--text);
+  font-size: 15px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  overflow: hidden;
+  transition: transform 0.1s ease, filter 0.15s ease, box-shadow 0.2s ease;
+}
+.btn::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.16), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.btn:active { transform: scale(0.97); }
+.btn:active::after { opacity: 1; }
+.btn:disabled { opacity: 0.45; filter: grayscale(0.5); cursor: not-allowed; }
+
+.btn-main { font-size: 16px; letter-spacing: 2px; font-weight: 600; }
+.btn-sub { font-size: 10.5px; color: rgba(255, 255, 255, 0.55); letter-spacing: 0.6px; }
+
+.btn-primary {
+  border-color: rgba(230, 194, 115, 0.55);
+  background: linear-gradient(180deg, #d9b464, #a8873f 60%, #8f7034);
+  box-shadow: 0 6px 20px rgba(230, 194, 115, 0.18), inset 0 1px 0 rgba(255, 240, 200, 0.45);
+  color: #16120a;
+}
+.btn-primary .btn-sub { color: rgba(40, 30, 10, 0.6); }
+.btn-primary:disabled,
+.btn-danger:disabled {
+  background: linear-gradient(180deg, rgba(120, 150, 150, 0.1), rgba(70, 90, 95, 0.14));
+  border-color: rgba(120, 160, 165, 0.16);
+  box-shadow: none;
+  color: rgba(190, 205, 208, 0.4);
+  opacity: 1;
+  filter: none;
+  animation: none;
+}
+.btn-primary:disabled .btn-sub { color: rgba(190, 205, 208, 0.3); }
+.btn-primary:not(:disabled) { animation: glowGold 2.6s ease-in-out infinite; }
+@keyframes glowGold {
+  0%, 100% { box-shadow: 0 6px 20px rgba(230, 194, 115, 0.16), inset 0 1px 0 rgba(255, 240, 200, 0.45); }
+  50% { box-shadow: 0 6px 28px rgba(230, 194, 115, 0.38), inset 0 1px 0 rgba(255, 240, 200, 0.45); }
+}
+
+.btn-ghost {
+  border-color: rgba(111, 211, 192, 0.32);
+  background: rgba(20, 44, 46, 0.5);
+  box-shadow: inset 0 0 18px rgba(111, 211, 192, 0.06);
+}
+.btn-ghost .btn-main { color: var(--jade); }
+
+.btn-danger {
+  border-color: rgba(226, 112, 112, 0.45);
+  background: linear-gradient(180deg, #a34a4a, #7d3535);
+  color: #fff3f0;
+}
+.btn-danger .btn-sub { color: rgba(255, 235, 230, 0.6); }
+
+.btn-small {
+  min-height: 34px;
+  padding: 4px 14px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  flex-direction: row;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(120, 180, 190, 0.25);
+  background: rgba(120, 180, 190, 0.08);
+  color: var(--text);
+}
+.btn-small .btn-main { font-size: 12.5px; letter-spacing: 0.5px; }
+.btn-small.buy { border-color: rgba(230, 194, 115, 0.4); background: rgba(230, 194, 115, 0.1); color: var(--gold-soft); }
+.btn-small.disabled { opacity: 0.35; filter: grayscale(0.6); pointer-events: none; }
+
+.action-row {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-wide { width: 100%; }
+
+.tips-card .tips-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.tips-card .tips-list li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.tips-card .tips-list li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(230, 194, 115, 0.55);
+}
+
+/* ============================ 日志 ============================ */
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-height: 240px;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: none;
+}
+.log-list::-webkit-scrollbar { display: none; }
+
+.log-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  animation: logIn 0.25s ease;
+  word-break: break-word;
+}
+@keyframes logIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.log-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--muted);
+  margin-top: 7px;
+  flex: none;
+  opacity: 0.7;
+}
+
+.log-item.tone-gain .log-text { color: var(--jade); }
+.log-item.tone-gain .log-dot { background: var(--jade); }
+.log-item.tone-success .log-text { color: var(--gold-soft); }
+.log-item.tone-success .log-dot { background: var(--gold); }
+.log-item.tone-great .log-text { color: #ffd166; text-shadow: 0 0 10px rgba(255, 209, 102, 0.35); }
+.log-item.tone-great .log-dot { background: #ffd166; }
+.log-item.tone-fail .log-text { color: var(--danger); }
+.log-item.tone-fail .log-dot { background: var(--danger); }
+.log-item.tone-achieve .log-text { color: #c9a2ff; }
+.log-item.tone-achieve .log-dot { background: #c9a2ff; }
+.log-item.tone-offline .log-text { color: #9fd0ff; }
+.log-item.tone-offline .log-dot { background: #9fd0ff; }
+
+/* ============================ 法宝 ============================ */
+.artifact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.artifact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 11px;
+  border-radius: 13px;
+  background: rgba(9, 16, 20, 0.6);
+  border: 1px solid var(--line);
+  transition: border-color 0.2s, transform 0.1s;
+}
+.artifact-item.owned { border-color: rgba(111, 211, 192, 0.3); background: rgba(16, 36, 38, 0.55); }
+.artifact-item:active { transform: scale(0.99); }
+
+.artifact-top { display: flex; align-items: center; gap: 8px; }
+.artifact-icon {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  font-size: 18px;
+  border-radius: 10px;
+  background: rgba(120, 180, 190, 0.08);
+  border: 1px solid rgba(120, 180, 190, 0.14);
+  flex: none;
+}
+.artifact-item.owned .artifact-icon { border-color: rgba(230, 194, 115, 0.35); background: rgba(230, 194, 115, 0.08); }
+
+.artifact-name { font-size: 13.5px; color: var(--text); letter-spacing: 1px; }
+.artifact-stars { font-size: 10px; color: var(--gold); letter-spacing: 1px; }
+.artifact-desc { font-size: 11px; line-height: 1.6; color: var(--muted); min-height: 34px; }
+.artifact-bonus { font-size: 11px; color: var(--jade); }
+.artifact-actions { display: flex; gap: 6px; margin-top: auto; }
+.artifact-actions .btn-small { flex: 1; }
+
+/* ============================ 丹药 ============================ */
+.pill-list { display: flex; flex-direction: column; gap: 9px; }
+
+.pill-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px;
+  border-radius: 13px;
+  background: rgba(9, 16, 20, 0.6);
+  border: 1px solid var(--line);
+}
+.pill-icon {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  font-size: 19px;
+  border-radius: 11px;
+  background: rgba(120, 180, 190, 0.07);
+  border: 1px solid rgba(120, 180, 190, 0.12);
+  flex: none;
+}
+.pill-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.pill-name { font-size: 13.5px; color: var(--text); display: flex; align-items: center; gap: 6px; letter-spacing: 1px; }
+.pill-count { font-size: 10.5px; color: var(--gold-soft); border: 1px solid rgba(230, 194, 115, 0.3); border-radius: 99px; padding: 0 6px; }
+.pill-desc { font-size: 11px; line-height: 1.5; color: var(--muted); }
+.pill-price { font-size: 11.5px; color: var(--gold); white-space: nowrap; display: flex; align-items: center; gap: 3px; }
+
+.empty-tip {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 18px 0;
+  letter-spacing: 1px;
+}
+
+/* ============================ 历练 ============================ */
+.journey-card { text-align: center; padding: 24px 16px 20px; }
+
+.journey-orb {
+  width: 84px; height: 84px;
+  margin: 0 auto 12px;
+  display: grid; place-items: center;
+  font-size: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(230, 194, 115, 0.35);
+  background: radial-gradient(circle at 35% 30%, rgba(230, 194, 115, 0.2), rgba(20, 44, 46, 0.4));
+  box-shadow: 0 0 30px rgba(230, 194, 115, 0.12), inset 0 0 20px rgba(0, 0, 0, 0.3);
+  animation: orbFloat 4.5s ease-in-out infinite;
+}
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-7px) rotate(2deg); }
+}
+.journey-title { font-family: var(--font-title); font-size: 20px; letter-spacing: 4px; color: var(--gold-soft); margin: 0 0 6px; }
+.journey-desc { font-size: 12px; color: var(--muted); margin: 0 0 18px; letter-spacing: 1px; }
+
+/* ============================ 更多 ============================ */
+.ach-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.ach-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px;
+  border-radius: 11px;
+  background: rgba(9, 16, 20, 0.5);
+  border: 1px solid var(--line);
+  opacity: 0.55;
+  transition: opacity 0.3s, border-color 0.3s;
+}
+.ach-item.done {
+  opacity: 1;
+  border-color: rgba(230, 194, 115, 0.32);
+  background: rgba(230, 194, 115, 0.06);
+}
+.ach-icon { font-size: 17px; line-height: 1.2; flex: none; }
+.ach-body { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ach-name { font-size: 12px; color: var(--text); letter-spacing: 0.5px; }
+.ach-item.done .ach-name { color: var(--gold-soft); }
+.ach-desc { font-size: 10.5px; color: var(--muted); line-height: 1.4; }
+.ach-bonus { font-size: 10px; color: var(--jade); }
+
+.menu-list { display: flex; flex-direction: column; }
+.menu-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 4px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(120, 180, 190, 0.1);
+  color: var(--text);
+  font-size: 14px;
+  font-family: var(--font-ui);
+  letter-spacing: 1px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-item:active { opacity: 0.65; }
+.menu-item.danger { color: var(--danger); }
+.menu-arrow { color: var(--muted); font-size: 16px; }
+
+.footer-note {
+  text-align: center;
+  font-size: 11px;
+  color: rgba(125, 149, 160, 0.65);
+  padding: 8px 0 20px;
+  letter-spacing: 1px;
+}
+
+/* ============================ 底栏 ============================ */
+.tabbar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  padding: 7px 8px calc(7px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, rgba(11, 19, 23, 0.82), rgba(9, 15, 18, 0.97));
+  border-top: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  flex: none;
+  z-index: 20;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 7px 2px;
+  border: none;
+  border-radius: 12px;
+  background: none;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 10.5px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: color 0.2s, background 0.2s, transform 0.1s;
+}
+.tab:active { transform: scale(0.94); }
+.tab-icon { font-size: 19px; line-height: 1.1; filter: grayscale(0.55); transition: filter 0.25s, transform 0.25s; }
+.tab.active { color: var(--gold-soft); background: rgba(230, 194, 115, 0.07); }
+.tab.active .tab-icon { filter: none; transform: translateY(-1px) scale(1.08); }
+
+/* ============================ 弹窗 ============================ */
+.modal-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 18px;
+  background: rgba(3, 6, 8, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.hidden { display: none !important; }
+
+.modal {
+  width: 100%;
+  max-width: 400px;
+  max-height: 80dvh;
+  overflow-y: auto;
+  padding: 22px 20px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(230, 194, 115, 0.22);
+  background:
+    radial-gradient(90% 60% at 50% 0%, rgba(230, 194, 115, 0.08), transparent 70%),
+    linear-gradient(180deg, #111d23, #0b1317);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  animation: modalIn 0.26s cubic-bezier(0.34, 1.3, 0.64, 1);
+  scrollbar-width: none;
+}
+.modal::-webkit-scrollbar { display: none; }
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-icon { font-size: 40px; text-align: center; margin-bottom: 6px; }
+.modal-title {
+  font-family: var(--font-title);
+  font-size: 21px;
+  letter-spacing: 2px;
+  text-align: center;
+  color: var(--gold-soft);
+  margin: 0 0 6px;
+}
+.modal-title.fail { color: var(--danger); }
+.modal-title.success { color: #ffe08a; text-shadow: 0 0 18px rgba(255, 224, 138, 0.4); }
+.modal-sub { font-size: 12px; text-align: center; color: var(--muted); margin-bottom: 14px; letter-spacing: 1px; }
+.modal-body { font-size: 13.5px; line-height: 1.8; color: var(--text); }
+.modal-body p { margin: 0 0 8px; }
+.modal-actions { display: flex; gap: 9px; margin-top: 18px; }
+.modal-actions .btn { flex: 1; min-height: 46px; }
+.modal-actions .btn-main { font-size: 14px; }
+
+.reward-line {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(111, 211, 192, 0.07);
+  border: 1px solid rgba(111, 211, 192, 0.18);
+  font-size: 14px;
+  color: var(--jade);
+  margin: 10px 0;
+  text-align: center;
+  line-height: 1.6;
+}
+.reward-line.bad {
+  background: rgba(226, 112, 112, 0.06);
+  border-color: rgba(226, 112, 112, 0.2);
+  color: var(--danger);
+}
+
+.changelog-item { margin-bottom: 16px; }
+.changelog-ver {
+  display: flex; align-items: baseline; gap: 8px;
+  font-size: 14px; color: var(--gold-soft); letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.changelog-date { font-size: 11px; color: var(--muted); }
+.changelog-list { margin: 0; padding-left: 18px; font-size: 12.5px; line-height: 1.8; color: var(--muted); }
+
+textarea.savelink {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: rgba(6, 10, 12, 0.8);
+  color: var(--text);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  resize: vertical;
+  word-break: break-all;
+}
+
+/* ============================ Toast / 浮字 ============================ */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, 12px);
+  z-index: 200;
+  padding: 10px 18px;
+  border-radius: 99px;
+  background: rgba(16, 28, 34, 0.95);
+  border: 1px solid rgba(230, 194, 115, 0.3);
+  color: var(--gold-soft);
+  font-size: 12.5px;
+  letter-spacing: 1px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  max-width: 80vw;
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+.float-layer { position: fixed; inset: 0; pointer-events: none; z-index: 150; overflow: hidden; }
+.float-num {
+  position: absolute;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--jade);
+  text-shadow: 0 0 10px rgba(111, 211, 192, 0.6);
+  animation: floatUp 1.1s ease-out forwards;
+  white-space: nowrap;
+}
+.float-num.gold { color: var(--gold-soft); text-shadow: 0 0 10px rgba(230, 194, 115, 0.6); }
+@keyframes floatUp {
+  0% { opacity: 0; transform: translateY(0) scale(0.85); }
+  15% { opacity: 1; transform: translateY(-8px) scale(1.05); }
+  100% { opacity: 0; transform: translateY(-64px) scale(1); }
+}
+
+/* ============================ 更新条 ============================ */
+.update-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 16px;
+  padding-top: calc(9px + env(safe-area-inset-top, 0px));
+  background: linear-gradient(90deg, rgba(230, 194, 115, 0.16), rgba(111, 211, 192, 0.12));
+  border-bottom: 1px solid rgba(230, 194, 115, 0.25);
+  font-size: 12.5px;
+  color: var(--gold-soft);
+  flex: none;
+}
+.update-btn {
+  padding: 5px 12px;
+  border-radius: 99px;
+  border: 1px solid rgba(230, 194, 115, 0.45);
+  background: rgba(230, 194, 115, 0.12);
+  color: var(--gold-soft);
+  font-size: 12px;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* ============================ 特效 ============================ */
+@keyframes flashGold {
+  0% { box-shadow: 0 0 0 0 rgba(255, 224, 138, 0.55); }
+  100% { box-shadow: 0 0 0 24px rgba(255, 224, 138, 0); }
+}
+.realm-card.breaking { animation: flashGold 0.7s ease-out; }
+.realm-card.failing { animation: shake 0.45s ease; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(3px); }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  transform: scale(0);
+  animation: ripple 0.55s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes ripple {
+  to { transform: scale(2.6); opacity: 0; }
+}
+
+/* 桌面端稍大留白 */
+@media (min-width: 560px) {
+  .artifact-grid, .ach-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-grid b { font-size: 15px; }
+}
+@media (max-height: 720px) {
+  .realm-ring { width: 148px; height: 148px; }
+  .realm-name { font-size: 23px; }
+  .log-list { max-height: 170px; }
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="update-bar hidden" id="updateBar">
+    <span id="updateText">发现新版本</span>
+    <button class="update-btn" data-action="reload">刷新体验</button>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-logo">☯</span>
+      <div class="brand-text">
+        <div class="brand-name">长生道</div>
+        <div class="brand-sub" id="brandSub">一介凡骨，问道长生</div>
+      </div>
+    </div>
+    <div class="res-chips">
+      <div class="chip" title="灵石">
+        <span class="chip-icon">💎</span>
+        <b id="stoneText">120</b>
+      </div>
+      <div class="chip" title="累计修行">
+        <span class="chip-icon">⏳</span>
+        <b id="playTimeText">0分</b>
+      </div>
+    </div>
+  </header>
+
+  <main id="view">
+    <!-- ===== 修炼 ===== -->
+    <section class="tab-panel active" data-panel="cultivate">
+      <div class="realm-card" id="realmCard">
+        <div class="realm-ring">
+          <svg viewBox="0 0 128 128" aria-hidden="true">
+            <defs>
+              <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#7fe3cf" />
+                <stop offset="100%" stop-color="#e6c273" />
+              </linearGradient>
+            </defs>
+            <circle class="ring-track" cx="64" cy="64" r="56"></circle>
+            <circle class="ring-progress" id="ringFill" cx="64" cy="64" r="56"></circle>
+          </svg>
+          <div class="ring-inner">
+            <div class="realm-name" id="realmName">练气一层</div>
+            <div class="realm-motto" id="realmMotto">引气入体，筑道之基</div>
+          </div>
+        </div>
+        <div class="exp-meta">
+          <span id="expText">0 / 120</span>
+          <span id="expPct">0%</span>
+        </div>
+        <div class="exp-bar"><i id="expBar"></i></div>
+        <div class="buff-row" id="buffRow"></div>
+        <div class="stat-grid">
+          <div class="stat"><label>修炼速度</label><b id="rateText">1.0 / 秒</b></div>
+          <div class="stat"><label>灵石产出</label><b id="stoneRateText">1.0 / 秒</b></div>
+          <div class="stat"><label>道心</label><b id="daoText">50</b></div>
+          <div class="stat"><label>破境成功</label><b id="successText">90%</b></div>
+        </div>
+        <div class="action-row">
+          <button class="btn btn-ghost" id="btnMeditate" data-action="meditate">
+            <span class="btn-main">打坐</span>
+            <span class="btn-sub" id="meditateSub">引气入体</span>
+          </button>
+          <button class="btn btn-primary" id="btnBreak" data-action="break">
+            <span class="btn-main">突破</span>
+            <span class="btn-sub" id="breakSub">修为未满</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="card log-card">
+        <div class="card-head"><span>道途见闻</span><span class="card-hint">最新在上</span></div>
+        <div class="log-list" id="logList"></div>
+      </div>
+    </section>
+
+    <!-- ===== 洞府 ===== -->
+    <section class="tab-panel" data-panel="arsenal">
+      <div class="card">
+        <div class="card-head"><span>洞府 · 法宝</span><span class="card-hint" id="artifactHint"></span></div>
+        <div class="artifact-grid" id="artifactGrid"></div>
+      </div>
+    </section>
+
+    <!-- ===== 丹房 ===== -->
+    <section class="tab-panel" data-panel="alchemy">
+      <div class="card">
+        <div class="card-head"><span>丹房 · 储物袋</span><span class="card-hint">点击服用</span></div>
+        <div class="pill-list" id="pillBag"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span>坊市 · 丹药</span><span class="card-hint" id="shopHint"></span></div>
+        <div class="pill-list" id="pillShop"></div>
+      </div>
+    </section>
+
+    <!-- ===== 历练 ===== -->
+    <section class="tab-panel" data-panel="journey">
+      <div class="card journey-card">
+        <div class="journey-orb" id="journeyOrb">🗺️</div>
+        <h3 class="journey-title">下山游历</h3>
+        <p class="journey-desc">山川湖海，仙缘劫数，皆在一念之间。</p>
+        <button class="btn btn-primary btn-wide" id="btnJourney" data-action="encounter">
+          <span class="btn-main">游历</span>
+          <span class="btn-sub" id="journeySub">整装待发</span>
+        </button>
+      </div>
+      <div class="card">
+        <div class="card-head"><span>游历见闻</span><span class="card-hint">最近 20 次</span></div>
+        <div class="log-list" id="journeyLog"></div>
+      </div>
+      <div class="card tips-card">
+        <div class="card-head"><span>游历须知</span></div>
+        <ul class="tips-list">
+          <li>每隔一段时间方可整装再发，山川自有其路。</li>
+          <li>机缘或厚或薄：或得灵石、或赐丹药、或增道心。</li>
+          <li>亦有劫数：轻则损修为，重则乱道心，谨慎行之。</li>
+          <li>道心愈坚，破境愈稳；道心受损，宜服静心丹。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== 更多 ===== -->
+    <section class="tab-panel" data-panel="more">
+      <div class="card">
+        <div class="card-head"><span>道途统计</span></div>
+        <div class="stat-grid stat-grid-2" id="statsGrid"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span>成就</span><span class="card-hint" id="achHint"></span></div>
+        <div class="ach-grid" id="achGrid"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span>版本与存档</span></div>
+        <div class="menu-list">
+          <button class="menu-item" data-action="changelog"><span>更新日志</span><span class="menu-arrow">›</span></button>
+          <button class="menu-item" data-action="export"><span>导出存档</span><span class="menu-arrow">›</span></button>
+          <button class="menu-item" data-action="import"><span>导入存档</span><span class="menu-arrow">›</span></button>
+          <button class="menu-item danger" data-action="reset"><span>重入轮回</span><span class="menu-arrow">›</span></button>
+        </div>
+      </div>
+      <div class="footer-note">长生道 v<span id="verText">1.0.0</span> · 存档自动保存于本机</div>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab active" data-action="tab" data-tab="cultivate"><span class="tab-icon">🧘</span><span class="tab-label">修炼</span></button>
+    <button class="tab" data-action="tab" data-tab="arsenal"><span class="tab-icon">🗡️</span><span class="tab-label">洞府</span></button>
+    <button class="tab" data-action="tab" data-tab="alchemy"><span class="tab-icon">⚗️</span><span class="tab-label">丹房</span></button>
+    <button class="tab" data-action="tab" data-tab="journey"><span class="tab-icon">🗺️</span><span class="tab-label">历练</span></button>
+    <button class="tab" data-action="tab" data-tab="more"><span class="tab-icon">📜</span><span class="tab-label">更多</span></button>
+  </nav>
+
+  <div class="modal-mask hidden" id="modalMask">
+    <div class="modal" id="modalBox"></div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <div class="float-layer" id="floatLayer"></div>
+</div>
+<script>
+/* ===== data.js ===== */
+/* =====================================================================
+ * 《长生道》· 挂机修仙
+ * data.js —— 静态数据：境界 / 法宝 / 丹药 / 奇遇 / 成就 / 更新日志
+ * 说明：所有可扩展内容集中于此，后续版本只需增加数据即可推送新内容。
+ * ===================================================================== */
+
+const GAME_TITLE = "长生道";
+const GAME_SUBTITLE = "一介凡骨，问道长生";
+const GAME_VERSION = "1.0.0";
+const SAVE_SCHEMA = 1;
+
+/* ---------------------------- 全局常数 ---------------------------- */
+const CFG = {
+  TICK_MS: 250,                 // 主循环间隔
+  AUTOSAVE_MS: 5000,            // 自动存档间隔
+  OFFLINE_CAP_HOURS: 12,        // 离线收益上限
+  OFFLINE_RATE: 0.8,            // 离线收益系数
+  DAO_MAX: 100,
+  DAO_START: 50,
+  DAO_PER_SUCCESS: 4,
+  DAO_PER_FAIL: 8,
+  MEDITATE_COOLDOWN: 2,         // 打坐冷却（秒）
+  MEDITATE_MULT: 12,            // 打坐获得 12 秒收益
+  ENCOUNTER_COOLDOWN: 40,       // 历练冷却（秒）
+  BREAK_LOSS_RATE: 0.15,        // 突破失败损失进度
+  STONE_FACTOR: 1.0,            // 灵石产出 = 修炼速度 * 该系数
+  LOG_LIMIT: 80,
+};
+
+/* ---------------------------- 境界体系 ---------------------------- */
+/* 每个大境界：起始需求、起始速度、起始成功率、段内成长 */
+const REALM_TIERS = [
+  { name: "练气", levels: ["一层","二层","三层","四层","五层","六层","七层","八层","九层"],
+    req: 120, rate: 1, success: 0.90, reqMul: 1.45, rateMul: 1.18,
+    motto: "引气入体，筑道之基", color: "#8fd3c7" },
+  { name: "筑基", levels: ["初期","中期","后期"],
+    req: 3200, rate: 4.5, success: 0.78, reqMul: 1.5, rateMul: 1.2,
+    motto: "洗髓伐骨，道基初成", color: "#7fc4a8" },
+  { name: "金丹", levels: ["初期","中期","后期"],
+    req: 11000, rate: 8, success: 0.68, reqMul: 1.5, rateMul: 1.2,
+    motto: "结丹如一，道心通明", color: "#e8c26a" },
+  { name: "元婴", levels: ["初期","中期","后期"],
+    req: 38000, rate: 15, success: 0.58, reqMul: 1.5, rateMul: 1.2,
+    motto: "元婴出窍，神游太虚", color: "#c9a2ff" },
+  { name: "化神", levels: ["初期","中期","后期"],
+    req: 130000, rate: 28, success: 0.50, reqMul: 1.5, rateMul: 1.2,
+    motto: "神与道合，一念千里", color: "#9fd0ff" },
+  { name: "炼虚", levels: ["初期","中期","后期"],
+    req: 450000, rate: 55, success: 0.43, reqMul: 1.5, rateMul: 1.2,
+    motto: "炼虚合道，虚实相生", color: "#ffb36a" },
+  { name: "合体", levels: ["初期","中期","后期"],
+    req: 1500000, rate: 105, success: 0.37, reqMul: 1.5, rateMul: 1.2,
+    motto: "身道合一，万法归宗", color: "#ff8f8f" },
+  { name: "大乘", levels: ["初期","中期","后期"],
+    req: 5000000, rate: 200, success: 0.31, reqMul: 1.5, rateMul: 1.2,
+    motto: "大道将成，举霞飞升", color: "#ffd166" },
+  { name: "渡劫", levels: ["一重"],
+    req: 20000000, rate: 400, success: 0.24, reqMul: 1, rateMul: 1,
+    motto: "雷劫加身，一念成仙", color: "#ff6b6b" },
+];
+
+/* 飞升之后的仙道（无限层） */
+const IMMORTAL_TITLES = ["散仙", "真仙", "玄仙", "金仙", "太乙玄仙", "大罗金仙", "混元大罗"];
+const IMMORTAL_BASE_REQ = 30000000;
+const IMMORTAL_BASE_RATE = 520;
+
+const REALMS = (function buildRealms() {
+  const list = [];
+  REALM_TIERS.forEach((tier, ti) => {
+    let req = tier.req, rate = tier.rate, success = tier.success;
+    tier.levels.forEach((lv, li) => {
+      list.push({
+        index: list.length,
+        tier: ti,
+        tierName: tier.name,
+        level: lv,
+        name: tier.name + lv,
+        req: Math.round(req),
+        rate: rate,
+        success: Math.max(0.12, success - li * 0.015),
+        motto: tier.motto,
+        color: tier.color,
+      });
+      req *= tier.reqMul;
+      rate *= tier.rateMul;
+      success -= 0.015;
+    });
+  });
+  return list;
+})();
+
+const MAX_MORTAL_INDEX = REALMS.length - 1;
+
+/* 取境界数据（支持飞升后的无限层） */
+function realmAt(index) {
+  if (index <= MAX_MORTAL_INDEX) return REALMS[index];
+  const n = index - MAX_MORTAL_INDEX - 1;
+  const titleIdx = Math.min(IMMORTAL_TITLES.length - 1, Math.floor(n / 5));
+  const round = Math.floor(n / 5) + 1;
+  const title = IMMORTAL_TITLES[titleIdx];
+  return {
+    index,
+    tier: REALM_TIERS.length + Math.floor(n / 5),
+    tierName: "仙道",
+    level: "第" + round + "重",
+    name: title + "·第" + round + "重",
+    req: Math.round(IMMORTAL_BASE_REQ * Math.pow(1.35, n)),
+    rate: IMMORTAL_BASE_RATE * Math.pow(1.16, n),
+    success: Math.max(0.08, 0.20 - n * 0.002),
+    motto: "仙路漫漫，道无止境",
+    color: "#ffe08a",
+  };
+}
+
+/* ---------------------------- 法宝 ---------------------------- */
+/* rate/stone 为加成百分比；success 为直接增加的成功率点数 */
+const ARTIFACTS = [
+  { id: "qingmu", name: "青木剑", icon: "🗡️", price: 800, maxStar: 5,
+    rate: 0.12, stone: 0, success: 0,
+    desc: "以万年青木炼成，吐纳间引动生机，修行事半功倍。" },
+  { id: "juling", name: "聚灵珠", icon: "🔮", price: 2600, maxStar: 5,
+    rate: 0.22, stone: 0.15, success: 0,
+    desc: "孕天地灵气于一珠，闭目则灵潮自涌。" },
+  { id: "xuantie", name: "玄铁令", icon: "🪙", price: 4200, maxStar: 5,
+    rate: 0, stone: 0.35, success: 0,
+    desc: "坊市通行之令，持之则灵石自来。" },
+  { id: "linghu", name: "灵狐佩", icon: "🦊", price: 6000, maxStar: 5,
+    rate: 0.06, stone: 0, success: 0.05,
+    desc: "灵狐一缕神魂所化，能于破境关头护持道心。" },
+  { id: "shanhe", name: "山河鼎", icon: "🏺", price: 15000, maxStar: 5,
+    rate: 0.35, stone: 0.10, success: 0,
+    desc: "鼎中自有山河万里，纳灵无穷。" },
+  { id: "taixu", name: "太虚镜", icon: "🪞", price: 48000, maxStar: 5,
+    rate: 0.45, stone: 0.30, success: 0.03,
+    desc: "照见太虚，洞悉天机，灵机不散。" },
+  { id: "jiuzhuan", name: "九转丹炉", icon: "⚗️", price: 120000, maxStar: 5,
+    rate: 0.20, stone: 0.20, success: 0.04,
+    desc: "九转成丹，丹成九色，修行如饮甘泉。" },
+  { id: "tianji", name: "天机盘", icon: "🎴", price: 300000, maxStar: 5,
+    rate: 0.25, stone: 0.25, success: 0.02,
+    desc: "推演因果，奇遇自至，天地为棋局。" },
+];
+
+const ARTIFACT_MAP = {};
+ARTIFACTS.forEach(a => { ARTIFACT_MAP[a.id] = a; });
+
+/* 星级成长：效果 = 基础 * (1 + 0.4 * (星-1))，价格 = 基础 * 2.2^(星-1) */
+function artifactEffectAt(def, star) {
+  const mul = 1 + 0.4 * (star - 1);
+  return {
+    rate: def.rate * mul,
+    stone: def.stone * mul,
+    success: def.success * mul,
+  };
+}
+function artifactUpgradePrice(def, star) {
+  return Math.round(def.price * 2.2 * Math.pow(2.0, star - 1));
+}
+
+/* ---------------------------- 丹药 ---------------------------- */
+const PILLS = [
+  { id: "juqi", name: "聚气丹", icon: "🟢", price: 60,
+    desc: "服之立得 120 秒修炼所得修为。", effect: "exp", power: 120 },
+  { id: "pojing", name: "破境丹", icon: "🔴", price: 320,
+    desc: "下一次突破成功率 +22%，且失败不损道心。", effect: "break", power: 0.22 },
+  { id: "wudao", name: "悟道丹", icon: "🟣", price: 260,
+    desc: "服后 30 分钟修炼速度 +150%。", effect: "rate", power: 1.5, duration: 1800 },
+  { id: "jingxin", name: "静心丹", icon: "🔵", price: 180,
+    desc: "平复心魔，恢复 25 点道心。", effect: "dao", power: 25 },
+  { id: "julingdan", name: "聚灵丹", icon: "🟡", price: 220,
+    desc: "服后 30 分钟灵石产出 +120%。", effect: "stone", power: 1.2, duration: 1800 },
+];
+const PILL_MAP = {};
+PILLS.forEach(p => { PILL_MAP[p.id] = p; });
+
+/* ---------------------------- 奇遇 ---------------------------- */
+/* kind: stone / exp / pill / rateBuff / stoneBuff / dao / success / hurt */
+const ENCOUNTERS = [
+  { id: "herb", name: "采得灵草", icon: "🌿", weight: 14, tone: "good",
+    text: "你在山涧采得一株百年灵芝，药香沁人心脾。", effect: { kind: "pill", pillId: "juqi" } },
+  { id: "vein", name: "灵脉现世", icon: "💎", weight: 10, tone: "good",
+    text: "地脉震动，一条微型灵脉显露，灵石散落一地。", effect: { kind: "stone", mult: 120 } },
+  { id: "insight", name: "月下顿悟", icon: "🌙", weight: 9, tone: "good",
+    text: "月华如练，你于溪畔枯坐一夜，忽有所悟。", effect: { kind: "rateBuff", power: 0.8, duration: 1200 } },
+  { id: "elder", name: "前辈指点", icon: "🧓", weight: 8, tone: "good",
+    text: "一位白须老者路过，随手点你眉心一记，道韵悠长。", effect: { kind: "success", power: 0.10 } },
+  { id: "secret", name: "上古洞府", icon: "🏯", weight: 5, tone: "great",
+    text: "你误入上古洞府，石壁刻满前人道法，此行不虚！", effect: { kind: "exp", mult: 300 } },
+  { id: "dao", name: "清心悟道", icon: "☯️", weight: 7, tone: "good",
+    text: "山风涤尘，你心境澄明，道心愈发稳固。", effect: { kind: "dao", power: 12 } },
+  { id: "fox", name: "灵狐报恩", icon: "🦊", weight: 6, tone: "great",
+    text: "你救下的灵狐衔来一枚丹药，蹭了蹭你的衣角。", effect: { kind: "pill", pillId: "pojing" } },
+  { id: "rumor", name: "坊市奇闻", icon: "📜", weight: 10, tone: "good",
+    text: "坊市间流传着一则仙缘秘闻，你随手记下，偶有所得。", effect: { kind: "stone", mult: 60 } },
+  { id: "demon", name: "心魔来袭", icon: "👁️", weight: 11, tone: "bad",
+    text: "心魔滋生，识海翻腾，你强行压下杂念，道心受损。", effect: { kind: "hurt", dao: 8, expRate: 0.06 } },
+  { id: "thief", name: "遭遇劫修", icon: "🥷", weight: 8, tone: "bad",
+    text: "一名散修拦路劫财，你且战且退，损了些灵石。", effect: { kind: "hurt", stoneRate: 0.05 } },
+  { id: "trap", name: "误入迷阵", icon: "🌀", weight: 6, tone: "bad",
+    text: "你误入上古迷阵，破阵而出时已过数日。", effect: { kind: "hurt", expRate: 0.10 } },
+  { id: "pill2", name: "丹房遗赠", icon: "⚗️", weight: 6, tone: "good",
+    text: "一处废弃丹房中，尚存一枚未被取走的丹药。", effect: { kind: "pill", pillId: "wudao" } },
+];
+
+const ENCOUNTER_TOTAL_WEIGHT = ENCOUNTERS.reduce((s, e) => s + e.weight, 0);
+
+/* ---------------------------- 成就 ---------------------------- */
+const ACHIEVEMENTS = [
+  { id: "first_break", name: "初入仙途", icon: "🌱", desc: "完成第一次突破", bonus: { rate: 0.02 } },
+  { id: "qi_full", name: "练气圆满", icon: "💨", desc: "踏入筑基境", bonus: { rate: 0.02 } },
+  { id: "gold_core", name: "金丹大道", icon: "🌕", desc: "结成金丹", bonus: { rate: 0.03 } },
+  { id: "nascent", name: "元婴出窍", icon: "👶", desc: "元婴出窍", bonus: { rate: 0.03 } },
+  { id: "spirit", name: "化神之姿", icon: "👁️", desc: "踏入化神境", bonus: { rate: 0.03 } },
+  { id: "void", name: "炼虚合道", icon: "🌌", desc: "踏入炼虚境", bonus: { rate: 0.04 } },
+  { id: "unity", name: "万法归宗", icon: "⚖️", desc: "踏入合体境", bonus: { rate: 0.04 } },
+  { id: "mahayana", name: "大乘彼岸", icon: "⛵", desc: "踏入大乘境", bonus: { rate: 0.05 } },
+  { id: "tribulation", name: "雷劫加身", icon: "⚡", desc: "踏入渡劫境", bonus: { rate: 0.05 } },
+  { id: "ascend", name: "白日飞升", icon: "🐉", desc: "渡过天劫，飞升仙界", bonus: { rate: 0.10 } },
+  { id: "rich1", name: "小有身家", icon: "💰", desc: "累计获得 10,000 灵石", bonus: { stone: 0.03 } },
+  { id: "rich2", name: "富甲一方", icon: "🏦", desc: "累计获得 1,000,000 灵石", bonus: { stone: 0.05 } },
+  { id: "rich3", name: "灵石如山", icon: "⛰️", desc: "累计获得 100,000,000 灵石", bonus: { stone: 0.08 } },
+  { id: "artifact3", name: "法宝初成", icon: "🗡️", desc: "收集 3 件法宝", bonus: { rate: 0.02 } },
+  { id: "artifact8", name: "多宝道人", icon: "🧿", desc: "收集全部 8 件法宝", bonus: { rate: 0.05 } },
+  { id: "encounter10", name: "游历四方", icon: "🗺️", desc: "经历 10 次奇遇", bonus: { stone: 0.03 } },
+  { id: "encounter50", name: "见多识广", icon: "📖", desc: "经历 50 次奇遇", bonus: { stone: 0.05 } },
+  { id: "dao100", name: "道心通明", icon: "☯️", desc: "道心达到 100", bonus: { rate: 0.03 } },
+  { id: "meditate100", name: "勤修不辍", icon: "🧘", desc: "打坐 100 次", bonus: { rate: 0.02 } },
+  { id: "break10", name: "破境如梭", icon: "🔨", desc: "累计突破 10 次", bonus: { success: 0.02 } },
+  { id: "play1h", name: "问道之心", icon: "⏳", desc: "累计修行满 1 小时", bonus: { rate: 0.02 } },
+  { id: "play24h", name: "长生久视", icon: "🕰️", desc: "累计修行满 24 小时", bonus: { rate: 0.05 } },
+];
+const ACHIEVEMENT_MAP = {};
+ACHIEVEMENTS.forEach(a => { ACHIEVEMENT_MAP[a.id] = a; });
+
+/* ---------------------------- 更新日志 ---------------------------- */
+const CHANGELOG = [
+  {
+    version: "1.0.0",
+    date: "2026-11-01",
+    title: "开山·问道",
+    items: [
+      "以凡骨入道，自练气至渡劫，三十一层境界拾级而上",
+      "自动修炼与离线收益，闭关归来修为自涨",
+      "八件法宝可购可升星，各有妙用",
+      "五类丹药：聚气、破境、悟道、静心、聚灵",
+      "历练奇遇十二则，奇缘、劫难皆由天定",
+      "二十二项成就，每达成一项永久增益",
+      "存档自动保存，支持导出 / 导入，换机不丢档",
+      "更新检测与更新日志，后续版本可在线推送",
+    ],
+  },
+];
+
+/* 数字格式化（万 / 亿 / 兆 / 京 / 科学计数） */
+function fmt(n, digits) {
+  if (!isFinite(n)) return "∞";
+  const d = digits === undefined ? 1 : digits;
+  if (n < 0) return "-" + fmt(-n, d);
+  if (n < 1000) return n < 10 ? (Math.round(n * 10) / 10).toString() : Math.floor(n).toString();
+  const units = [
+    [1e20, "垓"], [1e16, "京"], [1e12, "兆"], [1e8, "亿"], [1e4, "万"],
+  ];
+  for (const [base, unit] of units) {
+    if (n >= base) {
+      const v = n / base;
+      return (v >= 1000 ? Math.round(v) : v.toFixed(d).replace(/\.0+$/, "")) + unit;
+    }
+  }
+  return Math.floor(n).toString();
+}
+
+/* 百分比格式化 */
+function fmtPct(p, digits) {
+  const d = digits === undefined ? 0 : digits;
+  return (p * 100).toFixed(d) + "%";
+}
+
+/* 时间格式化 */
+function fmtDuration(sec) {
+  sec = Math.max(0, Math.floor(sec));
+  if (sec < 60) return sec + "秒";
+  if (sec < 3600) return Math.floor(sec / 60) + "分" + (sec % 60 ? (sec % 60) + "秒" : "");
+  if (sec < 86400) return Math.floor(sec / 3600) + "时" + Math.floor((sec % 3600) / 60) + "分";
+  return Math.floor(sec / 86400) + "天" + Math.floor((sec % 86400) / 3600) + "时";
+}
+
+/* ===== engine.js ===== */
+/* =====================================================================
+ * 《长生道》· engine.js
+ * 存档 / 数值计算 / 主循环 / 玩家操作
+ * ===================================================================== */
+
+const SAVE_KEY = "changsheng-dao.save.v1";
+const SAVE_BAK_KEY = "changsheng-dao.save.bak.v1";
+
+const ACHIEVE_COND = {
+  first_break: s => s.successes >= 1,
+  qi_full: s => s.realmIndex >= 9,
+  gold_core: s => s.realmIndex >= 12,
+  nascent: s => s.realmIndex >= 15,
+  spirit: s => s.realmIndex >= 18,
+  void: s => s.realmIndex >= 21,
+  unity: s => s.realmIndex >= 24,
+  mahayana: s => s.realmIndex >= 27,
+  tribulation: s => s.realmIndex >= 30,
+  ascend: s => s.realmIndex >= 31,
+  rich1: s => s.totalStone >= 10000,
+  rich2: s => s.totalStone >= 1000000,
+  rich3: s => s.totalStone >= 100000000,
+  artifact3: s => Object.keys(s.artifacts).length >= 3,
+  artifact8: s => Object.keys(s.artifacts).length >= 8,
+  encounter10: s => s.encounterCount >= 10,
+  encounter50: s => s.encounterCount >= 50,
+  dao100: s => s.dao >= 100,
+  meditate100: s => s.meditateCount >= 100,
+  break10: s => s.breaks >= 10,
+  play1h: s => s.playTime >= 3600,
+  play24h: s => s.playTime >= 86400,
+};
+
+function defaultState() {
+  return {
+    schema: SAVE_SCHEMA,
+    version: GAME_VERSION,
+    createdAt: Date.now(),
+    lastTick: Date.now(),
+    realmIndex: 0,
+    exp: 0,
+    stone: 120,
+    dao: CFG.DAO_START,
+    artifacts: {},
+    pills: { juqi: 2 },
+    buffs: { rateExp: null, rateStone: null },
+    breakBonus: 0,
+    successBonus: 0,
+    cooldowns: { meditate: 0, encounter: 0 },
+    totalStone: 120,
+    successes: 0,
+    failures: 0,
+    breaks: 0,
+    encounterCount: 0,
+    meditateCount: 0,
+    playTime: 0,
+    achieve: {},
+    journeyLog: [],
+    logs: [],
+    settings: { muted: false },
+    pendingOffline: null,
+    pendingUnlocks: [],
+    pendingEvents: [],
+  };
+}
+
+function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+
+function pushLog(state, text, tone) {
+  state.logs.push({ t: Date.now(), text, tone: tone || "info" });
+  if (state.logs.length > CFG.LOG_LIMIT) state.logs.splice(0, state.logs.length - CFG.LOG_LIMIT);
+}
+
+/* ------------------------------ 数值计算 ------------------------------ */
+function activeBuff(state, key, now) {
+  const b = state.buffs[key];
+  if (!b) return 0;
+  if (!isFinite(b.endAt) || b.endAt <= now) { state.buffs[key] = null; return 0; }
+  return b.power || 0;
+}
+
+function artifactSum(state, key) {
+  let total = 0;
+  for (const id in state.artifacts) {
+    const def = ARTIFACT_MAP[id];
+    if (!def) continue;
+    total += artifactEffectAt(def, state.artifacts[id])[key] || 0;
+  }
+  return total;
+}
+
+function achieveSum(state, key) {
+  let total = 0;
+  for (const id in state.achieve) {
+    if (!state.achieve[id]) continue;
+    const a = ACHIEVEMENT_MAP[id];
+    if (a && a.bonus && a.bonus[key]) total += a.bonus[key];
+  }
+  return total;
+}
+
+function computeStats(state, now) {
+  now = now || Date.now();
+  const realm = realmAt(state.realmIndex);
+  const rateBuff = activeBuff(state, "rateExp", now);
+  const stoneBuff = activeBuff(state, "rateStone", now);
+  const bonusRate = artifactSum(state, "rate") + achieveSum(state, "rate");
+  const bonusStone = artifactSum(state, "stone") + achieveSum(state, "stone");
+  const bonusSucc = artifactSum(state, "success") + achieveSum(state, "success");
+  const daoRate = state.dao / 500;
+  const daoSucc = state.dao / 1000;
+  const rate = realm.rate * (1 + bonusRate + daoRate) * (1 + rateBuff);
+  const stoneRate = Math.max(0.5, realm.rate * CFG.STONE_FACTOR) * (1 + bonusStone) * (1 + stoneBuff);
+  const success = clamp(realm.success + daoSucc + bonusSucc + state.breakBonus + state.successBonus, 0.05, 0.95);
+  return {
+    realm, rate, stoneRate, success,
+    bonusRate, bonusStone, bonusSucc,
+    rateBuff, stoneBuff,
+    rateBuffEnd: state.buffs.rateExp ? state.buffs.rateExp.endAt : 0,
+    stoneBuffEnd: state.buffs.rateStone ? state.buffs.rateStone.endAt : 0,
+    breakBonus: state.breakBonus,
+    successBonus: state.successBonus,
+  };
+}
+
+function applyBuff(state, key, power, durationSec) {
+  const now = Date.now();
+  const cur = state.buffs[key];
+  if (cur && cur.endAt > now && (cur.power || 0) >= power) {
+    cur.endAt = Math.max(cur.endAt, now + durationSec * 1000);
+  } else {
+    state.buffs[key] = { power: power, endAt: now + durationSec * 1000 };
+  }
+}
+
+/* ------------------------------ 成就 ------------------------------ */
+function checkAchievements(state) {
+  const unlocked = [];
+  for (const a of ACHIEVEMENTS) {
+    if (state.achieve[a.id]) continue;
+    const cond = ACHIEVE_COND[a.id];
+    if (cond && cond(state)) {
+      state.achieve[a.id] = Date.now();
+      unlocked.push(a);
+      pushLog(state, "成就达成 · " + a.name + "（" + a.desc + "）", "achieve");
+    }
+  }
+  if (unlocked.length) {
+    state.pendingUnlocks.push(...unlocked.map(a => a.id));
+  }
+  return unlocked;
+}
+
+/* ------------------------------ 主循环 ------------------------------ */
+function tick(state, now) {
+  now = now || Date.now();
+  let dt = (now - state.lastTick) / 1000;
+  if (!isFinite(dt) || dt < 0) dt = 0;
+  if (dt > 60) dt = 60; // 长时间后台由离线结算（advance）处理
+  if (dt <= 0) { state.lastTick = now; return; }
+  state.lastTick = now;
+  state.playTime += dt;
+
+  const st = computeStats(state, now);
+  state.exp += st.rate * dt;
+  const stoneGain = st.stoneRate * dt;
+  state.stone += stoneGain;
+  state.totalStone += stoneGain;
+
+  checkAchievements(state);
+}
+
+/* ------------------------------ 离线结算 ------------------------------ */
+function applyOffline(state, now) {
+  now = now || Date.now();
+  const elapsed = (now - state.lastTick) / 1000;
+  if (!isFinite(elapsed) || elapsed < 15) { tick(state, now); return null; }
+  const capped = Math.min(elapsed, CFG.OFFLINE_CAP_HOURS * 3600);
+  const st = computeStats(state, now);
+  const expGain = st.rate * capped * CFG.OFFLINE_RATE;
+  const stoneGain = st.stoneRate * capped * CFG.OFFLINE_RATE;
+  state.exp += expGain;
+  state.stone += stoneGain;
+  state.totalStone += stoneGain;
+  state.lastTick = now;
+  checkAchievements(state);
+  return {
+    elapsed: elapsed,
+    capped: capped,
+    expGain: expGain,
+    stoneGain: stoneGain,
+    at: now,
+  };
+}
+
+/* 统一时间推进：短间隔走在线 tick，长间隔（切后台/关页面）走离线结算 */
+function advance(state, now) {
+  now = now || Date.now();
+  const elapsed = (now - state.lastTick) / 1000;
+  if (!isFinite(elapsed) || elapsed <= 0) { state.lastTick = now; return null; }
+  if (elapsed < 15) { tick(state, now); return null; }
+  return applyOffline(state, now);
+}
+
+/* ------------------------------ 玩家操作 ------------------------------ */
+function meditate(state) {
+  const now = Date.now();
+  const cd = state.cooldowns.meditate || 0;
+  if (cd > now) return { ok: false, msg: "调息未稳，稍后再试", remain: (cd - now) / 1000 };
+  const st = computeStats(state, now);
+  const gain = st.rate * CFG.MEDITATE_MULT;
+  state.exp += gain;
+  state.meditateCount += 1;
+  state.cooldowns.meditate = now + CFG.MEDITATE_COOLDOWN * 1000;
+  pushLog(state, "打坐吐纳，修为 +" + fmt(gain), "gain");
+  checkAchievements(state);
+  return { ok: true, gain: gain };
+}
+
+function breakThrough(state) {
+  const st = computeStats(state);
+  const req = st.realm.req;
+  if (state.exp < req) {
+    return { ok: false, msg: "修为未满，尚需 " + fmt(req - state.exp) + " 修为" };
+  }
+  const chance = st.success;
+  const roll = Math.random();
+  const usedPill = state.breakBonus > 0;
+  state.breaks += 1;
+  state.breakBonus = 0;
+  state.successBonus = 0;
+
+  if (roll < chance) {
+    state.exp = Math.max(0, state.exp - req);
+    const oldRealm = st.realm;
+    state.realmIndex += 1;
+    state.successes += 1;
+    state.dao = clamp(state.dao + CFG.DAO_PER_SUCCESS, 0, CFG.DAO_MAX);
+    const reward = Math.floor(st.realm.rate * 120);
+    state.stone += reward;
+    state.totalStone += reward;
+    const newRealm = realmAt(state.realmIndex);
+    const ascended = state.realmIndex === MAX_MORTAL_INDEX + 1;
+    if (ascended) {
+      pushLog(state, "天雷散尽，霞光万丈 —— 白日飞升，踏入仙道！", "great");
+    } else {
+      pushLog(state, "破境成功 · " + newRealm.name + "（灵石 +" + fmt(reward) + "）", "success");
+    }
+    checkAchievements(state);
+    return { ok: true, success: true, oldRealm, realm: newRealm, reward, chance, ascended };
+  }
+
+  const loss = Math.floor(req * CFG.BREAK_LOSS_RATE);
+  state.exp = Math.max(0, state.exp - loss);
+  state.failures += 1;
+  if (!usedPill) {
+    state.dao = clamp(state.dao - CFG.DAO_PER_FAIL, 0, CFG.DAO_MAX);
+    pushLog(state, "破境失败，气血翻涌，修为倒退，道心 -" + CFG.DAO_PER_FAIL, "fail");
+  } else {
+    pushLog(state, "破境失败，借破境丹护持，道心未损", "fail");
+  }
+  checkAchievements(state);
+  return { ok: true, success: false, chance, loss, usedPill };
+}
+
+function buyArtifact(state, id) {
+  const def = ARTIFACT_MAP[id];
+  if (!def) return { ok: false, msg: "未知法宝" };
+  if (state.artifacts[id]) return { ok: false, msg: "已拥有该法宝" };
+  if (state.stone < def.price) return { ok: false, msg: "灵石不足，尚缺 " + fmt(def.price - state.stone) };
+  state.stone -= def.price;
+  state.artifacts[id] = 1;
+  pushLog(state, "购得法宝 · " + def.name, "success");
+  checkAchievements(state);
+  return { ok: true, def };
+}
+
+function upgradeArtifact(state, id) {
+  const def = ARTIFACT_MAP[id];
+  if (!def) return { ok: false, msg: "未知法宝" };
+  const star = state.artifacts[id];
+  if (!star) return { ok: false, msg: "尚未拥有该法宝" };
+  if (star >= def.maxStar) return { ok: false, msg: "已至最高星级" };
+  const price = artifactUpgradePrice(def, star);
+  if (state.stone < price) return { ok: false, msg: "灵石不足，尚缺 " + fmt(price - state.stone) };
+  state.stone -= price;
+  state.artifacts[id] = star + 1;
+  pushLog(state, def.name + " 升至 " + (star + 1) + " 星", "success");
+  checkAchievements(state);
+  return { ok: true, star: star + 1, price };
+}
+
+function buyPill(state, id) {
+  const def = PILL_MAP[id];
+  if (!def) return { ok: false, msg: "未知丹药" };
+  if (state.stone < def.price) return { ok: false, msg: "灵石不足，尚缺 " + fmt(def.price - state.stone) };
+  state.stone -= def.price;
+  state.pills[id] = (state.pills[id] || 0) + 1;
+  pushLog(state, "购得 " + def.name, "gain");
+  return { ok: true, def };
+}
+
+function usePill(state, id) {
+  const def = PILL_MAP[id];
+  if (!def) return { ok: false, msg: "未知丹药" };
+  if (!state.pills[id] || state.pills[id] <= 0) return { ok: false, msg: "丹药不足" };
+  const st = computeStats(state);
+  state.pills[id] -= 1;
+  if (state.pills[id] <= 0) delete state.pills[id];
+  let msg = "";
+  switch (def.effect) {
+    case "exp": {
+      const gain = st.rate * def.power;
+      state.exp += gain;
+      msg = "服下" + def.name + "，修为 +" + fmt(gain);
+      break;
+    }
+    case "break":
+      state.breakBonus = Math.max(state.breakBonus, def.power);
+      msg = "服下" + def.name + "，下次突破成功率 +" + fmtPct(def.power) + "，失败不损道心";
+      break;
+    case "rate":
+      applyBuff(state, "rateExp", def.power, def.duration);
+      msg = "服下" + def.name + "，修炼速度 +" + fmtPct(def.power) + "，持续 " + fmtDuration(def.duration);
+      break;
+    case "stone":
+      applyBuff(state, "rateStone", def.power, def.duration);
+      msg = "服下" + def.name + "，灵石产出 +" + fmtPct(def.power) + "，持续 " + fmtDuration(def.duration);
+      break;
+    case "dao":
+      state.dao = clamp(state.dao + def.power, 0, CFG.DAO_MAX);
+      msg = "服下" + def.name + "，道心恢复 " + def.power + " 点";
+      break;
+  }
+  pushLog(state, msg, "gain");
+  checkAchievements(state);
+  return { ok: true, msg: msg };
+}
+
+function pickWeighted(list) {
+  let r = Math.random() * ENCOUNTER_TOTAL_WEIGHT;
+  for (const item of list) {
+    r -= item.weight;
+    if (r <= 0) return item;
+  }
+  return list[list.length - 1];
+}
+
+function encounter(state) {
+  const now = Date.now();
+  const cd = state.cooldowns.encounter || 0;
+  if (cd > now) return { ok: false, msg: "正在游历，稍安勿躁", remain: (cd - now) / 1000 };
+  state.cooldowns.encounter = now + CFG.ENCOUNTER_COOLDOWN * 1000;
+  state.encounterCount += 1;
+  const st = computeStats(state, now);
+  const ev = pickWeighted(ENCOUNTERS);
+  const eff = ev.effect;
+  let detail = "";
+  switch (eff.kind) {
+    case "stone": {
+      const gain = Math.max(20, st.stoneRate * eff.mult);
+      state.stone += gain; state.totalStone += gain;
+      detail = "灵石 +" + fmt(gain);
+      break;
+    }
+    case "exp": {
+      const gain = Math.max(20, st.rate * eff.mult);
+      state.exp += gain;
+      detail = "修为 +" + fmt(gain);
+      break;
+    }
+    case "pill": {
+      state.pills[eff.pillId] = (state.pills[eff.pillId] || 0) + 1;
+      const p = PILL_MAP[eff.pillId];
+      detail = "获得 " + (p ? p.name : "丹药") + " ×1";
+      break;
+    }
+    case "rateBuff": {
+      applyBuff(state, "rateExp", eff.power, eff.duration);
+      detail = "修炼速度 +" + fmtPct(eff.power) + "，持续 " + fmtDuration(eff.duration);
+      break;
+    }
+    case "stoneBuff": {
+      applyBuff(state, "rateStone", eff.power, eff.duration);
+      detail = "灵石产出 +" + fmtPct(eff.power) + "，持续 " + fmtDuration(eff.duration);
+      break;
+    }
+    case "dao": {
+      state.dao = clamp(state.dao + eff.power, 0, CFG.DAO_MAX);
+      detail = "道心 +" + eff.power;
+      break;
+    }
+    case "success": {
+      state.successBonus += eff.power;
+      detail = "下次突破成功率 +" + fmtPct(eff.power);
+      break;
+    }
+    case "hurt": {
+      const parts = [];
+      if (eff.dao) {
+        state.dao = clamp(state.dao - eff.dao, 0, CFG.DAO_MAX);
+        parts.push("道心 -" + eff.dao);
+      }
+      if (eff.expRate) {
+        const loss = Math.max(0, state.exp * eff.expRate);
+        state.exp -= loss;
+        parts.push("修为 -" + fmt(loss));
+      }
+      if (eff.stoneRate) {
+        const loss = Math.max(0, state.stone * eff.stoneRate);
+        state.stone -= loss;
+        parts.push("灵石 -" + fmt(loss));
+      }
+      detail = parts.join("，");
+      break;
+    }
+  }
+  state.journeyLog.push({ t: now, id: ev.id, name: ev.name, icon: ev.icon, detail: detail, tone: ev.tone });
+  if (state.journeyLog.length > 30) state.journeyLog.splice(0, state.journeyLog.length - 30);
+  pushLog(state, "历练 · " + ev.name + "：" + detail, ev.tone === "bad" ? "fail" : "gain");
+  checkAchievements(state);
+  return { ok: true, event: ev, detail: detail, tone: ev.tone };
+}
+
+/* ------------------------------ 存档 ------------------------------ */
+function saveGame(state) {
+  try {
+    state.lastTick = Date.now();
+    state.version = GAME_VERSION;
+    const json = JSON.stringify(state);
+    const prev = localStorage.getItem(SAVE_KEY);
+    if (prev) localStorage.setItem(SAVE_BAK_KEY, prev);
+    localStorage.setItem(SAVE_KEY, json);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function migrate(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  const base = defaultState();
+  const s = Object.assign({}, base, raw);
+  s.realmIndex = clamp(parseInt(s.realmIndex, 10) || 0, 0, 1000000);
+  s.exp = Math.max(0, Number(s.exp) || 0);
+  s.stone = Math.max(0, Number(s.stone) || 0);
+  s.dao = clamp(Number(s.dao) || 0, 0, CFG.DAO_MAX);
+  s.totalStone = Math.max(0, Number(s.totalStone) || 0);
+  s.breakBonus = Math.max(0, Number(s.breakBonus) || 0);
+  s.successBonus = Math.max(0, Number(s.successBonus) || 0);
+  s.playTime = Math.max(0, Number(s.playTime) || 0);
+  s.successes = Math.max(0, parseInt(s.successes, 10) || 0);
+  s.failures = Math.max(0, parseInt(s.failures, 10) || 0);
+  s.breaks = Math.max(0, parseInt(s.breaks, 10) || 0);
+  s.encounterCount = Math.max(0, parseInt(s.encounterCount, 10) || 0);
+  s.meditateCount = Math.max(0, parseInt(s.meditateCount, 10) || 0);
+  s.lastTick = Number(s.lastTick) || Date.now();
+  s.artifacts = (s.artifacts && typeof s.artifacts === "object") ? s.artifacts : {};
+  s.pills = (s.pills && typeof s.pills === "object") ? s.pills : {};
+  s.achieve = (s.achieve && typeof s.achieve === "object") ? s.achieve : {};
+  s.buffs = Object.assign({ rateExp: null, rateStone: null }, s.buffs || {});
+  s.cooldowns = Object.assign({ meditate: 0, encounter: 0 }, s.cooldowns || {});
+  s.settings = Object.assign({ muted: false }, s.settings || {});
+  s.logs = Array.isArray(s.logs) ? s.logs.slice(-CFG.LOG_LIMIT) : [];
+  s.journeyLog = Array.isArray(s.journeyLog) ? s.journeyLog.slice(-30) : [];
+  s.pendingUnlocks = Array.isArray(s.pendingUnlocks) ? s.pendingUnlocks : [];
+  s.pendingEvents = Array.isArray(s.pendingEvents) ? s.pendingEvents : [];
+  s.pendingOffline = null;
+
+  /* 未来版本的存档迁移在此按 schema 分支处理 */
+  if ((raw.schema || 0) < SAVE_SCHEMA) {
+    /* v0 -> v1：无额外字段，仅补默认值 */
+  }
+  s.schema = SAVE_SCHEMA;
+  return s;
+}
+
+function loadGame() {
+  let data = null;
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (raw) data = migrate(JSON.parse(raw));
+  } catch (e) { data = null; }
+  if (!data) {
+    try {
+      const bak = localStorage.getItem(SAVE_BAK_KEY);
+      if (bak) data = migrate(JSON.parse(bak));
+    } catch (e) { data = null; }
+  }
+  const state = data || defaultState();
+  state.pendingOffline = advance(state, Date.now());
+  if (state.pendingOffline) {
+    pushLog(state, "闭关归来：离线 " + fmtDuration(state.pendingOffline.elapsed) +
+      "，修为 +" + fmt(state.pendingOffline.expGain) +
+      "，灵石 +" + fmt(state.pendingOffline.stoneGain), "offline");
+  }
+  return state;
+}
+
+function exportSave(state) {
+  const payload = Object.assign({}, state, { pendingOffline: null, pendingUnlocks: [], pendingEvents: [] });
+  return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+}
+
+function importSave(text) {
+  try {
+    const json = decodeURIComponent(escape(atob(String(text).trim())));
+    const raw = JSON.parse(json);
+    return migrate(raw);
+  } catch (e) {
+    return null;
+  }
+}
+
+function resetSave() {
+  try {
+    localStorage.removeItem(SAVE_KEY);
+    localStorage.removeItem(SAVE_BAK_KEY);
+  } catch (e) {}
+  return true;
+}
+
+/* ===== ui.js ===== */
+/* =====================================================================
+ * 《长生道》· ui.js
+ * 界面渲染 / 交互 / 存档导入导出 / 更新检测
+ * ===================================================================== */
+
+const $ = (id) => document.getElementById(id);
+const UI = {};
+const RING_LEN = 2 * Math.PI * 56;
+
+let game = null;
+let currentTab = "cultivate";
+let lastSaveAt = 0;
+let lastLogCount = -1;
+let lastJourneyCount = -1;
+let lastBuffSig = "";
+let lastTopSig = "";
+let breaking = false;
+let encountering = false;
+let toastTimer = 0;
+let saveNoticeTimer = 0;
+let modalQueue = [];
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => (
+    { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
+  ));
+}
+
+/* ------------------------------ 初始化 ------------------------------ */
+function init() {
+  game = loadGame();
+  cacheDom();
+  bindEvents();
+  if (!game.logs.length) {
+    pushLog(game, "你自凡尘中醒来，于青石小院盘膝而坐。", "info");
+    pushLog(game, "天地灵气自四方涌来，长生之路，自此而始。", "info");
+  }
+  lastLogCount = game.logs.length;
+  switchTab("cultivate");
+  updateTopbar(Date.now());
+  if (game.pendingOffline) {
+    const report = game.pendingOffline;
+    game.pendingOffline = null;
+    enqueueModal(offlineModal(report));
+  }
+  step(Date.now());
+  renderAll();
+  setInterval(loop, CFG.TICK_MS);
+  setInterval(() => { saveGame(game); }, CFG.AUTOSAVE_MS);
+  setInterval(checkUpdate, 10 * 60 * 1000);
+  checkUpdate();
+}
+
+function cacheDom() {
+  [
+    "realmName", "realmMotto", "expText", "expPct", "expBar", "ringFill",
+    "rateText", "stoneRateText", "daoText", "successText", "buffRow",
+    "btnMeditate", "meditateSub", "btnBreak", "breakSub", "realmCard",
+    "logList", "stoneText", "playTimeText", "brandSub",
+    "artifactGrid", "artifactHint", "pillBag", "pillShop", "shopHint",
+    "journeyOrb", "btnJourney", "journeySub", "journeyLog",
+    "statsGrid", "achGrid", "achHint", "verText",
+    "modalMask", "modalBox", "toast", "floatLayer", "updateBar", "updateText",
+    "view",
+  ].forEach((id) => { UI[id] = $(id); });
+}
+
+function bindEvents() {
+  document.addEventListener("click", onClick);
+  document.addEventListener("visibilitychange", onVisibility);
+  window.addEventListener("beforeunload", () => { saveGame(game); });
+  window.addEventListener("pagehide", () => { saveGame(game); });
+}
+
+/* ------------------------------ 主循环 ------------------------------ */
+function step(now) {
+  const gap = (now - game.lastTick) / 1000;
+  if (gap > 15) {
+    const report = advance(game, now);
+    if (report) {
+      pushLog(game, "闭关归来：离线 " + fmtDuration(report.elapsed) +
+        "，修为 +" + fmt(report.expGain) + "，灵石 +" + fmt(report.stoneGain), "offline");
+      enqueueModal(offlineModal(report));
+    }
+  } else {
+    tick(game, now);
+  }
+}
+
+function loop() {
+  const now = Date.now();
+  step(now);
+  updateTopbar(now);
+  if (currentTab === "cultivate") updateCultivate(now);
+  if (currentTab === "journey") updateJourney(now);
+  if (currentTab === "arsenal" || currentTab === "alchemy") updateAffordability();
+  flushUnlocks();
+  if (game.logs.length !== lastLogCount) {
+    lastLogCount = game.logs.length;
+    if (currentTab === "cultivate") renderLogs();
+  }
+  if (currentTab === "journey" && game.journeyLog.length !== lastJourneyCount) {
+    lastJourneyCount = game.journeyLog.length;
+    renderJourneyLog();
+  }
+  if (now - lastSaveAt > CFG.AUTOSAVE_MS) {
+    lastSaveAt = now;
+    saveGame(game);
+  }
+}
+
+function renderAll() {
+  updateTopbar(Date.now());
+  switchTab(currentTab);
+}
+
+/* ------------------------------ 顶栏 ------------------------------ */
+function updateTopbar(now) {
+  const sig = Math.floor(game.stone) + "|" + Math.floor(game.playTime);
+  if (sig === lastTopSig) return;
+  lastTopSig = sig;
+  UI.stoneText.textContent = fmt(game.stone);
+  UI.playTimeText.textContent = fmtDuration(game.playTime);
+}
+
+/* ------------------------------ 修炼页 ------------------------------ */
+function updateCultivate(now) {
+  const st = computeStats(game, now);
+  const realm = st.realm;
+  const pct = Math.min(1, game.exp / realm.req);
+
+  UI.realmName.textContent = realm.name;
+  UI.realmMotto.textContent = realm.motto;
+  UI.realmName.style.color = realm.color || "";
+  UI.expText.textContent = fmt(game.exp) + " / " + fmt(realm.req);
+  UI.expPct.textContent = Math.floor(pct * 100) + "%";
+  UI.expBar.style.width = (pct * 100).toFixed(1) + "%";
+  UI.ringFill.style.strokeDashoffset = (RING_LEN * (1 - pct)).toFixed(2);
+  UI.rateText.textContent = "+" + fmt(st.rate, 1) + " / 秒";
+  UI.stoneRateText.textContent = "+" + fmt(st.stoneRate, 1) + " / 秒";
+  UI.daoText.textContent = Math.floor(game.dao);
+  UI.successText.textContent = fmtPct(st.success);
+
+  const ready = game.exp >= realm.req;
+  const medRemain = Math.max(0, ((game.cooldowns.meditate || 0) - now) / 1000);
+  UI.btnBreak.disabled = !ready || breaking;
+  UI.breakSub.textContent = ready ? "道基已足" : "尚差 " + fmt(realm.req - game.exp);
+  UI.btnMeditate.disabled = medRemain > 0 || breaking;
+  UI.meditateSub.textContent = medRemain > 0 ? medRemain.toFixed(1) + " 秒" : "引气入体";
+
+  const sig = st.rateBuff + "|" + st.stoneBuff + "|" + st.breakBonus + "|" +
+    st.successBonus + "|" + Math.ceil(st.rateBuffEnd / 1000) + "|" + Math.ceil(st.stoneBuffEnd / 1000);
+  if (sig !== lastBuffSig) {
+    lastBuffSig = sig;
+    const parts = [];
+    if (st.rateBuff > 0) parts.push("悟道 +" + fmtPct(st.rateBuff) + " · " + fmtDuration((st.rateBuffEnd - now) / 1000));
+    if (st.stoneBuff > 0) parts.push("聚灵 +" + fmtPct(st.stoneBuff) + " · " + fmtDuration((st.stoneBuffEnd - now) / 1000));
+    if (st.breakBonus > 0) parts.push("破境丹 +" + fmtPct(st.breakBonus));
+    if (st.successBonus > 0) parts.push("前辈指点 +" + fmtPct(st.successBonus));
+    UI.buffRow.innerHTML = parts.map((p) => '<span class="buff-pill">' + p + "</span>").join("");
+  }
+}
+
+function renderLogs() {
+  const items = game.logs.slice(-30).reverse();
+  UI.logList.innerHTML = items.map((l) =>
+    '<div class="log-item tone-' + (l.tone || "info") + '"><span class="log-dot"></span><span class="log-text">' +
+    esc(l.text) + "</span></div>"
+  ).join("");
+}
+
+/* ------------------------------ 洞府页 ------------------------------ */
+function renderArsenal() {
+  const owned = Object.keys(game.artifacts).length;
+  UI.artifactHint.textContent = "已得 " + owned + " / " + ARTIFACTS.length;
+  UI.artifactGrid.innerHTML = ARTIFACTS.map((def) => {
+    const star = game.artifacts[def.id] || 0;
+    const eff = artifactEffectAt(def, star || 1);
+    const bonus = [];
+    if (eff.rate) bonus.push("修炼 +" + fmtPct(eff.rate));
+    if (eff.stone) bonus.push("灵石 +" + fmtPct(eff.stone));
+    if (eff.success) bonus.push("破境 +" + fmtPct(eff.success));
+    let action = "";
+    if (!star) {
+      action = '<button class="btn btn-small buy" data-action="buy-artifact" data-id="' + def.id +
+        '" data-price="' + def.price + '"><span class="btn-main">购得 · ' + fmt(def.price) + ' 💎</span></button>';
+    } else if (star < def.maxStar) {
+      const price = artifactUpgradePrice(def, star);
+      action = '<button class="btn btn-small" data-action="upgrade-artifact" data-id="' + def.id +
+        '" data-price="' + price + '"><span class="btn-main">升星 · ' + fmt(price) + ' 💎</span></button>';
+    } else {
+      action = '<button class="btn btn-small disabled"><span class="btn-main">已臻圆满</span></button>';
+    }
+    const stars = "★".repeat(star) + "☆".repeat(def.maxStar - star);
+    return '<div class="artifact-item ' + (star ? "owned" : "") + '">' +
+      '<div class="artifact-top"><div class="artifact-icon">' + def.icon + "</div>" +
+      '<div><div class="artifact-name">' + def.name + '</div><div class="artifact-stars">' + stars + "</div></div></div>" +
+      '<div class="artifact-desc">' + def.desc + "</div>" +
+      '<div class="artifact-bonus">' + (star ? bonus.join(" · ") : "尚未祭炼") + "</div>" +
+      '<div class="artifact-actions">' + action + "</div></div>";
+  }).join("");
+  updateAffordability();
+}
+
+function updateAffordability() {
+  document.querySelectorAll("[data-price]").forEach((btn) => {
+    const price = Number(btn.getAttribute("data-price"));
+    if (game.stone < price) btn.classList.add("disabled");
+    else btn.classList.remove("disabled");
+  });
+}
+
+/* ------------------------------ 丹房页 ------------------------------ */
+function renderAlchemy() {
+  const ids = Object.keys(game.pills).filter((id) => game.pills[id] > 0);
+  if (!ids.length) {
+    UI.pillBag.innerHTML = '<div class="empty-tip">储物袋空空如也，去坊市寻些丹药吧</div>';
+  } else {
+    UI.pillBag.innerHTML = ids.map((id) => {
+      const p = PILL_MAP[id];
+      if (!p) return "";
+      return '<div class="pill-item"><div class="pill-icon">' + p.icon + "</div>" +
+        '<div class="pill-info"><div class="pill-name">' + p.name +
+        '<span class="pill-count">×' + game.pills[id] + "</span></div>" +
+        '<div class="pill-desc">' + p.desc + "</div></div>" +
+        '<button class="btn btn-small" data-action="use-pill" data-id="' + id + '"><span class="btn-main">服用</span></button></div>';
+    }).join("");
+  }
+
+  UI.shopHint.textContent = "以灵石易丹药";
+  UI.pillShop.innerHTML = PILLS.map((p) =>
+    '<div class="pill-item"><div class="pill-icon">' + p.icon + "</div>" +
+    '<div class="pill-info"><div class="pill-name">' + p.name + "</div>" +
+    '<div class="pill-desc">' + p.desc + "</div></div>" +
+    '<button class="btn btn-small buy" data-action="buy-pill" data-id="' + p.id +
+    '" data-price="' + p.price + '"><span class="btn-main">' + fmt(p.price) + " 💎</span></button></div>"
+  ).join("");
+  updateAffordability();
+}
+
+/* ------------------------------ 历练页 ------------------------------ */
+function updateJourney(now) {
+  const remain = Math.max(0, ((game.cooldowns.encounter || 0) - now) / 1000);
+  UI.btnJourney.disabled = remain > 0 || encountering;
+  UI.journeySub.textContent = remain > 0 ? "整装中 " + Math.ceil(remain) + " 秒" : "整装待发";
+}
+
+function renderJourneyLog() {
+  const items = game.journeyLog.slice(-20).reverse();
+  if (!items.length) {
+    UI.journeyLog.innerHTML = '<div class="empty-tip">尚未踏出山门</div>';
+    return;
+  }
+  UI.journeyLog.innerHTML = items.map((l) =>
+    '<div class="log-item tone-' + (l.tone === "bad" ? "fail" : "gain") + '"><span class="log-dot"></span>' +
+    '<span class="log-text">' + esc(l.name) + "：" + esc(l.detail) + "</span></div>"
+  ).join("");
+}
+
+/* ------------------------------ 更多页 ------------------------------ */
+function renderMore() {
+  const arts = Object.keys(game.artifacts).length;
+  const achs = Object.keys(game.achieve).length;
+  const rows = [
+    ["累计修行", fmtDuration(game.playTime)],
+    ["突破战绩", game.successes + " 成 / " + game.failures + " 败"],
+    ["奇遇次数", game.encounterCount + " 次"],
+    ["打坐次数", game.meditateCount + " 次"],
+    ["收集法宝", arts + " / " + ARTIFACTS.length],
+    ["达成成就", achs + " / " + ACHIEVEMENTS.length],
+    ["当前道心", Math.floor(game.dao) + " / " + CFG.DAO_MAX],
+    ["游戏版本", "v" + GAME_VERSION],
+  ];
+  UI.statsGrid.innerHTML = rows.map((r) =>
+    '<div class="stat"><label>' + r[0] + "</label><b>" + r[1] + "</b></div>"
+  ).join("");
+
+  UI.achHint.textContent = achs + " / " + ACHIEVEMENTS.length;
+  UI.achGrid.innerHTML = ACHIEVEMENTS.map((a) => {
+    const done = !!game.achieve[a.id];
+    const bonus = Object.keys(a.bonus).map((k) =>
+      ({ rate: "修炼", stone: "灵石", success: "破境" }[k] || k) + " +" + fmtPct(a.bonus[k])
+    ).join(" · ");
+    return '<div class="ach-item ' + (done ? "done" : "") + '"><span class="ach-icon">' + a.icon + "</span>" +
+      '<div class="ach-body"><span class="ach-name">' + a.name + "</span>" +
+      '<span class="ach-desc">' + a.desc + "</span>" +
+      '<span class="ach-bonus">' + bonus + "</span></div></div>";
+  }).join("");
+  UI.verText.textContent = GAME_VERSION;
+}
+
+/* ------------------------------ Tab 切换 ------------------------------ */
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll(".tab").forEach((b) => {
+    b.classList.toggle("active", b.getAttribute("data-tab") === tab);
+  });
+  document.querySelectorAll(".tab-panel").forEach((p) => {
+    p.classList.toggle("active", p.getAttribute("data-panel") === tab);
+  });
+  if (tab === "cultivate") { renderLogs(); lastLogCount = game.logs.length; updateCultivate(Date.now()); }
+  if (tab === "arsenal") renderArsenal();
+  if (tab === "alchemy") renderAlchemy();
+  if (tab === "journey") { updateJourney(Date.now()); renderJourneyLog(); lastJourneyCount = game.journeyLog.length; }
+  if (tab === "more") renderMore();
+  if (UI.view) UI.view.scrollTop = 0;
+}
+
+/* ------------------------------ 交互 ------------------------------ */
+function onClick(e) {
+  const target = e.target.closest("[data-action]");
+  if (!target) return;
+  const action = target.getAttribute("data-action");
+  const id = target.getAttribute("data-id");
+  switch (action) {
+    case "tab": switchTab(target.getAttribute("data-tab")); break;
+    case "meditate": doMeditate(e); break;
+    case "break": doBreak(); break;
+    case "encounter": doEncounter(); break;
+    case "buy-artifact": doBuyArtifact(id); break;
+    case "upgrade-artifact": doUpgradeArtifact(id); break;
+    case "buy-pill": doBuyPill(id); break;
+    case "use-pill": doUsePill(id); break;
+    case "changelog": showChangelog(); break;
+    case "export": showExport(); break;
+    case "import": showImport(); break;
+    case "reset": showReset(); break;
+    case "reload": hardReload(); break;
+    case "close-modal": closeModal(); break;
+    default: break;
+  }
+}
+
+function ripple(e, el) {
+  const r = el.getBoundingClientRect();
+  const size = Math.max(r.width, r.height);
+  const span = document.createElement("span");
+  span.className = "ripple";
+  span.style.width = span.style.height = size + "px";
+  span.style.left = (e.clientX - r.left - size / 2) + "px";
+  span.style.top = (e.clientY - r.top - size / 2) + "px";
+  el.appendChild(span);
+  setTimeout(() => span.remove(), 600);
+}
+
+function floatText(x, y, text, cls) {
+  const layer = UI.floatLayer;
+  const el = document.createElement("div");
+  el.className = "float-num " + (cls || "");
+  el.textContent = text;
+  el.style.left = x + "px";
+  el.style.top = y + "px";
+  layer.appendChild(el);
+  setTimeout(() => el.remove(), 1200);
+}
+
+function toast(msg) {
+  const t = UI.toast;
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 1900);
+}
+
+function doMeditate(e) {
+  if (breaking) return;
+  const res = meditate(game);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  const r = UI.btnMeditate.getBoundingClientRect();
+  floatText(r.left + r.width / 2 - 20, r.top - 6, "+" + fmt(res.gain) + " 修为");
+  ripple(e, UI.btnMeditate);
+  if (currentTab === "cultivate") updateCultivate(Date.now());
+}
+
+function doBreak() {
+  if (breaking) return;
+  const st = computeStats(game);
+  if (game.exp < st.realm.req) { toast("修为未满，尚需 " + fmt(st.realm.req - game.exp)); return; }
+  breaking = true;
+  UI.btnBreak.disabled = true;
+  UI.realmCard.classList.add("breaking");
+  setTimeout(() => {
+    const res = breakThrough(game);
+    breaking = false;
+    UI.realmCard.classList.remove("breaking");
+    saveGame(game);
+    if (!res.ok) { toast(res.msg); return; }
+    if (res.success) {
+      UI.realmCard.classList.add("breaking");
+      setTimeout(() => UI.realmCard.classList.remove("breaking"), 700);
+      enqueueModal({
+        icon: res.ascended ? "🐉" : "✨",
+        title: res.ascended ? "白日飞升" : "破境成功",
+        titleClass: "success",
+        sub: "境界 · " + res.realm.name,
+        body: "<p>" + (res.ascended
+          ? "九霄雷落，道音长鸣。你踏碎长空，于万丈霞光中飞升而去。"
+          : "灵台清明，气机如潮。你自凡尘之中，又向上一步。") + "</p>" +
+          '<div class="reward-line">灵石 +' + fmt(res.reward) + "</div>",
+        buttons: [{ text: "继续修行", cls: "btn-primary" }],
+      });
+    } else {
+      UI.realmCard.classList.add("failing");
+      setTimeout(() => UI.realmCard.classList.remove("failing"), 600);
+      enqueueModal({
+        icon: "💢",
+        title: "破境失败",
+        titleClass: "fail",
+        sub: "道心不堕，来日再战",
+        body: "<p>气机溃散，经脉隐痛。你强行收摄心神，以旧法稳住根基。</p>" +
+          '<div class="reward-line bad">修为回退 ' + fmt(res.loss || 0) +
+          (res.usedPill ? " · 破境丹护持，道心未损" : " · 道心 -" + CFG.DAO_PER_FAIL) + "</div>",
+        buttons: [{ text: "静心调息", cls: "btn-ghost" }],
+      });
+    }
+    renderAll();
+  }, 620);
+}
+
+function doEncounter() {
+  if (encountering) return;
+  const res = encounter(game);
+  if (!res.ok) { toast(res.msg); return; }
+  encountering = true;
+  saveGame(game);
+  UI.journeyOrb.textContent = "🌀";
+  setTimeout(() => {
+    const good = res.tone !== "bad";
+    UI.journeyOrb.textContent = good ? (res.tone === "great" ? "🌟" : "🎋") : "🌫️";
+    setTimeout(() => { UI.journeyOrb.textContent = "🗺️"; }, 1800);
+    enqueueModal({
+      icon: res.event.icon,
+      title: res.event.name,
+      titleClass: good ? "success" : "fail",
+      sub: good ? "机缘" : "劫数",
+      body: "<p>" + esc(res.event.text) + "</p>" +
+        '<div class="reward-line ' + (good ? "" : "bad") + '">' + esc(res.detail) + "</div>",
+      buttons: [{ text: good ? "欣然收下" : "稳住道心", cls: good ? "btn-primary" : "btn-ghost" }],
+    });
+    encountering = false;
+    if (currentTab === "journey") renderJourneyLog();
+    lastJourneyCount = game.journeyLog.length;
+    updateJourney(Date.now());
+    renderAll();
+  }, 650);
+}
+
+function doBuyArtifact(id) {
+  const res = buyArtifact(game, id);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast("购得法宝 · " + res.def.name);
+  renderArsenal();
+  updateTopbar(Date.now());
+}
+
+function doUpgradeArtifact(id) {
+  const def = ARTIFACT_MAP[id];
+  const res = upgradeArtifact(game, id);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast(def.name + " 升至 " + res.star + " 星");
+  renderArsenal();
+}
+
+function doBuyPill(id) {
+  const res = buyPill(game, id);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast("购得 " + res.def.name);
+  renderAlchemy();
+}
+
+function doUsePill(id) {
+  const res = usePill(game, id);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast(res.msg);
+  renderAlchemy();
+  if (currentTab === "cultivate") updateCultivate(Date.now());
+}
+
+/* ------------------------------ 弹窗 ------------------------------ */
+function enqueueModal(opts) {
+  modalQueue.push(opts);
+  pumpModal();
+}
+
+function pumpModal() {
+  if (modalQueue.length === 0) return;
+  if (!UI.modalMask.classList.contains("hidden")) return;
+  const opts = modalQueue.shift();
+  showModal(opts);
+}
+
+function showModal(opts) {
+  const buttons = (opts.buttons && opts.buttons.length)
+    ? opts.buttons
+    : [{ text: "知道了", cls: "btn-primary" }];
+  UI.modalBox.innerHTML =
+    (opts.icon ? '<div class="modal-icon">' + opts.icon + "</div>" : "") +
+    '<h2 class="modal-title ' + (opts.titleClass || "") + '">' + esc(opts.title) + "</h2>" +
+    (opts.sub ? '<div class="modal-sub">' + opts.sub + "</div>" : "") +
+    '<div class="modal-body">' + (opts.body || "") + "</div>" +
+    '<div class="modal-actions">' + buttons.map((b, i) =>
+      '<button class="btn ' + (b.cls || "btn-primary") + '" data-modal-btn="' + i + '"><span class="btn-main">' +
+      esc(b.text) + "</span></button>"
+    ).join("") + "</div>";
+
+  UI.modalMask.classList.remove("hidden");
+  UI.modalMask.onclick = (ev) => {
+    if (ev.target === UI.modalMask && opts.dismissible !== false) closeModal();
+  };
+  buttons.forEach((b, i) => {
+    const btn = UI.modalBox.querySelector('[data-modal-btn="' + i + '"]');
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      if (b.onClick) {
+        const keep = b.onClick();
+        if (keep === false) return;
+      }
+      if (b.keepOpen) return;
+      closeModal();
+    });
+  });
+}
+
+function closeModal() {
+  UI.modalMask.classList.add("hidden");
+  UI.modalBox.innerHTML = "";
+  UI.modalMask.onclick = null;
+  setTimeout(pumpModal, 60);
+}
+
+function offlineModal(report) {
+  const capped = report.elapsed > CFG.OFFLINE_CAP_HOURS * 3600;
+  return {
+    icon: "🌙",
+    title: "闭关归来",
+    sub: "离线 " + fmtDuration(report.elapsed),
+    body: "<p>你于蒲团上睁开眼，周身灵气尚未散尽。</p>" +
+      '<div class="reward-line">修为 +' + fmt(report.expGain) + "<br>灵石 +" + fmt(report.stoneGain) + "</div>" +
+      (capped ? '<p style="font-size:11.5px;color:var(--muted);text-align:center">离线收益最多结算 ' +
+        CFG.OFFLINE_CAP_HOURS + " 小时</p>" : ""),
+    buttons: [{ text: "继续修行", cls: "btn-primary" }],
+  };
+}
+
+function flushUnlocks() {
+  if (!game.pendingUnlocks.length) return;
+  if (!UI.modalMask.classList.contains("hidden")) return;
+  const ids = game.pendingUnlocks.splice(0);
+  const items = ids.map((id) => ACHIEVEMENT_MAP[id]).filter(Boolean);
+  if (!items.length) return;
+  enqueueModal({
+    icon: "🏅",
+    title: "成就达成",
+    titleClass: "success",
+    body: items.map((a) => "<p>" + a.icon + " <b style=\"color:var(--gold-soft)\">" + a.name +
+      "</b> · " + a.desc + "</p>").join("") +
+      '<p style="font-size:11.5px;color:var(--muted);text-align:center;margin-top:10px">永久加成已生效</p>',
+    buttons: [{ text: "欣然领受", cls: "btn-primary" }],
+  });
+}
+
+/* ------------------------------ 更新日志 / 存档 ------------------------------ */
+function showChangelog() {
+  const html = CHANGELOG.map((c) =>
+    '<div class="changelog-item"><div class="changelog-ver">v' + c.version +
+    '<span class="changelog-date">' + c.date + "</span></div>" +
+    (c.title ? '<div style="font-size:12px;color:var(--muted);margin-bottom:6px">' + c.title + "</div>" : "") +
+    '<ul class="changelog-list">' + c.items.map((i) => "<li>" + esc(i) + "</li>").join("") + "</ul></div>"
+  ).join("");
+  enqueueModal({
+    icon: "📜",
+    title: "更新日志",
+    sub: "当前版本 v" + GAME_VERSION,
+    body: html,
+    buttons: [{ text: "知道了", cls: "btn-primary" }],
+  });
+}
+
+function showExport() {
+  const code = exportSave(game);
+  enqueueModal({
+    icon: "📦",
+    title: "导出存档",
+    sub: "复制下方经文，妥善保管",
+    body: '<textarea class="savelink" id="saveCode" readonly>' + esc(code) + "</textarea>" +
+      '<p style="font-size:11.5px;color:var(--muted);margin-top:8px">换手机或重装浏览器后，在「导入存档」中粘贴即可。</p>',
+    buttons: [
+      { text: "复制", cls: "btn-ghost", onClick: () => copySave(code) },
+      { text: "下载文件", cls: "btn-primary", onClick: () => downloadSave(code) },
+    ],
+  });
+}
+
+function copySave(code) {
+  const done = () => toast("存档已复制");
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(done).catch(() => fallbackCopy(code));
+  } else {
+    fallbackCopy(code);
+  }
+  return true;
+}
+
+function fallbackCopy(code) {
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = code;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    toast("存档已复制");
+  } catch (e) {
+    toast("复制失败，请手动长按选择");
+  }
+}
+
+function downloadSave(code) {
+  try {
+    const d = new Date();
+    const stamp = d.getFullYear() + "" + String(d.getMonth() + 1).padStart(2, "0") +
+      String(d.getDate()).padStart(2, "0") + "-" + String(d.getHours()).padStart(2, "0") +
+      String(d.getMinutes()).padStart(2, "0");
+    const blob = new Blob([code], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "长生道存档-" + stamp + ".txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+    toast("存档文件已生成");
+  } catch (e) {
+    toast("下载失败，请改用复制");
+  }
+  return true;
+}
+
+function showImport() {
+  enqueueModal({
+    icon: "📥",
+    title: "导入存档",
+    sub: "粘贴存档经文，或选择存档文件",
+    body: '<textarea class="savelink" id="importCode" placeholder="在此粘贴存档代码…"></textarea>' +
+      '<input type="file" id="importFile" accept=".txt,.json,text/plain" style="margin-top:10px;color:var(--muted);font-size:12px" />',
+    buttons: [
+      { text: "取消", cls: "btn-ghost" },
+      { text: "导入", cls: "btn-primary", onClick: doImport },
+    ],
+  });
+  setTimeout(() => {
+    const file = $("importFile");
+    if (file) {
+      file.addEventListener("change", () => {
+        const f = file.files && file.files[0];
+        if (!f) return;
+        const reader = new FileReader();
+        reader.onload = () => { const ta = $("importCode"); if (ta) ta.value = String(reader.result || "").trim(); };
+        reader.readAsText(f);
+      });
+    }
+  }, 50);
+}
+
+function doImport() {
+  const ta = $("importCode");
+  const text = ta ? ta.value.trim() : "";
+  if (!text) { toast("请先粘贴存档代码"); return false; }
+  const s = importSave(text);
+  if (!s) { toast("存档格式有误，无法导入"); return false; }
+  game = s;
+  const report = advance(game, Date.now());
+  game.pendingOffline = null;
+  game.pendingUnlocks = [];
+  saveGame(game);
+  toast("存档已导入，继续问道吧");
+  renderAll();
+  if (report) {
+    setTimeout(() => enqueueModal(offlineModal(report)), 400);
+  }
+  return true;
+}
+
+function showReset() {
+  enqueueModal({
+    icon: "☠️",
+    title: "重入轮回",
+    sub: "此操作不可撤销",
+    body: "<p>散去一身修为，重归凡尘。所有境界、法宝、丹药与成就，都将化为云烟。</p>",
+    buttons: [
+      { text: "再想想", cls: "btn-ghost" },
+      {
+        text: "散尽修为", cls: "btn-danger", onClick: () => {
+          resetSave();
+          location.reload();
+        }
+      },
+    ],
+  });
+}
+
+/* ------------------------------ 更新检测 ------------------------------ */
+function hardReload() {
+  if (/^https?:$/.test(location.protocol)) {
+    const base = location.href.split("#")[0].split("?")[0];
+    location.replace(base + "?v=" + Date.now());
+  } else {
+    location.reload();
+  }
+}
+
+function compareVersion(a, b) {
+  const pa = String(a).split(".").map((n) => parseInt(n, 10) || 0);
+  const pb = String(b).split(".").map((n) => parseInt(n, 10) || 0);
+  const len = Math.max(pa.length, pb.length);
+  for (let i = 0; i < len; i++) {
+    const x = pa[i] || 0;
+    const y = pb[i] || 0;
+    if (x !== y) return x > y ? 1 : -1;
+  }
+  return 0;
+}
+
+function checkUpdate() {
+  if (!/^https?:$/.test(location.protocol)) return;
+  fetch("version.json?t=" + Date.now(), { cache: "no-store" })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((data) => {
+      if (!data || !data.version) return;
+      if (compareVersion(data.version, GAME_VERSION) > 0) {
+        UI.updateBar.classList.remove("hidden");
+        UI.updateText.textContent = "新版本 v" + data.version + " 已发布";
+      }
+    })
+    .catch(() => {});
+}
+
+/* ------------------------------ 页面可见性 ------------------------------ */
+function onVisibility() {
+  if (document.hidden) {
+    saveGame(game);
+    return;
+  }
+  checkUpdate();
+  const report = advance(game, Date.now());
+  if (report) {
+    pushLog(game, "闭关归来：离线 " + fmtDuration(report.elapsed) +
+      "，修为 +" + fmt(report.expGain) + "，灵石 +" + fmt(report.stoneGain), "offline");
+    enqueueModal(offlineModal(report));
+  }
+  renderAll();
+}
+
+/* ------------------------------ 启动 ------------------------------ */
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
+
+</script>
+</body>
+</html>
