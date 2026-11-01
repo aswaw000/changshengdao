@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v1.0.1 · built 2026-11-01T15:35:07.243Z · 单文件离线可玩 -->
+<!-- 《长生道》 v1.1.0 · built 2026-11-01T15:51:36.642Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -440,6 +440,36 @@ main::-webkit-scrollbar { display: none; }
   grid-template-columns: 1fr 1.35fr;
   gap: 10px;
   margin-top: 4px;
+}
+.action-row.single { grid-template-columns: 1fr; }
+
+.auto-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 11px;
+  font-size: 11.5px;
+  color: var(--muted);
+  letter-spacing: 0.8px;
+}
+.auto-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--jade);
+  box-shadow: 0 0 8px rgba(111, 211, 192, 0.85);
+  animation: autoPulse 2.6s ease-in-out infinite;
+}
+@keyframes autoPulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+.journey-realm {
+  color: var(--gold-soft);
+  font-family: var(--font-title);
+  font-size: 1.04em;
+  font-weight: 600;
 }
 
 .btn-wide { width: 100%; }
@@ -909,6 +939,109 @@ textarea.savelink {
   .log-list { max-height: 170px; }
 }
 
+
+/* =====================================================================
+ * 开屏封面
+ * ===================================================================== */
+.cover {
+  position: fixed;
+  inset: 0;
+  z-index: 260;
+  background: #050b0e;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.cover.hidden { display: none; }
+.cover.gone { animation: coverOut 0.46s ease forwards; pointer-events: none; }
+@keyframes coverOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.05); }
+}
+.cover-art { position: absolute; inset: 0; }
+.cover-art svg { width: 100%; height: 100%; display: block; }
+.cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 11, 14, 0.82) 0%,
+    rgba(5, 11, 14, 0.28) 16%,
+    rgba(5, 11, 14, 0) 34%,
+    rgba(5, 11, 14, 0) 54%,
+    rgba(5, 11, 14, 0.72) 80%,
+    rgba(5, 11, 14, 0.95) 100%
+  );
+}
+.cover-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: calc(env(safe-area-inset-top, 0px) + 54px) 26px calc(env(safe-area-inset-bottom, 0px) + 32px);
+}
+.cover-top { text-align: center; animation: coverRise 1.1s ease both; }
+.cover-title {
+  font-family: var(--font-title);
+  font-size: 40px;
+  letter-spacing: 14px;
+  text-indent: 14px;
+  color: var(--gold-soft);
+  text-shadow: 0 0 26px rgba(230, 194, 115, 0.5), 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+.cover-sub {
+  margin-top: 8px;
+  font-size: 11.5px;
+  letter-spacing: 4px;
+  text-indent: 4px;
+  color: rgba(220, 232, 234, 0.55);
+}
+.cover-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  animation: coverRise 1.1s 0.2s ease both;
+}
+.cover-realm {
+  font-family: var(--font-title);
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--gold);
+  text-shadow: 0 0 14px rgba(230, 194, 115, 0.35);
+}
+.cover-realm span { color: var(--gold-soft); }
+.cover .btn-wide { padding: 17px 18px; }
+.cover .btn-main { font-size: 17px; letter-spacing: 3px; }
+.cover-note {
+  font-size: 10.5px;
+  letter-spacing: 0.8px;
+  color: rgba(125, 149, 160, 0.65);
+}
+@keyframes coverRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 小屏（矮屏）压缩封面排版，避免与人物裙摆挤在一起 */
+@media (max-height: 720px) {
+  .cover-inner {
+    padding: calc(env(safe-area-inset-top, 0px) + 30px) 22px calc(env(safe-area-inset-bottom, 0px) + 18px);
+  }
+  .cover-title { font-size: 32px; letter-spacing: 10px; text-indent: 10px; }
+  .cover-sub { margin-top: 5px; font-size: 10.5px; letter-spacing: 3px; text-indent: 3px; }
+  .cover-foot { gap: 9px; }
+  .cover-realm { font-size: 11.5px; letter-spacing: 2px; }
+  .cover .btn-wide { padding: 13px 16px; }
+  .cover .btn-main { font-size: 15.5px; letter-spacing: 2px; }
+  .cover-note { font-size: 9.5px; }
+}
+
 </style>
 </head>
 <body>
@@ -970,16 +1103,13 @@ textarea.savelink {
           <div class="stat"><label>道心</label><b id="daoText">50</b></div>
           <div class="stat"><label>破境成功</label><b id="successText">90%</b></div>
         </div>
-        <div class="action-row">
-          <button class="btn btn-ghost" id="btnMeditate" data-action="meditate">
-            <span class="btn-main">打坐</span>
-            <span class="btn-sub" id="meditateSub">引气入体</span>
-          </button>
-          <button class="btn btn-primary" id="btnBreak" data-action="break">
+        <div class="action-row single">
+          <button class="btn btn-primary btn-wide" id="btnBreak" data-action="break">
             <span class="btn-main">突破</span>
             <span class="btn-sub" id="breakSub">修为未满</span>
           </button>
         </div>
+        <div class="auto-hint" id="autoHint"><span class="auto-dot"></span>静坐自修 · 挂机加成 +40%</div>
       </div>
 
       <div class="card log-card">
@@ -1013,7 +1143,7 @@ textarea.savelink {
       <div class="card journey-card">
         <div class="journey-orb" id="journeyOrb">🗺️</div>
         <h3 class="journey-title">下山游历</h3>
-        <p class="journey-desc">山川湖海，仙缘劫数，皆在一念之间。</p>
+        <p class="journey-desc">以 <b class="journey-realm" id="journeyRealm">练气一层</b> 之境游历，山川湖海，仙缘劫数，皆在一念之间。</p>
         <button class="btn btn-primary btn-wide" id="btnJourney" data-action="encounter">
           <span class="btn-main">游历</span>
           <span class="btn-sub" id="journeySub">整装待发</span>
@@ -1026,8 +1156,9 @@ textarea.savelink {
       <div class="card tips-card">
         <div class="card-head"><span>游历须知</span></div>
         <ul class="tips-list">
-          <li>每隔一段时间方可整装再发，山川自有其路。</li>
-          <li>机缘或厚或薄：或得灵石、或赐丹药、或增道心。</li>
+          <li>奇遇共四十九则，按境界分流：境界愈高，所遇愈奇。</li>
+          <li>低境多见拾遗、灵泉；高境方有洞天、仙缘、雷劫。</li>
+          <li>机缘或厚或薄：得灵石、赐丹药、增道心、淬道基。</li>
           <li>亦有劫数：轻则损修为，重则乱道心，谨慎行之。</li>
           <li>道心愈坚，破境愈稳；道心受损，宜服静心丹。</li>
         </ul>
@@ -1070,6 +1201,384 @@ textarea.savelink {
   </div>
   <div class="toast" id="toast"></div>
   <div class="float-layer" id="floatLayer"></div>
+
+  <div class="cover" id="cover" data-action="enter">
+    <div class="cover-art"><svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="月下打坐的汉服少女">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0" stop-color="#03080b"/>
+      <stop offset="0.34" stop-color="#081a22"/>
+      <stop offset="0.62" stop-color="#0d2a33"/>
+      <stop offset="0.82" stop-color="#0a1d24"/>
+      <stop offset="1" stop-color="#050e12"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffeec2" stop-opacity="0.62"/>
+      <stop offset="0.5" stop-color="#ffd88e" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffd88e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#f4dcae" stop-opacity="0.20"/>
+      <stop offset="0.6" stop-color="#8fd6c8" stop-opacity="0.07"/>
+      <stop offset="1" stop-color="#8fd6c8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="moonFill" x1="0.28" y1="0.05" x2="0.72" y2="0.95">
+      <stop offset="0" stop-color="#fffdf4"/>
+      <stop offset="0.45" stop-color="#f9eecb"/>
+      <stop offset="1" stop-color="#e3cd96"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#2e284b"/>
+      <stop offset="0.5" stop-color="#1e1a36"/>
+      <stop offset="1" stop-color="#141026"/>
+    </linearGradient>
+    <linearGradient id="hairLit" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8d97da" stop-opacity="0.45"/>
+      <stop offset="0.55" stop-color="#403c73" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#3d3a68" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="robe" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#fffdf6"/>
+      <stop offset="0.4" stop-color="#f3efe3"/>
+      <stop offset="0.76" stop-color="#d9dee0"/>
+      <stop offset="1" stop-color="#b6c4c8"/>
+    </linearGradient>
+    <linearGradient id="robeShade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c3cfd3" stop-opacity="0.9"/>
+      <stop offset="0.32" stop-color="#eef0e8" stop-opacity="0.05"/>
+      <stop offset="0.68" stop-color="#eef0e8" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#c3cfd3" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="sleeve" x1="0.2" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset="0.55" stop-color="#eae8de"/>
+      <stop offset="1" stop-color="#bccacd"/>
+    </linearGradient>
+    <linearGradient id="robeInner" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#f4fbf8"/>
+      <stop offset="1" stop-color="#cfe6df"/>
+    </linearGradient>
+    <linearGradient id="sash" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#eccd8c"/>
+      <stop offset="0.5" stop-color="#dcb069"/>
+      <stop offset="1" stop-color="#b98a49"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe6ae" stop-opacity="0.8"/>
+      <stop offset="0.55" stop-color="#f0c983" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#9fd8cd" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#fff3e9"/>
+      <stop offset="0.6" stop-color="#ffe2ce"/>
+      <stop offset="1" stop-color="#f4c3ad"/>
+    </linearGradient>
+    <linearGradient id="mtnFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#123039"/>
+      <stop offset="1" stop-color="#0a1a21"/>
+    </linearGradient>
+    <linearGradient id="mtnMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d232b"/>
+      <stop offset="1" stop-color="#071218"/>
+    </linearGradient>
+    <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfe6e6" stop-opacity="0"/>
+      <stop offset="0.55" stop-color="#cfe6e6" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#cfe6e6" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="petal" cx="0.3" cy="0.25" r="0.85">
+      <stop offset="0" stop-color="#fff2f4"/>
+      <stop offset="0.55" stop-color="#f9c3cf"/>
+      <stop offset="1" stop-color="#e996ab"/>
+    </radialGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <!-- 夜空 -->
+  <rect width="390" height="844" fill="url(#sky)"/>
+  <ellipse cx="196" cy="286" rx="300" ry="300" fill="url(#glow)" opacity="0.7"/>
+
+  <!-- 云纹 -->
+  <g opacity="0.09" fill="none" stroke="#cfe6e6" stroke-width="1.6">
+    <path d="M18,196 C42,182 66,186 78,198 C90,186 112,188 120,200"/>
+    <path d="M268,168 C288,156 310,160 320,170 C330,160 348,162 356,172"/>
+  </g>
+
+  <!-- 远山 -->
+  <path d="M0,548 L44,512 L86,534 L132,498 L176,528 L214,506 L262,536 L306,502 L348,530 L390,508 L390,844 L0,844 Z" fill="url(#mtnFar)" opacity="0.82"/>
+  <path d="M0,596 L38,566 L82,588 L126,556 L168,584 L206,560 L250,590 L296,562 L338,590 L390,566 L390,844 L0,844 Z" fill="url(#mtnMid)"/>
+
+  <!-- 月 -->
+  <circle cx="196" cy="300" r="132" fill="url(#glow)" opacity="0.5"/>
+  <circle cx="196" cy="300" r="96" fill="url(#moonFill)"/>
+  <circle cx="196" cy="300" r="96" fill="none" stroke="#fff8e2" stroke-opacity="0.45" stroke-width="1.2"/>
+  <g fill="#e6cf9a" opacity="0.26">
+    <circle cx="166" cy="266" r="10"/>
+    <circle cx="216" cy="250" r="6.5"/>
+    <circle cx="232" cy="322" r="12"/>
+    <circle cx="174" cy="332" r="5.5"/>
+    <circle cx="198" cy="294" r="4"/>
+  </g>
+
+  <!-- 灵光 -->
+  <circle cx="196" cy="500" r="216" fill="url(#halo)"/>
+
+  <!-- 身后飘带 -->
+  <g opacity="0.45" filter="url(#soft2)">
+    <path d="M154,470 C112,504 68,518 26,498 C62,538 116,550 158,532" fill="none" stroke="url(#ribbon)" stroke-width="9" stroke-linecap="round"/>
+    <path d="M238,470 C280,504 324,518 366,498 C330,538 276,550 234,532" fill="none" stroke="url(#ribbon)" stroke-width="9" stroke-linecap="round"/>
+  </g>
+
+  <!-- 后方长发 -->
+  <path d="M196,306 C150,306 126,342 124,392 C122,444 132,496 148,540 C160,574 172,600 180,618 L212,618 C220,600 232,574 244,540 C260,496 270,444 268,392 C266,342 242,306 196,306 Z" fill="url(#hair)"/>
+  <path d="M196,306 C150,306 126,342 124,392 C122,444 132,496 148,540 C160,574 172,600 180,618 L196,618 Z" fill="url(#hairLit)" opacity="0.8"/>
+
+  <!-- 发髻 -->
+  <g>
+    <ellipse cx="152" cy="334" rx="23" ry="21" fill="url(#hair)"/>
+    <ellipse cx="240" cy="334" rx="23" ry="21" fill="url(#hair)"/>
+    <path d="M140,326 C147,318 158,319 163,327" fill="none" stroke="#818ccb" stroke-opacity="0.45" stroke-width="2" stroke-linecap="round"/>
+    <path d="M229,326 C236,318 247,319 252,327" fill="none" stroke="#818ccb" stroke-opacity="0.45" stroke-width="2" stroke-linecap="round"/>
+    <path d="M168,320 L196,306 L224,320" fill="none" stroke="#e6c273" stroke-width="1.6" opacity="0.5"/>
+    <circle cx="196" cy="306" r="3" fill="#f5dfa9"/>
+    <path d="M136,344 C130,360 132,374 140,382" fill="none" stroke="#e6c273" stroke-width="2.2" stroke-linecap="round" opacity="0.7"/>
+    <path d="M256,344 C262,360 260,374 252,382" fill="none" stroke="#e6c273" stroke-width="2.2" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <!-- 座下石台 -->
+  <g opacity="0.5">
+    <ellipse cx="196" cy="716" rx="134" ry="20" fill="#0b1c22"/>
+    <path d="M196,690 C160,690 120,700 94,712 C130,726 170,732 196,732 C222,732 262,726 298,712 C272,700 232,690 196,690 Z" fill="#0e242b"/>
+  </g>
+
+  <!-- 裙裾 -->
+  <path d="M196,556
+           C170,556 152,562 148,578
+           C138,604 120,636 104,660
+           C94,674 86,686 82,694
+           C118,710 158,718 196,720
+           C234,718 274,710 310,694
+           C306,686 298,674 288,660
+           C272,636 254,604 244,578
+           C240,562 222,556 196,556 Z" fill="url(#robe)"/>
+  <path d="M196,556
+           C170,556 152,562 148,578
+           C138,604 120,636 104,660
+           C94,674 86,686 82,694
+           C118,710 158,718 196,720
+           C234,718 274,710 310,694
+           C306,686 298,674 288,660
+           C272,636 254,604 244,578
+           C240,562 222,556 196,556 Z" fill="url(#robeShade)" opacity="0.45"/>
+  <g fill="none" stroke="#b9c6ca" stroke-width="1.3" opacity="0.6">
+    <path d="M196,586 C192,630 188,670 184,708"/>
+    <path d="M168,606 C156,644 144,678 134,702"/>
+    <path d="M224,606 C236,644 248,678 258,702"/>
+    <path d="M150,652 C166,668 180,676 196,678"/>
+    <path d="M242,652 C226,668 212,676 196,678"/>
+  </g>
+  <path d="M100,662 C128,678 164,688 196,690 C228,688 264,678 292,662" fill="none" stroke="#e2e8e4" stroke-width="2" opacity="0.45"/>
+  <ellipse cx="132" cy="676" rx="44" ry="21" fill="#c3d0d4" opacity="0.3"/>
+  <ellipse cx="260" cy="676" rx="44" ry="21" fill="#c3d0d4" opacity="0.3"/>
+  <path d="M196,676 C188,686 178,692 168,696" fill="none" stroke="#c3d0d4" stroke-width="1.4" opacity="0.5"/>
+  <path d="M196,676 C204,686 214,692 224,696" fill="none" stroke="#c3d0d4" stroke-width="1.4" opacity="0.5"/>
+  <path d="M82,694 C118,710 158,718 196,720 C234,718 274,710 310,694" fill="none" stroke="#e6c273" stroke-width="1.8" opacity="0.6"/>
+  <!-- 裙摆暗纹 -->
+  <g fill="none" stroke="#e6c273" stroke-width="1" opacity="0.26">
+    <path d="M108,676 C140,692 170,700 196,702"/>
+    <path d="M284,676 C252,692 222,700 196,702"/>
+    <path d="M120,684 C130,690 138,692 146,692"/>
+    <path d="M272,684 C262,690 254,692 246,692"/>
+  </g>
+  <g fill="none" stroke="#e6c273" stroke-width="1.1" opacity="0.3">
+    <path d="M136,700 C142,694 150,694 154,699 C158,704 152,708 146,705"/>
+    <path d="M256,700 C250,694 242,694 238,699 C234,704 240,708 246,705"/>
+  </g>
+  <ellipse cx="196" cy="604" rx="52" ry="16" fill="#b9c6ca" opacity="0.22"/>
+
+  <!-- 上身 -->
+  <path d="M196,466
+           C180,466 166,474 160,490
+           C154,508 156,534 160,566
+           C180,574 212,574 232,566
+           C236,534 238,508 232,490
+           C226,474 212,466 196,466 Z" fill="url(#robe)"/>
+  <!-- 圆领 -->
+  <path d="M170,466 C178,479 214,479 222,466 L225,483 C214,496 178,496 167,483 Z" fill="#fdfbf3"/>
+  <path d="M170,466 C178,479 214,479 222,466" fill="none" stroke="#e6c273" stroke-width="1.4" opacity="0.6"/>
+  <path d="M167,483 C178,496 214,496 225,483" fill="none" stroke="#dcd7c6" stroke-width="1" opacity="0.75"/>
+  <!-- 斜襟与盘扣 -->
+  <path d="M220,492 C232,514 239,536 241,558" fill="none" stroke="#e6e2d4" stroke-width="2.2" opacity="0.9"/>
+  <path d="M220,492 C232,514 239,536 241,558" fill="none" stroke="#e6c273" stroke-width="0.9" opacity="0.4"/>
+  <circle cx="224" cy="501" r="2.4" fill="#e6c273" opacity="0.85"/>
+  <circle cx="231" cy="519" r="2.4" fill="#e6c273" opacity="0.85"/>
+  <circle cx="237" cy="537" r="2.4" fill="#e6c273" opacity="0.85"/>
+
+
+  <!-- 腰带 -->
+  <path d="M158,558 C180,550 212,550 234,558 L232,580 C210,572 182,572 160,580 Z" fill="url(#sash)"/>
+  <path d="M158,558 C180,550 212,550 234,558" fill="none" stroke="#fff2cd" stroke-width="1.2" opacity="0.75"/>
+  <path d="M196,574 C191,584 188,592 189,600 L196,595 L203,600 C204,592 201,584 196,574 Z" fill="#dcb069"/>
+  <circle cx="196" cy="575" r="4.2" fill="#f5dfa9"/>
+  <path d="M196,580 C192,590 188,596 186,602" fill="none" stroke="url(#ribbon)" stroke-width="2.6" stroke-linecap="round" opacity="0.7"/>
+  <path d="M196,580 C200,590 204,596 206,602" fill="none" stroke="url(#ribbon)" stroke-width="2.6" stroke-linecap="round" opacity="0.7"/>
+  <circle cx="196" cy="588" r="3.4" fill="#f5dfa9" opacity="0.9"/>
+
+  <!-- 广袖 -->
+  <path d="M162,470 C142,480 130,508 126,544 C122,578 122,606 128,626 C140,632 152,624 155,606 C158,582 158,544 164,516 Z" fill="url(#sleeve)"/>
+  <path d="M230,470 C250,480 262,508 266,544 C270,578 270,606 264,626 C252,632 240,624 237,606 C234,582 234,544 228,516 Z" fill="url(#sleeve)"/>
+  <g fill="none" stroke="#b9c6ca" stroke-width="1.2" opacity="0.55">
+    <path d="M136,556 C132,584 132,608 135,622"/>
+    <path d="M148,562 C146,588 146,608 148,620"/>
+    <path d="M256,556 C260,584 260,608 257,622"/>
+    <path d="M244,562 C246,588 246,608 244,620"/>
+  </g>
+  <path d="M128,626 C140,632 152,624 155,606" fill="none" stroke="#e6c273" stroke-width="1.5" opacity="0.45"/>
+  <path d="M264,626 C252,632 240,624 237,606" fill="none" stroke="#e6c273" stroke-width="1.5" opacity="0.45"/>
+  <path d="M160,516 C158,544 156,574 155,604" fill="none" stroke="#e6c273" stroke-width="1.2" opacity="0.35"/>
+  <path d="M232,516 C234,544 236,574 237,604" fill="none" stroke="#e6c273" stroke-width="1.2" opacity="0.35"/>
+
+  <!-- 袖口内衬 -->
+  <path d="M150,600 C154,616 160,632 168,644 L176,638 C168,628 162,614 159,598 Z" fill="#e6f2ed"/>
+  <path d="M242,600 C238,616 232,632 224,644 L216,638 C224,628 230,614 233,598 Z" fill="#e6f2ed"/>
+
+  <!-- 手（禅定印，叠于丹田） -->
+  <g>
+    <ellipse cx="196" cy="656" rx="33" ry="9" fill="#a89489" opacity="0.2"/>
+    <path d="M170,642 C170,634 181,628 196,628 C211,628 222,634 222,642 C222,651 211,657 196,657 C181,657 170,651 170,642 Z" fill="#ffe3cf"/>
+    <path d="M196,630 C209,630 220,636 222,643 C220,652 209,657 196,657 Z" fill="#f8cfb8"/>
+    <path d="M175,644 C184,651 208,651 217,644" fill="none" stroke="#e0a58c" stroke-width="1.3" opacity="0.55"/>
+    <path d="M186,633 C190,629 195,628 199,631" fill="none" stroke="#e0a58c" stroke-width="1.3" opacity="0.5"/>
+  </g>
+
+  <!-- 脖颈 -->
+  <path d="M183,436 L209,436 L211,472 C203,478 189,478 181,472 Z" fill="#ffe6d4"/>
+  <path d="M182,450 C190,458 204,458 212,450" fill="none" stroke="#e0a48c" stroke-width="1.4" opacity="0.5"/>
+  <path d="M181,470 C189,476 203,476 211,470" fill="none" stroke="#e8b59d" stroke-width="1" opacity="0.25"/>
+
+  <!-- 脸 -->
+  <path d="M196,338
+           C218,338 238,354 242,380
+           C245,398 244,412 238,424
+           C230,440 214,452 196,454
+           C178,452 162,440 154,424
+           C148,412 147,398 150,380
+           C154,354 174,338 196,338 Z" fill="url(#skin)"/>
+
+  <!-- 前发 -->
+  <path d="M150,388
+           C146,348 170,322 196,322
+           C222,322 246,348 242,388
+           C238,372 234,360 224,354
+           C222,370 214,382 204,386
+           C208,374 208,364 206,356
+           C198,372 188,382 176,386
+           C180,374 180,362 178,354
+           C166,360 156,372 150,388 Z" fill="url(#hair)"/>
+  <path d="M150,388 C146,348 170,322 196,322 C222,322 246,348 242,388" fill="none" stroke="#8f9bd4" stroke-width="1.3" opacity="0.35"/>
+  <path d="M158,344 C170,332 186,328 198,329" fill="none" stroke="#7a85c6" stroke-width="2.4" opacity="0.3" stroke-linecap="round"/>
+  <!-- 鬓发 -->
+  <path d="M152,380 C144,406 142,436 146,464 C152,454 158,442 160,426 C162,410 160,394 156,382 Z" fill="url(#hair)"/>
+  <path d="M240,380 C248,406 250,436 246,464 C240,454 234,442 232,426 C230,410 232,394 236,382 Z" fill="url(#hair)"/>
+  <path d="M150,380 C144,408 143,438 147,462" fill="none" stroke="#7a85c6" stroke-width="1.2" opacity="0.26"/>
+  <path d="M242,380 C248,408 249,438 245,462" fill="none" stroke="#7a85c6" stroke-width="1.2" opacity="0.26"/>
+  <!-- 垂肩发丝 -->
+  <path d="M148,420 C142,458 146,500 154,534" fill="none" stroke="#241f3d" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+  <path d="M244,420 C250,458 246,500 238,534" fill="none" stroke="#241f3d" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+
+  <!-- 五官 -->
+  <g>
+    <path d="M166,402 C170,408 178,408 182,402" fill="none" stroke="#453a52" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M210,402 C214,408 222,408 226,402" fill="none" stroke="#453a52" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M165,399 C169,395 175,394 180,397" fill="none" stroke="#5a4c66" stroke-width="1.3" stroke-linecap="round" opacity="0.7"/>
+    <path d="M212,397 C217,394 223,395 227,399" fill="none" stroke="#5a4c66" stroke-width="1.3" stroke-linecap="round" opacity="0.7"/>
+    <ellipse cx="172" cy="420" rx="10" ry="5.4" fill="#f2a3a0" opacity="0.28"/>
+    <ellipse cx="220" cy="420" rx="10" ry="5.4" fill="#f2a3a0" opacity="0.28"/>
+    <path d="M191,428 C194,432 198,432 200,429" fill="none" stroke="#d98a86" stroke-width="1.7" stroke-linecap="round"/>
+    <circle cx="196" cy="420" r="1.3" fill="#e2ab94" opacity="0.75"/>
+  </g>
+
+  <!-- 发丝月光 -->
+  <path d="M132,352 C126,392 128,436 138,478" fill="none" stroke="#a9b4ea" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
+  <path d="M140,344 C132,388 134,436 146,486" fill="none" stroke="#8f9bd4" stroke-width="1.4" stroke-linecap="round" opacity="0.3"/>
+  <path d="M126,404 C124,448 128,486 136,520" fill="none" stroke="#8f9bd4" stroke-width="1.2" stroke-linecap="round" opacity="0.22"/>
+
+  <!-- 轮廓光 -->
+  <path d="M242,380 C245,398 244,412 238,424" fill="none" stroke="#fff6dc" stroke-width="1.6" opacity="0.5"/>
+  <path d="M234,472 C248,482 260,508 266,544" fill="none" stroke="#fff6dc" stroke-width="1.5" opacity="0.28"/>
+  <path d="M268,392 C270,444 260,496 244,540" fill="none" stroke="#fff6dc" stroke-width="1.2" opacity="0.2"/>
+
+  <!-- 前景薄雾 -->
+  <path d="M0,706 C70,690 140,706 196,700 C252,694 322,712 390,696 L390,844 L0,844 Z" fill="url(#mist)" opacity="0.9"/>
+  <ellipse cx="120" cy="750" rx="150" ry="30" fill="#dff0f0" opacity="0.05" filter="url(#soft)"/>
+  <ellipse cx="286" cy="770" rx="130" ry="26" fill="#dff0f0" opacity="0.05" filter="url(#soft)"/>
+
+  <!-- 花枝 -->
+  <g opacity="0.85">
+    <path d="M390,120 C352,132 322,158 300,192 C288,210 280,228 278,244" fill="none" stroke="#241f33" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M330,150 C322,166 320,180 322,194" fill="none" stroke="#241f33" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M352,168 C358,182 358,196 354,208" fill="none" stroke="#241f33" stroke-width="2.2" stroke-linecap="round"/>
+    <g fill="url(#petal)" opacity="0.9">
+      <circle cx="322" cy="194" r="6.5"/>
+      <circle cx="310" cy="182" r="4.6"/>
+      <circle cx="332" cy="206" r="4.2"/>
+      <circle cx="354" cy="208" r="5.6"/>
+      <circle cx="342" cy="192" r="3.8"/>
+      <circle cx="278" cy="246" r="4.4"/>
+      <circle cx="296" cy="228" r="3.6"/>
+    </g>
+  </g>
+
+  <!-- 光斑 -->
+  <g filter="url(#soft2)" opacity="0.5">
+    <circle cx="52" cy="196" r="7" fill="#ffe9b8" opacity="0.35"/>
+    <circle cx="336" cy="252" r="9" fill="#ffe9b8" opacity="0.3"/>
+    <circle cx="86" cy="470" r="6" fill="#cfe6e6" opacity="0.25"/>
+    <circle cx="312" cy="512" r="7" fill="#cfe6e6" opacity="0.22"/>
+    <circle cx="40" cy="640" r="10" fill="#ffe9b8" opacity="0.18"/>
+    <circle cx="356" cy="668" r="8" fill="#cfe6e6" opacity="0.2"/>
+  </g>
+
+  <!-- 花瓣 -->
+  <g fill="url(#petal)" opacity="0.9">
+    <ellipse cx="70" cy="298" rx="8" ry="4.6" transform="rotate(-28 70 298)"/>
+    <ellipse cx="318" cy="344" rx="7.4" ry="4.2" transform="rotate(34 318 344)"/>
+    <ellipse cx="96" cy="404" rx="6.6" ry="3.8" transform="rotate(18 96 404)"/>
+    <ellipse cx="296" cy="438" rx="7" ry="4" transform="rotate(-42 296 438)"/>
+    <ellipse cx="62" cy="548" rx="6.4" ry="3.6" transform="rotate(52 62 548)"/>
+    <ellipse cx="330" cy="596" rx="6.8" ry="3.9" transform="rotate(-16 330 596)"/>
+    <ellipse cx="124" cy="624" rx="6" ry="3.4" transform="rotate(38 124 624)"/>
+    <ellipse cx="274" cy="652" rx="6.2" ry="3.5" transform="rotate(-30 274 652)"/>
+  </g>
+  <g fill="#fbe8c2" opacity="0.75">
+    <circle cx="120" cy="238" r="1.8"/>
+    <circle cx="272" cy="214" r="1.5"/>
+    <circle cx="86" cy="330" r="1.4"/>
+    <circle cx="306" cy="286" r="1.7"/>
+    <circle cx="150" cy="188" r="1.2"/>
+    <circle cx="348" cy="392" r="1.4"/>
+  </g>
+</svg></div>
+    <div class="cover-inner">
+      <div class="cover-top">
+        <div class="cover-title">长生道</div>
+        <div class="cover-sub">一介凡骨，问道长生</div>
+      </div>
+      <div class="cover-foot">
+        <div class="cover-realm">· <span id="coverRealm">练气一层</span> ·</div>
+        <button class="btn btn-primary btn-wide" id="coverBtn" data-action="enter">
+          <span class="btn-main">开始修行</span>
+          <span class="btn-sub" id="coverSub">自动挂机 · 闭关也在涨</span>
+        </button>
+        <div class="cover-note">v<span id="coverVer">1.1.0</span> · 存档自动保存于本机</div>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
 /* ===== data.js ===== */
@@ -1081,7 +1590,7 @@ textarea.savelink {
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "1.0.1";
+const GAME_VERSION = "1.1.0";
 const SAVE_SCHEMA = 1;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -1094,8 +1603,7 @@ const CFG = {
   DAO_START: 50,
   DAO_PER_SUCCESS: 4,
   DAO_PER_FAIL: 8,
-  MEDITATE_COOLDOWN: 2,         // 打坐冷却（秒）
-  MEDITATE_MULT: 12,            // 打坐获得 12 秒收益
+  IDLE_MULT: 1.4,               // 挂机修炼加成（取消打坐后的补偿）
   ENCOUNTER_COOLDOWN: 40,       // 历练冷却（秒）
   BREAK_LOSS_RATE: 0.15,        // 突破失败损失进度
   STONE_FACTOR: 1.0,            // 灵石产出 = 修炼速度 * 该系数
@@ -1249,35 +1757,144 @@ const PILL_MAP = {};
 PILLS.forEach(p => { PILL_MAP[p.id] = p; });
 
 /* ---------------------------- 奇遇 ---------------------------- */
-/* kind: stone / exp / pill / rateBuff / stoneBuff / dao / success / hurt */
+/* kind: stone / exp / pill / rateBuff / stoneBuff / dao / success / hurt / combo
+ * stone.mult / exp.mult 的单位是「秒」：相当于当前境界多少秒的产出，境界越高数值越大。
+ * minRealm / maxRealm 为境界层索引，奇遇按九重境界分流：
+ *   练气 0-8 · 筑基 9-11 · 金丹 12-14 · 元婴 15-17 · 化神 18-20
+ *   炼虚 21-23 · 合体 24-26 · 大乘 27-29 · 渡劫 30·仙道 31+
+ * 境界越高，所见机缘越奇，所得亦越厚。 */
 const ENCOUNTERS = [
-  { id: "herb", name: "采得灵草", icon: "🌿", weight: 14, tone: "good",
-    text: "你在山涧采得一株百年灵芝，药香沁人心脾。", effect: { kind: "pill", pillId: "juqi" } },
-  { id: "vein", name: "灵脉现世", icon: "💎", weight: 10, tone: "good",
-    text: "地脉震动，一条微型灵脉显露，灵石散落一地。", effect: { kind: "stone", mult: 120 } },
-  { id: "insight", name: "月下顿悟", icon: "🌙", weight: 9, tone: "good",
-    text: "月华如练，你于溪畔枯坐一夜，忽有所悟。", effect: { kind: "rateBuff", power: 0.8, duration: 1200 } },
-  { id: "elder", name: "前辈指点", icon: "🧓", weight: 8, tone: "good",
-    text: "一位白须老者路过，随手点你眉心一记，道韵悠长。", effect: { kind: "success", power: 0.10 } },
-  { id: "secret", name: "上古洞府", icon: "🏯", weight: 5, tone: "great",
-    text: "你误入上古洞府，石壁刻满前人道法，此行不虚！", effect: { kind: "exp", mult: 300 } },
-  { id: "dao", name: "清心悟道", icon: "☯️", weight: 7, tone: "good",
-    text: "山风涤尘，你心境澄明，道心愈发稳固。", effect: { kind: "dao", power: 12 } },
-  { id: "fox", name: "灵狐报恩", icon: "🦊", weight: 6, tone: "great",
-    text: "你救下的灵狐衔来一枚丹药，蹭了蹭你的衣角。", effect: { kind: "pill", pillId: "pojing" } },
-  { id: "rumor", name: "坊市奇闻", icon: "📜", weight: 10, tone: "good",
-    text: "坊市间流传着一则仙缘秘闻，你随手记下，偶有所得。", effect: { kind: "stone", mult: 60 } },
-  { id: "demon", name: "心魔来袭", icon: "👁️", weight: 11, tone: "bad",
-    text: "心魔滋生，识海翻腾，你强行压下杂念，道心受损。", effect: { kind: "hurt", dao: 8, expRate: 0.06 } },
-  { id: "thief", name: "遭遇劫修", icon: "🥷", weight: 8, tone: "bad",
-    text: "一名散修拦路劫财，你且战且退，损了些灵石。", effect: { kind: "hurt", stoneRate: 0.05 } },
-  { id: "trap", name: "误入迷阵", icon: "🌀", weight: 6, tone: "bad",
-    text: "你误入上古迷阵，破阵而出时已过数日。", effect: { kind: "hurt", expRate: 0.10 } },
-  { id: "pill2", name: "丹房遗赠", icon: "⚗️", weight: 6, tone: "good",
-    text: "一处废弃丹房中，尚存一枚未被取走的丹药。", effect: { kind: "pill", pillId: "wudao" } },
+  /* ——— 练气 ——— */
+  { id: "herb", name: "采得灵草", icon: "🌿", weight: 14, tone: "good", minRealm: 0, maxRealm: 8,
+    text: "你在山涧采得一株三年生的黄精，药香沁人，正好入药。", effect: { kind: "pill", pillId: "juqi" } },
+  { id: "creek", name: "溪畔拾遗", icon: "🐚", weight: 12, tone: "good", minRealm: 0, maxRealm: 8,
+    text: "溪水退去，泥沙间露出几枚被冲刷圆润的碎灵砂。", effect: { kind: "stone", mult: 90 } },
+  { id: "squirrel", name: "山野松鼠", icon: "🐿️", weight: 11, tone: "good", minRealm: 0, maxRealm: 8,
+    text: "松鼠叼来半枚灵气充盈的野果，吃完只觉通体轻快。", effect: { kind: "exp", mult: 60 } },
+  { id: "fortune", name: "村口卜卦", icon: "🎴", weight: 9, tone: "good", minRealm: 0, maxRealm: 8,
+    text: "算命瞎子掐指一算，笑说你近日有破境之兆。", effect: { kind: "success", power: 0.05 } },
+  { id: "rumor", name: "坊市奇闻", icon: "📜", weight: 10, tone: "good", minRealm: 0, maxRealm: 8,
+    text: "坊市闲谈，你无意间记下一处散落灵石的旧矿洞。", effect: { kind: "stone", mult: 70 } },
+  { id: "demon0", name: "杂念丛生", icon: "😖", weight: 10, tone: "bad", minRealm: 0, maxRealm: 8,
+    text: "夜里杂念翻涌，你辗转半宿，醒来道心微损。", effect: { kind: "hurt", dao: 6 } },
+  { id: "thief0", name: "山贼拦路", icon: "🥷", weight: 7, tone: "bad", minRealm: 0, maxRealm: 8,
+    text: "几个山贼拦路要钱，你且战且退，丢了些灵石。", effect: { kind: "hurt", stoneRate: 0.05 } },
+
+  /* ——— 筑基 ——— */
+  { id: "vein", name: "灵脉现世", icon: "💎", weight: 10, tone: "good", minRealm: 9, maxRealm: 11,
+    text: "地脉轻震，一条微型灵脉显露，灵石散落一地。", effect: { kind: "stone", mult: 180 } },
+  { id: "elder", name: "前辈指点", icon: "🧓", weight: 9, tone: "good", minRealm: 9, maxRealm: 11,
+    text: "白须老者路过，随手点你眉心一记，道韵悠长。", effect: { kind: "success", power: 0.08 } },
+  { id: "fox", name: "灵狐报恩", icon: "🦊", weight: 6, tone: "good", minRealm: 9, maxRealm: 11,
+    text: "你曾救下的灵狐衔来一枚朱红丹药，蹭了蹭你衣角。", effect: { kind: "pill", pillId: "pojing" } },
+  { id: "moon", name: "月下顿悟", icon: "🌙", weight: 8, tone: "good", minRealm: 9, maxRealm: 11,
+    text: "月华如练，你于溪畔枯坐一夜，忽有所悟。", effect: { kind: "rateBuff", power: 0.6, duration: 900 } },
+  { id: "auction", name: "坊市拍卖", icon: "🏮", weight: 7, tone: "good", minRealm: 9, maxRealm: 11,
+    text: "你在拍卖会上捡了个漏，转手便赚进一笔灵石。", effect: { kind: "stone", mult: 240 } },
+  { id: "trap", name: "误入迷阵", icon: "🌀", weight: 7, tone: "bad", minRealm: 9, maxRealm: 11,
+    text: "你误入上古迷阵，破阵而出时已过数日。", effect: { kind: "hurt", expRate: 0.08 } },
+  { id: "demon1", name: "心魔低语", icon: "👁️", weight: 8, tone: "bad", minRealm: 9, maxRealm: 11,
+    text: "识海深处传来低语，你强压杂念，道心仍受了损。", effect: { kind: "hurt", dao: 8, expRate: 0.05 } },
+
+  /* ——— 金丹 ——— */
+  { id: "cave", name: "上古洞府", icon: "🏯", weight: 5, tone: "great", minRealm: 12, maxRealm: 14,
+    text: "你误入上古洞府，石壁刻满前人道法，此行不虚。", effect: { kind: "exp", mult: 300 } },
+  { id: "swordTomb", name: "剑冢残鸣", icon: "⚔️", weight: 5, tone: "great", minRealm: 12, maxRealm: 14,
+    text: "剑冢万剑齐鸣，一缕剑意自碑上灌入你的识海。", effect: { kind: "exp", mult: 360 } },
+  { id: "ore", name: "玄铁矿脉", icon: "⛏️", weight: 9, tone: "good", minRealm: 12, maxRealm: 14,
+    text: "山腹中露出玄铁矿脉，你剥下不少灵石矿砂。", effect: { kind: "stone", mult: 320 } },
+  { id: "pillmaster", name: "丹道比试", icon: "⚗️", weight: 6, tone: "good", minRealm: 12, maxRealm: 14,
+    text: "丹会上你侥幸夺魁，得赐一枚悟道丹。", effect: { kind: "pill", pillId: "wudao" } },
+  { id: "scroll", name: "残卷道经", icon: "📖", weight: 7, tone: "good", minRealm: 12, maxRealm: 14,
+    text: "古卷虽残，却字字珠玑，你读至天明未尽。", effect: { kind: "exp", mult: 240 } },
+  { id: "demon2", name: "心魔来袭", icon: "🩸", weight: 9, tone: "bad", minRealm: 12, maxRealm: 14,
+    text: "心魔滋生，识海翻腾，你强行压下却伤了道心。", effect: { kind: "hurt", dao: 10, expRate: 0.06 } },
+  { id: "rob", name: "结丹拦路", icon: "🗡️", weight: 6, tone: "bad", minRealm: 12, maxRealm: 14,
+    text: "一名结丹散修拦路，你破财免灾，心中郁闷。", effect: { kind: "hurt", stoneRate: 0.08, expRate: 0.04 } },
+
+  /* ——— 元婴 ——— */
+  { id: "secretRealm", name: "洞天福地", icon: "🏞️", weight: 5, tone: "great", minRealm: 15, maxRealm: 17,
+    text: "你寻到一处灵气温养的秘地，闭关半月如饮甘霖。", effect: { kind: "rateBuff", power: 1.0, duration: 1800 } },
+  { id: "starFall", name: "星陨之夜", icon: "🌠", weight: 4, tone: "great", minRealm: 15, maxRealm: 17,
+    text: "星陨坠地，你于陨坑中拾得大片星砂灵石。", effect: { kind: "stone", mult: 520 } },
+  { id: "debate", name: "论道大会", icon: "🎤", weight: 6, tone: "good", minRealm: 15, maxRealm: 17,
+    text: "论道台上你舌绽莲花，众人拱手称服。", effect: { kind: "success", power: 0.10 } },
+  { id: "bird", name: "青鸾衔芝", icon: "🕊️", weight: 5, tone: "good", minRealm: 15, maxRealm: 17,
+    text: "青鸾衔来灵芝，食之灵台清明，道心大进。", effect: { kind: "dao", power: 16 } },
+  { id: "mirror", name: "照心古镜", icon: "🪞", weight: 4, tone: "good", minRealm: 15, maxRealm: 17,
+    text: "古镜映出你的本心，你反倒看得更清楚了。", effect: { kind: "dao", power: 20 } },
+  { id: "illusion", name: "心魔幻境", icon: "🌫️", weight: 8, tone: "bad", minRealm: 15, maxRealm: 17,
+    text: "幻境千重，你破境时心神震荡，久久难平。", effect: { kind: "hurt", dao: 12, expRate: 0.08 } },
+
+  /* ——— 化神 ——— */
+  { id: "ruins", name: "古仙遗迹", icon: "🏛️", weight: 4, tone: "great", minRealm: 18, maxRealm: 20,
+    text: "遗迹深处灵泉与丹炉俱在，你满载而归。", effect: { kind: "combo", stoneMult: 400, expMult: 900 } },
+  { id: "thunder", name: "雷池淬体", icon: "⚡", weight: 5, tone: "good", minRealm: 18, maxRealm: 20,
+    text: "雷池中淬炼一身经脉，破境更有把握。", effect: { kind: "success", power: 0.12 } },
+  { id: "rain", name: "灵雨降世", icon: "🌧️", weight: 5, tone: "great", minRealm: 18, maxRealm: 20,
+    text: "灵雨落下，你张口承接，周身气机欢腾。", effect: { kind: "rateBuff", power: 1.5, duration: 1200 } },
+  { id: "cloud", name: "云海仙舟", icon: "⛵", weight: 4, tone: "good", minRealm: 18, maxRealm: 20,
+    text: "云海中一艘仙舟倾覆，散落的灵石尽归你手。", effect: { kind: "stone", mult: 700 } },
+  { id: "dream", name: "一梦千年", icon: "🛌", weight: 4, tone: "great", minRealm: 18, maxRealm: 20,
+    text: "你睡了一觉，梦里已修行千年。", effect: { kind: "exp", mult: 900 } },
+  { id: "rift", name: "虚空裂隙", icon: "🕳️", weight: 7, tone: "bad", minRealm: 18, maxRealm: 20,
+    text: "虚空裂隙张开，你以修为填补，损耗不小。", effect: { kind: "hurt", dao: 8, expRate: 0.12 } },
+
+  /* ——— 炼虚 ——— */
+  { id: "remains", name: "大能遗蜕", icon: "🦴", weight: 4, tone: "great", minRealm: 21, maxRealm: 23,
+    text: "前辈遗蜕中尚存一丝道韵，尽数被你吸纳。", effect: { kind: "exp", mult: 1200 } },
+  { id: "starmap", name: "星图浮现", icon: "🌌", weight: 4, tone: "great", minRealm: 21, maxRealm: 23,
+    text: "夜空星图自行浮现，你的道途因此更明。", effect: { kind: "combo", stoneMult: 600, expMult: 1000 } },
+  { id: "daoq", name: "问道于石", icon: "🪨", weight: 5, tone: "good", minRealm: 21, maxRealm: 23,
+    text: "山石静默，你枯坐百日，忽悟破境之机。", effect: { kind: "success", power: 0.14 } },
+  { id: "spring", name: "灵泉古井", icon: "⛲", weight: 5, tone: "good", minRealm: 21, maxRealm: 23,
+    text: "古井之水甘冽，饮之气机源源不绝。", effect: { kind: "rateBuff", power: 1.2, duration: 1800 } },
+  { id: "beastTide", name: "妖潮过境", icon: "🐗", weight: 6, tone: "bad", minRealm: 21, maxRealm: 23,
+    text: "妖潮踏过山门，你护宗时损失惨重。", effect: { kind: "hurt", stoneRate: 0.12, expRate: 0.08 } },
+
+  /* ——— 合体 ——— */
+  { id: "gate", name: "天门虚影", icon: "🚪", weight: 4, tone: "great", minRealm: 24, maxRealm: 26,
+    text: "天门虚影一闪，你于光影中窥见大道的形状。", effect: { kind: "dao", power: 26 } },
+  { id: "tree", name: "建木神树", icon: "🌳", weight: 4, tone: "great", minRealm: 24, maxRealm: 26,
+    text: "建木之下灵气如潮，你贪吸了半日。", effect: { kind: "rateBuff", power: 1.8, duration: 1500 } },
+  { id: "peach", name: "道果熟成", icon: "🍑", weight: 4, tone: "great", minRealm: 24, maxRealm: 26,
+    text: "一枚道果恰好熟透，你摘下便吞。", effect: { kind: "exp", mult: 1800 } },
+  { id: "echo", name: "天劫余波", icon: "🌩️", weight: 6, tone: "bad", minRealm: 24, maxRealm: 26,
+    text: "远处天劫余波扫来，你勉力抵挡，气血翻涌。", effect: { kind: "hurt", dao: 10, expRate: 0.15 } },
+
+  /* ——— 大乘 ——— */
+  { id: "elderSmile", name: "仙人过路", icon: "🧙", weight: 4, tone: "good", minRealm: 27, maxRealm: 29,
+    text: "一位仙人自你身旁经过，回首一笑，道意通透。", effect: { kind: "success", power: 0.15 } },
+  { id: "fairyFeast", name: "仙宴请柬", icon: "🍶", weight: 4, tone: "great", minRealm: 27, maxRealm: 29,
+    text: "你受邀赴一场仙宴，归来时怀里塞满灵物。", effect: { kind: "combo", stoneMult: 900, expMult: 2200 } },
+  { id: "karma", name: "因果缠身", icon: "🧵", weight: 6, tone: "bad", minRealm: 27, maxRealm: 29,
+    text: "旧日因果寻上门来，你须以道心偿还。", effect: { kind: "hurt", dao: 14, expRate: 0.15 } },
+
+  /* ——— 渡劫 · 仙道 ——— */
+  { id: "tribulation", name: "雷劫洗礼", icon: "⚡️", weight: 5, tone: "good", minRealm: 30,
+    text: "九霄雷落，你于雷中沐浴，破境把握已成。", effect: { kind: "success", power: 0.18 } },
+  { id: "heavenlySword", name: "天外飞剑", icon: "🗡️", weight: 4, tone: "great", minRealm: 30,
+    text: "一柄天外飞剑破空而来，剑意尽入你的识海。", effect: { kind: "exp", mult: 2600 } },
+  { id: "immortalGuest", name: "仙界来客", icon: "🧚", weight: 4, tone: "great", minRealm: 30,
+    text: "仙界使者路过，随手赏你一片灵石。", effect: { kind: "stone", mult: 2200 } },
+  { id: "chaos", name: "混沌侵袭", icon: "🌑", weight: 5, tone: "bad", minRealm: 30,
+    text: "混沌之气侵蚀灵台，你闭目苦撑，神魂疲惫。", effect: { kind: "hurt", dao: 12, expRate: 0.18 } },
 ];
 
-const ENCOUNTER_TOTAL_WEIGHT = ENCOUNTERS.reduce((s, e) => s + e.weight, 0);
+/* 按当前境界层索引筛选可遇之事 */
+function encountersFor(realmIndex) {
+  const idx = Math.max(0, realmIndex | 0);
+  const pool = ENCOUNTERS.filter((e) =>
+    idx >= (e.minRealm || 0) && idx <= (e.maxRealm == null ? 1e9 : e.maxRealm));
+  return pool.length ? pool : ENCOUNTERS;
+}
+
+/* 境界所处阶段名（奇遇分层展示用） */
+function realmStageName(index) {
+  if (index > MAX_MORTAL_INDEX) return "仙道";
+  const tier = REALM_TIERS[realmAt(index).tier];
+  return tier ? tier.name : "练气";
+}
 
 /* ---------------------------- 成就 ---------------------------- */
 const ACHIEVEMENTS = [
@@ -1299,7 +1916,7 @@ const ACHIEVEMENTS = [
   { id: "encounter10", name: "游历四方", icon: "🗺️", desc: "经历 10 次奇遇", bonus: { stone: 0.03 } },
   { id: "encounter50", name: "见多识广", icon: "📖", desc: "经历 50 次奇遇", bonus: { stone: 0.05 } },
   { id: "dao100", name: "道心通明", icon: "☯️", desc: "道心达到 100", bonus: { rate: 0.03 } },
-  { id: "meditate100", name: "勤修不辍", icon: "🧘", desc: "打坐 100 次", bonus: { rate: 0.02 } },
+  { id: "play100h", name: "岁月如流", icon: "🌗", desc: "累计修行满 100 小时", bonus: { rate: 0.06 } },
   { id: "break10", name: "破境如梭", icon: "🔨", desc: "累计突破 10 次", bonus: { success: 0.02 } },
   { id: "play1h", name: "问道之心", icon: "⏳", desc: "累计修行满 1 小时", bonus: { rate: 0.02 } },
   { id: "play24h", name: "长生久视", icon: "🕰️", desc: "累计修行满 24 小时", bonus: { rate: 0.05 } },
@@ -1309,6 +1926,19 @@ ACHIEVEMENTS.forEach(a => { ACHIEVEMENT_MAP[a.id] = a; });
 
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "1.1.0",
+    date: "2026-11-02",
+    title: "问道·新章",
+    items: [
+      "取消「打坐」按钮：修行全自动，挂机修炼速度 +40% 作为补偿",
+      "奇遇扩至四十九则，按九重境界分流，境界愈高、机缘愈奇",
+      "新增四类奇遇效果：遗宝、灵泉、道心淬炼、双份机缘",
+      "全新开屏封面：汉服少女月下吐纳，静待问道之人",
+      "历练页显示当前境界与际遇规则，所遇之事一目了然",
+      "道途统计与成就相应调整，新增「岁月如流」长线目标",
+    ],
+  },
   {
     version: "1.0.1",
     date: "2026-11-01",
@@ -1399,7 +2029,7 @@ const ACHIEVE_COND = {
   encounter10: s => s.encounterCount >= 10,
   encounter50: s => s.encounterCount >= 50,
   dao100: s => s.dao >= 100,
-  meditate100: s => s.meditateCount >= 100,
+  play100h: s => s.playTime >= 360000,
   break10: s => s.breaks >= 10,
   play1h: s => s.playTime >= 3600,
   play24h: s => s.playTime >= 86400,
@@ -1420,13 +2050,12 @@ function defaultState() {
     buffs: { rateExp: null, rateStone: null },
     breakBonus: 0,
     successBonus: 0,
-    cooldowns: { meditate: 0, encounter: 0 },
+    cooldowns: { encounter: 0 },
     totalStone: 120,
     successes: 0,
     failures: 0,
     breaks: 0,
     encounterCount: 0,
-    meditateCount: 0,
     playTime: 0,
     achieve: {},
     journeyLog: [],
@@ -1483,7 +2112,7 @@ function computeStats(state, now) {
   const bonusSucc = artifactSum(state, "success") + achieveSum(state, "success");
   const daoRate = state.dao / 500;
   const daoSucc = state.dao / 1000;
-  const rate = realm.rate * (1 + bonusRate + daoRate) * (1 + rateBuff);
+  const rate = realm.rate * CFG.IDLE_MULT * (1 + bonusRate + daoRate) * (1 + rateBuff);
   const stoneRate = Math.max(0.5, realm.rate * CFG.STONE_FACTOR) * (1 + bonusStone) * (1 + stoneBuff);
   const success = clamp(realm.success + daoSucc + bonusSucc + state.breakBonus + state.successBonus, 0.05, 0.95);
   return {
@@ -1577,20 +2206,6 @@ function advance(state, now) {
 }
 
 /* ------------------------------ 玩家操作 ------------------------------ */
-function meditate(state) {
-  const now = Date.now();
-  const cd = state.cooldowns.meditate || 0;
-  if (cd > now) return { ok: false, msg: "调息未稳，稍后再试", remain: (cd - now) / 1000 };
-  const st = computeStats(state, now);
-  const gain = st.rate * CFG.MEDITATE_MULT;
-  state.exp += gain;
-  state.meditateCount += 1;
-  state.cooldowns.meditate = now + CFG.MEDITATE_COOLDOWN * 1000;
-  pushLog(state, "打坐吐纳，修为 +" + fmt(gain), "gain");
-  checkAchievements(state);
-  return { ok: true, gain: gain };
-}
-
 function breakThrough(state) {
   const st = computeStats(state);
   const req = st.realm.req;
@@ -1712,9 +2327,10 @@ function usePill(state, id) {
 }
 
 function pickWeighted(list) {
-  let r = Math.random() * ENCOUNTER_TOTAL_WEIGHT;
+  const total = list.reduce((sum, item) => sum + (item.weight || 1), 0);
+  let r = Math.random() * total;
   for (const item of list) {
-    r -= item.weight;
+    r -= (item.weight || 1);
     if (r <= 0) return item;
   }
   return list[list.length - 1];
@@ -1727,7 +2343,7 @@ function encounter(state) {
   state.cooldowns.encounter = now + CFG.ENCOUNTER_COOLDOWN * 1000;
   state.encounterCount += 1;
   const st = computeStats(state, now);
-  const ev = pickWeighted(ENCOUNTERS);
+  const ev = pickWeighted(encountersFor(state.realmIndex));
   const eff = ev.effect;
   let detail = "";
   switch (eff.kind) {
@@ -1741,6 +2357,14 @@ function encounter(state) {
       const gain = Math.max(20, st.rate * eff.mult);
       state.exp += gain;
       detail = "修为 +" + fmt(gain);
+      break;
+    }
+    case "combo": {
+      const gainStone = Math.max(20, st.stoneRate * eff.stoneMult);
+      const gainExp = Math.max(20, st.rate * eff.expMult);
+      state.stone += gainStone; state.totalStone += gainStone;
+      state.exp += gainExp;
+      detail = "灵石 +" + fmt(gainStone) + "，修为 +" + fmt(gainExp);
       break;
     }
     case "pill": {
@@ -1827,13 +2451,12 @@ function migrate(raw) {
   s.failures = Math.max(0, parseInt(s.failures, 10) || 0);
   s.breaks = Math.max(0, parseInt(s.breaks, 10) || 0);
   s.encounterCount = Math.max(0, parseInt(s.encounterCount, 10) || 0);
-  s.meditateCount = Math.max(0, parseInt(s.meditateCount, 10) || 0);
   s.lastTick = Number(s.lastTick) || Date.now();
   s.artifacts = (s.artifacts && typeof s.artifacts === "object") ? s.artifacts : {};
   s.pills = (s.pills && typeof s.pills === "object") ? s.pills : {};
   s.achieve = (s.achieve && typeof s.achieve === "object") ? s.achieve : {};
   s.buffs = Object.assign({ rateExp: null, rateStone: null }, s.buffs || {});
-  s.cooldowns = Object.assign({ meditate: 0, encounter: 0 }, s.cooldowns || {});
+  s.cooldowns = Object.assign({ encounter: 0 }, s.cooldowns || {});
   s.settings = Object.assign({ muted: false }, s.settings || {});
   s.logs = Array.isArray(s.logs) ? s.logs.slice(-CFG.LOG_LIMIT) : [];
   s.journeyLog = Array.isArray(s.journeyLog) ? s.journeyLog.slice(-30) : [];
@@ -1916,6 +2539,7 @@ let encountering = false;
 let toastTimer = 0;
 let saveNoticeTimer = 0;
 let modalQueue = [];
+let coverOpen = false;
 
 function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => (
@@ -1925,6 +2549,9 @@ function esc(s) {
 
 /* ------------------------------ 初始化 ------------------------------ */
 function init() {
+  const hadSave = (function () {
+    try { return !!localStorage.getItem(SAVE_KEY); } catch (e) { return false; }
+  })();
   game = loadGame();
   cacheDom();
   bindEvents();
@@ -1934,6 +2561,7 @@ function init() {
   }
   lastLogCount = game.logs.length;
   if (UI.verText) UI.verText.textContent = GAME_VERSION;
+  paintCover(hadSave);
   switchTab("cultivate");
   updateTopbar(Date.now());
   if (game.pendingOffline) {
@@ -1953,11 +2581,12 @@ function cacheDom() {
   [
     "realmName", "realmMotto", "expText", "expPct", "expBar", "ringFill",
     "rateText", "stoneRateText", "daoText", "successText", "buffRow",
-    "btnMeditate", "meditateSub", "btnBreak", "breakSub", "realmCard",
+    "btnBreak", "breakSub", "realmCard", "autoHint",
     "logList", "stoneText", "playTimeText", "brandSub",
     "artifactGrid", "artifactHint", "pillBag", "pillShop", "shopHint",
     "journeyOrb", "btnJourney", "journeySub", "journeyLog",
-    "statsGrid", "achGrid", "achHint", "verText",
+    "statsGrid", "achGrid", "achHint", "verText", "journeyRealm",
+    "cover", "coverBtn", "coverSub", "coverVer", "coverRealm",
     "modalMask", "modalBox", "toast", "floatLayer", "updateBar", "updateText",
     "view",
   ].forEach((id) => { UI[id] = $(id); });
@@ -2040,11 +2669,8 @@ function updateCultivate(now) {
   UI.successText.textContent = fmtPct(st.success);
 
   const ready = game.exp >= realm.req;
-  const medRemain = Math.max(0, ((game.cooldowns.meditate || 0) - now) / 1000);
   UI.btnBreak.disabled = !ready || breaking;
   UI.breakSub.textContent = ready ? "道基已足" : "尚差 " + fmt(realm.req - game.exp);
-  UI.btnMeditate.disabled = medRemain > 0 || breaking;
-  UI.meditateSub.textContent = medRemain > 0 ? medRemain.toFixed(1) + " 秒" : "引气入体";
 
   const sig = st.rateBuff + "|" + st.stoneBuff + "|" + st.breakBonus + "|" +
     st.successBonus + "|" + Math.ceil(st.rateBuffEnd / 1000) + "|" + Math.ceil(st.stoneBuffEnd / 1000);
@@ -2141,6 +2767,10 @@ function updateJourney(now) {
   const remain = Math.max(0, ((game.cooldowns.encounter || 0) - now) / 1000);
   UI.btnJourney.disabled = remain > 0 || encountering;
   UI.journeySub.textContent = remain > 0 ? "整装中 " + Math.ceil(remain) + " 秒" : "整装待发";
+  if (UI.journeyRealm) {
+    UI.journeyRealm.textContent = realmAt(game.realmIndex).name;
+    UI.journeyOrb.title = "当前可遇 " + encountersFor(game.realmIndex).length + " 则奇遇";
+  }
 }
 
 function renderJourneyLog() {
@@ -2163,7 +2793,7 @@ function renderMore() {
     ["累计修行", fmtDuration(game.playTime)],
     ["突破战绩", game.successes + " 成 / " + game.failures + " 败"],
     ["奇遇次数", game.encounterCount + " 次"],
-    ["打坐次数", game.meditateCount + " 次"],
+    ["挂机加成", "+" + Math.round((CFG.IDLE_MULT - 1) * 100) + "%"],
     ["收集法宝", arts + " / " + ARTIFACTS.length],
     ["达成成就", achs + " / " + ACHIEVEMENTS.length],
     ["当前道心", Math.floor(game.dao) + " / " + CFG.DAO_MAX],
@@ -2212,7 +2842,7 @@ function onClick(e) {
   const id = target.getAttribute("data-id");
   switch (action) {
     case "tab": switchTab(target.getAttribute("data-tab")); break;
-    case "meditate": doMeditate(e); break;
+    case "enter": enterGame(); break;
     case "break": doBreak(); break;
     case "encounter": doEncounter(); break;
     case "buy-artifact": doBuyArtifact(id); break;
@@ -2258,17 +2888,6 @@ function toast(msg) {
   t.classList.add("show");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove("show"), 1900);
-}
-
-function doMeditate(e) {
-  if (breaking) return;
-  const res = meditate(game);
-  if (!res.ok) { toast(res.msg); return; }
-  saveGame(game);
-  const r = UI.btnMeditate.getBoundingClientRect();
-  floatText(r.left + r.width / 2 - 20, r.top - 6, "+" + fmt(res.gain) + " 修为");
-  ripple(e, UI.btnMeditate);
-  if (currentTab === "cultivate") updateCultivate(Date.now());
 }
 
 function doBreak() {
@@ -2379,6 +2998,29 @@ function doUsePill(id) {
   if (currentTab === "cultivate") updateCultivate(Date.now());
 }
 
+/* ------------------------------ 封面 ------------------------------ */
+function paintCover(hadSave) {
+  coverOpen = true;
+  if (!UI.cover) return;
+  UI.cover.classList.remove("gone", "hidden");
+  if (UI.coverVer) UI.coverVer.textContent = GAME_VERSION;
+  if (UI.coverRealm) UI.coverRealm.textContent = realmAt(game.realmIndex).name;
+  if (UI.coverBtn) UI.coverBtn.querySelector(".btn-main").textContent = hadSave ? "继续修行" : "开始修行";
+  if (UI.coverSub) {
+    UI.coverSub.textContent = hadSave
+      ? "已修行 " + fmtDuration(game.playTime) + " · 修为不曾中断"
+      : "自动挂机 · 闭关也在涨";
+  }
+}
+
+function enterGame() {
+  if (!coverOpen) return;
+  coverOpen = false;
+  if (UI.cover) UI.cover.classList.add("gone");
+  setTimeout(() => { if (UI.cover && coverOpen === false) UI.cover.classList.add("hidden"); }, 460);
+  pumpModal();
+}
+
 /* ------------------------------ 弹窗 ------------------------------ */
 function enqueueModal(opts) {
   modalQueue.push(opts);
@@ -2387,6 +3029,7 @@ function enqueueModal(opts) {
 
 function pumpModal() {
   if (modalQueue.length === 0) return;
+  if (coverOpen) return;
   if (!UI.modalMask.classList.contains("hidden")) return;
   const opts = modalQueue.shift();
   showModal(opts);
