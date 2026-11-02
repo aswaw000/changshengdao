@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v2.1.0 · built 2026-11-02T04:04:46.824Z · 单文件离线可玩 -->
+<!-- 《长生道》 v2.2.0 · built 2026-11-02T04:38:10.795Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -179,7 +179,12 @@ main::-webkit-scrollbar { display: none; }
   margin-bottom: 10px;
   border-bottom: 1px dashed rgba(120, 180, 190, 0.16);
 }
+.card-head > span:first-child { flex-shrink: 0; white-space: nowrap; }
 .card-hint {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: right;
+  line-height: 1.45;
   font-family: var(--font-ui);
   font-size: 11px;
   letter-spacing: 0.5px;
@@ -1108,7 +1113,94 @@ textarea.savelink {
 .slot-effect { font-size: 10px; color: var(--gold-soft); text-align: center; line-height: 1.4; }
 .slot-card .btn-small { margin-top: auto; width: 100%; padding: 6px 4px; }
 .slot-card .btn-small .btn-main { font-size: 11px; }
+.slot-card.equipped { border-color: rgba(230, 194, 115, 0.3); }
+.slot-bag-tip {
+  margin-top: auto;
+  width: 100%;
+  padding-top: 6px;
+  border-top: 1px dashed rgba(120, 180, 190, 0.14);
+  font-size: 9.5px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.5px;
+}
 .slot-empty { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+.bag-state {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 0 5px;
+  border: 1px solid rgba(111, 211, 192, 0.3);
+  border-radius: 99px;
+  font-size: 9px;
+  font-weight: 400;
+  color: var(--jade);
+  letter-spacing: 0.5px;
+  vertical-align: 1px;
+}
+
+.companion-list { display: flex; flex-direction: column; gap: 12px; }
+.companion-item {
+  display: flex;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(9, 16, 20, 0.6);
+}
+.companion-item.owned {
+  border-color: rgba(230, 194, 115, 0.32);
+  background: linear-gradient(140deg, rgba(230, 194, 115, 0.07), rgba(9, 16, 20, 0.6));
+}
+.companion-art {
+  position: relative;
+  width: 104px;
+  height: 132px;
+  flex: none;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(120, 180, 190, 0.18);
+  background: radial-gradient(circle at 50% 30%, rgba(111, 211, 192, 0.14), rgba(7, 11, 14, 0.9));
+}
+.companion-art svg { width: 100%; height: 100%; display: block; }
+.companion-item.locked .companion-art svg { filter: grayscale(1) brightness(0.55); opacity: 0.72; }
+.companion-lock {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 4px 0;
+  text-align: center;
+  font-size: 10px;
+  color: rgba(220, 232, 234, 0.72);
+  letter-spacing: 1px;
+  background: rgba(7, 11, 14, 0.72);
+}
+.companion-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.companion-name {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px;
+  font-size: 15px; font-weight: 600; color: var(--gold-soft);
+}
+.companion-title {
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--muted);
+}
+.companion-meta { font-size: 10.5px; color: var(--muted); line-height: 1.5; }
+.companion-effect { margin-top: 2px; font-size: 11.5px; color: var(--jade); line-height: 1.5; }
+.companion-desc { font-size: 11px; color: var(--text); opacity: 0.86; line-height: 1.65; }
+.companion-quote { margin-top: 2px; font-size: 10.5px; font-style: italic; color: var(--muted); line-height: 1.5; }
+.companion-locked-tip { margin-top: 6px; font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
+.companion-gain-art {
+  width: 150px;
+  height: 190px;
+  margin: 0 auto 12px;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid rgba(230, 194, 115, 0.28);
+  background: radial-gradient(circle at 50% 30%, rgba(111, 211, 192, 0.14), rgba(7, 11, 14, 0.9));
+}
+.companion-gain-art svg { width: 100%; height: 100%; display: block; }
 
 .spell-list { display: flex; flex-direction: column; gap: 9px; }
 .spell-item {
@@ -1330,15 +1422,15 @@ textarea.savelink {
 
 .bag-tabs {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
   margin-top: 4px;
 }
 .bag-tab {
   appearance: none;
   font-family: inherit;
-  font-size: 12.5px;
-  padding: 10px 4px;
+  font-size: 12px;
+  padding: 10px 2px;
   border-radius: 12px;
   border: 1px solid var(--line);
   background: rgba(120, 180, 190, 0.04);
@@ -1403,9 +1495,15 @@ textarea.savelink {
 .market-buy { width: 100%; margin-top: 10px; }
 
 @media (max-width: 350px) {
+  .card-head { font-size: 14px; letter-spacing: 1px; gap: 8px; }
+  .card-hint { font-size: 10px; letter-spacing: 0; }
   .research-actions { gap: 6px; }
-  .bag-tab { font-size: 11.5px; padding: 9px 2px; }
+  .bag-tab { font-size: 11px; padding: 9px 1px; }
   .market-item { padding: 10px; }
+  .companion-item { gap: 10px; padding: 10px; }
+  .companion-art { width: 84px; height: 108px; }
+  .companion-name { font-size: 14px; }
+  .companion-desc { font-size: 10.5px; }
 }
 
 </style>
@@ -1519,7 +1617,7 @@ textarea.savelink {
         <ul class="tips-list">
           <li>每卷参研固定十分钟，功成时随机习得一门法术，先收入背包。</li>
           <li>悟性只影响高品质法术出现的概率，任何悟性都有机会研得最高品质。</li>
-          <li>新术不会自动装配，需前往「背包 · 法术」放入法术栏。</li>
+          <li>新术不会自动装配，需前往「背包 · 法术」装配或卸下。</li>
           <li>灵石可加速参研，剩余时间越短，所耗灵石越少。</li>
         </ul>
       </div>
@@ -1533,6 +1631,7 @@ textarea.savelink {
           <button class="bag-tab active" data-action="bag-tab" data-bag="spell">法术 <b id="bagSpellCount">0</b></button>
           <button class="bag-tab" data-action="bag-tab" data-bag="artifact">法宝 <b id="bagArtCount">0</b></button>
           <button class="bag-tab" data-action="bag-tab" data-bag="pill">丹药 <b id="bagPillCount">0</b></button>
+          <button class="bag-tab" data-action="bag-tab" data-bag="companion">道侣 <b id="bagCompCount">0</b></button>
         </div>
       </div>
 
@@ -1554,6 +1653,13 @@ textarea.savelink {
         <div class="card">
           <div class="card-head"><span>丹药</span><span class="card-hint" id="bagPillHint">点击服用</span></div>
           <div class="pill-list" id="bagPillList"></div>
+        </div>
+      </div>
+
+      <div class="bag-panel" data-bag-panel="companion">
+        <div class="card">
+          <div class="card-head"><span>双修道侣</span><span class="card-hint" id="bagCompHint">结缘后永久加成</span></div>
+          <div class="companion-list" id="bagCompList"></div>
         </div>
       </div>
     </section>
@@ -2120,7 +2226,7 @@ textarea.savelink {
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "2.1.0";
+const GAME_VERSION = "2.2.0";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -2252,6 +2358,41 @@ const PILLS = [
 const PILL_MAP = {};
 PILLS.forEach(p => { PILL_MAP[p.id] = p; });
 
+/* ---------------------------- 双修伴侣 ---------------------------- */
+/* 修仙者寿元悠长，五位道侣皆已数百上千岁，容貌却仍停在十五六岁。
+ * 效果与成就相同：一旦结缘，永久计入修炼 / 灵石 / 破境加成。
+ * 立绘由 src/companions/*.svg 在构建时注入 COMPANION_ART。 */
+const COMPANION_ART = {"c_sword":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 300\" role=\"img\" aria-label=\"沈青梧立绘\">\n  <defs>\n    <radialGradient id=\"sw_glow\" cx=\"50%\" cy=\"40%\" r=\"60%\">\n      <stop offset=\"0\" stop-color=\"#bfe9ff\" stop-opacity=\".42\"/>\n      <stop offset=\".6\" stop-color=\"#6fa8d8\" stop-opacity=\".14\"/>\n      <stop offset=\"1\" stop-color=\"#6fa8d8\" stop-opacity=\"0\"/>\n    </radialGradient>\n    <linearGradient id=\"sw_hair\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#f4fbff\"/>\n      <stop offset=\".45\" stop-color=\"#d7e8f6\"/>\n      <stop offset=\"1\" stop-color=\"#9dbdd6\"/>\n    </linearGradient>\n    <linearGradient id=\"sw_hairDark\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#b9d2e6\"/>\n      <stop offset=\"1\" stop-color=\"#7d9fbd\"/>\n    </linearGradient>\n    <linearGradient id=\"sw_skin\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#fff4ec\"/>\n      <stop offset=\"1\" stop-color=\"#f6d8c8\"/>\n    </linearGradient>\n    <linearGradient id=\"sw_robe\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#eaf6ff\"/>\n      <stop offset=\".55\" stop-color=\"#bcd9ee\"/>\n      <stop offset=\"1\" stop-color=\"#7fa9c8\"/>\n    </linearGradient>\n    <linearGradient id=\"sw_robeDark\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#7ea6c6\"/>\n      <stop offset=\"1\" stop-color=\"#4b708f\"/>\n    </linearGradient>\n    <linearGradient id=\"sw_iris\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#78d7f2\"/>\n      <stop offset=\"1\" stop-color=\"#2f6c9e\"/>\n    </linearGradient>\n  </defs>\n\n  <circle cx=\"120\" cy=\"128\" r=\"110\" fill=\"url(#sw_glow)\"/>\n  <circle cx=\"120\" cy=\"128\" r=\"94\" fill=\"none\" stroke=\"#bfe9ff\" stroke-opacity=\".18\"/>\n\n  <!-- 背后长发 -->\n  <path d=\"M70 88 C56 142 60 220 44 298 L88 298 C78 222 82 152 94 108 Z\" fill=\"url(#sw_hair)\"/>\n  <path d=\"M170 88 C184 142 180 220 196 298 L152 298 C162 222 158 152 146 108 Z\" fill=\"url(#sw_hair)\"/>\n\n  <!-- 高马尾 -->\n  <path d=\"M140 50 C186 40 222 66 220 106 C218 142 196 158 188 194 C180 168 192 132 174 108 C162 90 148 72 134 66 Z\" fill=\"url(#sw_hair)\"/>\n  <path d=\"M154 64 C188 59 208 78 207 104 C205 130 190 148 185 174 C181 150 192 124 178 104 C170 92 162 78 152 72 Z\" fill=\"#ffffff\" opacity=\".38\"/>\n  <path d=\"M136 58 q14 -8 28 -2\" stroke=\"#7d9fbd\" stroke-width=\"2\" fill=\"none\" opacity=\".55\"/>\n\n  <!-- 剑匣 -->\n  <g transform=\"rotate(20 198 222)\">\n    <rect x=\"190\" y=\"150\" width=\"12\" height=\"122\" rx=\"5\" fill=\"#31465c\"/>\n    <rect x=\"192\" y=\"152\" width=\"3\" height=\"118\" rx=\"1.5\" fill=\"#6f8fae\" opacity=\".7\"/>\n    <rect x=\"184\" y=\"146\" width=\"24\" height=\"8\" rx=\"3\" fill=\"#d8b978\"/>\n    <rect x=\"192\" y=\"136\" width=\"8\" height=\"14\" rx=\"3\" fill=\"#8b6a3c\"/>\n    <circle cx=\"196\" cy=\"134\" r=\"4\" fill=\"#e6c273\"/>\n  </g>\n\n  <!-- 身体 -->\n  <path d=\"M78 184 C56 196 40 226 32 300 L208 300 C200 226 184 196 162 184 C146 200 94 200 78 184 Z\" fill=\"url(#sw_robe)\"/>\n  <path d=\"M44 300 C48 250 62 220 84 198 C72 226 66 262 64 300 Z\" fill=\"#ffffff\" opacity=\".34\"/>\n  <path d=\"M196 300 C192 250 178 220 156 198 C168 226 174 262 176 300 Z\" fill=\"#5f87a7\" opacity=\".24\"/>\n\n  <!-- 颈 -->\n  <path d=\"M107 158 h26 v26 c0 10 -26 10 -26 0 Z\" fill=\"#f0cdbb\"/>\n  <path d=\"M107 166 c9 6 17 6 26 0 v10 c-8 5 -18 5 -26 0 Z\" fill=\"#ddb3a2\" opacity=\".6\"/>\n\n  <!-- 脸 -->\n  <path d=\"M120 58 C90 58 72 82 72 112 C72 140 92 166 120 174 C148 166 168 140 168 112 C168 82 150 58 120 58 Z\" fill=\"url(#sw_skin)\"/>\n  <ellipse cx=\"71\" cy=\"122\" rx=\"7\" ry=\"11\" fill=\"#f3d1c2\"/>\n  <ellipse cx=\"169\" cy=\"122\" rx=\"7\" ry=\"11\" fill=\"#f3d1c2\"/>\n\n  <!-- 刘海 -->\n  <path d=\"M65 116 C58 72 86 40 120 40 C154 40 182 72 175 116 C169 96 160 86 150 80 C144 99 135 107 120 107 C105 107 96 99 90 80 C79 87 70 98 65 116 Z\" fill=\"url(#sw_hair)\"/>\n  <path d=\"M88 78 C99 90 108 100 111 116 C100 112 90 98 83 86 Z\" fill=\"#ffffff\" opacity=\".62\"/>\n  <path d=\"M152 80 C146 94 138 104 130 110 C136 94 140 84 146 74 Z\" fill=\"url(#sw_hairDark)\" opacity=\".65\"/>\n  <path d=\"M70 102 C62 136 66 172 58 202 C72 190 78 158 82 122 Z\" fill=\"url(#sw_hair)\"/>\n  <path d=\"M170 102 C178 136 174 172 182 202 C168 190 162 158 158 122 Z\" fill=\"url(#sw_hair)\"/>\n  <path d=\"M64 112 C60 150 62 186 54 216 C66 204 72 168 76 132 Z\" fill=\"url(#sw_hairDark)\" opacity=\".55\"/>\n\n  <!-- 眼 -->\n  <g>\n    <path d=\"M84 125 Q99 113 113 125 Q99 137 84 125 Z\" fill=\"#ffffff\"/>\n    <circle cx=\"99\" cy=\"125\" r=\"6.2\" fill=\"url(#sw_iris)\"/>\n    <circle cx=\"99\" cy=\"125\" r=\"2.9\" fill=\"#183247\"/>\n    <circle cx=\"97\" cy=\"122.5\" r=\"2\" fill=\"#ffffff\"/>\n    <path d=\"M83 124 Q99 110 114 123\" stroke=\"#596b7d\" stroke-width=\"2.6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M112 120 l4 -3\" stroke=\"#596b7d\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n  <g>\n    <path d=\"M156 125 Q141 113 127 125 Q141 137 156 125 Z\" fill=\"#ffffff\"/>\n    <circle cx=\"141\" cy=\"125\" r=\"6.2\" fill=\"url(#sw_iris)\"/>\n    <circle cx=\"141\" cy=\"125\" r=\"2.9\" fill=\"#183247\"/>\n    <circle cx=\"139\" cy=\"122.5\" r=\"2\" fill=\"#ffffff\"/>\n    <path d=\"M157 124 Q141 110 126 123\" stroke=\"#596b7d\" stroke-width=\"2.6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M128 120 l-4 -3\" stroke=\"#596b7d\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n  <path d=\"M88 110 Q99 105 110 109\" stroke=\"#9cb4c7\" stroke-width=\"1.8\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M152 110 Q141 105 130 109\" stroke=\"#9cb4c7\" stroke-width=\"1.8\" fill=\"none\" stroke-linecap=\"round\"/>\n\n  <ellipse cx=\"89\" cy=\"141\" rx=\"9\" ry=\"4.5\" fill=\"#efa3a3\" opacity=\".3\"/>\n  <ellipse cx=\"151\" cy=\"141\" rx=\"9\" ry=\"4.5\" fill=\"#efa3a3\" opacity=\".3\"/>\n  <path d=\"M120 141 q2 2 3 3\" stroke=\"#d8a28f\" stroke-width=\"1.4\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M113 154 Q120 160 127 154\" stroke=\"#bd6f74\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/>\n\n  <!-- 交领 -->\n  <path d=\"M94 188 L120 238 L146 188 L136 183 L120 214 L104 183 Z\" fill=\"#f7fbff\"/>\n  <path d=\"M94 188 L120 238 L108 244 L86 196 Z\" fill=\"url(#sw_robeDark)\"/>\n  <path d=\"M146 188 L120 238 L132 244 L154 196 Z\" fill=\"url(#sw_robeDark)\"/>\n  <path d=\"M89 196 L109 243\" stroke=\"#d9c08a\" stroke-width=\"2\" fill=\"none\"/>\n  <path d=\"M151 196 L131 243\" stroke=\"#d9c08a\" stroke-width=\"2\" fill=\"none\"/>\n\n  <!-- 腰带与玉饰 -->\n  <path d=\"M78 262 Q120 250 162 262 L162 280 Q120 270 78 280 Z\" fill=\"#6f93b0\"/>\n  <path d=\"M78 262 Q120 250 162 262\" stroke=\"#e6c273\" stroke-width=\"2.5\" fill=\"none\"/>\n  <path d=\"M78 280 Q120 270 162 280\" stroke=\"#d8e8f4\" stroke-width=\"1.5\" fill=\"none\" opacity=\".7\"/>\n  <circle cx=\"120\" cy=\"272\" r=\"7\" fill=\"#eaf9ff\"/>\n  <circle cx=\"120\" cy=\"272\" r=\"4\" fill=\"#79cfe0\"/>\n  <path d=\"M120 279 v14\" stroke=\"#d9c08a\" stroke-width=\"1.8\"/>\n\n  <!-- 发饰 -->\n  <path d=\"M104 46 Q120 38 136 46\" stroke=\"#e6c273\" stroke-width=\"2.4\" fill=\"none\"/>\n  <circle cx=\"120\" cy=\"41\" r=\"3.4\" fill=\"#f7e4b0\"/>\n  <path d=\"M136 46 l18 -9\" stroke=\"#e6c273\" stroke-width=\"2\"/>\n  <circle cx=\"156\" cy=\"36\" r=\"3\" fill=\"#bfe9ff\"/>\n  <path d=\"M156 36 l2 14 M156 36 l-6 12\" stroke=\"#bfe9ff\" stroke-width=\"1.2\" opacity=\".75\"/>\n\n  <!-- 碎光 -->\n  <g fill=\"#eaf9ff\">\n    <path d=\"M48 88 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2 Z\" opacity=\".8\"/>\n    <path d=\"M196 150 l1.5 4.5 4.5 1.5 -4.5 1.5 -1.5 4.5 -1.5 -4.5 -4.5 -1.5 4.5 -1.5 Z\" opacity=\".6\"/>\n    <circle cx=\"60\" cy=\"180\" r=\"2\" opacity=\".5\"/>\n    <circle cx=\"184\" cy=\"76\" r=\"2.4\" opacity=\".55\"/>\n  </g>\n</svg>\n","c_alchemy":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 300\" role=\"img\" aria-label=\"苏晚照立绘\">\n  <defs>\n    <radialGradient id=\"al_glow\" cx=\"50%\" cy=\"38%\" r=\"62%\">\n      <stop offset=\"0\" stop-color=\"#ffd9a0\" stop-opacity=\".45\"/>\n      <stop offset=\".6\" stop-color=\"#e08a4a\" stop-opacity=\".14\"/>\n      <stop offset=\"1\" stop-color=\"#e08a4a\" stop-opacity=\"0\"/>\n    </radialGradient>\n    <linearGradient id=\"al_hair\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#a56445\"/>\n      <stop offset=\".5\" stop-color=\"#7e4632\"/>\n      <stop offset=\"1\" stop-color=\"#532c22\"/>\n    </linearGradient>\n    <linearGradient id=\"al_hairLight\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#c98a62\"/>\n      <stop offset=\"1\" stop-color=\"#8b5138\"/>\n    </linearGradient>\n    <linearGradient id=\"al_skin\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#fff5e9\"/>\n      <stop offset=\"1\" stop-color=\"#f7d9c2\"/>\n    </linearGradient>\n    <linearGradient id=\"al_robe\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#f6c27f\"/>\n      <stop offset=\".55\" stop-color=\"#e29a5c\"/>\n      <stop offset=\"1\" stop-color=\"#b96e3e\"/>\n    </linearGradient>\n    <linearGradient id=\"al_robeDark\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#b96c3e\"/>\n      <stop offset=\"1\" stop-color=\"#8d4a2b\"/>\n    </linearGradient>\n    <linearGradient id=\"al_iris\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#ffd479\"/>\n      <stop offset=\"1\" stop-color=\"#a45c1e\"/>\n    </linearGradient>\n  </defs>\n\n  <circle cx=\"120\" cy=\"126\" r=\"110\" fill=\"url(#al_glow)\"/>\n  <circle cx=\"120\" cy=\"126\" r=\"94\" fill=\"none\" stroke=\"#ffd9a0\" stroke-opacity=\".2\"/>\n\n  <!-- 双髻 -->\n  <circle cx=\"74\" cy=\"58\" r=\"21\" fill=\"url(#al_hair)\"/>\n  <circle cx=\"166\" cy=\"58\" r=\"21\" fill=\"url(#al_hair)\"/>\n  <path d=\"M60 50 q14 -14 30 -2\" stroke=\"#c98a62\" stroke-width=\"2\" fill=\"none\" opacity=\".65\"/>\n  <path d=\"M152 48 q14 -12 28 2\" stroke=\"#c98a62\" stroke-width=\"2\" fill=\"none\" opacity=\".65\"/>\n  <path d=\"M56 68 q-10 8 -8 18 q10 -4 14 -12 Z\" fill=\"#a56445\"/>\n  <path d=\"M184 68 q10 8 8 18 q-10 -4 -14 -12 Z\" fill=\"#a56445\"/>\n\n  <!-- 背后长发 -->\n  <path d=\"M70 90 C58 144 64 222 48 298 L92 298 C82 224 84 154 94 110 Z\" fill=\"url(#al_hair)\"/>\n  <path d=\"M170 90 C182 144 176 222 192 298 L148 298 C158 224 156 154 146 110 Z\" fill=\"url(#al_hair)\"/>\n\n  <!-- 身体 -->\n  <path d=\"M78 184 C56 196 40 226 32 300 L208 300 C200 226 184 196 162 184 C146 200 94 200 78 184 Z\" fill=\"url(#al_robe)\"/>\n  <path d=\"M44 300 C48 250 62 220 84 198 C72 226 66 262 64 300 Z\" fill=\"#ffe2b8\" opacity=\".28\"/>\n  <path d=\"M196 300 C192 250 178 220 156 198 C168 226 174 262 176 300 Z\" fill=\"#8d4a2b\" opacity=\".22\"/>\n\n  <!-- 颈 -->\n  <path d=\"M107 158 h26 v26 c0 10 -26 10 -26 0 Z\" fill=\"#f1d0ba\"/>\n  <path d=\"M107 166 c9 6 17 6 26 0 v10 c-8 5 -18 5 -26 0 Z\" fill=\"#dcb19e\" opacity=\".55\"/>\n\n  <!-- 脸 -->\n  <path d=\"M120 58 C90 58 71 82 71 112 C71 141 91 167 120 175 C149 167 169 141 169 112 C169 82 150 58 120 58 Z\" fill=\"url(#al_skin)\"/>\n  <ellipse cx=\"70\" cy=\"122\" rx=\"7\" ry=\"11\" fill=\"#f3d1bd\"/>\n  <ellipse cx=\"170\" cy=\"122\" rx=\"7\" ry=\"11\" fill=\"#f3d1bd\"/>\n\n  <!-- 刘海 -->\n  <path d=\"M63 116 C56 72 85 38 120 38 C155 38 184 72 177 116 C171 96 162 84 151 78 C146 98 136 106 122 106 C106 106 96 98 90 78 C78 86 68 98 63 116 Z\" fill=\"url(#al_hair)\"/>\n  <path d=\"M88 76 C98 90 106 100 109 114 C98 110 90 98 83 84 Z\" fill=\"url(#al_hairLight)\" opacity=\".75\"/>\n  <path d=\"M152 78 C146 94 138 104 130 110 C136 94 140 84 146 72 Z\" fill=\"#532c22\" opacity=\".5\"/>\n  <path d=\"M70 102 C62 138 66 174 58 204 C72 192 78 160 82 122 Z\" fill=\"url(#al_hair)\"/>\n  <path d=\"M170 102 C178 138 174 174 182 204 C168 192 162 160 158 122 Z\" fill=\"url(#al_hair)\"/>\n  <path d=\"M64 112 C60 152 62 188 54 218 C66 206 72 170 76 132 Z\" fill=\"#532c22\" opacity=\".45\"/>\n\n  <!-- 眼：琥珀，笑眼 -->\n  <g>\n    <path d=\"M84 125 Q99 113 113 125 Q99 136 84 125 Z\" fill=\"#ffffff\"/>\n    <circle cx=\"99\" cy=\"125\" r=\"6.4\" fill=\"url(#al_iris)\"/>\n    <circle cx=\"99\" cy=\"125\" r=\"3\" fill=\"#4a2a12\"/>\n    <circle cx=\"97\" cy=\"122.5\" r=\"2.1\" fill=\"#ffffff\"/>\n    <path d=\"M83 123 Q99 109 114 122\" stroke=\"#6b4630\" stroke-width=\"2.6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M112 119 l4 -3\" stroke=\"#6b4630\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n  <g>\n    <path d=\"M156 125 Q141 113 127 125 Q141 136 156 125 Z\" fill=\"#ffffff\"/>\n    <circle cx=\"141\" cy=\"125\" r=\"6.4\" fill=\"url(#al_iris)\"/>\n    <circle cx=\"141\" cy=\"125\" r=\"3\" fill=\"#4a2a12\"/>\n    <circle cx=\"139\" cy=\"122.5\" r=\"2.1\" fill=\"#ffffff\"/>\n    <path d=\"M157 123 Q141 109 126 122\" stroke=\"#6b4630\" stroke-width=\"2.6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M128 119 l-4 -3\" stroke=\"#6b4630\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n  <path d=\"M87 109 Q99 104 111 109\" stroke=\"#b17a58\" stroke-width=\"1.8\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M153 109 Q141 104 129 109\" stroke=\"#b17a58\" stroke-width=\"1.8\" fill=\"none\" stroke-linecap=\"round\"/>\n\n  <ellipse cx=\"88\" cy=\"142\" rx=\"10\" ry=\"5\" fill=\"#f0958a\" opacity=\".34\"/>\n  <ellipse cx=\"152\" cy=\"142\" rx=\"10\" ry=\"5\" fill=\"#f0958a\" opacity=\".34\"/>\n  <path d=\"M120 142 q2 2 3 3\" stroke=\"#d79b83\" stroke-width=\"1.4\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M112 154 Q120 163 128 154 Q120 168 112 154 Z\" fill=\"#b9565a\"/>\n\n  <!-- 交领 -->\n  <path d=\"M94 188 L120 238 L146 188 L136 183 L120 214 L104 183 Z\" fill=\"#fff3df\"/>\n  <path d=\"M94 188 L120 238 L108 244 L86 196 Z\" fill=\"url(#al_robeDark)\"/>\n  <path d=\"M146 188 L120 238 L132 244 L154 196 Z\" fill=\"url(#al_robeDark)\"/>\n  <path d=\"M89 196 L109 243\" stroke=\"#f3d79c\" stroke-width=\"2\" fill=\"none\"/>\n  <path d=\"M151 196 L131 243\" stroke=\"#f3d79c\" stroke-width=\"2\" fill=\"none\"/>\n\n  <!-- 腰带 -->\n  <path d=\"M78 262 Q120 250 162 262 L162 280 Q120 270 78 280 Z\" fill=\"#a65a35\"/>\n  <path d=\"M78 262 Q120 250 162 262\" stroke=\"#f3d79c\" stroke-width=\"2.5\" fill=\"none\"/>\n  <circle cx=\"120\" cy=\"272\" r=\"7\" fill=\"#ffe3ae\"/>\n  <circle cx=\"120\" cy=\"272\" r=\"4\" fill=\"#d97c3f\"/>\n\n  <!-- 药葫芦 -->\n  <g transform=\"translate(171 250) rotate(12)\">\n    <path d=\"M0 0 c-10 3 -13 12 -7 18 c5 5 14 5 19 0 c6 -6 3 -15 -7 -18 Z\" fill=\"#c96e3a\"/>\n    <path d=\"M-1 -8 h8 l2 9 h-12 Z\" fill=\"#8d4a2b\"/>\n    <path d=\"M-3 4 c5 -3 13 -3 18 0\" stroke=\"#ffd9a0\" stroke-width=\"1.4\" fill=\"none\"/>\n    <path d=\"M-2 -6 q-5 -8 2 -12\" stroke=\"#e6c273\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/>\n  </g>\n\n  <!-- 发饰 -->\n  <g transform=\"translate(72 36)\">\n    <circle cx=\"0\" cy=\"0\" r=\"4\" fill=\"#e6c273\"/>\n    <path d=\"M0 0 l9 -8 M0 0 l10 4 M0 0 l-9 6\" stroke=\"#e6c273\" stroke-width=\"1.6\" stroke-linecap=\"round\"/>\n    <circle cx=\"9\" cy=\"-8\" r=\"2.2\" fill=\"#f0958a\"/>\n    <circle cx=\"10\" cy=\"4\" r=\"2.2\" fill=\"#f0958a\"/>\n  </g>\n  <g transform=\"translate(166 36)\">\n    <circle cx=\"0\" cy=\"0\" r=\"4\" fill=\"#e6c273\"/>\n    <path d=\"M0 0 l-9 -8 M0 0 l-10 4 M0 0 l9 6\" stroke=\"#e6c273\" stroke-width=\"1.6\" stroke-linecap=\"round\"/>\n    <circle cx=\"-9\" cy=\"-8\" r=\"2.2\" fill=\"#f0958a\"/>\n    <circle cx=\"-10\" cy=\"4\" r=\"2.2\" fill=\"#f0958a\"/>\n  </g>\n\n  <!-- 药香光点 -->\n  <g fill=\"#ffd9a0\">\n    <circle cx=\"56\" cy=\"88\" r=\"2.4\" opacity=\".8\"/>\n    <circle cx=\"190\" cy=\"116\" r=\"2\" opacity=\".6\"/>\n    <circle cx=\"178\" cy=\"206\" r=\"2.6\" opacity=\".45\"/>\n    <path d=\"M46 152 l1.6 5 5 1.6 -5 1.6 -1.6 5 -1.6 -5 -5 -1.6 5 -1.6 Z\" opacity=\".6\"/>\n  </g>\n</svg>\n","c_fox":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 300\" role=\"img\" aria-label=\"白璃立绘\">\n  <defs>\n    <radialGradient id=\"fx_glow\" cx=\"50%\" cy=\"38%\" r=\"62%\">\n      <stop offset=\"0\" stop-color=\"#ffd6e2\" stop-opacity=\".46\"/>\n      <stop offset=\".6\" stop-color=\"#e88aa8\" stop-opacity=\".14\"/>\n      <stop offset=\"1\" stop-color=\"#e88aa8\" stop-opacity=\"0\"/>\n    </radialGradient>\n    <linearGradient id=\"fx_hair\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#ffffff\"/>\n      <stop offset=\".5\" stop-color=\"#f4e8ef\"/>\n      <stop offset=\"1\" stop-color=\"#d4bccb\"/>\n    </linearGradient>\n    <linearGradient id=\"fx_hairShade\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#e9d3df\"/>\n      <stop offset=\"1\" stop-color=\"#bda2b5\"/>\n    </linearGradient>\n    <linearGradient id=\"fx_skin\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#fff6f0\"/>\n      <stop offset=\"1\" stop-color=\"#f8dcd2\"/>\n    </linearGradient>\n    <linearGradient id=\"fx_robe\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#ffd9e3\"/>\n      <stop offset=\".55\" stop-color=\"#efa8bd\"/>\n      <stop offset=\"1\" stop-color=\"#c46f8d\"/>\n    </linearGradient>\n    <linearGradient id=\"fx_robeDark\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#d47f9b\"/>\n      <stop offset=\"1\" stop-color=\"#9c4e6b\"/>\n    </linearGradient>\n    <linearGradient id=\"fx_iris\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#ffd86e\"/>\n      <stop offset=\"1\" stop-color=\"#b5721e\"/>\n    </linearGradient>\n  </defs>\n\n  <circle cx=\"120\" cy=\"126\" r=\"110\" fill=\"url(#fx_glow)\"/>\n  <circle cx=\"120\" cy=\"126\" r=\"94\" fill=\"none\" stroke=\"#ffd6e2\" stroke-opacity=\".22\"/>\n\n  <!-- 狐尾 -->\n  <path d=\"M170 246 C222 232 232 188 214 162 C200 142 178 146 172 166 C188 166 198 180 192 196 C184 216 166 226 154 232 Z\" fill=\"url(#fx_hair)\"/>\n  <path d=\"M214 162 C224 178 222 198 208 212 C218 196 216 178 206 168 Z\" fill=\"#e8a8bd\"/>\n  <path d=\"M178 238 C204 228 214 208 212 190\" stroke=\"#d4bccb\" stroke-width=\"2\" fill=\"none\" opacity=\".7\"/>\n\n  <!-- 狐耳：尖长直立，耳尖外挑 -->\n  <path d=\"M77 82 C70 64 60 44 56 34 C62 24 72 27 78 36 L102 64 Z\" fill=\"url(#fx_hair)\"/>\n  <path d=\"M78 70 C72 58 66 46 64 40 C68 36 72 39 75 45 L92 61 Z\" fill=\"#f4a9bd\"/>\n  <path d=\"M163 82 C170 64 180 44 184 34 C178 24 168 27 162 36 L138 64 Z\" fill=\"url(#fx_hair)\"/>\n  <path d=\"M162 70 C168 58 174 46 176 40 C172 36 168 39 165 45 L148 61 Z\" fill=\"#f4a9bd\"/>\n  <path d=\"M62 38 C68 44 74 52 80 62\" stroke=\"#ffffff\" stroke-width=\"1.6\" fill=\"none\" opacity=\".75\"/>\n  <path d=\"M178 38 C172 44 166 52 160 62\" stroke=\"#ffffff\" stroke-width=\"1.6\" fill=\"none\" opacity=\".65\"/>\n\n  <!-- 背后长发 -->\n  <path d=\"M70 90 C58 146 64 224 48 298 L94 298 C82 224 84 154 94 110 Z\" fill=\"url(#fx_hair)\"/>\n  <path d=\"M170 90 C182 146 176 224 192 298 L146 298 C158 224 156 154 146 110 Z\" fill=\"url(#fx_hair)\"/>\n\n  <!-- 身体 -->\n  <path d=\"M78 184 C56 196 40 226 32 300 L208 300 C200 226 184 196 162 184 C146 200 94 200 78 184 Z\" fill=\"url(#fx_robe)\"/>\n  <path d=\"M44 300 C48 250 62 220 84 198 C72 226 66 262 64 300 Z\" fill=\"#fff0f4\" opacity=\".4\"/>\n  <path d=\"M196 300 C192 250 178 220 156 198 C168 226 174 262 176 300 Z\" fill=\"#9c4e6b\" opacity=\".2\"/>\n\n  <!-- 颈 -->\n  <path d=\"M107 158 h26 v26 c0 10 -26 10 -26 0 Z\" fill=\"#f2d0c4\"/>\n  <path d=\"M107 166 c9 6 17 6 26 0 v10 c-8 5 -18 5 -26 0 Z\" fill=\"#ddb2a4\" opacity=\".55\"/>\n\n  <!-- 脸 -->\n  <path d=\"M120 58 C90 58 71 82 71 112 C71 141 91 167 120 175 C149 167 169 141 169 112 C169 82 150 58 120 58 Z\" fill=\"url(#fx_skin)\"/>\n  <ellipse cx=\"70\" cy=\"122\" rx=\"7\" ry=\"11\" fill=\"#f3d2c3\"/>\n  <ellipse cx=\"170\" cy=\"122\" rx=\"7\" ry=\"11\" fill=\"#f3d2c3\"/>\n\n  <!-- 刘海 -->\n  <path d=\"M62 118 C54 74 84 38 120 38 C156 38 186 74 178 118 C172 98 163 86 152 80 C147 100 137 108 122 108 C106 108 95 100 89 80 C77 88 67 100 62 118 Z\" fill=\"url(#fx_hair)\"/>\n  <path d=\"M86 78 C97 92 106 102 110 118 C98 113 89 100 81 86 Z\" fill=\"#ffffff\" opacity=\".7\"/>\n  <path d=\"M154 80 C148 96 139 106 130 112 C136 96 141 86 148 74 Z\" fill=\"url(#fx_hairShade)\" opacity=\".6\"/>\n  <path d=\"M68 104 C60 140 64 178 56 208 C70 196 76 162 80 124 Z\" fill=\"url(#fx_hair)\"/>\n  <path d=\"M172 104 C180 140 176 178 184 208 C170 196 164 162 160 124 Z\" fill=\"url(#fx_hair)\"/>\n  <path d=\"M62 114 C58 154 60 190 52 220 C64 208 70 172 74 134 Z\" fill=\"url(#fx_hairShade)\" opacity=\".45\"/>\n  <!-- 侧边小辫 -->\n  <path d=\"M158 150 q10 16 7 34 q-8 -14 -12 -28 Z\" fill=\"url(#fx_hair)\"/>\n  <circle cx=\"163\" cy=\"186\" r=\"3.2\" fill=\"#f0958a\"/>\n\n  <!-- 眼：金色，带笑意 -->\n  <g>\n    <path d=\"M84 125 Q99 113 113 125 Q99 137 84 125 Z\" fill=\"#ffffff\"/>\n    <circle cx=\"99\" cy=\"125\" r=\"6.4\" fill=\"url(#fx_iris)\"/>\n    <circle cx=\"99\" cy=\"125\" r=\"3\" fill=\"#4d2c10\"/>\n    <circle cx=\"97\" cy=\"122.5\" r=\"2.1\" fill=\"#ffffff\"/>\n    <path d=\"M83 124 Q99 110 114 122\" stroke=\"#6a4b45\" stroke-width=\"2.6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M112 119 l4 -3\" stroke=\"#6a4b45\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n  <g>\n    <path d=\"M156 125 Q141 113 127 125 Q141 137 156 125 Z\" fill=\"#ffffff\"/>\n    <circle cx=\"141\" cy=\"125\" r=\"6.4\" fill=\"url(#fx_iris)\"/>\n    <circle cx=\"141\" cy=\"125\" r=\"3\" fill=\"#4d2c10\"/>\n    <circle cx=\"139\" cy=\"122.5\" r=\"2.1\" fill=\"#ffffff\"/>\n    <path d=\"M157 124 Q141 110 126 122\" stroke=\"#6a4b45\" stroke-width=\"2.6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M128 119 l-4 -3\" stroke=\"#6a4b45\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n  <path d=\"M87 109 Q99 104 111 109\" stroke=\"#b58c8d\" stroke-width=\"1.8\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M153 109 Q141 104 129 109\" stroke=\"#b58c8d\" stroke-width=\"1.8\" fill=\"none\" stroke-linecap=\"round\"/>\n\n  <ellipse cx=\"88\" cy=\"142\" rx=\"10\" ry=\"5\" fill=\"#f08f9f\" opacity=\".34\"/>\n  <ellipse cx=\"152\" cy=\"142\" rx=\"10\" ry=\"5\" fill=\"#f08f9f\" opacity=\".34\"/>\n  <path d=\"M120 142 q2 2 3 3\" stroke=\"#d79d8d\" stroke-width=\"1.4\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M112 153 Q120 161 128 153 Q124 166 118 166 Q114 162 112 153 Z\" fill=\"#c25d76\"/>\n  <path d=\"M116 162 l2 4 l2 -4 Z\" fill=\"#ffffff\"/>\n\n  <!-- 交领 -->\n  <path d=\"M94 188 L120 238 L146 188 L136 183 L120 214 L104 183 Z\" fill=\"#fff2f6\"/>\n  <path d=\"M94 188 L120 238 L108 244 L86 196 Z\" fill=\"url(#fx_robeDark)\"/>\n  <path d=\"M146 188 L120 238 L132 244 L154 196 Z\" fill=\"url(#fx_robeDark)\"/>\n  <path d=\"M89 196 L109 243\" stroke=\"#f7e0a8\" stroke-width=\"2\" fill=\"none\"/>\n  <path d=\"M151 196 L131 243\" stroke=\"#f7e0a8\" stroke-width=\"2\" fill=\"none\"/>\n\n  <!-- 腰带 -->\n  <path d=\"M78 262 Q120 250 162 262 L162 280 Q120 270 78 280 Z\" fill=\"#b45f7c\"/>\n  <path d=\"M78 262 Q120 250 162 262\" stroke=\"#f7e0a8\" stroke-width=\"2.5\" fill=\"none\"/>\n  <circle cx=\"120\" cy=\"272\" r=\"7\" fill=\"#ffe9f0\"/>\n  <circle cx=\"120\" cy=\"272\" r=\"4\" fill=\"#e88aa8\"/>\n\n  <!-- 梅花纹 -->\n  <g fill=\"#fff0f4\" opacity=\".85\">\n    <circle cx=\"62\" cy=\"250\" r=\"2.4\"/><circle cx=\"68\" cy=\"246\" r=\"2.4\"/><circle cx=\"74\" cy=\"250\" r=\"2.4\"/>\n    <circle cx=\"68\" cy=\"256\" r=\"2.4\"/><circle cx=\"68\" cy=\"250\" r=\"1.5\" fill=\"#e88aa8\"/>\n    <circle cx=\"184\" cy=\"222\" r=\"2.2\"/><circle cx=\"189\" cy=\"218\" r=\"2.2\"/><circle cx=\"194\" cy=\"222\" r=\"2.2\"/>\n    <circle cx=\"189\" cy=\"227\" r=\"2.2\"/><circle cx=\"189\" cy=\"222\" r=\"1.4\" fill=\"#e88aa8\"/>\n  </g>\n\n  <!-- 发饰：红绳铃铛 -->\n  <g transform=\"translate(70 64)\">\n    <path d=\"M-12 0 q12 -8 24 0\" stroke=\"#e0667f\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/>\n    <circle cx=\"12\" cy=\"8\" r=\"4.6\" fill=\"#f2c86a\"/>\n    <path d=\"M10 11 h4\" stroke=\"#8a5a1a\" stroke-width=\"1.2\"/>\n    <circle cx=\"12\" cy=\"14\" r=\"1.6\" fill=\"#8a5a1a\"/>\n  </g>\n  <g transform=\"translate(168 66)\">\n    <path d=\"M-12 0 q12 -8 24 0\" stroke=\"#e0667f\" stroke-width=\"3\" fill=\"none\" stroke-linecap=\"round\"/>\n  </g>\n\n  <!-- 光点 -->\n  <g fill=\"#ffd6e2\">\n    <path d=\"M44 120 l1.8 5.4 5.4 1.8 -5.4 1.8 -1.8 5.4 -1.8 -5.4 -5.4 -1.8 5.4 -1.8 Z\" opacity=\".75\"/>\n    <circle cx=\"196\" cy=\"94\" r=\"2.2\" opacity=\".7\"/>\n    <circle cx=\"182\" cy=\"184\" r=\"1.8\" opacity=\".5\"/>\n    <circle cx=\"58\" cy=\"204\" r=\"2\" opacity=\".45\"/>\n  </g>\n</svg>\n","c_qin":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 300\" role=\"img\" aria-label=\"洛清商立绘\">\n  <defs>\n    <radialGradient id=\"qn_glow\" cx=\"50%\" cy=\"38%\" r=\"62%\">\n      <stop offset=\"0\" stop-color=\"#c8f0df\" stop-opacity=\".42\"/>\n      <stop offset=\".6\" stop-color=\"#5fae96\" stop-opacity=\".14\"/>\n      <stop offset=\"1\" stop-color=\"#5fae96\" stop-opacity=\"0\"/>\n    </radialGradient>\n    <linearGradient id=\"qn_hair\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#31323f\"/>\n      <stop offset=\".5\" stop-color=\"#20212b\"/>\n      <stop offset=\"1\" stop-color=\"#101118\"/>\n    </linearGradient>\n    <linearGradient id=\"qn_hairLight\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#565a6d\"/>\n      <stop offset=\"1\" stop-color=\"#282a36\"/>\n    </linearGradient>\n    <linearGradient id=\"qn_skin\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#fff7ef\"/>\n      <stop offset=\"1\" stop-color=\"#f5ddcd\"/>\n    </linearGradient>\n    <linearGradient id=\"qn_robe\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#cfeade\"/>\n      <stop offset=\".55\" stop-color=\"#8fc7b4\"/>\n      <stop offset=\"1\" stop-color=\"#4e8d7d\"/>\n    </linearGradient>\n    <linearGradient id=\"qn_robeDark\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#5e9c8a\"/>\n      <stop offset=\"1\" stop-color=\"#33655c\"/>\n    </linearGradient>\n    <linearGradient id=\"qn_iris\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#9fe3c9\"/>\n      <stop offset=\"1\" stop-color=\"#2f7564\"/>\n    </linearGradient>\n    <linearGradient id=\"qn_wood\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#a87345\"/>\n      <stop offset=\".5\" stop-color=\"#7c4f2d\"/>\n      <stop offset=\"1\" stop-color=\"#4d2d19\"/>\n    </linearGradient>\n  </defs>\n\n  <circle cx=\"120\" cy=\"126\" r=\"110\" fill=\"url(#qn_glow)\"/>\n  <circle cx=\"120\" cy=\"126\" r=\"94\" fill=\"none\" stroke=\"#c8f0df\" stroke-opacity=\".18\"/>\n\n  <!-- 背后长发 -->\n  <path d=\"M70 90 C56 150 62 230 46 298 L96 298 C82 228 84 154 94 110 Z\" fill=\"url(#qn_hair)\"/>\n  <path d=\"M170 90 C184 150 178 230 194 298 L144 298 C158 228 156 154 146 110 Z\" fill=\"url(#qn_hair)\"/>\n\n  <!-- 身体 -->\n  <path d=\"M78 184 C56 196 40 226 32 300 L208 300 C200 226 184 196 162 184 C146 200 94 200 78 184 Z\" fill=\"url(#qn_robe)\"/>\n  <path d=\"M44 300 C48 250 62 220 84 198 C72 226 66 262 64 300 Z\" fill=\"#eafff4\" opacity=\".32\"/>\n  <path d=\"M196 300 C192 250 178 220 156 198 C168 226 174 262 176 300 Z\" fill=\"#33655c\" opacity=\".22\"/>\n\n  <!-- 颈 -->\n  <path d=\"M107 158 h26 v26 c0 10 -26 10 -26 0 Z\" fill=\"#eed0bd\"/>\n  <path d=\"M107 166 c9 6 17 6 26 0 v10 c-8 5 -18 5 -26 0 Z\" fill=\"#d9b1a0\" opacity=\".55\"/>\n\n  <!-- 脸 -->\n  <path d=\"M120 58 C90 58 71 82 71 112 C71 141 91 167 120 175 C149 167 169 141 169 112 C169 82 150 58 120 58 Z\" fill=\"url(#qn_skin)\"/>\n  <ellipse cx=\"70\" cy=\"122\" rx=\"7\" ry=\"11\" fill=\"#f2d3c3\"/>\n  <ellipse cx=\"170\" cy=\"122\" rx=\"7\" ry=\"11\" fill=\"#f2d3c3\"/>\n\n  <!-- 刘海 -->\n  <path d=\"M63 118 C55 72 85 38 120 38 C155 38 185 72 177 118 C171 98 162 86 151 80 C146 100 136 108 122 108 C106 108 95 100 89 80 C78 88 68 100 63 118 Z\" fill=\"url(#qn_hair)\"/>\n  <path d=\"M88 76 C99 90 107 100 110 116 C99 112 90 99 83 84 Z\" fill=\"url(#qn_hairLight)\" opacity=\".6\"/>\n  <path d=\"M154 80 C148 96 139 106 130 112 C136 96 141 86 148 74 Z\" fill=\"#565a6d\" opacity=\".5\"/>\n  <path d=\"M69 104 C61 142 65 182 57 214 C71 202 77 166 81 126 Z\" fill=\"url(#qn_hair)\"/>\n  <path d=\"M171 104 C179 142 175 182 183 214 C169 202 163 166 159 126 Z\" fill=\"url(#qn_hair)\"/>\n  <path d=\"M63 114 C59 156 61 194 53 224 C65 212 71 174 75 134 Z\" fill=\"#101118\" opacity=\".55\"/>\n  <path d=\"M177 114 C181 156 179 194 187 224 C175 212 169 174 165 134 Z\" fill=\"#101118\" opacity=\".55\"/>\n\n  <!-- 眼：沉静 -->\n  <g>\n    <path d=\"M84 126 Q99 114 113 126 Q99 137 84 126 Z\" fill=\"#ffffff\"/>\n    <circle cx=\"99\" cy=\"126\" r=\"6.2\" fill=\"url(#qn_iris)\"/>\n    <circle cx=\"99\" cy=\"126\" r=\"2.9\" fill=\"#12332d\"/>\n    <circle cx=\"97\" cy=\"123.5\" r=\"2\" fill=\"#ffffff\"/>\n    <path d=\"M83 125 Q99 111 114 124\" stroke=\"#4e4a4f\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M112 121 l4 -3\" stroke=\"#4e4a4f\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n  <g>\n    <path d=\"M156 126 Q141 114 127 126 Q141 137 156 126 Z\" fill=\"#ffffff\"/>\n    <circle cx=\"141\" cy=\"126\" r=\"6.2\" fill=\"url(#qn_iris)\"/>\n    <circle cx=\"141\" cy=\"126\" r=\"2.9\" fill=\"#12332d\"/>\n    <circle cx=\"139\" cy=\"123.5\" r=\"2\" fill=\"#ffffff\"/>\n    <path d=\"M157 125 Q141 111 126 124\" stroke=\"#4e4a4f\" stroke-width=\"2.5\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M128 121 l-4 -3\" stroke=\"#4e4a4f\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n  <path d=\"M87 110 Q99 105 111 110\" stroke=\"#8b7a78\" stroke-width=\"1.7\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M153 110 Q141 105 129 110\" stroke=\"#8b7a78\" stroke-width=\"1.7\" fill=\"none\" stroke-linecap=\"round\"/>\n\n  <ellipse cx=\"88\" cy=\"143\" rx=\"9\" ry=\"4.5\" fill=\"#e8a49c\" opacity=\".28\"/>\n  <ellipse cx=\"152\" cy=\"143\" rx=\"9\" ry=\"4.5\" fill=\"#e8a49c\" opacity=\".28\"/>\n  <path d=\"M120 142 q2 2 3 3\" stroke=\"#d4a08c\" stroke-width=\"1.4\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M113 156 Q120 161 127 156\" stroke=\"#b56f6f\" stroke-width=\"2.1\" fill=\"none\" stroke-linecap=\"round\"/>\n\n  <!-- 交领 -->\n  <path d=\"M94 188 L120 238 L146 188 L136 183 L120 214 L104 183 Z\" fill=\"#f2fff9\"/>\n  <path d=\"M94 188 L120 238 L108 244 L86 196 Z\" fill=\"url(#qn_robeDark)\"/>\n  <path d=\"M146 188 L120 238 L132 244 L154 196 Z\" fill=\"url(#qn_robeDark)\"/>\n  <path d=\"M89 196 L109 243\" stroke=\"#d9c08a\" stroke-width=\"2\" fill=\"none\"/>\n  <path d=\"M151 196 L131 243\" stroke=\"#d9c08a\" stroke-width=\"2\" fill=\"none\"/>\n\n  <!-- 腰带 -->\n  <path d=\"M78 262 Q120 250 162 262 L162 280 Q120 270 78 280 Z\" fill=\"#3f7468\"/>\n  <path d=\"M78 262 Q120 250 162 262\" stroke=\"#d9c08a\" stroke-width=\"2.4\" fill=\"none\"/>\n  <circle cx=\"120\" cy=\"272\" r=\"7\" fill=\"#dbfff2\"/>\n  <circle cx=\"120\" cy=\"272\" r=\"4\" fill=\"#6bbfa5\"/>\n\n  <!-- 古琴 -->\n  <g transform=\"translate(120 270) rotate(-8) translate(-120 -270)\">\n    <path d=\"M52 248 Q120 236 188 248 L188 268 Q120 256 52 268 Z\" fill=\"url(#qn_wood)\"/>\n    <path d=\"M52 248 Q120 236 188 248\" stroke=\"#d9b47a\" stroke-width=\"2\" fill=\"none\"/>\n    <path d=\"M52 268 Q120 256 188 268\" stroke=\"#2f1a0e\" stroke-width=\"2\" fill=\"none\"/>\n    <path d=\"M60 255 Q120 244 180 255\" stroke=\"#f0d9a8\" stroke-width=\"1\" fill=\"none\" opacity=\".65\"/>\n    <path d=\"M60 260 Q120 249 180 260\" stroke=\"#f0d9a8\" stroke-width=\"1\" fill=\"none\" opacity=\".5\"/>\n    <path d=\"M60 265 Q120 254 180 265\" stroke=\"#f0d9a8\" stroke-width=\"1\" fill=\"none\" opacity=\".38\"/>\n    <circle cx=\"180\" cy=\"258\" r=\"2.4\" fill=\"#e6c273\"/>\n    <circle cx=\"62\" cy=\"263\" r=\"2.4\" fill=\"#e6c273\"/>\n  </g>\n\n  <!-- 双手 -->\n  <path d=\"M66 258 C58 250 54 258 58 266 C62 274 72 278 80 276 L84 266 Z\" fill=\"#f2d6c4\"/>\n  <path d=\"M174 258 C182 250 186 258 182 266 C178 274 168 278 160 276 L156 266 Z\" fill=\"#f2d6c4\"/>\n  <path d=\"M70 266 q8 4 12 2 M172 266 q-8 4 -12 2\" stroke=\"#dcae9a\" stroke-width=\"1.4\" fill=\"none\" stroke-linecap=\"round\"/>\n\n  <!-- 玉簪 -->\n  <path d=\"M148 46 L186 30\" stroke=\"#d9c08a\" stroke-width=\"3\" stroke-linecap=\"round\"/>\n  <circle cx=\"186\" cy=\"30\" r=\"4\" fill=\"#a9e6ce\"/>\n  <path d=\"M186 30 l4 12 M186 30 l-6 11\" stroke=\"#a9e6ce\" stroke-width=\"1.2\" opacity=\".8\"/>\n  <path d=\"M70 62 q14 -8 28 0\" stroke=\"#d9c08a\" stroke-width=\"1.8\" fill=\"none\" opacity=\".8\"/>\n\n  <!-- 光点与音纹 -->\n  <g stroke=\"#c8f0df\" fill=\"none\" opacity=\".45\">\n    <path d=\"M40 168 q-8 -10 0 -20\"/>\n    <path d=\"M200 132 q8 10 0 20\"/>\n  </g>\n  <g fill=\"#c8f0df\">\n    <circle cx=\"52\" cy=\"96\" r=\"2.2\" opacity=\".7\"/>\n    <circle cx=\"190\" cy=\"86\" r=\"1.8\" opacity=\".6\"/>\n    <circle cx=\"198\" cy=\"206\" r=\"2.2\" opacity=\".4\"/>\n  </g>\n</svg>\n","c_dragon":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 300\" role=\"img\" aria-label=\"敖雪立绘\">\n  <defs>\n    <radialGradient id=\"dr_glow\" cx=\"50%\" cy=\"38%\" r=\"62%\">\n      <stop offset=\"0\" stop-color=\"#b9f2ff\" stop-opacity=\".45\"/>\n      <stop offset=\".6\" stop-color=\"#3c8fb8\" stop-opacity=\".16\"/>\n      <stop offset=\"1\" stop-color=\"#3c8fb8\" stop-opacity=\"0\"/>\n    </radialGradient>\n    <linearGradient id=\"dr_hair\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#3b5c9c\"/>\n      <stop offset=\".5\" stop-color=\"#223a6c\"/>\n      <stop offset=\"1\" stop-color=\"#101c3c\"/>\n    </linearGradient>\n    <linearGradient id=\"dr_hairLight\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#6f9bd6\"/>\n      <stop offset=\"1\" stop-color=\"#35538c\"/>\n    </linearGradient>\n    <linearGradient id=\"dr_skin\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#fff8f2\"/>\n      <stop offset=\"1\" stop-color=\"#f4ded3\"/>\n    </linearGradient>\n    <linearGradient id=\"dr_robe\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#c8f6f4\"/>\n      <stop offset=\".5\" stop-color=\"#6fc6cf\"/>\n      <stop offset=\"1\" stop-color=\"#2f7f99\"/>\n    </linearGradient>\n    <linearGradient id=\"dr_robeDark\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#3f95a9\"/>\n      <stop offset=\"1\" stop-color=\"#1f5a74\"/>\n    </linearGradient>\n    <linearGradient id=\"dr_iris\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#a9f4ff\"/>\n      <stop offset=\"1\" stop-color=\"#2d7fa8\"/>\n    </linearGradient>\n    <linearGradient id=\"dr_horn\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n      <stop offset=\"0\" stop-color=\"#fff4cf\"/>\n      <stop offset=\".55\" stop-color=\"#e8c98a\"/>\n      <stop offset=\"1\" stop-color=\"#b08a4a\"/>\n    </linearGradient>\n    <radialGradient id=\"dr_pearl\" cx=\"35%\" cy=\"30%\" r=\"70%\">\n      <stop offset=\"0\" stop-color=\"#ffffff\"/>\n      <stop offset=\".45\" stop-color=\"#d8fbff\"/>\n      <stop offset=\"1\" stop-color=\"#7fc9dc\"/>\n    </radialGradient>\n  </defs>\n\n  <circle cx=\"120\" cy=\"126\" r=\"110\" fill=\"url(#dr_glow)\"/>\n  <circle cx=\"120\" cy=\"126\" r=\"94\" fill=\"none\" stroke=\"#b9f2ff\" stroke-opacity=\".2\"/>\n\n  <!-- 龙角 -->\n  <g>\n    <path d=\"M82 66 C70 44 58 30 42 22 C46 40 54 56 70 72 Z\" fill=\"url(#dr_horn)\"/>\n    <path d=\"M70 58 C58 48 48 38 40 28 C50 34 60 44 68 54 Z\" fill=\"#fff4cf\" opacity=\".55\"/>\n    <path d=\"M60 42 l-16 -6 M64 50 l-18 -2\" stroke=\"#b08a4a\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\" opacity=\".7\"/>\n    <path d=\"M158 66 C170 44 182 30 198 22 C194 40 186 56 170 72 Z\" fill=\"url(#dr_horn)\"/>\n    <path d=\"M170 58 C182 48 192 38 200 28 C190 34 180 44 172 54 Z\" fill=\"#fff4cf\" opacity=\".55\"/>\n    <path d=\"M180 42 l16 -6 M176 50 l18 -2\" stroke=\"#b08a4a\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\" opacity=\".7\"/>\n  </g>\n\n  <!-- 耳鳍 -->\n  <path d=\"M68 112 C52 108 42 118 48 132 C54 144 66 142 72 134 Z\" fill=\"#9fe4ea\" opacity=\".85\"/>\n  <path d=\"M172 112 C188 108 198 118 192 132 C186 144 174 142 168 134 Z\" fill=\"#9fe4ea\" opacity=\".85\"/>\n  <path d=\"M60 118 l-8 6 M64 126 l-10 2\" stroke=\"#e6ffff\" stroke-width=\"1.4\" opacity=\".7\"/>\n\n  <!-- 背后长发 -->\n  <path d=\"M70 90 C54 150 62 232 44 298 L98 298 C82 230 84 154 94 110 Z\" fill=\"url(#dr_hair)\"/>\n  <path d=\"M170 90 C186 150 178 232 196 298 L142 298 C158 230 156 154 146 110 Z\" fill=\"url(#dr_hair)\"/>\n  <path d=\"M60 170 q-8 44 -4 92 q6 -48 12 -92 Z\" fill=\"#6f9bd6\" opacity=\".35\"/>\n  <path d=\"M180 170 q8 44 4 92 q-6 -48 -12 -92 Z\" fill=\"#6f9bd6\" opacity=\".35\"/>\n\n  <!-- 身体 -->\n  <path d=\"M78 184 C56 196 40 226 32 300 L208 300 C200 226 184 196 162 184 C146 200 94 200 78 184 Z\" fill=\"url(#dr_robe)\"/>\n  <path d=\"M44 300 C48 250 62 220 84 198 C72 226 66 262 64 300 Z\" fill=\"#eaffff\" opacity=\".36\"/>\n  <path d=\"M196 300 C192 250 178 220 156 198 C168 226 174 262 176 300 Z\" fill=\"#1f5a74\" opacity=\".22\"/>\n\n  <!-- 颈 -->\n  <path d=\"M107 158 h26 v26 c0 10 -26 10 -26 0 Z\" fill=\"#efd1c4\"/>\n  <path d=\"M107 166 c9 6 17 6 26 0 v10 c-8 5 -18 5 -26 0 Z\" fill=\"#d9b0a3\" opacity=\".55\"/>\n\n  <!-- 脸 -->\n  <path d=\"M120 58 C90 58 71 82 71 112 C71 141 91 167 120 175 C149 167 169 141 169 112 C169 82 150 58 120 58 Z\" fill=\"url(#dr_skin)\"/>\n  <ellipse cx=\"70\" cy=\"122\" rx=\"7\" ry=\"11\" fill=\"#f2d4c7\"/>\n  <ellipse cx=\"170\" cy=\"122\" rx=\"7\" ry=\"11\" fill=\"#f2d4c7\"/>\n\n  <!-- 刘海 -->\n  <path d=\"M62 118 C54 72 84 38 120 38 C156 38 186 72 178 118 C172 98 163 86 152 80 C147 100 137 108 122 108 C106 108 95 100 89 80 C77 88 67 100 62 118 Z\" fill=\"url(#dr_hair)\"/>\n  <path d=\"M88 76 C99 90 107 100 110 116 C99 112 90 99 83 84 Z\" fill=\"url(#dr_hairLight)\" opacity=\".65\"/>\n  <path d=\"M154 80 C148 96 139 106 130 112 C136 96 141 86 148 74 Z\" fill=\"#101c3c\" opacity=\".55\"/>\n  <path d=\"M68 104 C60 142 64 182 56 214 C70 202 76 166 80 126 Z\" fill=\"url(#dr_hair)\"/>\n  <path d=\"M172 104 C180 142 176 182 184 214 C170 202 164 166 160 126 Z\" fill=\"url(#dr_hair)\"/>\n  <path d=\"M62 114 C58 156 60 194 52 224 C64 212 70 174 74 134 Z\" fill=\"#101c3c\" opacity=\".5\"/>\n\n  <!-- 眼：海蓝 -->\n  <g>\n    <path d=\"M84 125 Q99 113 113 125 Q99 137 84 125 Z\" fill=\"#ffffff\"/>\n    <circle cx=\"99\" cy=\"125\" r=\"6.5\" fill=\"url(#dr_iris)\"/>\n    <circle cx=\"99\" cy=\"125\" r=\"2.9\" fill=\"#102d44\"/>\n    <circle cx=\"97\" cy=\"122.5\" r=\"2.2\" fill=\"#ffffff\"/>\n    <path d=\"M83 124 Q99 110 114 122\" stroke=\"#4b586f\" stroke-width=\"2.6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M112 119 l4 -3\" stroke=\"#4b586f\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n  <g>\n    <path d=\"M156 125 Q141 113 127 125 Q141 137 156 125 Z\" fill=\"#ffffff\"/>\n    <circle cx=\"141\" cy=\"125\" r=\"6.5\" fill=\"url(#dr_iris)\"/>\n    <circle cx=\"141\" cy=\"125\" r=\"2.9\" fill=\"#102d44\"/>\n    <circle cx=\"139\" cy=\"122.5\" r=\"2.2\" fill=\"#ffffff\"/>\n    <path d=\"M157 124 Q141 110 126 122\" stroke=\"#4b586f\" stroke-width=\"2.6\" fill=\"none\" stroke-linecap=\"round\"/>\n    <path d=\"M128 119 l-4 -3\" stroke=\"#4b586f\" stroke-width=\"2\" stroke-linecap=\"round\"/>\n  </g>\n  <path d=\"M87 109 Q99 104 111 109\" stroke=\"#7d879c\" stroke-width=\"1.8\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M153 109 Q141 104 129 109\" stroke=\"#7d879c\" stroke-width=\"1.8\" fill=\"none\" stroke-linecap=\"round\"/>\n\n  <ellipse cx=\"88\" cy=\"142\" rx=\"10\" ry=\"5\" fill=\"#e89a9a\" opacity=\".3\"/>\n  <ellipse cx=\"152\" cy=\"142\" rx=\"10\" ry=\"5\" fill=\"#e89a9a\" opacity=\".3\"/>\n  <path d=\"M120 142 q2 2 3 3\" stroke=\"#d19c8d\" stroke-width=\"1.4\" fill=\"none\" stroke-linecap=\"round\"/>\n  <path d=\"M112 155 Q120 161 128 155\" stroke=\"#b96e74\" stroke-width=\"2.1\" fill=\"none\" stroke-linecap=\"round\"/>\n\n  <!-- 交领 -->\n  <path d=\"M94 188 L120 238 L146 188 L136 183 L120 214 L104 183 Z\" fill=\"#eeffff\"/>\n  <path d=\"M94 188 L120 238 L108 244 L86 196 Z\" fill=\"url(#dr_robeDark)\"/>\n  <path d=\"M146 188 L120 238 L132 244 L154 196 Z\" fill=\"url(#dr_robeDark)\"/>\n  <path d=\"M89 196 L109 243\" stroke=\"#e6d39a\" stroke-width=\"2\" fill=\"none\"/>\n  <path d=\"M151 196 L131 243\" stroke=\"#e6d39a\" stroke-width=\"2\" fill=\"none\"/>\n\n  <!-- 肩部鳞纹 -->\n  <g fill=\"none\" stroke=\"#e6ffff\" stroke-width=\"1.2\" opacity=\".5\">\n    <path d=\"M58 226 q10 -8 20 0 q-10 8 -20 0 Z\"/>\n    <path d=\"M68 238 q10 -8 20 0 q-10 8 -20 0 Z\"/>\n    <path d=\"M162 226 q10 -8 20 0 q-10 8 -20 0 Z\"/>\n    <path d=\"M152 238 q10 -8 20 0 q-10 8 -20 0 Z\"/>\n  </g>\n\n  <!-- 腰带 -->\n  <path d=\"M78 262 Q120 250 162 262 L162 280 Q120 270 78 280 Z\" fill=\"#256b82\"/>\n  <path d=\"M78 262 Q120 250 162 262\" stroke=\"#e6d39a\" stroke-width=\"2.5\" fill=\"none\"/>\n  <circle cx=\"120\" cy=\"272\" r=\"7\" fill=\"#efffff\"/>\n  <circle cx=\"120\" cy=\"272\" r=\"4\" fill=\"#5bc4d6\"/>\n\n  <!-- 龙珠 -->\n  <g transform=\"translate(176 214)\">\n    <circle cx=\"0\" cy=\"0\" r=\"10\" fill=\"url(#dr_pearl)\"/>\n    <circle cx=\"0\" cy=\"0\" r=\"14\" fill=\"none\" stroke=\"#b9f2ff\" stroke-width=\"1.2\" opacity=\".55\"/>\n    <path d=\"M-14 0 q14 -8 28 0 q-14 8 -28 0 Z\" fill=\"none\" stroke=\"#e6ffff\" stroke-width=\"1\" opacity=\".5\"/>\n    <circle cx=\"-3\" cy=\"-4\" r=\"2.4\" fill=\"#ffffff\" opacity=\".9\"/>\n  </g>\n\n  <!-- 发饰 -->\n  <path d=\"M140 50 q14 -10 28 -4\" stroke=\"#e6d39a\" stroke-width=\"2\" fill=\"none\"/>\n  <circle cx=\"168\" cy=\"46\" r=\"4\" fill=\"#b9f2ff\"/>\n  <path d=\"M168 46 l3 12 M168 46 l-7 9\" stroke=\"#b9f2ff\" stroke-width=\"1.2\" opacity=\".8\"/>\n  <circle cx=\"84\" cy=\"50\" r=\"3.2\" fill=\"#d8fbff\"/>\n  <path d=\"M84 50 l-10 8 M84 50 l2 12\" stroke=\"#d8fbff\" stroke-width=\"1.1\" opacity=\".7\"/>\n\n  <!-- 水光 -->\n  <g fill=\"#b9f2ff\">\n    <path d=\"M44 140 l1.8 5.4 5.4 1.8 -5.4 1.8 -1.8 5.4 -1.8 -5.4 -5.4 -1.8 5.4 -1.8 Z\" opacity=\".7\"/>\n    <circle cx=\"198\" cy=\"168\" r=\"2.2\" opacity=\".6\"/>\n    <circle cx=\"60\" cy=\"92\" r=\"2\" opacity=\".55\"/>\n    <circle cx=\"188\" cy=\"86\" r=\"1.8\" opacity=\".5\"/>\n  </g>\n</svg>\n"};
+const COMPANIONS = [
+  { id: "c_sword", name: "沈青梧", title: "霜锋剑侣", icon: "🗡️", style: "剑修",
+    age: 328, look: "十六七岁", art: "sword",
+    desc: "自北境剑冢中走出的剑修，银发如霜，寡言而心细。与你对剑三日，剑意相合。",
+    quote: "剑心通明处，道途便不孤。",
+    effect: { rate: 0.10 }, effectText: "修行速度 +10%" },
+  { id: "c_alchemy", name: "苏晚照", title: "丹火知己", icon: "⚗️", style: "丹修",
+    age: 412, look: "十五六岁", art: "alchemy",
+    desc: "南疆丹谷的守炉人，双髻上总沾着一点炉灰。她炼的丹，火候总比你多半分耐心。",
+    quote: "丹成九转，也想留一盏灯给你。",
+    effect: { stone: 0.12 }, effectText: "灵石产出 +12%" },
+  { id: "c_fox", name: "白璃", title: "青丘狐仙", icon: "🦊", style: "狐仙",
+    age: 866, look: "十六岁", art: "fox",
+    desc: "青丘山中的白狐仙，耳尖与尾梢沾着月色。她爱在月下讲些真假难辨的旧事。",
+    quote: "长生太长，不如分我一半。",
+    effect: { success: 0.04 }, effectText: "破境成功率 +4%" },
+  { id: "c_qin", name: "洛清商", title: "听雨琴侣", icon: "🎼", style: "琴修",
+    age: 590, look: "十七岁", art: "qin",
+    desc: "抱琴游历的散修，青衫上常带松风与雨气。你悟道时，她便在一旁轻声按弦。",
+    quote: "一曲清商，可抵十年枯坐。",
+    effect: { rate: 0.07, stone: 0.07 }, effectText: "修行 +7% · 灵石 +7%" },
+  { id: "c_dragon", name: "敖雪", title: "深海龙女", icon: "🐉", style: "龙女",
+    age: 1320, look: "十六岁", art: "dragon",
+    desc: "东海龙宫的幺女，角上凝着不化的霜。她嫌岸上太吵，却总在你渡劫时守在云外。",
+    quote: "雷落下来，我替你挡一半。",
+    effect: { rate: 0.06, stone: 0.06, success: 0.02 }, effectText: "修行 +6% · 灵石 +6% · 破境 +2%" },
+];
+const COMPANION_MAP = {};
+COMPANIONS.forEach((c) => { COMPANION_MAP[c.id] = c; });
+
 /* ---------------------------- 奇遇 ---------------------------- */
 /* kind: stone / exp / pill / rateBuff / stoneBuff / dao / success / hurt / combo
  * stone.mult / exp.mult 的单位是「秒」：相当于当前境界多少秒的产出，境界越高数值越大。
@@ -2375,6 +2516,23 @@ const ENCOUNTERS = [
     text: "仙界使者路过，随手赏你一片灵石。", effect: { kind: "stone", mult: 2200 } },
   { id: "chaos", name: "混沌侵袭", icon: "🌑", weight: 5, tone: "bad", minRealm: 30,
     text: "混沌之气侵蚀灵台，你闭目苦撑，神魂疲惫。", effect: { kind: "hurt", dao: 12, expRate: 0.18 } },
+
+  /* ——— 双修伴侣：不限境界，缘至则遇 ——— */
+  { id: "bondSword", name: "霜锋初遇", icon: "🗡️", weight: 3, tone: "great", minRealm: 0,
+    text: "剑冢之外，一名银发少女抱剑而立。她抬眼看你，剑意与道心同时轻轻一颤。",
+    effect: { kind: "companion", companionId: "c_sword" } },
+  { id: "bondAlchemy", name: "丹火相逢", icon: "⚗️", weight: 3, tone: "great", minRealm: 0,
+    text: "山间小炉腾起一线丹火，双髻少女正托腮守着火候。见你来了，她笑着让出半张蒲团。",
+    effect: { kind: "companion", companionId: "c_alchemy" } },
+  { id: "bondFox", name: "狐影入梦", icon: "🦊", weight: 3, tone: "great", minRealm: 0,
+    text: "月色里闪过一条白尾。狐耳少女倚在古树上，晃着脚问你：长生的路，要不要结个伴？",
+    effect: { kind: "companion", companionId: "c_fox" } },
+  { id: "bondQin", name: "琴心相印", icon: "🎼", weight: 3, tone: "great", minRealm: 0,
+    text: "雨打松檐，有人抱琴坐在石阶上。一曲终了，她抬眸看你，像已等了很久。",
+    effect: { kind: "companion", companionId: "c_qin" } },
+  { id: "bondDragon", name: "龙女赠鳞", icon: "🐉", weight: 3, tone: "great", minRealm: 0,
+    text: "云外雷声未落，一名蓝发少女踏浪而来，将一片冰凉龙鳞放进你掌心：拿着，别死在劫里。",
+    effect: { kind: "companion", companionId: "c_dragon" } },
 ];
 
 /* 按当前境界层索引筛选可遇之事 */
@@ -2432,6 +2590,20 @@ ACHIEVEMENTS.forEach(a => { ACHIEVEMENT_MAP[a.id] = a; });
 
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "2.2.0",
+    date: "2026-11-02",
+    title: "道侣·同心",
+    items: [
+      "装配与卸下移入背包：法术、法宝皆可在背包中入阵 / 卸下，法宝亦可卸下本命",
+      "舍弃改为出售：闲置法术法宝可折价换灵石，装备中的需先卸下",
+      "新增五位双修伴侣特殊历练，不限境界，缘至即遇",
+      "五位道侣风格各异，各有独立立绘；修仙岁长，容貌仍如十五六岁",
+      "伴侣收入背包「道侣」页，结缘后永久提供修炼 / 灵石 / 破境加成",
+      "每次破境成功，随机一项五维资质 +1，资质总值可随境界成长",
+      "法术名称池扩充至四百余种组合，参研所得不再千篇一律",
+    ],
+  },
   {
     version: "2.1.0",
     date: "2026-11-02",
@@ -2581,8 +2753,12 @@ const SPELL_EXTRAS = [
   { key: "defBonus", name: "防御加成", icon: "🛡️", values: [0.04, 0.08, 0.12, 0.16, 0.20] },
 ];
 
-const SPELL_NAME_A = ["青莲", "太乙", "玄冰", "赤霄", "雷音", "紫电", "幽泉", "九曜", "无相", "焚天", "寒山", "星陨"];
-const SPELL_NAME_B = ["诀", "术", "咒", "印", "法", "经", "章"];
+const SPELL_NAME_A = [
+  "青莲", "太乙", "玄冰", "赤霄", "雷音", "紫电", "幽泉", "九曜", "无相", "焚天", "寒山", "星陨",
+  "流云", "落霞", "孤鸿", "霜华", "碧落", "黄泉", "青冥", "玄冥", "素问", "长歌", "惊鸿", "踏雪",
+  "揽月", "听雨", "逐日", "扶摇", "沧澜", "鹤唳", "松风", "竹影", "梅魄", "兰因", "云篆", "天枢",
+];
+const SPELL_NAME_B = ["诀", "术", "咒", "印", "法", "经", "章", "篇", "录", "谱", "诏", "令"];
 const ART_NAME_A = ["青冥", "玄光", "赤霄", "太虚", "九幽", "紫府", "天罡", "流云", "寒潭", "焚寂"];
 const ART_NAME_B = ["剑", "钟", "镜", "印", "珠", "幡", "鼎", "箫", "尺", "环"];
 
@@ -2762,6 +2938,7 @@ function defaultState() {
     spellSlots: [null, null, null],
     artifacts: [],
     equippedArtifact: null,
+    companions: [],
     market: { refreshAt: 0, spells: [], artifacts: [] },
     research: { active: false, startAt: 0, endAt: 0 },
     researchCount: 0,
@@ -2818,15 +2995,27 @@ function achieveSum(state, key) {
   return total;
 }
 
+function companionSum(state, key) {
+  let total = 0;
+  for (const id of state.companions || []) {
+    const c = COMPANION_MAP[id];
+    if (c && c.effect && c.effect[key]) total += c.effect[key];
+  }
+  return total;
+}
+
 function computeStats(state, now) {
   now = now || Date.now();
   const realm = realmAt(state.realmIndex);
   const rateBuff = activeBuff(state, "rateExp", now);
   const stoneBuff = activeBuff(state, "rateStone", now);
   const guardianBonus = guardianStoneBonus(state);
-  const bonusRate = achieveSum(state, "rate");
-  const bonusStone = achieveSum(state, "stone") + guardianBonus;
-  const bonusSucc = achieveSum(state, "success");
+  const companionRate = companionSum(state, "rate");
+  const companionStone = companionSum(state, "stone");
+  const companionSucc = companionSum(state, "success");
+  const bonusRate = achieveSum(state, "rate") + companionRate;
+  const bonusStone = achieveSum(state, "stone") + guardianBonus + companionStone;
+  const bonusSucc = achieveSum(state, "success") + companionSucc;
   const daoRate = state.dao / 500;
   const daoSucc = state.dao / 1000;
   const rate = realm.rate * CFG.IDLE_MULT * (1 + bonusRate + daoRate) * (1 + rateBuff);
@@ -2835,6 +3024,7 @@ function computeStats(state, now) {
   return {
     realm, rate, stoneRate, success,
     bonusRate, bonusStone, bonusSucc, guardianBonus,
+    companionRate, companionStone, companionSucc,
     derived: deriveStats(state),
     rateBuff, stoneBuff,
     rateBuffEnd: state.buffs.rateExp ? state.buffs.rateExp.endAt : 0,
@@ -2945,18 +3135,22 @@ function breakThrough(state) {
     state.realmIndex += 1;
     state.successes += 1;
     state.dao = clamp(state.dao + CFG.DAO_PER_SUCCESS, 0, CFG.DAO_MAX);
+    if (!state.attrs) state.attrs = rollAttrs();
+    const attrDef = ATTR_DEFS[Math.floor(Math.random() * ATTR_DEFS.length)];
+    state.attrs[attrDef.key] = (Number(state.attrs[attrDef.key]) || 0) + 1;
+    const attrGain = { key: attrDef.key, name: attrDef.name, icon: attrDef.icon, value: state.attrs[attrDef.key] };
     const reward = Math.floor(st.realm.rate * 120);
     state.stone += reward;
     state.totalStone += reward;
     const newRealm = realmAt(state.realmIndex);
     const ascended = state.realmIndex === MAX_MORTAL_INDEX + 1;
     if (ascended) {
-      pushLog(state, "天雷散尽，霞光万丈 —— 白日飞升，踏入仙道！", "great");
+      pushLog(state, "天雷散尽，霞光万丈 —— 白日飞升，踏入仙道！资质 +1 · " + attrDef.name, "great");
     } else {
-      pushLog(state, "破境成功 · " + newRealm.name + "（灵石 +" + fmt(reward) + "）", "success");
+      pushLog(state, "破境成功 · " + newRealm.name + "（灵石 +" + fmt(reward) + " · 资质 +1 " + attrDef.name + "）", "success");
     }
     checkAchievements(state);
-    return { ok: true, success: true, oldRealm, realm: newRealm, reward, chance, ascended };
+    return { ok: true, success: true, oldRealm, realm: newRealm, reward, chance, ascended, attrGain };
   }
 
   const loss = Math.floor(req * CFG.BREAK_LOSS_RATE);
@@ -3065,12 +3259,22 @@ function unequipSpell(state, slot) {
   return { ok: true, spell: sp };
 }
 
-function releaseSpell(state, id) {
-  if ((state.spellSlots || []).indexOf(id) >= 0) return { ok: false, msg: "先卸下法术，再行舍弃" };
+/* 坊市回收价：约为同品质售价的两成半，最低 5 灵石 */
+function sellValue(state, kind, item) {
+  const base = marketPrice(state, kind, item && item.quality);
+  return Math.max(5, Math.round(base * 0.25));
+}
+
+function sellSpell(state, id) {
+  if ((state.spellSlots || []).indexOf(id) >= 0) return { ok: false, msg: "法术已入阵，请先卸下再出售" };
   const idx = (state.spells || []).findIndex((s) => s.id === id);
   if (idx < 0) return { ok: false, msg: "法术不存在" };
   const sp = state.spells.splice(idx, 1)[0];
-  return { ok: true, spell: sp };
+  const price = sellValue(state, "spell", sp);
+  state.stone += price;
+  state.totalStone += price;
+  pushLog(state, "出售法术「" + sp.name + "」（灵石 +" + fmt(price) + "）", "gain");
+  return { ok: true, spell: sp, price: price };
 }
 
 function grantArtifact(state) {
@@ -3104,13 +3308,24 @@ function equipArtifact(state, id) {
   return { ok: true, artifact: art };
 }
 
-function releaseArtifact(state, id) {
-  if (state.equippedArtifact === id) return { ok: false, msg: "本命法宝不可舍弃，先祭炼他宝" };
+function unequipArtifact(state) {
+  if (!state.equippedArtifact) return { ok: false, msg: "当前未祭炼法宝" };
+  const art = (state.artifacts || []).find((a) => a.id === state.equippedArtifact);
+  state.equippedArtifact = null;
+  pushLog(state, "卸下法宝 ·「" + (art ? art.name : "本命法宝") + "」", "info");
+  return { ok: true, artifact: art || null };
+}
+
+function sellArtifact(state, id) {
+  if (state.equippedArtifact === id) return { ok: false, msg: "本命法宝不可出售，请先卸下" };
   const idx = (state.artifacts || []).findIndex((a) => a.id === id);
   if (idx < 0) return { ok: false, msg: "法宝不存在" };
   const art = state.artifacts.splice(idx, 1)[0];
-  pushLog(state, "舍弃法宝 ·「" + art.name + "」", "fail");
-  return { ok: true, artifact: art };
+  const price = sellValue(state, "artifact", art);
+  state.stone += price;
+  state.totalStone += price;
+  pushLog(state, "出售法宝「" + art.name + "」（灵石 +" + fmt(price) + "）", "gain");
+  return { ok: true, artifact: art, price: price };
 }
 
 function marketPrice(state, kind, quality) {
@@ -3180,7 +3395,8 @@ function marketBuy(state, kind, id) {
 }
 
 function rerollAttrs(state) {
-  state.attrs = rollAttrs();
+  const total = ATTR_KEYS.reduce((sum, k) => sum + (Number(state.attrs && state.attrs[k]) || 0), 0);
+  state.attrs = rollAttrs(Math.max(ATTR_TOTAL, total));
   pushLog(state, "洗髓易骨，资质重铸（总值不变）", "info");
   return state.attrs;
 }
@@ -3279,10 +3495,14 @@ function encounter(state) {
   state.cooldowns.encounter = now + CFG.ENCOUNTER_COOLDOWN * 1000;
   state.encounterCount += 1;
   const st = computeStats(state, now);
-  const ev = pickWeighted(encountersFor(state.realmIndex));
+  const owned = state.companions || [];
+  const pool = encountersFor(state.realmIndex).filter((e) =>
+    !(e.effect && e.effect.kind === "companion" && owned.indexOf(e.effect.companionId) >= 0));
+  const ev = pickWeighted(pool.length ? pool : encountersFor(state.realmIndex));
   const eff = ev.effect;
   if (eff.kind === "fight") return resolveFightEncounter(state, ev, now);
   let detail = "";
+  let companion = null;
   switch (eff.kind) {
     case "stone": {
       const gain = Math.max(20, st.stoneRate * eff.mult);
@@ -3302,6 +3522,18 @@ function encounter(state) {
       state.stone += gainStone; state.totalStone += gainStone;
       state.exp += gainExp;
       detail = "灵石 +" + fmt(gainStone) + "，修为 +" + fmt(gainExp);
+      break;
+    }
+    case "companion": {
+      const c = COMPANION_MAP[eff.companionId];
+      if (c && (state.companions || []).indexOf(c.id) < 0) {
+        if (!state.companions) state.companions = [];
+        state.companions.push(c.id);
+        companion = c;
+        detail = "与「" + c.name + "」结为双修伴侣 · " + c.effectText + "（永久）";
+      } else {
+        detail = "缘法已定，你与故人相视一笑";
+      }
       break;
     }
     case "pill": {
@@ -3354,7 +3586,7 @@ function encounter(state) {
   if (state.journeyLog.length > 30) state.journeyLog.splice(0, state.journeyLog.length - 30);
   pushLog(state, "历练 · " + ev.name + "：" + detail, ev.tone === "bad" ? "fail" : "gain");
   checkAchievements(state);
-  return { ok: true, event: ev, detail: detail, tone: ev.tone };
+  return { ok: true, event: ev, detail: detail, tone: ev.tone, companion: companion };
 }
 
 /* 战斗类奇遇：胜负、缴获与败退代价 */
@@ -3432,7 +3664,7 @@ function normalizeAttrs(raw) {
     attrs[k] = v;
     sum += v;
   }
-  return sum === ATTR_TOTAL ? attrs : null;
+  return sum >= ATTR_TOTAL && sum <= 1000000 ? attrs : null;
 }
 
 function migrate(raw) {
@@ -3454,6 +3686,8 @@ function migrate(raw) {
   s.encounterCount = Math.max(0, parseInt(s.encounterCount, 10) || 0);
   s.lastTick = Number(s.lastTick) || Date.now();
   s.attrs = normalizeAttrs(raw.attrs) || rollAttrs();
+  s.companions = Array.isArray(raw.companions)
+    ? Array.from(new Set(raw.companions.filter((id) => !!COMPANION_MAP[id]))) : [];
   s.spells = Array.isArray(raw.spells)
     ? raw.spells.filter((sp) => sp && sp.id && sp.main).slice(-CFG.MAX_SPELLS) : [];
   const slots = Array.isArray(raw.spellSlots) ? raw.spellSlots.slice(0, 3) : [];
@@ -3483,6 +3717,7 @@ function migrate(raw) {
   s.battleLosses = Math.max(0, parseInt(s.battleLosses, 10) || 0);
   s.guardianKills = Math.max(0, parseInt(s.guardianKills, 10) || 0);
   s.flags = Object.assign({ created: true }, raw.flags || {});
+  if (!s.companions) s.companions = [];
   s.pills = (s.pills && typeof s.pills === "object") ? s.pills : {};
   s.achieve = (s.achieve && typeof s.achieve === "object") ? s.achieve : {};
   s.buffs = Object.assign({ rateExp: null, rateStone: null }, s.buffs || {});
@@ -3584,14 +3819,16 @@ function shuffle(list) {
 }
 
 /* ------------------------------ 资质 ------------------------------ */
-function rollAttrs() {
+function rollAttrs(total) {
+  const target = Math.max(ATTR_TOTAL, Math.round(Number(total) || ATTR_TOTAL));
   const attrs = {};
   ATTR_KEYS.forEach((k) => { attrs[k] = 8; });
-  let left = ATTR_TOTAL - 8 * ATTR_KEYS.length;
+  let left = target - 8 * ATTR_KEYS.length;
+  const cap = Math.max(32, Math.ceil(target / ATTR_KEYS.length) + 8);
   let guard = 0;
-  while (left > 0 && guard++ < 4000) {
+  while (left > 0 && guard++ < target * 20 + 4000) {
     const k = pickOne(ATTR_KEYS);
-    if (attrs[k] >= 32) continue;
+    if (attrs[k] >= cap) continue;
     attrs[k] += 1;
     left -= 1;
   }
@@ -4023,6 +4260,7 @@ let coverOpen = false;
 let creating = false;
 let bagTab = "spell";
 let lastBagSpellCount = -1;
+let lastBagCompanionCount = -1;
 let lastMarketRefresh = -1;
 
 /* 战斗演出状态 */
@@ -4082,9 +4320,9 @@ function cacheDom() {
     "logList", "stoneText", "playTimeText", "brandSub",
     "researchHint", "researchIcon", "researchTitle", "researchDesc",
     "researchBar", "researchTime", "btnResearch", "researchSub", "btnRush", "rushSub", "slotRow", "spellHint",
-    "bagHint", "bagSpellCount", "bagArtCount", "bagPillCount",
-    "bagSpellHint", "bagArtHint", "bagPillHint",
-    "bagSpellList", "bagArtList", "bagPillList",
+    "bagHint", "bagSpellCount", "bagArtCount", "bagPillCount", "bagCompCount",
+    "bagSpellHint", "bagArtHint", "bagPillHint", "bagCompHint",
+    "bagSpellList", "bagArtList", "bagPillList", "bagCompList",
     "marketTime", "marketNote", "marketSpellHint", "marketArtHint", "marketPillHint",
     "marketSpells", "marketArts", "marketPills",
     "combatGrid",
@@ -4131,7 +4369,8 @@ function loop() {
   if (currentTab === "spells") updateResearchCard(now);
   if (currentTab === "bag") {
     updateResearchCard(now);
-    if ((game.spells || []).length !== lastBagSpellCount) renderBag();
+    if ((game.spells || []).length !== lastBagSpellCount ||
+        (game.companions || []).length !== lastBagCompanionCount) renderBag();
   }
   if (currentTab === "market") {
     const market = ensureMarket(game, now);
@@ -4260,13 +4499,12 @@ function renderSpellPage() {
       return '<div class="slot-card empty"><div class="slot-no">' + (i + 1) + "</div>" +
         '<div class="slot-empty">空置</div></div>';
     }
-    return '<div class="slot-card"><div class="slot-no">' + (i + 1) + "</div>" +
+    return '<div class="slot-card equipped"><div class="slot-no">' + (i + 1) + "</div>" +
       '<div class="slot-icon">' + sp.icon + "</div>" +
       '<div class="slot-name">' + esc(sp.name) + "</div>" +
       '<div class="slot-main">' + spellMainLine(sp) + "</div>" +
       '<div class="slot-effect">' + (sp.effect ? sp.effect.icon + " " + sp.effect.name : "无特效") + "</div>" +
-      '<button class="btn btn-small btn-ghost" data-action="unequip-spell" data-slot="' + i +
-      '"><span class="btn-main">卸下</span></button></div>';
+      '<div class="slot-bag-tip">卸下请前往背包</div></div>';
   }).join("");
   const equipped = slots.filter(Boolean).length;
   if (UI.spellHint) UI.spellHint.textContent = "已装配 " + equipped + " / 3 · 共习得 " + spells.length + " 门";
@@ -4282,10 +4520,13 @@ function renderBag() {
   const spells = game.spells || [];
   const arts = game.artifacts || [];
   const pills = pillTotal();
+  const comps = (game.companions || []).length;
   if (UI.bagSpellCount) UI.bagSpellCount.textContent = spells.length;
   if (UI.bagArtCount) UI.bagArtCount.textContent = arts.length;
   if (UI.bagPillCount) UI.bagPillCount.textContent = pills;
-  if (UI.bagHint) UI.bagHint.textContent = "法术 " + spells.length + " 门 · 法宝 " + arts.length + " 件 · 丹药 " + pills + " 枚";
+  if (UI.bagCompCount) UI.bagCompCount.textContent = comps;
+  if (UI.bagHint) UI.bagHint.textContent = "法术 " + spells.length + " 门 · 法宝 " + arts.length +
+    " 件 · 丹药 " + pills + " 枚 · 道侣 " + comps + " 位";
   document.querySelectorAll(".bag-tab").forEach((b) =>
     b.classList.toggle("active", b.getAttribute("data-bag") === bagTab));
   document.querySelectorAll("[data-bag-panel]").forEach((p) =>
@@ -4294,7 +4535,9 @@ function renderBag() {
   renderBagSpells();
   renderBagArts();
   renderBagPills();
+  renderBagCompanions();
   lastBagSpellCount = spells.length;
+  lastBagCompanionCount = comps;
 }
 
 function renderBagSpells() {
@@ -4306,21 +4549,24 @@ function renderBagSpells() {
     return;
   }
   UI.bagSpellList.innerHTML = spells.map((sp) => {
-    const equipped = slots.indexOf(sp.id) >= 0;
+    const slot = slots.indexOf(sp.id);
+    const equipped = slot >= 0;
+    const price = sellValue(game, "spell", sp);
+    const primary = equipped
+      ? '<button class="btn btn-small btn-ghost" data-action="unequip-spell" data-slot="' + slot + '"><span class="btn-main">卸下</span></button>'
+      : '<button class="btn btn-small" data-action="equip-spell" data-id="' + sp.id + '"><span class="btn-main">入阵</span></button>';
     return '<div class="spell-item">' +
       '<div class="spell-head"><div class="spell-icon">' + sp.icon + "</div>" +
       '<div class="spell-title"><div class="spell-name">' + esc(sp.name) +
-      '<span class="quality">' + stars(sp.quality) + "</span></div>" +
+      '<span class="quality">' + stars(sp.quality) + "</span>" +
+      (equipped ? '<span class="bag-state">已入阵</span>' : "") + "</div>" +
       '<div class="spell-tag">' + esc(sp.realmName || "") + " · 法术</div></div></div>" +
       '<div class="spell-main">' + spellMainLine(sp) + "</div>" +
       (sp.effect ? '<div class="spell-effect">' + sp.effect.icon + " <b>" + esc(sp.effect.name) +
         "</b> · " + esc(sp.effect.text) + "</div>" : "") +
       '<div class="spell-extras">' + itemExtraLines(sp).map((t) => '<span class="chip-mini">' + esc(t) + "</span>").join("") + "</div>" +
-      '<div class="spell-actions">' +
-      (equipped
-        ? '<button class="btn btn-small disabled"><span class="btn-main">已入阵</span></button>'
-        : '<button class="btn btn-small" data-action="equip-spell" data-id="' + sp.id + '"><span class="btn-main">入阵</span></button>') +
-      '<button class="btn btn-small btn-ghost" data-action="release-spell" data-id="' + sp.id + '"><span class="btn-main">舍弃</span></button>' +
+      '<div class="spell-actions">' + primary +
+      '<button class="btn btn-small btn-ghost" data-action="sell-spell" data-id="' + sp.id + '"><span class="btn-main">出售 ' + fmt(price) + " 💎</span></button>" +
       "</div></div>";
   }).join("");
 }
@@ -4334,19 +4580,21 @@ function renderBagArts() {
   }
   UI.bagArtList.innerHTML = arts.map((a) => {
     const on = game.equippedArtifact === a.id;
+    const price = sellValue(game, "artifact", a);
+    const primary = on
+      ? '<button class="btn btn-small btn-ghost" data-action="unequip-artifact"><span class="btn-main">卸下</span></button>'
+      : '<button class="btn btn-small" data-action="equip-artifact" data-id="' + a.id + '"><span class="btn-main">祭炼</span></button>';
     return '<div class="artifact-item ' + (on ? "owned" : "") + '">' +
       '<div class="artifact-top"><div class="artifact-icon">' + a.icon + "</div>" +
       '<div class="artifact-title"><div class="artifact-name">' + esc(a.name) +
-      '<span class="quality">' + stars(a.quality) + "</span></div>" +
+      '<span class="quality">' + stars(a.quality) + "</span>" +
+      (on ? '<span class="bag-state">本命</span>' : "") + "</div>" +
       '<div class="artifact-stars">' + esc(a.realmName || "") + " · 速 " + a.speed + "</div></div></div>" +
       '<div class="artifact-bonus">' + spellMainLine(a) + "</div>" +
       (a.effect ? '<div class="artifact-desc">' + a.effect.icon + " " + esc(a.effect.name) + " · " + esc(a.effect.text) + "</div>" : "") +
       '<div class="artifact-extra">' + itemExtraLines(a).join(" · ") + "</div>" +
-      '<div class="artifact-actions">' +
-      (on
-        ? '<button class="btn btn-small disabled"><span class="btn-main">祭炼中</span></button>'
-        : '<button class="btn btn-small" data-action="equip-artifact" data-id="' + a.id + '"><span class="btn-main">祭炼</span></button>' +
-          '<button class="btn btn-small btn-ghost" data-action="release-artifact" data-id="' + a.id + '"><span class="btn-main">舍弃</span></button>') +
+      '<div class="artifact-actions">' + primary +
+      '<button class="btn btn-small btn-ghost" data-action="sell-artifact" data-id="' + a.id + '"><span class="btn-main">出售 ' + fmt(price) + " 💎</span></button>" +
       "</div></div>";
   }).join("");
 }
@@ -4366,6 +4614,30 @@ function renderBagPills() {
       '<span class="pill-count">×' + game.pills[id] + "</span></div>" +
       '<div class="pill-desc">' + p.desc + "</div></div>" +
       '<button class="btn btn-small" data-action="use-pill" data-id="' + id + '"><span class="btn-main">服用</span></button></div>';
+  }).join("");
+}
+
+function renderBagCompanions() {
+  const owned = game.companions || [];
+  if (UI.bagCompHint) UI.bagCompHint.textContent = owned.length + " / " + COMPANIONS.length + " · 永久加成";
+  if (!UI.bagCompList) return;
+  UI.bagCompList.innerHTML = COMPANIONS.map((c) => {
+    const got = owned.indexOf(c.id) >= 0;
+    const art = COMPANION_ART[c.id] || "";
+    return '<div class="companion-item ' + (got ? "owned" : "locked") + '">' +
+      '<div class="companion-art">' + art +
+      (got ? "" : '<span class="companion-lock">未结缘</span>') + "</div>" +
+      '<div class="companion-body">' +
+      '<div class="companion-name">' + esc(c.name) +
+      '<span class="companion-title">' + esc(c.title) + "</span></div>" +
+      '<div class="companion-meta">' + esc(c.style) + " · " + esc(c.age + " 岁") +
+      " · 容貌停在 " + esc(c.look) + "</div>" +
+      (got
+        ? '<div class="companion-effect">' + esc(c.effectText) + " · 永久生效</div>" +
+          '<div class="companion-desc">' + esc(c.desc) + "</div>" +
+          '<div class="companion-quote">「' + esc(c.quote) + "」</div>"
+        : '<div class="companion-locked-tip">机缘未至 · 游历山川或可相逢</div>') +
+      "</div></div>";
   }).join("");
 }
 
@@ -4575,9 +4847,10 @@ function onClick(e) {
     case "research": doResearch(); break;
     case "equip-spell": doEquipSpell(id); break;
     case "unequip-spell": doUnequipSpell(slot); break;
-    case "release-spell": doReleaseSpell(id); break;
+    case "sell-spell": doSellSpell(id); break;
     case "equip-artifact": doEquipArtifact(id); break;
-    case "release-artifact": doReleaseArtifact(id); break;
+    case "unequip-artifact": doUnequipArtifact(); break;
+    case "sell-artifact": doSellArtifact(id); break;
     case "rush-research": doRushResearch(); break;
     case "bag-tab": doBagTab(target.getAttribute("data-bag")); break;
     case "buy-market": doMarketBuy(target.getAttribute("data-kind"), id); break;
@@ -4629,7 +4902,9 @@ function doBreak() {
         body: "<p>" + (res.ascended
           ? "九霄雷落，道音长鸣。你踏碎长空，于万丈霞光中飞升而去。"
           : "灵台清明，气机如潮。你自凡尘之中，又向上一步。") + "</p>" +
-          '<div class="reward-line">灵石 +' + fmt(res.reward) + "</div>",
+          '<div class="reward-line">灵石 +' + fmt(res.reward) + "</div>" +
+          (res.attrGain ? '<div class="reward-line">' + res.attrGain.icon + " 资质 +1 · " +
+            esc(res.attrGain.name) + "</div>" : ""),
         buttons: [{ text: "继续修行", cls: "btn-primary" }],
       });
     } else {
@@ -4683,6 +4958,27 @@ function doEncounter() {
           renderAll();
         },
       });
+      return;
+    }
+    if (res.companion) {
+      const c = res.companion;
+      UI.journeyOrb.textContent = "💞";
+      setTimeout(() => { UI.journeyOrb.textContent = "🗺️"; }, 2200);
+      enqueueModal({
+        icon: "💞",
+        title: "结为道侣",
+        titleClass: "success",
+        sub: c.title + " · " + c.style,
+        body: '<div class="companion-gain-art">' + (COMPANION_ART[c.id] || "") + "</div>" +
+          "<p>" + esc(c.desc) + "</p>" +
+          '<div class="reward-line">' + esc(c.effectText) + " · 永久生效</div>" +
+          '<div class="companion-quote">「' + esc(c.quote) + "」</div>",
+        buttons: [{ text: "携手同行", cls: "btn-primary" }],
+      });
+      if (currentTab === "journey") renderJourneyLog();
+      lastJourneyCount = game.journeyLog.length;
+      updateJourney(Date.now());
+      renderAll();
       return;
     }
     const good = res.tone !== "bad";
@@ -4772,11 +5068,11 @@ function doUnequipSpell(slot) {
   refreshSpellViews();
 }
 
-function doReleaseSpell(id) {
-  const res = releaseSpell(game, id);
+function doSellSpell(id) {
+  const res = sellSpell(game, id);
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
-  toast("已舍弃「" + (res.spell ? res.spell.name : "法术") + "」");
+  toast("已出售「" + res.spell.name + "」，灵石 +" + fmt(res.price));
   refreshSpellViews();
 }
 
@@ -4788,16 +5084,24 @@ function doEquipArtifact(id) {
   renderBag();
 }
 
-function doReleaseArtifact(id) {
-  const res = releaseArtifact(game, id);
+function doUnequipArtifact() {
+  const res = unequipArtifact(game);
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
-  toast("已舍弃「" + (res.artifact ? res.artifact.name : "法宝") + "」");
+  toast("已卸下「" + (res.artifact ? res.artifact.name : "本命法宝") + "」");
+  renderBag();
+}
+
+function doSellArtifact(id) {
+  const res = sellArtifact(game, id);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast("已出售「" + res.artifact.name + "」，灵石 +" + fmt(res.price));
   renderBag();
 }
 
 function doBagTab(tab) {
-  if (["spell", "artifact", "pill"].indexOf(tab) < 0) return;
+  if (["spell", "artifact", "pill", "companion"].indexOf(tab) < 0) return;
   bagTab = tab;
   renderBag();
 }
