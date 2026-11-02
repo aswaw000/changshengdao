@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v2.0.0 · built 2026-11-02T00:17:56.192Z · 单文件离线可玩 -->
+<!-- 《长生道》 v2.1.0 · built 2026-11-02T04:04:46.824Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -1317,6 +1317,97 @@ textarea.savelink {
 .track-note { font-size: 9.5px; color: var(--muted); letter-spacing: 0.5px; }
 .battle .btn-wide { margin-top: 2px; }
 
+/* ===================== v2.1 背包 / 坊市 / 灵石加速 ===================== */
+.research-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+.research-actions .btn { min-width: 0; }
+.btn-rush { border-color: rgba(230, 194, 115, 0.28); }
+.btn-rush:not(:disabled) .btn-main { color: var(--gold-soft); }
+
+.bag-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+}
+.bag-tab {
+  appearance: none;
+  font-family: inherit;
+  font-size: 12.5px;
+  padding: 10px 4px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(120, 180, 190, 0.04);
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+.bag-tab b {
+  display: inline-block;
+  min-width: 16px;
+  margin-left: 3px;
+  font-weight: 500;
+  color: var(--jade);
+  font-size: 11.5px;
+}
+.bag-tab.active {
+  color: var(--gold-soft);
+  border-color: rgba(230, 194, 115, 0.35);
+  background: rgba(230, 194, 115, 0.07);
+}
+.bag-tab.active b { color: var(--gold); }
+
+.bag-panel { display: none; }
+.bag-panel.active { display: block; }
+
+.market-note {
+  margin: 9px 0 2px;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.market-item {
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(120, 180, 190, 0.035);
+}
+.market-item + .market-item { margin-top: 10px; }
+.market-head { display: flex; align-items: center; gap: 10px; }
+.market-icon {
+  width: 44px; height: 44px; flex: none;
+  display: grid; place-items: center;
+  font-size: 22px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(120, 180, 190, 0.05);
+}
+.market-body { flex: 1; min-width: 0; }
+.market-name {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  font-size: 14px; font-weight: 600; color: var(--text);
+}
+.market-name .quality { color: var(--gold); font-size: 10px; letter-spacing: 1px; }
+.market-sub { margin-top: 3px; font-size: 10.5px; color: var(--muted); }
+.market-line {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--gold-soft);
+}
+.market-line.sub { margin-top: 4px; font-size: 11px; color: var(--muted); }
+.market-line.sub + .market-line.sub { margin-top: 2px; }
+.market-buy { width: 100%; margin-top: 10px; }
+
+@media (max-width: 350px) {
+  .research-actions { gap: 6px; }
+  .bag-tab { font-size: 11.5px; padding: 9px 2px; }
+  .market-item { padding: 10px; }
+}
+
 </style>
 </head>
 <body>
@@ -1401,49 +1492,89 @@ textarea.savelink {
           <div class="research-icon" id="researchIcon">📖</div>
           <div class="research-info">
             <div class="research-title" id="researchTitle">尚未开卷</div>
-            <div class="research-desc" id="researchDesc">研习需静候 10 分钟，功成时随机习得一门法术。</div>
+            <div class="research-desc" id="researchDesc">研习需静候 10 分钟，功成时随机习得一门法术，收入背包。</div>
             <div class="research-bar"><i id="researchBar"></i></div>
             <div class="research-time" id="researchTime"></div>
           </div>
         </div>
-        <button class="btn btn-primary btn-wide" id="btnResearch" data-action="research">
-          <span class="btn-main">开卷参研</span>
-          <span class="btn-sub" id="researchSub">需 10 分钟</span>
-        </button>
+        <div class="research-actions">
+          <button class="btn btn-primary" id="btnResearch" data-action="research">
+            <span class="btn-main">开卷参研</span>
+            <span class="btn-sub" id="researchSub">需 10 分钟</span>
+          </button>
+          <button class="btn btn-ghost btn-rush" id="btnRush" data-action="rush-research">
+            <span class="btn-main">灵石加速</span>
+            <span class="btn-sub" id="rushSub">尚未开卷</span>
+          </button>
+        </div>
       </div>
 
       <div class="card">
-        <div class="card-head"><span>法术栏</span><span class="card-hint">战斗中依序施展</span></div>
+        <div class="card-head"><span>法术栏</span><span class="card-hint" id="spellHint">在背包中装配</span></div>
         <div class="slot-row" id="slotRow"></div>
       </div>
 
-      <div class="card">
-        <div class="card-head"><span>藏法阁</span><span class="card-hint" id="spellHint"></span></div>
-        <div class="spell-list" id="spellList"></div>
+      <div class="card tips-card">
+        <div class="card-head"><span>参研须知</span></div>
+        <ul class="tips-list">
+          <li>每卷参研固定十分钟，功成时随机习得一门法术，先收入背包。</li>
+          <li>悟性只影响高品质法术出现的概率，任何悟性都有机会研得最高品质。</li>
+          <li>新术不会自动装配，需前往「背包 · 法术」放入法术栏。</li>
+          <li>灵石可加速参研，剩余时间越短，所耗灵石越少。</li>
+        </ul>
       </div>
     </section>
 
-    <!-- ===== 法宝 ===== -->
-    <section class="tab-panel" data-panel="artifacts">
-      <div class="card">
-        <div class="card-head"><span>本命法宝</span><span class="card-hint" id="artHint"></span></div>
-        <div id="artEquipped"></div>
+    <!-- ===== 背包 ===== -->
+    <section class="tab-panel" data-panel="bag">
+      <div class="card bag-switch-card">
+        <div class="card-head"><span>背包</span><span class="card-hint" id="bagHint">装备与服用</span></div>
+        <div class="bag-tabs">
+          <button class="bag-tab active" data-action="bag-tab" data-bag="spell">法术 <b id="bagSpellCount">0</b></button>
+          <button class="bag-tab" data-action="bag-tab" data-bag="artifact">法宝 <b id="bagArtCount">0</b></button>
+          <button class="bag-tab" data-action="bag-tab" data-bag="pill">丹药 <b id="bagPillCount">0</b></button>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-head"><span>法宝库</span><span class="card-hint" id="artLibHint">战利品</span></div>
-        <div class="artifact-list" id="artList"></div>
+
+      <div class="bag-panel active" data-bag-panel="spell">
+        <div class="card">
+          <div class="card-head"><span>已习法术</span><span class="card-hint" id="bagSpellHint"></span></div>
+          <div class="spell-list" id="bagSpellList"></div>
+        </div>
+      </div>
+
+      <div class="bag-panel" data-bag-panel="artifact">
+        <div class="card">
+          <div class="card-head"><span>已获法宝</span><span class="card-hint" id="bagArtHint"></span></div>
+          <div class="artifact-list" id="bagArtList"></div>
+        </div>
+      </div>
+
+      <div class="bag-panel" data-bag-panel="pill">
+        <div class="card">
+          <div class="card-head"><span>丹药</span><span class="card-hint" id="bagPillHint">点击服用</span></div>
+          <div class="pill-list" id="bagPillList"></div>
+        </div>
       </div>
     </section>
 
-    <!-- ===== 丹房 ===== -->
-    <section class="tab-panel" data-panel="alchemy">
+    <!-- ===== 坊市 ===== -->
+    <section class="tab-panel" data-panel="market">
       <div class="card">
-        <div class="card-head"><span>丹房 · 储物袋</span><span class="card-hint">点击服用</span></div>
-        <div class="pill-list" id="pillBag"></div>
+        <div class="card-head"><span>坊市</span><span class="card-hint" id="marketTime">正在进货</span></div>
+        <p class="market-note" id="marketNote">行商往来，每三十分钟换一批货。法术法宝品质随你的境界浮动，丹药常备。</p>
       </div>
       <div class="card">
-        <div class="card-head"><span>坊市 · 丹药</span><span class="card-hint" id="shopHint"></span></div>
-        <div class="pill-list" id="pillShop"></div>
+        <div class="card-head"><span>法术货架</span><span class="card-hint" id="marketSpellHint"></span></div>
+        <div class="spell-list" id="marketSpells"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span>法宝货架</span><span class="card-hint" id="marketArtHint"></span></div>
+        <div class="artifact-list" id="marketArts"></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span>丹药货架</span><span class="card-hint" id="marketPillHint"></span></div>
+        <div class="pill-list" id="marketPills"></div>
       </div>
     </section>
 
@@ -1503,6 +1634,11 @@ textarea.savelink {
       </div>
 
       <div class="card">
+        <div class="card-head"><span>战斗属性</span><span class="card-hint">随境界与资质</span></div>
+        <div class="stat-grid stat-grid-2" id="combatGrid"></div>
+      </div>
+
+      <div class="card">
         <div class="card-head"><span>道途统计</span></div>
         <div class="stat-grid stat-grid-2" id="statsGrid"></div>
       </div>
@@ -1521,15 +1657,15 @@ textarea.savelink {
           <button class="menu-item danger" data-action="reset"><span>重入轮回</span><span class="menu-arrow">›</span></button>
         </div>
       </div>
-      <div class="footer-note">长生道 v<span id="verText">2.0.0</span> · 存档自动保存于本机</div>
+      <div class="footer-note">长生道 v<span id="verText">2.1.0</span> · 存档自动保存于本机</div>
     </section>
   </main>
 
   <nav class="tabbar">
     <button class="tab active" data-action="tab" data-tab="cultivate"><span class="tab-icon">🧘</span><span class="tab-label">修炼</span></button>
     <button class="tab" data-action="tab" data-tab="spells"><span class="tab-icon">📖</span><span class="tab-label">法术</span></button>
-    <button class="tab" data-action="tab" data-tab="artifacts"><span class="tab-icon">🗡️</span><span class="tab-label">法宝</span></button>
-    <button class="tab" data-action="tab" data-tab="alchemy"><span class="tab-icon">⚗️</span><span class="tab-label">丹房</span></button>
+    <button class="tab" data-action="tab" data-tab="bag"><span class="tab-icon">🎒</span><span class="tab-label">背包</span></button>
+    <button class="tab" data-action="tab" data-tab="market"><span class="tab-icon">🏪</span><span class="tab-label">坊市</span></button>
     <button class="tab" data-action="tab" data-tab="journey"><span class="tab-icon">🗺️</span><span class="tab-label">历练</span></button>
     <button class="tab" data-action="tab" data-tab="more"><span class="tab-icon">📜</span><span class="tab-label">更多</span></button>
   </nav>
@@ -1969,7 +2105,7 @@ textarea.savelink {
           <span class="btn-main">开始修行</span>
           <span class="btn-sub" id="coverSub">自动挂机 · 闭关也在涨</span>
         </button>
-        <div class="cover-note">v<span id="coverVer">2.0.0</span> · 存档自动保存于本机</div>
+        <div class="cover-note">v<span id="coverVer">2.1.0</span> · 存档自动保存于本机</div>
       </div>
     </div>
   </div>
@@ -1984,7 +2120,7 @@ textarea.savelink {
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "2.0.0";
+const GAME_VERSION = "2.1.0";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -2006,6 +2142,8 @@ const CFG = {
   MAX_SPELLS: 30,               // 藏法阁上限
   MAX_ARTIFACTS: 15,            // 法宝库上限
   BATTLE_MAX_ROUNDS: 15,        // 战斗最大回合数
+  MARKET_REFRESH_SEC: 1800,     // 坊市换货间隔（秒）
+  MARKET_STOCK: 2,              // 坊市每类法术 / 法宝的货量
   LOG_LIMIT: 80,
 };
 
@@ -2295,6 +2433,21 @@ ACHIEVEMENTS.forEach(a => { ACHIEVEMENT_MAP[a.id] = a; });
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
   {
+    version: "2.1.0",
+    date: "2026-11-02",
+    title: "万宝·通衢",
+    items: [
+      "伤害类法术的出现概率略微提高，斗法更易破敌",
+      "悟性改为只影响高品质法术概率，任何悟性都有机会悟出五星法术",
+      "属性页新增完整战斗属性：气血、法力、法术 / 法宝强度、防御、暴击、闪避等",
+      "修复未击败上一级灵脉守护者便突破后，守护者被下一级顶替的问题",
+      "新增灵石加速参研：剩余时间越短，花费越少",
+      "新增背包：法术、法宝、丹药集中收纳，可装备法术法宝、服用丹药",
+      "坊市独立成页，新增随机法术与法宝货架，每三十分钟换一批，品质随境界",
+      "研习所得不再自动入阵，先入背包，由你亲自装配",
+    ],
+  },
+  {
     version: "2.0.0",
     date: "2026-11-02",
     title: "战起·问道",
@@ -2394,15 +2547,15 @@ const ATTR_DEFS = [
   { key: "linggen", name: "灵根", icon: "🌿", desc: "法力上限 · 法术伤害" },
   { key: "shenshi", name: "神识", icon: "👁️", desc: "法宝伤害 · 暴击伤害" },
   { key: "xingyun", name: "幸运", icon: "🍀", desc: "暴击率 · 闪避率" },
-  { key: "wuxing", name: "悟性", icon: "📖", desc: "法术品阶 · 研究所得" },
+  { key: "wuxing", name: "悟性", icon: "📖", desc: "高品质法术概率" },
 ];
 const ATTR_KEYS = ATTR_DEFS.map((a) => a.key);
 
 /* 法术 / 法宝的主效果：伤害、回复、护盾，必有且仅有一种 */
 const SPELL_MAINS = [
-  { key: "dmg", name: "伤害", icon: "⚔️", spellRatio: 1.15, artRatio: 1.35 },
-  { key: "heal", name: "回复", icon: "💚", spellRatio: 0.85, artRatio: 0.7 },
-  { key: "shield", name: "护盾", icon: "🛡️", spellRatio: 1.0, artRatio: 0.9 },
+  { key: "dmg", name: "伤害", icon: "⚔️", spellRatio: 1.15, artRatio: 1.35, weight: 1.35 },
+  { key: "heal", name: "回复", icon: "💚", spellRatio: 0.85, artRatio: 0.7, weight: 1.0 },
+  { key: "shield", name: "护盾", icon: "🛡️", spellRatio: 1.0, artRatio: 0.9, weight: 1.0 },
 ];
 
 /* 法术特效（不固定出现；出现时至少两档） */
@@ -2609,6 +2762,7 @@ function defaultState() {
     spellSlots: [null, null, null],
     artifacts: [],
     equippedArtifact: null,
+    market: { refreshAt: 0, spells: [], artifacts: [] },
     research: { active: false, startAt: 0, endAt: 0 },
     researchCount: 0,
     guardians: [],
@@ -2829,11 +2983,10 @@ function updateResearch(state, now) {
     stored = false;
   } else {
     state.spells.push(spell);
-    autoEquipSpell(state, spell);
   }
   state.researchCount = (state.researchCount || 0) + 1;
   if (stored) {
-    pushLog(state, "研习有成 · 习得「" + spell.name + "」（" + spell.realmName + "）", "success");
+    pushLog(state, "研习有成 · 习得「" + spell.name + "」（" + spell.realmName + "），已收入背包", "success");
     state.pendingSpell = spell;
   } else {
     pushLog(state, "藏法阁已满，新悟之法散于识海", "fail");
@@ -2853,6 +3006,33 @@ function startResearch(state) {
   r.endAt = now + CFG.RESEARCH_SEC * 1000;
   pushLog(state, "你铺开蒲团，开始参研法术……", "info");
   return { ok: true, duration: CFG.RESEARCH_SEC };
+}
+
+function researchRemain(state, now) {
+  const r = state.research;
+  if (!r || !r.active) return 0;
+  return Math.max(0, (Number(r.endAt) || 0) - (now || Date.now()));
+}
+
+function rushResearchCost(state, now) {
+  const remain = researchRemain(state, now);
+  if (!remain) return 0;
+  const realm = realmAt(state.realmIndex || 0);
+  const perSec = Math.max(0.5, realm.rate * CFG.STONE_FACTOR);
+  return Math.max(1, Math.ceil((remain / 1000) * perSec * 0.9));
+}
+
+function rushResearch(state) {
+  const now = Date.now();
+  const r = state.research;
+  if (!r || !r.active) return { ok: false, msg: "尚未开卷参研" };
+  const cost = rushResearchCost(state, now);
+  if ((state.stone || 0) < cost) return { ok: false, msg: "灵石不足，尚缺 " + fmt(cost - state.stone) };
+  state.stone -= cost;
+  pushLog(state, "耗灵石 " + fmt(cost) + " 加速参研，灵光乍现", "gain");
+  r.endAt = now;
+  const spell = updateResearch(state, now);
+  return { ok: true, cost: cost, spell: spell };
 }
 
 function autoEquipSpell(state, spell) {
@@ -2922,6 +3102,81 @@ function equipArtifact(state, id) {
   pushLog(state, "祭炼法宝 ·「" + art.name + "」", "gain");
   checkAchievements(state);
   return { ok: true, artifact: art };
+}
+
+function releaseArtifact(state, id) {
+  if (state.equippedArtifact === id) return { ok: false, msg: "本命法宝不可舍弃，先祭炼他宝" };
+  const idx = (state.artifacts || []).findIndex((a) => a.id === id);
+  if (idx < 0) return { ok: false, msg: "法宝不存在" };
+  const art = state.artifacts.splice(idx, 1)[0];
+  pushLog(state, "舍弃法宝 ·「" + art.name + "」", "fail");
+  return { ok: true, artifact: art };
+}
+
+function marketPrice(state, kind, quality) {
+  const realm = realmAt(state.realmIndex || 0);
+  const unit = Math.max(1, realm.rate * CFG.STONE_FACTOR);
+  const q = clamp(Number(quality) || 1, 1, 5);
+  const base = unit * (34 + q * 22);
+  return Math.max(1, Math.round(kind === "artifact" ? base * 2.4 : base));
+}
+
+function refreshMarket(state, now) {
+  now = now || Date.now();
+  const count = Math.max(1, CFG.MARKET_STOCK | 0);
+  const spells = [];
+  const artifacts = [];
+  for (let i = 0; i < count; i++) {
+    const sp = makeSpell(state);
+    sp.price = marketPrice(state, "spell", sp.quality);
+    spells.push(sp);
+    const art = makeArtifact(state);
+    art.price = marketPrice(state, "artifact", art.quality);
+    artifacts.push(art);
+  }
+  state.market = {
+    refreshAt: now + CFG.MARKET_REFRESH_SEC * 1000,
+    spells: spells,
+    artifacts: artifacts,
+  };
+  return state.market;
+}
+
+function ensureMarket(state, now) {
+  now = now || Date.now();
+  if (!state.market || typeof state.market !== "object") {
+    state.market = { refreshAt: 0, spells: [], artifacts: [] };
+  }
+  const m = state.market;
+  m.spells = Array.isArray(m.spells) ? m.spells : [];
+  m.artifacts = Array.isArray(m.artifacts) ? m.artifacts : [];
+  if (!m.refreshAt || now >= m.refreshAt) refreshMarket(state, now);
+  return state.market;
+}
+
+function marketBuy(state, kind, id) {
+  const now = Date.now();
+  const m = ensureMarket(state, now);
+  const isArtifact = kind === "artifact";
+  const list = isArtifact ? m.artifacts : m.spells;
+  const idx = list.findIndex((it) => it.id === id);
+  if (idx < 0) return { ok: false, msg: "此物已被人买走" };
+  const item = list[idx];
+  if (isArtifact && (state.artifacts || []).length >= CFG.MAX_ARTIFACTS) {
+    return { ok: false, msg: "法宝库已满，先在背包舍弃一件" };
+  }
+  if (!isArtifact && (state.spells || []).length >= CFG.MAX_SPELLS) {
+    return { ok: false, msg: "藏法阁已满，先在背包舍弃旧术" };
+  }
+  const price = Math.max(1, Number(item.price) || 1);
+  if ((state.stone || 0) < price) return { ok: false, msg: "灵石不足，尚缺 " + fmt(price - state.stone) };
+  state.stone -= price;
+  list.splice(idx, 1);
+  if (isArtifact) state.artifacts.push(item);
+  else state.spells.push(item);
+  pushLog(state, "于坊市购得「" + item.name + "」（灵石 -" + fmt(price) + "）", "gain");
+  checkAchievements(state);
+  return { ok: true, item: item, kind: kind, price: price };
 }
 
 function rerollAttrs(state) {
@@ -3214,6 +3469,16 @@ function migrate(raw) {
   }
   s.researchCount = Math.max(0, parseInt(s.researchCount, 10) || 0);
   s.guardians = Array.isArray(raw.guardians) ? raw.guardians.filter((id) => !!GUARDIAN_MAP[id]) : [];
+  const rawMarket = raw.market && typeof raw.market === "object" ? raw.market : {};
+  const normMarket = (list) => (Array.isArray(list) ? list : []).filter((it) => it && it.id && it.main).map((it) => {
+    it.price = Math.max(1, Number(it.price) || 1);
+    return it;
+  }).slice(0, 8);
+  s.market = {
+    refreshAt: Number(rawMarket.refreshAt) || 0,
+    spells: normMarket(rawMarket.spells),
+    artifacts: normMarket(rawMarket.artifacts),
+  };
   s.battleWins = Math.max(0, parseInt(s.battleWins, 10) || 0);
   s.battleLosses = Math.max(0, parseInt(s.battleLosses, 10) || 0);
   s.guardianKills = Math.max(0, parseInt(s.guardianKills, 10) || 0);
@@ -3333,6 +3598,36 @@ function rollAttrs() {
   return attrs;
 }
 
+/* 法术品质只由悟性决定：任何悟性都可能出五星，悟性越高，高品质权重越大 */
+function qualityWeights(wuxing) {
+  const w = clamp(Number(wuxing) || 8, 1, 100);
+  const shift = clamp((w - 8) / 24, 0, 1.2);
+  return [
+    46 - 20 * shift,
+    28 - 4 * shift,
+    15 + 2 * shift,
+    7 + 10 * shift,
+    4 + 12 * shift,
+  ];
+}
+function qualityChance(wuxing, minQuality) {
+  const weights = qualityWeights(wuxing);
+  const total = weights.reduce((a, b) => a + b, 0);
+  let hit = 0;
+  for (let q = minQuality; q <= 5; q++) hit += weights[q - 1];
+  return hit / total;
+}
+function rollQuality(attrs) {
+  const weights = qualityWeights(attrs && attrs.wuxing);
+  const total = weights.reduce((a, b) => a + b, 0);
+  let r = Math.random() * total;
+  for (let i = 0; i < weights.length; i++) {
+    r -= weights[i];
+    if (r <= 0) return i + 1;
+  }
+  return 5;
+}
+
 function deriveStats(state) {
   const a = state.attrs || rollAttrs();
   const idx = Math.max(0, state.realmIndex | 0);
@@ -3345,9 +3640,9 @@ function deriveStats(state) {
   const critRate = Math.min(0.6, 0.05 + a.xingyun * 0.0035);
   const critDmg = 1.5 + a.shenshi * 0.012;
   const dodge = Math.min(0.35, a.xingyun * 0.0025);
-  const quality = clamp(1 + Math.floor(a.wuxing / 12) + Math.floor(idx / 12), 1, 5);
+  const highQualityChance = qualityChance(a.wuxing, 4);
   const mpCost = Math.max(1, Math.round(mpMax * 0.10));
-  return { hpMax, mpMax, spellAtk, artifactAtk, defense, critRate, critDmg, dodge, quality, mpCost };
+  return { hpMax, mpMax, spellAtk, artifactAtk, defense, critRate, critDmg, dodge, highQualityChance, mpCost };
 }
 
 /* ------------------------------ 法术 / 法宝生成 ------------------------------ */
@@ -3370,10 +3665,11 @@ function realmTag(state) {
 }
 function makeSpell(state) {
   const d = deriveStats(state);
-  const main = pickOne(SPELL_MAINS);
+  const quality = rollQuality(state.attrs);
+  const main = pickWeighted(SPELL_MAINS);
   const hasEffect = Math.random() < 0.6;
-  const effect = hasEffect ? pickEffect(d.quality) : null;
-  const extras = pickExtras(hasEffect ? 3 : 4, d.quality);
+  const effect = hasEffect ? pickEffect(quality) : null;
+  const extras = pickExtras(hasEffect ? 3 : 4, quality);
   const ratio = main.spellRatio;
   return {
     id: nextUid("sp"),
@@ -3385,16 +3681,17 @@ function makeSpell(state) {
     extras: extras,
     realm: state.realmIndex | 0,
     realmName: realmTag(state),
-    quality: d.quality,
+    quality: quality,
   };
 }
 function makeArtifact(state) {
   const d = deriveStats(state);
+  const quality = rollQuality(state.attrs);
   const main = pickOne(SPELL_MAINS);
   const hasEffect = Math.random() < 0.5;
-  const effect = hasEffect ? pickEffect(d.quality) : null;
-  const extras = pickExtras(hasEffect ? 2 : 3, d.quality);
-  const speedRoll = Math.random() + Math.max(0, d.quality - 3) * 0.1;
+  const effect = hasEffect ? pickEffect(quality) : null;
+  const extras = pickExtras(hasEffect ? 2 : 3, quality);
+  const speedRoll = Math.random() + Math.max(0, quality - 3) * 0.1;
   const speed = speedRoll > 0.84 ? 4 : speedRoll > 0.46 ? 3 : 2;
   return {
     id: nextUid("art"),
@@ -3407,7 +3704,7 @@ function makeArtifact(state) {
     speed: speed,
     realm: state.realmIndex | 0,
     realmName: realmTag(state),
-    quality: d.quality,
+    quality: quality,
   };
 }
 
@@ -3685,10 +3982,13 @@ function simulateBattle(state, cfg) {
 
 /* ------------------------------ 灵脉守护者 ------------------------------ */
 function guardianForState(state) {
-  const tier = realmAt(state.realmIndex || 0).tier;
-  let g = GUARDIANS.find((x) => x.tier === tier);
-  if (!g) g = GUARDIANS[GUARDIANS.length - 1];
-  return g || null;
+  const realm = Math.max(0, state.realmIndex | 0);
+  /* 先收服最早一道已解锁却未击败的灵脉，境界提升不会跳过旧守护者 */
+  const pending = GUARDIANS.filter((g) => realm >= g.start && !guardianDefeated(state, g.id));
+  if (pending.length) return pending[0];
+  /* 已全部收服时，展示下一道尚未解锁的灵脉（若有） */
+  const next = GUARDIANS.find((g) => realm < g.start);
+  return next || null;
 }
 function guardianDefeated(state, id) {
   return (state.guardians || []).indexOf(id) >= 0;
@@ -3699,7 +3999,7 @@ function guardianStoneBonus(state) {
 
 /* ===== ui.js ===== */
 /* =====================================================================
- * 《长生道》· ui.js (v2.0.0)
+ * 《长生道》· ui.js (v2.1.0)
  * 界面渲染 / 交互 / 创造角 / 战斗演出 / 存档导入导出 / 更新检测
  * ===================================================================== */
 
@@ -3721,6 +4021,9 @@ let toastTimer = 0;
 let modalQueue = [];
 let coverOpen = false;
 let creating = false;
+let bagTab = "spell";
+let lastBagSpellCount = -1;
+let lastMarketRefresh = -1;
 
 /* 战斗演出状态 */
 let battleOpen = false;
@@ -3778,9 +4081,13 @@ function cacheDom() {
     "btnBreak", "breakSub", "realmCard", "autoHint",
     "logList", "stoneText", "playTimeText", "brandSub",
     "researchHint", "researchIcon", "researchTitle", "researchDesc",
-    "researchBar", "researchTime", "btnResearch", "researchSub", "slotRow", "spellHint", "spellList",
-    "artHint", "artEquipped", "artLibHint", "artList",
-    "pillBag", "pillShop", "shopHint",
+    "researchBar", "researchTime", "btnResearch", "researchSub", "btnRush", "rushSub", "slotRow", "spellHint",
+    "bagHint", "bagSpellCount", "bagArtCount", "bagPillCount",
+    "bagSpellHint", "bagArtHint", "bagPillHint",
+    "bagSpellList", "bagArtList", "bagPillList",
+    "marketTime", "marketNote", "marketSpellHint", "marketArtHint", "marketPillHint",
+    "marketSpells", "marketArts", "marketPills",
+    "combatGrid",
     "guardianHint", "guardianIcon", "guardianName", "guardianDesc", "btnGuardian", "guardianSub",
     "journeyOrb", "btnJourney", "journeySub", "journeyLog", "journeyRealm",
     "attrTotal", "attrList", "statsGrid", "achGrid", "achHint", "verText",
@@ -3822,8 +4129,17 @@ function loop() {
   updateTopbar(now);
   if (currentTab === "cultivate") updateCultivate(now);
   if (currentTab === "spells") updateResearchCard(now);
+  if (currentTab === "bag") {
+    updateResearchCard(now);
+    if ((game.spells || []).length !== lastBagSpellCount) renderBag();
+  }
+  if (currentTab === "market") {
+    const market = ensureMarket(game, now);
+    if (market.refreshAt !== lastMarketRefresh) renderMarket();
+    else updateMarketClock(now);
+    updateAffordability();
+  }
   if (currentTab === "journey") { updateJourney(now); renderGuardian(now); }
-  if (currentTab === "alchemy") updateAffordability();
   flushPendingSpell();
   flushUnlocks();
   if (game.logs.length !== lastLogCount) {
@@ -3909,23 +4225,32 @@ function updateResearchCard(now) {
     const remain = Math.max(0, (r.endAt - now) / 1000);
     UI.researchIcon.textContent = "🌀";
     UI.researchTitle.textContent = "参研中";
-    UI.researchDesc.textContent = "心无旁骛，静待术成。功成时随机习得一门法术。";
+    UI.researchDesc.textContent = "心无旁骛，静待术成。功成时随机习得一门法术，收入背包。";
     UI.researchBar.style.width = (pct * 100).toFixed(1) + "%";
     UI.researchTime.textContent = "还剩 " + fmtDuration(remain);
     UI.btnResearch.disabled = true;
     UI.researchSub.textContent = "还需 " + fmtDuration(remain);
+    const cost = rushResearchCost(game, now);
+    if (UI.btnRush) {
+      UI.btnRush.disabled = game.stone < cost;
+      UI.rushSub.textContent = game.stone < cost ? "尚缺 " + fmt(cost - game.stone) : "耗 " + fmt(cost) + " 灵石";
+    }
   } else {
     UI.researchIcon.textContent = "📖";
     UI.researchTitle.textContent = total ? "案上无卷" : "尚未开卷";
-    UI.researchDesc.textContent = "研习需静候 " + fmtDuration(CFG.RESEARCH_SEC) + "，功成时随机习得一门法术。";
+    UI.researchDesc.textContent = "研习需静候 " + fmtDuration(CFG.RESEARCH_SEC) + "，功成时随机习得一门法术，收入背包。";
     UI.researchBar.style.width = "0%";
     UI.researchTime.textContent = "";
     UI.btnResearch.disabled = total >= CFG.MAX_SPELLS;
     UI.researchSub.textContent = total >= CFG.MAX_SPELLS ? "藏法阁已满" : "需 " + fmtDuration(CFG.RESEARCH_SEC);
+    if (UI.btnRush) {
+      UI.btnRush.disabled = true;
+      UI.rushSub.textContent = "尚未开卷";
+    }
   }
 }
 
-function renderSpells() {
+function renderSpellPage() {
   const slots = game.spellSlots || [null, null, null];
   const spells = game.spells || [];
   UI.slotRow.innerHTML = [0, 1, 2].map((i) => {
@@ -3943,13 +4268,44 @@ function renderSpells() {
       '<button class="btn btn-small btn-ghost" data-action="unequip-spell" data-slot="' + i +
       '"><span class="btn-main">卸下</span></button></div>';
   }).join("");
+  const equipped = slots.filter(Boolean).length;
+  if (UI.spellHint) UI.spellHint.textContent = "已装配 " + equipped + " / 3 · 共习得 " + spells.length + " 门";
+  updateResearchCard(Date.now());
+}
 
-  UI.spellHint.textContent = spells.length + " / " + CFG.MAX_SPELLS;
+/* ------------------------------ 背包页 ------------------------------ */
+function pillTotal() {
+  return Object.keys(game.pills || {}).reduce((sum, id) => sum + (game.pills[id] || 0), 0);
+}
+
+function renderBag() {
+  const spells = game.spells || [];
+  const arts = game.artifacts || [];
+  const pills = pillTotal();
+  if (UI.bagSpellCount) UI.bagSpellCount.textContent = spells.length;
+  if (UI.bagArtCount) UI.bagArtCount.textContent = arts.length;
+  if (UI.bagPillCount) UI.bagPillCount.textContent = pills;
+  if (UI.bagHint) UI.bagHint.textContent = "法术 " + spells.length + " 门 · 法宝 " + arts.length + " 件 · 丹药 " + pills + " 枚";
+  document.querySelectorAll(".bag-tab").forEach((b) =>
+    b.classList.toggle("active", b.getAttribute("data-bag") === bagTab));
+  document.querySelectorAll("[data-bag-panel]").forEach((p) =>
+    p.classList.toggle("active", p.getAttribute("data-bag-panel") === bagTab));
+
+  renderBagSpells();
+  renderBagArts();
+  renderBagPills();
+  lastBagSpellCount = spells.length;
+}
+
+function renderBagSpells() {
+  const spells = game.spells || [];
+  const slots = game.spellSlots || [null, null, null];
+  UI.bagSpellHint.textContent = spells.length + " / " + CFG.MAX_SPELLS + " · 三格法术栏";
   if (!spells.length) {
-    UI.spellList.innerHTML = '<div class="empty-tip">藏法阁空空如也，先开卷参研一门法术吧</div>';
+    UI.bagSpellList.innerHTML = '<div class="empty-tip">尚未习得法术，先开卷参研</div>';
     return;
   }
-  UI.spellList.innerHTML = spells.map((sp) => {
+  UI.bagSpellList.innerHTML = spells.map((sp) => {
     const equipped = slots.indexOf(sp.id) >= 0;
     return '<div class="spell-item">' +
       '<div class="spell-head"><div class="spell-icon">' + sp.icon + "</div>" +
@@ -3967,36 +4323,16 @@ function renderSpells() {
       '<button class="btn btn-small btn-ghost" data-action="release-spell" data-id="' + sp.id + '"><span class="btn-main">舍弃</span></button>' +
       "</div></div>";
   }).join("");
-  updateResearchCard(Date.now());
 }
 
-/* ------------------------------ 法宝页 ------------------------------ */
-function renderArts() {
+function renderBagArts() {
   const arts = game.artifacts || [];
-  const eq = equippedArtifact(game);
-  UI.artHint.textContent = arts.length + " / " + CFG.MAX_ARTIFACTS;
-  UI.artLibHint.textContent = arts.length + " / " + CFG.MAX_ARTIFACTS;
-  if (!eq) {
-    UI.artEquipped.innerHTML = '<div class="empty-tip">尚无本命法宝，去历练中缴获一件吧</div>';
-  } else {
-    UI.artEquipped.innerHTML = '<div class="art-detail">' +
-      '<div class="art-detail-head"><div class="art-detail-icon">' + eq.icon + "</div>" +
-      '<div><div class="art-detail-name">' + esc(eq.name) +
-      '<span class="quality">' + stars(eq.quality) + "</span></div>" +
-      '<div class="art-detail-sub">' + esc(eq.realmName || "") + " · 本命法宝</div></div></div>" +
-      '<div class="art-detail-main">' + spellMainLine(eq) + "</div>" +
-      (eq.effect ? '<div class="spell-effect">' + eq.effect.icon + " <b>" + esc(eq.effect.name) +
-        "</b> · " + esc(eq.effect.text) + "</div>" : "") +
-      '<div class="spell-extras">' + itemExtraLines(eq).map((t) => '<span class="chip-mini">' + esc(t) + "</span>").join("") + "</div>" +
-      '<div class="art-speed">⏱ ' + artifactTriggerHint(eq) + "</div>" +
-      "</div>";
-  }
-
+  UI.bagArtHint.textContent = arts.length + " / " + CFG.MAX_ARTIFACTS + " · 本命限一";
   if (!arts.length) {
-    UI.artList.innerHTML = '<div class="empty-tip">法宝库空空如也，斗法得胜或可缴获</div>';
+    UI.bagArtList.innerHTML = '<div class="empty-tip">法宝库空空如也，斗法得胜或可缴获</div>';
     return;
   }
-  UI.artList.innerHTML = arts.map((a) => {
+  UI.bagArtList.innerHTML = arts.map((a) => {
     const on = game.equippedArtifact === a.id;
     return '<div class="artifact-item ' + (on ? "owned" : "") + '">' +
       '<div class="artifact-top"><div class="artifact-icon">' + a.icon + "</div>" +
@@ -4007,37 +4343,77 @@ function renderArts() {
       (a.effect ? '<div class="artifact-desc">' + a.effect.icon + " " + esc(a.effect.name) + " · " + esc(a.effect.text) + "</div>" : "") +
       '<div class="artifact-extra">' + itemExtraLines(a).join(" · ") + "</div>" +
       '<div class="artifact-actions">' +
-      (on ? '<button class="btn btn-small disabled"><span class="btn-main">祭炼中</span></button>'
-        : '<button class="btn btn-small" data-action="equip-artifact" data-id="' + a.id + '"><span class="btn-main">祭炼</span></button>') +
+      (on
+        ? '<button class="btn btn-small disabled"><span class="btn-main">祭炼中</span></button>'
+        : '<button class="btn btn-small" data-action="equip-artifact" data-id="' + a.id + '"><span class="btn-main">祭炼</span></button>' +
+          '<button class="btn btn-small btn-ghost" data-action="release-artifact" data-id="' + a.id + '"><span class="btn-main">舍弃</span></button>') +
       "</div></div>";
   }).join("");
 }
 
-/* ------------------------------ 丹房页 ------------------------------ */
-function renderAlchemy() {
-  const ids = Object.keys(game.pills).filter((id) => game.pills[id] > 0);
+function renderBagPills() {
+  const ids = Object.keys(game.pills || {}).filter((id) => game.pills[id] > 0);
+  UI.bagPillHint.textContent = pillTotal() + " 枚 · 点击服用";
   if (!ids.length) {
-    UI.pillBag.innerHTML = '<div class="empty-tip">储物袋空空如也，去坊市寻些丹药吧</div>';
-  } else {
-    UI.pillBag.innerHTML = ids.map((id) => {
-      const p = PILL_MAP[id];
-      if (!p) return "";
-      return '<div class="pill-item"><div class="pill-icon">' + p.icon + "</div>" +
-        '<div class="pill-info"><div class="pill-name">' + p.name +
-        '<span class="pill-count">×' + game.pills[id] + "</span></div>" +
-        '<div class="pill-desc">' + p.desc + "</div></div>" +
-        '<button class="btn btn-small" data-action="use-pill" data-id="' + id + '"><span class="btn-main">服用</span></button></div>';
-    }).join("");
+    UI.bagPillList.innerHTML = '<div class="empty-tip">储物袋空空如也，去坊市寻些丹药吧</div>';
+    return;
   }
+  UI.bagPillList.innerHTML = ids.map((id) => {
+    const p = PILL_MAP[id];
+    if (!p) return "";
+    return '<div class="pill-item"><div class="pill-icon">' + p.icon + "</div>" +
+      '<div class="pill-info"><div class="pill-name">' + p.name +
+      '<span class="pill-count">×' + game.pills[id] + "</span></div>" +
+      '<div class="pill-desc">' + p.desc + "</div></div>" +
+      '<button class="btn btn-small" data-action="use-pill" data-id="' + id + '"><span class="btn-main">服用</span></button></div>';
+  }).join("");
+}
 
-  UI.shopHint.textContent = "以灵石易丹药";
-  UI.pillShop.innerHTML = PILLS.map((p) =>
-    '<div class="pill-item"><div class="pill-icon">' + p.icon + "</div>" +
-    '<div class="pill-info"><div class="pill-name">' + p.name + "</div>" +
-    '<div class="pill-desc">' + p.desc + "</div></div>" +
-    '<button class="btn btn-small buy" data-action="buy-pill" data-id="' + p.id +
+/* ------------------------------ 坊市页 ------------------------------ */
+function updateMarketClock(now) {
+  if (!UI.marketTime) return;
+  const remain = Math.max(0, ((game.market && game.market.refreshAt || 0) - now) / 1000);
+  UI.marketTime.textContent = remain > 0 ? "换货倒计时 " + fmtDuration(remain) : "正在换货";
+}
+
+function marketItemHTML(item, kind) {
+  const isArt = kind === "artifact";
+  return '<div class="market-item">' +
+    '<div class="market-head"><div class="market-icon">' + item.icon + "</div>" +
+    '<div class="market-body"><div class="market-name">' + esc(item.name) +
+    '<span class="quality">' + stars(item.quality) + "</span></div>" +
+    '<div class="market-sub">' + esc(item.realmName || "") + (isArt ? " · 法宝 · 速 " + item.speed : " · 法术") + "</div></div></div>" +
+    '<div class="market-line">' + spellMainLine(item) + "</div>" +
+    (item.effect ? '<div class="market-line sub">' + item.effect.icon + " " + esc(item.effect.name) + " · " + esc(item.effect.text) + "</div>" : "") +
+    '<div class="market-line sub">' + itemExtraLines(item).join(" · ") + "</div>" +
+    '<button class="btn btn-small buy market-buy" data-action="buy-market" data-kind="' + kind +
+    '" data-id="' + item.id + '" data-price="' + item.price + '"><span class="btn-main">' +
+    fmt(item.price) + " 💎</span></button></div>";
+}
+
+function renderMarket() {
+  const m = ensureMarket(game, Date.now());
+  if (UI.marketNote) UI.marketNote.textContent = "行商每 " + Math.round(CFG.MARKET_REFRESH_SEC / 60) + " 分钟换货 · 品质随境界";
+  if (UI.marketSpellHint) UI.marketSpellHint.textContent = m.spells.length + " / " + CFG.MARKET_STOCK;
+  if (UI.marketArtHint) UI.marketArtHint.textContent = m.artifacts.length + " / " + CFG.MARKET_STOCK;
+  if (UI.marketPillHint) UI.marketPillHint.textContent = "常备丹药";
+
+  UI.marketSpells.innerHTML = m.spells.length
+    ? m.spells.map((it) => marketItemHTML(it, "spell")).join("")
+    : '<div class="empty-tip">货架已空，等待行商补货</div>';
+  UI.marketArts.innerHTML = m.artifacts.length
+    ? m.artifacts.map((it) => marketItemHTML(it, "artifact")).join("")
+    : '<div class="empty-tip">货架已空，等待行商补货</div>';
+  UI.marketPills.innerHTML = PILLS.map((p) =>
+    '<div class="market-item"><div class="market-head"><div class="market-icon">' + p.icon + "</div>" +
+    '<div class="market-body"><div class="market-name">' + p.name + "</div>" +
+    '<div class="market-sub">丹药 · 常备</div></div></div>' +
+    '<div class="market-line sub">' + p.desc + "</div>" +
+    '<button class="btn btn-small buy market-buy" data-action="buy-pill" data-id="' + p.id +
     '" data-price="' + p.price + '"><span class="btn-main">' + fmt(p.price) + " 💎</span></button></div>"
   ).join("");
+  updateMarketClock(Date.now());
+  lastMarketRefresh = m.refreshAt;
   updateAffordability();
 }
 
@@ -4062,7 +4438,16 @@ function updateJourney(now) {
 
 function renderGuardian(now) {
   const g = guardianForState(game);
-  if (!g) { UI.guardianHint.textContent = ""; return; }
+  if (!g) {
+    UI.guardianHint.textContent = "已镇守 " + (game.guardians || []).length + " / " + GUARDIANS.length;
+    UI.guardianIcon.textContent = "🗻";
+    UI.guardianName.textContent = "灵脉尽归";
+    UI.guardianDesc.textContent = "九道灵脉皆已镇守，此界再无守护者。";
+    UI.btnGuardian.disabled = true;
+    UI.btnGuardian.querySelector(".btn-main").textContent = "此界已定";
+    UI.guardianSub.textContent = "九脉皆归";
+    return;
+  }
   const done = guardianDefeated(game, g.id);
   const locked = game.realmIndex < g.start;
   UI.guardianHint.textContent = "已镇守 " + (game.guardians || []).length + " / " + GUARDIANS.length;
@@ -4124,6 +4509,24 @@ function renderMore() {
     '<div class="stat"><label>' + r[0] + "</label><b>" + r[1] + "</b></div>"
   ).join("");
 
+  if (UI.combatGrid) {
+    const combatRows = [
+      ["气血上限", fmt(d.hpMax)],
+      ["法力上限", fmt(d.mpMax)],
+      ["法术强度", fmt(d.spellAtk, 1)],
+      ["法宝强度", fmt(d.artifactAtk, 1)],
+      ["防御", fmt(d.defense, 1)],
+      ["暴击率", fmtPct(d.critRate, 1)],
+      ["暴击伤害", Math.round(d.critDmg * 100) + "%"],
+      ["闪避率", fmtPct(d.dodge, 1)],
+      ["法术耗灵", fmt(d.mpCost)],
+      ["高品质法术", fmtPct(d.highQualityChance, 1)],
+    ];
+    UI.combatGrid.innerHTML = combatRows.map((r) =>
+      '<div class="stat"><label>' + r[0] + "</label><b>" + r[1] + "</b></div>"
+    ).join("");
+  }
+
   UI.achHint.textContent = achs + " / " + ACHIEVEMENTS.length;
   UI.achGrid.innerHTML = ACHIEVEMENTS.map((a) => {
     const done = !!game.achieve[a.id];
@@ -4148,9 +4551,9 @@ function switchTab(tab) {
     p.classList.toggle("active", p.getAttribute("data-panel") === tab);
   });
   if (tab === "cultivate") { renderLogs(); lastLogCount = game.logs.length; updateCultivate(Date.now()); }
-  if (tab === "spells") { renderSpells(); updateResearchCard(Date.now()); }
-  if (tab === "artifacts") renderArts();
-  if (tab === "alchemy") renderAlchemy();
+  if (tab === "spells") renderSpellPage();
+  if (tab === "bag") renderBag();
+  if (tab === "market") renderMarket();
   if (tab === "journey") { updateJourney(Date.now()); renderGuardian(Date.now()); renderJourneyLog(); lastJourneyCount = game.journeyLog.length; }
   if (tab === "more") renderMore();
   if (UI.view) UI.view.scrollTop = 0;
@@ -4174,6 +4577,10 @@ function onClick(e) {
     case "unequip-spell": doUnequipSpell(slot); break;
     case "release-spell": doReleaseSpell(id); break;
     case "equip-artifact": doEquipArtifact(id); break;
+    case "release-artifact": doReleaseArtifact(id); break;
+    case "rush-research": doRushResearch(); break;
+    case "bag-tab": doBagTab(target.getAttribute("data-bag")); break;
+    case "buy-market": doMarketBuy(target.getAttribute("data-kind"), id); break;
     case "reroll": doReroll(); break;
     case "reroll-create": doCreateReroll(); break;
     case "create-start": doCreateStart(); break;
@@ -4326,13 +4733,27 @@ function doGuardian() {
   });
 }
 
-/* ------------------------------ 法术 / 法宝操作 ------------------------------ */
+/* ------------------------------ 法术 / 背包 / 坊市操作 ------------------------------ */
+function refreshSpellViews() {
+  renderSpellPage();
+  if (currentTab === "bag") renderBag();
+}
+
 function doResearch() {
   const res = startResearch(game);
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
   toast("已开卷参研");
-  renderSpells();
+  refreshSpellViews();
+}
+
+function doRushResearch() {
+  const res = rushResearch(game);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast(res.spell ? "参研瞬息而成：「" + res.spell.name + "」" : "参研瞬息而成");
+  refreshSpellViews();
+  flushPendingSpell();
 }
 
 function doEquipSpell(id) {
@@ -4340,14 +4761,15 @@ function doEquipSpell(id) {
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
   toast("「" + res.spell.name + "」已入阵");
-  renderSpells();
+  refreshSpellViews();
 }
 
 function doUnequipSpell(slot) {
   const res = unequipSpell(game, slot);
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
-  renderSpells();
+  toast("已卸下法术");
+  refreshSpellViews();
 }
 
 function doReleaseSpell(id) {
@@ -4355,7 +4777,7 @@ function doReleaseSpell(id) {
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
   toast("已舍弃「" + (res.spell ? res.spell.name : "法术") + "」");
-  renderSpells();
+  refreshSpellViews();
 }
 
 function doEquipArtifact(id) {
@@ -4363,7 +4785,29 @@ function doEquipArtifact(id) {
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
   toast("已祭炼「" + res.artifact.name + "」");
-  renderArts();
+  renderBag();
+}
+
+function doReleaseArtifact(id) {
+  const res = releaseArtifact(game, id);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast("已舍弃「" + (res.artifact ? res.artifact.name : "法宝") + "」");
+  renderBag();
+}
+
+function doBagTab(tab) {
+  if (["spell", "artifact", "pill"].indexOf(tab) < 0) return;
+  bagTab = tab;
+  renderBag();
+}
+
+function doMarketBuy(kind, id) {
+  const res = marketBuy(game, kind, id);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast("购得「" + res.item.name + "」");
+  renderMarket();
 }
 
 function doReroll() {
@@ -4379,7 +4823,7 @@ function doBuyPill(id) {
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
   toast("购得 " + res.def.name);
-  renderAlchemy();
+  renderMarket();
 }
 
 function doUsePill(id) {
@@ -4387,7 +4831,7 @@ function doUsePill(id) {
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
   toast(res.msg);
-  renderAlchemy();
+  renderBag();
   if (currentTab === "cultivate") updateCultivate(Date.now());
 }
 
@@ -4651,8 +5095,8 @@ function spellModal(sp) {
       (sp.effect ? '<p>' + sp.effect.icon + " <b>" + esc(sp.effect.name) + "</b> · " + esc(sp.effect.text) + "</p>" : "") +
       '<p style="font-size:11.5px;color:var(--muted)">' +
       (itemExtraLines(sp).join(" · ") || "无附加属性") +
-      '</p><p style="font-size:11.5px;color:var(--muted)">已自动装入法术栏空位。</p>',
-    buttons: [{ text: "收入藏法阁", cls: "btn-primary" }],
+      '</p><p style="font-size:11.5px;color:var(--muted)">已收入背包，可前往「背包 · 法术」装配。</p>',
+    buttons: [{ text: "收入背包", cls: "btn-primary" }],
   };
 }
 
