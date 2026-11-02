@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v2.4.0 · built 2026-11-02T15:30:13.559Z · 单文件离线可玩 -->
+<!-- 《长生道》 v2.5.0 · built 2026-11-02T17:13:51.566Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -1523,6 +1523,39 @@ textarea.savelink {
 [hidden] { display: none !important; }
 #metaCard { scroll-margin-top: 66px; }
 
+/* v2.5 · 洞府与道侣共修 */
+.cave-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 6px; }
+.cave-line {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 9px 11px; border-radius: 10px;
+  border: 1px solid var(--line); background: rgba(9, 16, 20, 0.5);
+  font-size: 11.5px; color: var(--muted);
+}
+.cave-line b { color: var(--jade); font-size: 14px; font-weight: 600; }
+.cave-desc { font-size: 11.5px; color: var(--muted); line-height: 1.7; margin: 4px 0 10px; }
+.companion-bond { margin-top: 10px; }
+.companion-bond-btn {
+  width: 100%; padding: 9px 10px;
+  border-color: rgba(111, 211, 192, 0.28);
+  background: rgba(16, 38, 40, 0.55);
+  box-shadow: inset 0 0 18px rgba(111, 211, 192, 0.05);
+}
+.companion-bond-btn .btn-main { font-size: 14px; color: var(--text); }
+.companion-bond-btn .btn-sub { font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+.companion-bond-btn:disabled { opacity: 0.5; filter: grayscale(0.4); }
+.companion-bond-btn:not(:disabled) .btn-main { color: var(--jade); }
+.companion-progress { margin-top: 6px; text-align: right; font-size: 10.5px; color: var(--muted); letter-spacing: 0.5px; }
+.companion-story-art {
+  width: 148px; margin: 0 auto 12px; overflow: hidden;
+  border-radius: 12px; border: 1px solid var(--line);
+}
+.companion-story-art img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.companion-story-quote { margin-top: 10px; text-align: center; font-size: 11.5px; color: var(--muted); font-style: italic; }
+@media (max-width: 350px) {
+  .cave-stats { grid-template-columns: 1fr; }
+  .companion-story-art { width: 128px; }
+}
+
 </style>
 </head>
 <body>
@@ -1686,6 +1719,18 @@ textarea.savelink {
       <div class="card">
         <div class="card-head"><span>坊市</span><span class="card-hint" id="marketTime">正在进货</span></div>
         <p class="market-note" id="marketNote">行商往来，每三十分钟换一批货。法术法宝品质随你的境界浮动，丹药常备。</p>
+      </div>
+      <div class="card cave-card">
+        <div class="card-head"><span>洞府 · 聚灵</span><span class="card-hint" id="caveLevel">Lv.1 / 20</span></div>
+        <div class="cave-stats">
+          <div class="cave-line"><span>修炼加成</span><b id="caveBonus">+6%</b></div>
+          <div class="cave-line"><span>下一级</span><b id="caveNext">+12%</b></div>
+        </div>
+        <p class="cave-desc" id="caveHint">聚灵阵加持，等级越高，静坐自修越快。</p>
+        <button class="btn btn-primary btn-wide" id="btnCave" data-action="upgrade-cave">
+          <span class="btn-main">升级洞府</span>
+          <span class="btn-sub" id="caveCost">耗 500 灵石</span>
+        </button>
       </div>
       <div class="card">
         <div class="card-head"><span>法术货架</span><span class="card-hint" id="marketSpellHint"></span></div>
@@ -2260,7 +2305,7 @@ textarea.savelink {
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "2.4.0";
+const GAME_VERSION = "2.5.0";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -2281,9 +2326,14 @@ const CFG = {
   RESEARCH_SEC: 600,            // 法术研究固定耗时（秒）
   MAX_SPELLS: 30,               // 藏法阁上限
   MAX_ARTIFACTS: 15,            // 法宝库上限
-  BATTLE_MAX_ROUNDS: 15,        // 战斗最大回合数
+  BATTLE_MAX_ROUNDS: 20,        // 战斗最大回合数
   MARKET_REFRESH_SEC: 1800,     // 坊市换货间隔（秒）
   MARKET_STOCK: 2,              // 坊市每类法术 / 法宝的货量
+  COMPANION_BOND_CD: 1800,      // 道侣共修共享冷却（秒）
+  CAVE_MAX_LEVEL: 20,           // 洞府最高等级
+  CAVE_BONUS_PER_LEVEL: 0.06,   // 洞府每级修炼加成
+  CAVE_UPGRADE_BASE: 500,       // 洞府升级基础灵石
+  CAVE_UPGRADE_MUL: 1.55,       // 洞府升级费用增长
   LOG_LIMIT: 80,
 };
 
@@ -2402,27 +2452,72 @@ const COMPANIONS = [
     age: 328, look: "二十上下", art: "sword",
     desc: "自深海而来的鲸族少女，蓝发如潮，白衣胜雪。她寡言少语，却总在你收功时递上一盏温茶。",
     quote: "潮起潮落，我都在这里。",
-    effect: { rate: 0.10 }, effectText: "修行速度 +10%" },
+    effect: { rate: 0.10 }, effectText: "修行速度 +10%",
+    gift: { name: "潮息", icon: "🌊", duration: 600, effects: [{ key: "rateExp", power: 0.80 }],
+      text: "修行速度 +80%，持续 10 分钟" },
+    stories: [
+      { title: "潮声入梦", text: "夜里你被潮声惊醒，沈青梧坐在窗边，正把一枚海螺贴在耳畔。她回头看你，说这是故乡的声音。" },
+      { title: "一盏温茶", text: "收功时，她递来一盏温茶，茶面浮着细小的盐粒。她说深海的人喝茶要加一点海，才不算忘本。" },
+      { title: "海底旧歌", text: "她轻声哼起一支没有词的歌，屋里的灯焰跟着潮声起伏。你听见鲸群在很远的地方回应。" },
+      { title: "鲸落之约", text: "她说鲸族一生只落一次，落下时会把最后的灵力还给海。她顿了顿，又说：我还不想那么早还。" },
+      { title: "潮起潮落", text: "她把手放在你掌心，掌心微凉，像退潮后的礁石。潮起潮落，我都在这里——这一次，她不是说笑。" },
+    ] },
   { id: "c_alchemy", name: "苏晚照", title: "丹火知己", icon: "📚", style: "丹修",
     age: 412, look: "二十三四", art: "alchemy",
     desc: "守着旧书斋的丹修，橘发如枫，袖口沾着墨与炉灰。她替你校方，也替你记着每一次火候。",
     quote: "丹成九转，也想留一盏灯给你。",
-    effect: { stone: 0.12 }, effectText: "灵石产出 +12%" },
+    effect: { stone: 0.12 }, effectText: "灵石产出 +12%",
+    gift: { name: "丹火", icon: "🔥", duration: 600, effects: [{ key: "rateStone", power: 0.80 }],
+      text: "灵石产出 +80%，持续 10 分钟" },
+    stories: [
+      { title: "炉火初燃", text: "苏晚照守着一炉将成的丹，橘发被火光照得发暖。她让你别说话，只把扇火的蒲扇递给你。" },
+      { title: "书页夹枫", text: "她在旧书里翻出一片多年前的枫叶，叶脉上还留着丹方批注。她说这是她第一次炼成丹时夹进去的。" },
+      { title: "丹成九转", text: "丹炉轻响，九转丹成。她先不看你，只看火候，确认无误后才弯起眼睛，把第一枚丹放进你手心。" },
+      { title: "灯下校方", text: "夜里她替你校对方子，笔尖停在某一味药上。她说不必谢，她只是喜欢有人陪她把灯点到很晚。" },
+      { title: "留一盏灯", text: "她把书斋的灯留在窗边，说无论你游历多远，回来时总有一盏是亮的。丹成九转，也想留一盏灯给你。" },
+    ] },
   { id: "c_fox", name: "白璃", title: "青丘狐仙", icon: "🦊", style: "狐仙",
     age: 866, look: "二十上下", art: "fox",
     desc: "青丘玄狐，黑耳白绒，尾梢扫过月色。她爱在月下讲些真假难辨的旧事。",
     quote: "长生太长，不如分我一半。",
-    effect: { success: 0.04 }, effectText: "破境成功率 +4%" },
+    effect: { success: 0.04 }, effectText: "破境成功率 +4%",
+    gift: { name: "狐月", icon: "🌙", duration: 600, effects: [{ key: "success", power: 0.10 }],
+      text: "破境成功率 +10%，持续 10 分钟" },
+    stories: [
+      { title: "月下狐影", text: "白璃蹲在屋脊上，黑耳被月光镀出一圈白绒。她冲你招手，说今夜月色好，适合听一句假话。" },
+      { title: "假话与真话", text: "她说自己活了八百多年，早就不记得真话怎么讲。可她说这句话时，尾尖悄悄卷住了你的手腕。" },
+      { title: "尾尖月色", text: "她把尾巴搭在你膝上，白绒扫过月色。她说狐尾最诚实，心里想什么，尾尖就先动了。" },
+      { title: "青丘旧事", text: "她讲起青丘的旧事，讲到一半忽然停住，问你若她不是狐仙，你还会不会在月下等她。" },
+      { title: "分我一半", text: "她把额头抵在你肩上，声音轻得像月光落地。长生太长，不如分我一半——这次，她没有笑。" },
+    ] },
   { id: "c_qin", name: "洛清商", title: "听雨琴侣", icon: "✨", style: "琴修",
     age: 590, look: "二十上下", art: "qin",
     desc: "紫发猫耳的琴妖，异色双瞳里各藏一枚星子。她按弦时，连风都轻下来。",
     quote: "一曲清商，可抵十年枯坐。",
-    effect: { rate: 0.07, stone: 0.07 }, effectText: "修行 +7% · 灵石 +7%" },
+    effect: { rate: 0.07, stone: 0.07 }, effectText: "修行 +7% · 灵石 +7%",
+    gift: { name: "清商", icon: "🎵", duration: 600, effects: [{ key: "rateExp", power: 0.35 }, { key: "rateStone", power: 0.35 }],
+      text: "修行 +35% · 灵石 +35%，持续 10 分钟" },
+    stories: [
+      { title: "雨打琴弦", text: "洛清商在檐下弹琴，雨点落在琴弦上，竟和她的曲子合上了拍。她抬眼看你，异色双瞳里各有一枚星子。" },
+      { title: "一曲清商", text: "她弹完一曲，指尖还停在弦上。她说这曲子没有名字，是写给一个总在雨里回来的人。" },
+      { title: "弦外之音", text: "你听不出她曲中的转折，她便拉过你的手按在弦上。弦震了一下，她说：这就是弦外之音。" },
+      { title: "知音难觅", text: "她说琴妖活得久，听过太多人夸她弹得好，却很少有人问她累不累。她问你，你听见的是琴，还是她。" },
+      { title: "与你合奏", text: "她把琴横在你膝上，自己坐到对面，说今日不弹独奏。雨声、琴声、你的心跳，慢慢落在同一个拍子上。" },
+    ] },
   { id: "c_dragon", name: "敖雪", title: "深海龙女", icon: "🐉", style: "龙女",
     age: 1320, look: "二十三四", art: "dragon",
     desc: "东海龙宫的幺女，角如霜玉，发如新雪。她嫌岸上太吵，却总在你渡劫时守在云外。",
     quote: "雷落下来，我替你挡一半。",
-    effect: { rate: 0.06, stone: 0.06, success: 0.02 }, effectText: "修行 +6% · 灵石 +6% · 破境 +2%" },
+    effect: { rate: 0.06, stone: 0.06, success: 0.02 }, effectText: "修行 +6% · 灵石 +6% · 破境 +2%",
+    gift: { name: "龙吟", icon: "🐉", duration: 600, effects: [{ key: "rateExp", power: 0.45 }, { key: "success", power: 0.05 }],
+      text: "修行 +45% · 破境 +5%，持续 10 分钟" },
+    stories: [
+      { title: "龙宫来客", text: "敖雪从云里落下来，白发上沾着细小的冰晶。她说龙宫太吵，借你的院子躲一会儿，只一会儿。" },
+      { title: "霜玉之角", text: "她低头让你看那对霜玉般的龙角，说龙角长得慢，一千年才这么长。你伸手碰了碰，她耳尖微微发红。" },
+      { title: "潮下珊瑚", text: "她带你去看海底的珊瑚，水光在她白发间流动。她说这些珊瑚比龙宫年纪还大，却没人替它们记岁数。" },
+      { title: "龙女之泪", text: "她说不清龙泪会不会变成珍珠，因为她从没哭过。停了一会儿，她把脸别开，说今天风太大。" },
+      { title: "与君同游", text: "她化作龙身绕着你飞了一圈，又落回你身边，装作什么都没发生。雷落下来，我替你挡一半——她说过的话，一直算数。" },
+    ] },
 ];
 const COMPANION_MAP = {};
 COMPANIONS.forEach((c) => { COMPANION_MAP[c.id] = c; });
@@ -2624,6 +2719,19 @@ ACHIEVEMENTS.forEach(a => { ACHIEVEMENT_MAP[a.id] = a; });
 
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "2.5.0",
+    date: "2026-11-03",
+    title: "同心·洞府",
+    items: [
+      "背包道侣新增「共度片刻」：每位道侣五段剧情，结缘后即可共修",
+      "五位道侣各带一种临时加成：潮息、丹火、狐月、清商、龙吟，持续十分钟",
+      "道侣共修共享三十分钟冷却，冷却中不可再叙",
+      "战斗默认速度加倍，回合上限由十五提升至二十",
+      "坊市新增洞府：以灵石升级，每级提升修炼速度，最高二十级",
+      "v2.4.0 存档可直接续玩，无需迁移",
+    ],
+  },
   {
     version: "2.4.0",
     date: "2026-11-02",
@@ -3001,6 +3109,9 @@ function defaultState() {
     artifacts: [],
     equippedArtifact: null,
     companions: [],
+    companionCd: 0,
+    companionStory: {},
+    caveLevel: 1,
     market: { refreshAt: 0, spells: [], artifacts: [] },
     research: { active: false, startAt: 0, endAt: 0 },
     researchCount: 0,
@@ -3011,7 +3122,7 @@ function defaultState() {
     flags: { created: false, ascended: false, ascensionRecorded: false },
     lifeNo: 1,
     pills: { juqi: 2 },
-    buffs: { rateExp: null, rateStone: null },
+    buffs: { rateExp: null, rateStone: null, success: null },
     breakBonus: 0,
     successBonus: 0,
     cooldowns: { encounter: 0 },
@@ -3067,11 +3178,59 @@ function companionSum(state, key) {
   return total;
 }
 
+function caveLevel(state) {
+  const lv = parseInt(state.caveLevel, 10);
+  return clamp(isFinite(lv) ? lv : 1, 1, CFG.CAVE_MAX_LEVEL);
+}
+
+function caveBonus(state) {
+  return CFG.CAVE_BONUS_PER_LEVEL * caveLevel(state);
+}
+
+function caveUpgradeCost(state) {
+  const lv = caveLevel(state);
+  if (lv >= CFG.CAVE_MAX_LEVEL) return 0;
+  return Math.round(CFG.CAVE_UPGRADE_BASE * Math.pow(CFG.CAVE_UPGRADE_MUL, lv - 1));
+}
+
+function upgradeCave(state) {
+  const lv = caveLevel(state);
+  if (lv >= CFG.CAVE_MAX_LEVEL) return { ok: false, msg: "洞府已至最高等级" };
+  const cost = caveUpgradeCost(state);
+  if (state.stone < cost) return { ok: false, msg: "灵石不足，尚缺 " + fmt(cost - state.stone) };
+  state.stone -= cost;
+  state.caveLevel = lv + 1;
+  pushLog(state, "洞府升至 Lv." + state.caveLevel + " · 修炼速度 +" + fmtPct(caveBonus(state)), "gain");
+  return { ok: true, level: state.caveLevel, cost: cost, bonus: caveBonus(state) };
+}
+
+function companionBond(state, id) {
+  const c = COMPANION_MAP[id];
+  if (!c) return { ok: false, msg: "未知道侣" };
+  if ((state.companions || []).indexOf(id) < 0) return { ok: false, msg: "尚未结缘，不可共修" };
+  if (!c.gift || !Array.isArray(c.stories) || !c.stories.length) return { ok: false, msg: "此道侣尚未备下故事" };
+  const now = Date.now();
+  const cd = Math.max(0, Number(state.companionCd) || 0);
+  if (cd > now) return { ok: false, msg: "道侣们正在静养", remain: (cd - now) / 1000 };
+  if (!state.companionStory || typeof state.companionStory !== "object") state.companionStory = {};
+  const prev = clamp(parseInt(state.companionStory[id], 10) || 0, 0, c.stories.length);
+  const index = Math.min(prev + 1, c.stories.length);
+  state.companionStory[id] = index;
+  state.companionCd = now + CFG.COMPANION_BOND_CD * 1000;
+  for (const e of c.gift.effects || []) applyBuff(state, e.key, e.power, c.gift.duration);
+  const story = c.stories[index - 1];
+  pushLog(state, "与「" + c.name + "」共度片刻 · 「" + story.title + "」" + c.gift.text, "great");
+  return { ok: true, companion: c, story: story, index: index, cdUntil: state.companionCd, gift: c.gift };
+}
+
 function computeStats(state, now) {
   now = now || Date.now();
   const realm = realmAt(state.realmIndex);
   const rateBuff = activeBuff(state, "rateExp", now);
   const stoneBuff = activeBuff(state, "rateStone", now);
+  const successBuff = activeBuff(state, "success", now);
+  const caveLv = caveLevel(state);
+  const caveMul = 1 + caveBonus(state);
   const guardianBonus = guardianStoneBonus(state);
   const companionRate = companionSum(state, "rate");
   const companionStone = companionSum(state, "stone");
@@ -3081,17 +3240,19 @@ function computeStats(state, now) {
   const bonusSucc = achieveSum(state, "success") + companionSucc;
   const daoRate = state.dao / 500;
   const daoSucc = state.dao / 1000;
-  const rate = realm.rate * CFG.IDLE_MULT * (1 + bonusRate + daoRate) * (1 + rateBuff);
+  const rate = realm.rate * CFG.IDLE_MULT * caveMul * (1 + bonusRate + daoRate) * (1 + rateBuff);
   const stoneRate = Math.max(0.5, realm.rate * CFG.STONE_FACTOR) * (1 + bonusStone) * (1 + stoneBuff);
-  const success = clamp(realm.success + daoSucc + bonusSucc + state.breakBonus + state.successBonus, 0.05, 0.95);
+  const success = clamp(realm.success + daoSucc + bonusSucc + state.breakBonus + state.successBonus + successBuff, 0.05, 0.95);
   return {
     realm, rate, stoneRate, success,
     bonusRate, bonusStone, bonusSucc, guardianBonus,
     companionRate, companionStone, companionSucc,
     derived: deriveStats(state),
-    rateBuff, stoneBuff,
+    caveLevel: caveLv, caveBonus: caveBonus(state), caveMul,
+    rateBuff, stoneBuff, successBuff,
     rateBuffEnd: state.buffs.rateExp ? state.buffs.rateExp.endAt : 0,
     stoneBuffEnd: state.buffs.rateStone ? state.buffs.rateStone.endAt : 0,
+    successBuffEnd: state.buffs.success ? state.buffs.success.endAt : 0,
     breakBonus: state.breakBonus,
     successBonus: state.successBonus,
   };
@@ -3784,6 +3945,15 @@ function migrate(raw) {
     spells: normMarket(rawMarket.spells),
     artifacts: normMarket(rawMarket.artifacts),
   };
+  s.caveLevel = clamp(parseInt(raw.caveLevel, 10) || 1, 1, CFG.CAVE_MAX_LEVEL);
+  s.companionCd = Math.max(0, Number(raw.companionCd) || 0);
+  const rawStories = raw.companionStory && typeof raw.companionStory === "object" ? raw.companionStory : {};
+  const storyMap = {};
+  for (const cid in rawStories) {
+    if (!COMPANION_MAP[cid]) continue;
+    storyMap[cid] = clamp(parseInt(rawStories[cid], 10) || 0, 0, 5);
+  }
+  s.companionStory = storyMap;
   s.battleWins = Math.max(0, parseInt(s.battleWins, 10) || 0);
   s.battleLosses = Math.max(0, parseInt(s.battleLosses, 10) || 0);
   s.guardianKills = Math.max(0, parseInt(s.guardianKills, 10) || 0);
@@ -3792,7 +3962,7 @@ function migrate(raw) {
   if (!s.companions) s.companions = [];
   s.pills = (s.pills && typeof s.pills === "object") ? s.pills : {};
   s.achieve = (s.achieve && typeof s.achieve === "object") ? s.achieve : {};
-  s.buffs = Object.assign({ rateExp: null, rateStone: null }, s.buffs || {});
+  s.buffs = Object.assign({ rateExp: null, rateStone: null, success: null }, s.buffs || {});
   s.cooldowns = Object.assign({ encounter: 0 }, s.cooldowns || {});
   s.settings = Object.assign({ muted: false }, s.settings || {});
   s.logs = Array.isArray(s.logs) ? s.logs.slice(-CFG.LOG_LIMIT) : [];
@@ -4405,6 +4575,7 @@ function guardianStoneBonus(state) {
 const $ = (id) => document.getElementById(id);
 const UI = {};
 const RING_LEN = 2 * Math.PI * 56;
+const BATTLE_SPEED = 2;
 
 let game = null;
 let currentTab = "cultivate";
@@ -4424,6 +4595,7 @@ let bagTab = "spell";
 let lastBagSpellCount = -1;
 let lastBagCompanionCount = -1;
 let lastMarketRefresh = -1;
+let lastBondReady = null;
 
 /* 战斗演出状态 */
 let battleOpen = false;
@@ -4499,6 +4671,7 @@ function cacheDom() {
     "bagSpellList", "bagArtList", "bagPillList", "bagCompList",
     "marketTime", "marketNote", "marketSpellHint", "marketArtHint", "marketPillHint",
     "marketSpells", "marketArts", "marketPills",
+    "caveLevel", "caveBonus", "caveNext", "caveHint", "caveCost", "btnCave",
     "combatGrid",
     "guardianHint", "guardianIcon", "guardianName", "guardianDesc", "btnGuardian", "guardianSub",
     "journeyOrb", "btnJourney", "journeySub", "journeyLog", "journeyRealm",
@@ -4546,11 +4719,15 @@ function loop() {
     updateResearchCard(now);
     if ((game.spells || []).length !== lastBagSpellCount ||
         (game.companions || []).length !== lastBagCompanionCount) renderBag();
+    const ready = !game.companionCd || game.companionCd <= now;
+    if (lastBondReady !== null && ready !== lastBondReady) renderBagCompanions();
+    lastBondReady = ready;
   }
   if (currentTab === "market") {
     const market = ensureMarket(game, now);
     if (market.refreshAt !== lastMarketRefresh) renderMarket();
     else updateMarketClock(now);
+    updateCave();
     updateAffordability();
   }
   if (currentTab === "journey") { updateJourney(now); renderGuardian(now); }
@@ -4614,13 +4791,15 @@ function updateCultivate(now) {
     if (UI.autoHint) UI.autoHint.innerHTML = '<span class="auto-dot"></span>静坐自修 · 修行速度 ×' + CFG.IDLE_MULT;
   }
 
-  const sig = st.rateBuff + "|" + st.stoneBuff + "|" + st.breakBonus + "|" +
-    st.successBonus + "|" + Math.ceil(st.rateBuffEnd / 1000) + "|" + Math.ceil(st.stoneBuffEnd / 1000);
+  const sig = st.rateBuff + "|" + st.stoneBuff + "|" + st.successBuff + "|" + st.breakBonus + "|" +
+    st.successBonus + "|" + Math.ceil(st.rateBuffEnd / 1000) + "|" + Math.ceil(st.stoneBuffEnd / 1000) +
+    "|" + Math.ceil(st.successBuffEnd / 1000);
   if (sig !== lastBuffSig) {
     lastBuffSig = sig;
     const parts = [];
     if (st.rateBuff > 0) parts.push("悟道 +" + fmtPct(st.rateBuff) + " · " + fmtDuration((st.rateBuffEnd - now) / 1000));
     if (st.stoneBuff > 0) parts.push("聚灵 +" + fmtPct(st.stoneBuff) + " · " + fmtDuration((st.stoneBuffEnd - now) / 1000));
+    if (st.successBuff > 0) parts.push("道侣同心 +" + fmtPct(st.successBuff) + " · " + fmtDuration((st.successBuffEnd - now) / 1000));
     if (st.breakBonus > 0) parts.push("破境丹 +" + fmtPct(st.breakBonus));
     if (st.successBonus > 0) parts.push("前辈指点 +" + fmtPct(st.successBonus));
     UI.buffRow.innerHTML = parts.map((p) => '<span class="buff-pill">' + p + "</span>").join("");
@@ -4802,11 +4981,28 @@ function renderBagPills() {
 
 function renderBagCompanions() {
   const owned = game.companions || [];
-  if (UI.bagCompHint) UI.bagCompHint.textContent = owned.length + " / " + COMPANIONS.length + " · 永久加成";
+  const now = Date.now();
+  const cdLeft = Math.max(0, ((game.companionCd || 0) - now) / 1000);
+  if (UI.bagCompHint) {
+    UI.bagCompHint.textContent = owned.length + " / " + COMPANIONS.length +
+      " · 共修冷却 " + Math.round(CFG.COMPANION_BOND_CD / 60) + " 分钟";
+  }
   if (!UI.bagCompList) return;
   UI.bagCompList.innerHTML = COMPANIONS.map((c) => {
     const got = owned.indexOf(c.id) >= 0;
     const art = companionArtUrl(c.id);
+    const total = (c.stories || []).length;
+    const seen = Math.min(parseInt((game.companionStory || {})[c.id], 10) || 0, total);
+    const nextIdx = Math.min(seen + 1, total);
+    const ready = cdLeft <= 0;
+    const bond = got && c.gift && total
+      ? '<div class="companion-bond">' +
+        '<button class="btn companion-bond-btn" data-action="companion-bond" data-id="' + c.id + '"' +
+        (ready ? "" : " disabled") + '><span class="btn-main">共度片刻</span>' +
+        '<span class="btn-sub">' + (ready ? "第 " + nextIdx + " 段 · " + esc(c.gift.name) : "共修静养中") +
+        "</span></button>" +
+        '<div class="companion-progress">已历 ' + seen + " / " + total + " 段</div></div>"
+      : "";
     return '<div class="companion-item ' + (got ? "owned" : "locked") + '">' +
       '<div class="companion-art"><img src="' + art + '" alt="' + esc(c.name) + '" loading="lazy">' +
       (got ? "" : '<span class="companion-lock">未结缘</span>') + "</div>" +
@@ -4818,10 +5014,11 @@ function renderBagCompanions() {
       (got
         ? '<div class="companion-effect">' + esc(c.effectText) + " · 永久生效</div>" +
           '<div class="companion-desc">' + esc(c.desc) + "</div>" +
-          '<div class="companion-quote">「' + esc(c.quote) + "」</div>"
+          '<div class="companion-quote">「' + esc(c.quote) + "」</div>" + bond
         : '<div class="companion-locked-tip">机缘未至 · 游历山川或可相逢</div>') +
       "</div></div>";
   }).join("");
+  lastBondReady = cdLeft <= 0;
 }
 
 /* ------------------------------ 坊市页 ------------------------------ */
@@ -4829,6 +5026,27 @@ function updateMarketClock(now) {
   if (!UI.marketTime) return;
   const remain = Math.max(0, ((game.market && game.market.refreshAt || 0) - now) / 1000);
   UI.marketTime.textContent = remain > 0 ? "换货倒计时 " + fmtDuration(remain) : "正在换货";
+}
+
+function updateCave() {
+  if (!UI.btnCave) return;
+  const lv = caveLevel(game);
+  const max = CFG.CAVE_MAX_LEVEL;
+  const bonus = caveBonus(game);
+  if (UI.caveLevel) UI.caveLevel.textContent = "Lv." + lv + " / " + max;
+  if (UI.caveBonus) UI.caveBonus.textContent = "+" + fmtPct(bonus);
+  if (lv >= max) {
+    if (UI.caveNext) UI.caveNext.textContent = "已满级";
+    if (UI.caveHint) UI.caveHint.textContent = "聚灵阵已臻圆满，静坐自修快至极处。";
+    if (UI.caveCost) UI.caveCost.textContent = "洞府已满";
+    UI.btnCave.disabled = true;
+    return;
+  }
+  const cost = caveUpgradeCost(game);
+  if (UI.caveNext) UI.caveNext.textContent = "+" + fmtPct(CFG.CAVE_BONUS_PER_LEVEL * (lv + 1));
+  if (UI.caveHint) UI.caveHint.textContent = "聚灵阵加持，等级越高，静坐自修越快。";
+  if (UI.caveCost) UI.caveCost.textContent = "耗 " + fmt(cost) + " 灵石";
+  UI.btnCave.disabled = game.stone < cost;
 }
 
 function marketItemHTML(item, kind) {
@@ -4868,6 +5086,7 @@ function renderMarket() {
     '" data-price="' + p.price + '"><span class="btn-main">' + fmt(p.price) + " 💎</span></button></div>"
   ).join("");
   updateMarketClock(Date.now());
+  updateCave();
   lastMarketRefresh = m.refreshAt;
   updateAffordability();
 }
@@ -5050,6 +5269,8 @@ function onClick(e) {
     case "rush-research": doRushResearch(); break;
     case "bag-tab": doBagTab(target.getAttribute("data-bag")); break;
     case "buy-market": doMarketBuy(target.getAttribute("data-kind"), id); break;
+    case "upgrade-cave": doUpgradeCave(); break;
+    case "companion-bond": doCompanionBond(id); break;
     case "reroll": doReroll(); break;
     case "clear-meta": showClearMeta(); break;
     case "next-life": showAscensionEnding(); break;
@@ -5374,6 +5595,44 @@ function doMarketBuy(kind, id) {
   renderMarket();
 }
 
+function doUpgradeCave() {
+  const res = upgradeCave(game);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast("洞府升至 Lv." + res.level + " · 修炼速度 +" + fmtPct(res.bonus));
+  renderMarket();
+  if (currentTab === "cultivate") updateCultivate(Date.now());
+}
+
+function doCompanionBond(id) {
+  const res = companionBond(game, id);
+  if (!res.ok) {
+    toast(res.remain ? "道侣们正在静养，还需 " + fmtDuration(res.remain) : res.msg);
+    return;
+  }
+  saveGame(game);
+  renderBag();
+  enqueueModal(companionStoryModal(res));
+  if (currentTab === "cultivate") updateCultivate(Date.now());
+}
+
+function companionStoryModal(res) {
+  const c = res.companion;
+  const s = res.story;
+  const g = res.gift;
+  return {
+    icon: g.icon || "💞",
+    title: s.title,
+    titleClass: "success",
+    sub: c.name + " · 第 " + res.index + " 段",
+    body: '<div class="companion-story-art"><img src="' + companionArtUrl(c.id) + '" alt="' + esc(c.name) + '"></div>' +
+      "<p>" + esc(s.text) + "</p>" +
+      '<div class="reward-line">' + esc(g.text) + "</div>" +
+      '<div class="companion-story-quote">「' + esc(c.quote) + "」</div>",
+    buttons: [{ text: "收下心意", cls: "btn-primary" }],
+  };
+}
+
 function doReroll() {
   rerollAttrs(game);
   saveGame(game);
@@ -5489,7 +5748,7 @@ function battleNext() {
   const ev = p.events[p.idx++];
   applyBattleEvent(ev);
   const pace = ev.kind === "round" ? 150 : (ev.kind === "hit" || ev.kind === "miss") ? 300 : 230;
-  p.timer = setTimeout(battleNext, ev.side === "e" && ev.kind === "cast" ? 200 : pace);
+  p.timer = setTimeout(battleNext, (ev.side === "e" && ev.kind === "cast" ? 200 : pace) / BATTLE_SPEED);
 }
 
 function applyBattleEvent(ev) {
@@ -5504,13 +5763,13 @@ function applyBattleEvent(ev) {
     const dot = UI.battleSpellTrack.querySelector('[data-track="spell-' + ((p.casts - 1) % 3) + '"]');
     if (dot) {
       dot.classList.add("active");
-      setTimeout(() => dot.classList.remove("active"), 360);
+      setTimeout(() => dot.classList.remove("active"), 360 / BATTLE_SPEED);
     }
   }
   if (ev.kind === "artifact") {
     const dots = UI.battleArtifactTrack.querySelectorAll(".track-dot");
     dots.forEach((d) => d.classList.add("fired"));
-    setTimeout(() => dots.forEach((d) => d.classList.remove("fired")), 600);
+    setTimeout(() => dots.forEach((d) => d.classList.remove("fired")), 600 / BATTLE_SPEED);
   }
   if (typeof ev.php === "number" && p) {
     const pmax = p.playerHpMax || 1;
