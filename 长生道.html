@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v2.5.0 · built 2026-11-02T17:13:51.566Z · 单文件离线可玩 -->
+<!-- 《长生道》 v2.6.0 · built 2026-11-03T05:13:38.024Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -1556,6 +1556,141 @@ textarea.savelink {
   .companion-story-art { width: 128px; }
 }
 
+
+/* ===== v2.6 · 属性来源与计算 ===== */
+.stat[data-action],
+.attr-item[data-action] {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color .18s ease, transform .12s ease, background .18s ease;
+}
+.stat[data-action]:hover,
+.attr-item[data-action]:hover {
+  border-color: rgba(214, 184, 116, .34);
+}
+.stat[data-action]:active,
+.attr-item[data-action]:active {
+  transform: scale(.985);
+}
+.stat[data-action] label::after,
+.attr-item[data-action] .attr-name::after {
+  content: "?";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  margin-left: 5px;
+  border-radius: 50%;
+  border: 1px solid rgba(160, 190, 190, .38);
+  color: rgba(170, 200, 200, .8);
+  font-size: 9px;
+  line-height: 1;
+  vertical-align: 1px;
+}
+.stat-formula {
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(120, 170, 165, .18);
+  border-radius: 10px;
+  background: rgba(10, 26, 28, .55);
+}
+.stat-formula-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  margin-right: 7px;
+  border-radius: 4px;
+  background: rgba(111, 211, 192, .12);
+  color: var(--jade);
+  font-size: 10.5px;
+  vertical-align: 2px;
+}
+.stat-formula code {
+  color: #b9d7d4;
+  font-size: 11.5px;
+  line-height: 1.7;
+  word-break: break-word;
+}
+.stat-lines { display: flex; flex-direction: column; }
+.stat-line {
+  padding: 9px 0;
+  border-bottom: 1px dashed rgba(120, 160, 165, .14);
+}
+.stat-line:last-child { border-bottom: none; }
+.stat-line-main {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.stat-line-label { color: var(--muted); font-size: 12.5px; }
+.stat-line-value { color: var(--text); font-size: 13px; font-weight: 600; text-align: right; }
+.stat-line-note { display: block; margin-top: 3px; color: rgba(140, 168, 172, .78); font-size: 11px; }
+.stat-note {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.75;
+}
+
+/* 让修炼四格的「?」提示不挤掉属性名；窄屏下隐藏该提示，靠卡片说明与点击反馈 */
+.stat[data-action] label { letter-spacing: 0.2px; }
+.stat[data-action] label::after {
+  width: 12px; height: 12px; margin-left: 3px; font-size: 8.5px; vertical-align: 1px;
+}
+@media (max-width: 360px) {
+  .stat[data-action] label::after { display: none; }
+}
+/* 数据明细较长时，按钮固定在弹窗底部，避免必须滚动才能关闭 */
+.modal-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  padding-top: 12px;
+  background: linear-gradient(180deg, rgba(11, 19, 23, 0), #0b1317 34%);
+}
+
+/* 固定按钮需实底，避免下方明细文字透出 */
+.modal-actions {
+  background: #0b1317;
+  box-shadow: 0 -14px 18px rgba(11, 19, 23, 0.92);
+}
+
+/* 弹窗改为固定头尾、正文滚动，明细再长按钮也始终可见 */
+.modal {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.modal-body::-webkit-scrollbar { display: none; }
+.modal-actions {
+  position: static;
+  bottom: auto;
+  z-index: auto;
+  padding-top: 0;
+  background: none;
+  box-shadow: none;
+  flex: 0 0 auto;
+}
+
+/* 320px 窄屏：四格数值收紧，避免「+4.1 / 秒」被省略 */
+@media (max-width: 360px) {
+  .stat { padding: 8px 4px; }
+  .stat label { font-size: 10px; letter-spacing: 0; }
+  .stat b { font-size: 11px; }
+}
+/* 矮屏圆环缩小后，境界名不换行 */
+@media (max-height: 720px) {
+  .ring-inner { padding: 0 12px; }
+  .realm-name { font-size: 22px; letter-spacing: 2px; }
+}
+
 </style>
 </head>
 <body>
@@ -1612,10 +1747,10 @@ textarea.savelink {
         <div class="exp-bar"><i id="expBar"></i></div>
         <div class="buff-row" id="buffRow"></div>
         <div class="stat-grid">
-          <div class="stat"><label>修炼速度</label><b id="rateText">1.0 / 秒</b></div>
-          <div class="stat"><label>灵石产出</label><b id="stoneRateText">1.0 / 秒</b></div>
-          <div class="stat"><label>道心</label><b id="daoText">50</b></div>
-          <div class="stat"><label>破境成功</label><b id="successText">90%</b></div>
+          <div class="stat" data-action="stat-info" data-stat="rate"><label>修炼速度</label><b id="rateText">1.0 / 秒</b></div>
+          <div class="stat" data-action="stat-info" data-stat="stoneRate"><label>灵石产出</label><b id="stoneRateText">1.0 / 秒</b></div>
+          <div class="stat" data-action="stat-info" data-stat="dao"><label>道心</label><b id="daoText">50</b></div>
+          <div class="stat" data-action="stat-info" data-stat="success"><label>破境成功</label><b id="successText">90%</b></div>
         </div>
         <div class="action-row single">
           <button class="btn btn-primary btn-wide" id="btnBreak" data-action="break">
@@ -1802,7 +1937,7 @@ textarea.savelink {
       </div>
 
       <div class="card">
-        <div class="card-head"><span>战斗属性</span><span class="card-hint">随境界与资质</span></div>
+        <div class="card-head"><span>战斗属性</span><span class="card-hint">随境界与资质 · 点击查看</span></div>
         <div class="stat-grid stat-grid-2" id="combatGrid"></div>
       </div>
 
@@ -2305,7 +2440,7 @@ textarea.savelink {
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "2.5.0";
+const GAME_VERSION = "2.6.0";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -2720,6 +2855,19 @@ ACHIEVEMENTS.forEach(a => { ACHIEVEMENT_MAP[a.id] = a; });
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
   {
+    version: "2.6.0",
+    date: "2026-11-03",
+    title: "明算·灵爆",
+    items: [
+      "修复不同来源的临时加成互相覆盖的问题：现在会同时生效并相加",
+      "修炼速度、灵石产出、破境成功等属性可点击查看来源与完整计算",
+      "五维资质与十项战斗属性也可点击，查看每一条加成与公式",
+      "新增爆发类法术：伤害倍率极高，但法力消耗为普通法术的 2.4 倍",
+      "爆发法术会单独标注耗灵倍率，其余生成规则与普通法术一致",
+      "法宝不会出现爆发型；v2.5.0 存档可直接续玩",
+    ],
+  },
+  {
     version: "2.5.0",
     date: "2026-11-03",
     title: "同心·洞府",
@@ -2892,12 +3040,15 @@ const ATTR_DEFS = [
 ];
 const ATTR_KEYS = ATTR_DEFS.map((a) => a.key);
 
-/* 法术 / 法宝的主效果：伤害、回复、护盾，必有且仅有一种 */
+/* 法术 / 法宝的主效果：伤害、回复、护盾、爆发，必有且仅有一种 */
 const SPELL_MAINS = [
   { key: "dmg", name: "伤害", icon: "⚔️", spellRatio: 1.15, artRatio: 1.35, weight: 1.35 },
   { key: "heal", name: "回复", icon: "💚", spellRatio: 0.85, artRatio: 0.7, weight: 1.0 },
   { key: "shield", name: "护盾", icon: "🛡️", spellRatio: 1.0, artRatio: 0.9, weight: 1.0 },
+  { key: "burst", name: "爆发", icon: "💥", spellRatio: 2.6, weight: 0.45, mpMul: 2.4 },
 ];
+/* 法宝没有爆发型：法宝按速度反复祭出，若再给高倍率会失衡 */
+const ARTIFACT_MAINS = SPELL_MAINS.filter((m) => m.artRatio);
 
 /* 法术特效（不固定出现；出现时至少两档） */
 const SPELL_EFFECTS = [
@@ -3122,7 +3273,7 @@ function defaultState() {
     flags: { created: false, ascended: false, ascensionRecorded: false },
     lifeNo: 1,
     pills: { juqi: 2 },
-    buffs: { rateExp: null, rateStone: null, success: null },
+    buffs: { rateExp: [], rateStone: [], success: [] },
     breakBonus: 0,
     successBonus: 0,
     cooldowns: { encounter: 0 },
@@ -3152,11 +3303,33 @@ function pushLog(state, text, tone) {
 }
 
 /* ------------------------------ 数值计算 ------------------------------ */
+const BUFF_KEYS = ["rateExp", "rateStone", "success"];
+const BUFF_LABELS = { rateExp: "修炼速度", rateStone: "灵石产出", success: "破境成功" };
+
+/* 同一属性的不同来源各自独立计时，互不覆盖；同源刷新时长并取较高值 */
+function activeBuffList(state, key, now) {
+  if (!state.buffs || typeof state.buffs !== "object") state.buffs = {};
+  const raw = state.buffs[key];
+  const arr = Array.isArray(raw) ? raw : [];
+  const list = arr.filter((b) => b && isFinite(b.endAt) && b.endAt > now && (Number(b.power) || 0) > 0);
+  if (list.length !== arr.length) state.buffs[key] = list;
+  return list;
+}
+
+function buffPower(list) {
+  let total = 0;
+  for (const b of list) total += Number(b.power) || 0;
+  return total;
+}
+
+function buffEndAt(list) {
+  let end = 0;
+  for (const b of list) end = Math.max(end, b.endAt || 0);
+  return end;
+}
+
 function activeBuff(state, key, now) {
-  const b = state.buffs[key];
-  if (!b) return 0;
-  if (!isFinite(b.endAt) || b.endAt <= now) { state.buffs[key] = null; return 0; }
-  return b.power || 0;
+  return buffPower(activeBuffList(state, key, now));
 }
 
 function achieveSum(state, key) {
@@ -3217,7 +3390,8 @@ function companionBond(state, id) {
   const index = Math.min(prev + 1, c.stories.length);
   state.companionStory[id] = index;
   state.companionCd = now + CFG.COMPANION_BOND_CD * 1000;
-  for (const e of c.gift.effects || []) applyBuff(state, e.key, e.power, c.gift.duration);
+  for (const e of c.gift.effects || []) applyBuff(state, e.key, e.power, c.gift.duration,
+    { id: "bond:" + c.id, name: c.name + "·" + c.gift.name, icon: c.gift.icon });
   const story = c.stories[index - 1];
   pushLog(state, "与「" + c.name + "」共度片刻 · 「" + story.title + "」" + c.gift.text, "great");
   return { ok: true, companion: c, story: story, index: index, cdUntil: state.companionCd, gift: c.gift };
@@ -3226,9 +3400,12 @@ function companionBond(state, id) {
 function computeStats(state, now) {
   now = now || Date.now();
   const realm = realmAt(state.realmIndex);
-  const rateBuff = activeBuff(state, "rateExp", now);
-  const stoneBuff = activeBuff(state, "rateStone", now);
-  const successBuff = activeBuff(state, "success", now);
+  const rateList = activeBuffList(state, "rateExp", now);
+  const stoneList = activeBuffList(state, "rateStone", now);
+  const successList = activeBuffList(state, "success", now);
+  const rateBuff = buffPower(rateList);
+  const stoneBuff = buffPower(stoneList);
+  const successBuff = buffPower(successList);
   const caveLv = caveLevel(state);
   const caveMul = 1 + caveBonus(state);
   const guardianBonus = guardianStoneBonus(state);
@@ -3250,22 +3427,295 @@ function computeStats(state, now) {
     derived: deriveStats(state),
     caveLevel: caveLv, caveBonus: caveBonus(state), caveMul,
     rateBuff, stoneBuff, successBuff,
-    rateBuffEnd: state.buffs.rateExp ? state.buffs.rateExp.endAt : 0,
-    stoneBuffEnd: state.buffs.rateStone ? state.buffs.rateStone.endAt : 0,
-    successBuffEnd: state.buffs.success ? state.buffs.success.endAt : 0,
+    rateBuffEnd: buffEndAt(rateList),
+    stoneBuffEnd: buffEndAt(stoneList),
+    successBuffEnd: buffEndAt(successList),
+    buffs: { rateExp: rateList, rateStone: stoneList, success: successList },
     breakBonus: state.breakBonus,
     successBonus: state.successBonus,
   };
 }
 
-function applyBuff(state, key, power, durationSec) {
+function applyBuff(state, key, power, durationSec, meta) {
   const now = Date.now();
-  const cur = state.buffs[key];
-  if (cur && cur.endAt > now && (cur.power || 0) >= power) {
-    cur.endAt = Math.max(cur.endAt, now + durationSec * 1000);
+  if (!state.buffs || typeof state.buffs !== "object") state.buffs = {};
+  if (!Array.isArray(state.buffs[key])) state.buffs[key] = [];
+  const list = activeBuffList(state, key, now);
+  const info = meta || {};
+  const id = info.id || key;
+  const name = info.name || BUFF_LABELS[key] || key;
+  const icon = info.icon || "";
+  const endAt = now + Math.max(1, Number(durationSec) || 1) * 1000;
+  const cur = list.find((b) => b.id === id);
+  if (cur) {
+    cur.power = Math.max(Number(cur.power) || 0, Number(power) || 0);
+    cur.endAt = Math.max(cur.endAt, endAt);
+    cur.name = name;
+    cur.icon = icon;
   } else {
-    state.buffs[key] = { power: power, endAt: now + durationSec * 1000 };
+    list.push({ id: id, name: name, icon: icon, power: Number(power) || 0, startAt: now, endAt: endAt });
   }
+  state.buffs[key] = list;
+}
+
+
+/* ------------------------------ 属性来源明细 ------------------------------ */
+function statLine(label, value, note) { return { label: label, value: value, note: note || "" }; }
+
+function buffStatLines(list, now) {
+  return list.map((b) => statLine(
+    (b.icon ? b.icon + " " : "") + b.name,
+    "+" + fmtPct(b.power, 1),
+    "剩余 " + fmtDuration((b.endAt - now) / 1000)
+  ));
+}
+
+function statBreakdown(state, key, now) {
+  now = now || Date.now();
+  const st = computeStats(state, now);
+  const d = st.derived;
+  const a = state.attrs || {};
+  const r = st.realm;
+  const idx = Math.max(0, state.realmIndex | 0);
+  const scale = 1 + idx * 0.16;
+  const attrDef = ATTR_DEFS.find((x) => x.key === key);
+  const buffsAll = st.buffs.rateExp.concat(st.buffs.rateStone, st.buffs.success);
+
+  if (attrDef) {
+    const v = a[key] || 0;
+    const lines = [statLine("当前资质", String(v)), statLine("洗髓 / 突破", "每突破成功一次，随机一项 +1")];
+    if (key === "gengu") {
+      lines.push(statLine("生命上限贡献", "+" + fmt(v * 8 * scale), "根骨 × 8 × 境界系数"));
+      lines.push(statLine("防御贡献", "+" + fmt(v * 1.0 * scale, 1), "根骨 × 1.0 × 境界系数"));
+    } else if (key === "linggen") {
+      lines.push(statLine("法力上限贡献", "+" + fmt(v * 5 * scale), "灵根 × 5 × 境界系数"));
+      lines.push(statLine("法术强度贡献", "+" + fmt(v * 1.6 * scale, 1), "灵根 × 1.6 × 境界系数"));
+    } else if (key === "shenshi") {
+      lines.push(statLine("法宝强度贡献", "+" + fmt(v * 1.4 * scale, 1), "神识 × 1.4 × 境界系数"));
+      lines.push(statLine("暴击伤害贡献", "+" + fmtPct(v * 0.012, 1), "神识 × 1.2%"));
+    } else if (key === "xingyun") {
+      lines.push(statLine("暴击率贡献", "+" + fmtPct(v * 0.0035, 2), "幸运 × 0.35%，上限 60%"));
+      lines.push(statLine("闪避率贡献", "+" + fmtPct(v * 0.0025, 2), "幸运 × 0.25%，上限 35%"));
+    } else if (key === "wuxing") {
+      lines.push(statLine("高品质法术概率", fmtPct(d.highQualityChance, 1), "四星及以上"));
+      lines.push(statLine("影响方式", "只提高高品质权重", "任何悟性都可能研得五星法术"));
+    }
+    return {
+      name: attrDef.name, icon: attrDef.icon, value: String(v), key: key,
+      formula: attrDef.desc, lines: lines,
+      note: "资质来源：洗髓定基；此后每次突破成功，随机一项资质 +1，总值随之提高。",
+    };
+  }
+
+  if (key === "rate") {
+    const lines = [
+      statLine("境界基础", fmt(r.rate, 2) + " / 秒", r.name),
+      statLine("静坐自修", "×" + CFG.IDLE_MULT, "挂机修炼系数"),
+      statLine("洞府 Lv." + st.caveLevel, "×" + st.caveMul.toFixed(2), "聚灵阵 +" + fmtPct(st.caveBonus, 0)),
+      statLine("成就加成", "+" + fmtPct(achieveSum(state, "rate"), 1), "永久"),
+      statLine("道侣相伴", "+" + fmtPct(st.companionRate, 1), "永久"),
+      statLine("道心通明", "+" + fmtPct(state.dao / 500, 1), "道心 " + Math.floor(state.dao) + " / 500"),
+    ].concat(buffStatLines(st.buffs.rateExp, now));
+    return {
+      name: "修炼速度", icon: "⚡", value: "+" + fmt(st.rate, 1) + " / 秒", key: key,
+      formula: "境界速度 × 静坐系数 × 洞府加成 × (1 + 成就 + 道侣 + 道心) × (1 + 临时加成)",
+      lines: lines,
+      note: "同一属性的不同临时加成现在会并行生效并相加，不再互相覆盖。",
+    };
+  }
+
+  if (key === "stoneRate") {
+    const base = r.rate * CFG.STONE_FACTOR;
+    const lines = [
+      statLine("境界基础", fmt(r.rate, 2), r.name),
+      statLine("灵石系数", "×" + CFG.STONE_FACTOR, "灵石产出 = 修炼速度 × 系数"),
+      statLine("保底", "≥ 0.5 / 秒", base < 0.5 ? "当前已触发保底" : "未触发"),
+      statLine("成就加成", "+" + fmtPct(achieveSum(state, "stone"), 1), "永久"),
+      statLine("灵脉归位", "+" + fmtPct(st.guardianBonus, 1), "已镇守 " + (state.guardians || []).length + " / " + GUARDIANS.length),
+      statLine("道侣相伴", "+" + fmtPct(st.companionStone, 1), "永久"),
+    ].concat(buffStatLines(st.buffs.rateStone, now));
+    return {
+      name: "灵石产出", icon: "💎", value: "+" + fmt(st.stoneRate, 1) + " / 秒", key: key,
+      formula: "max(0.5, 境界速度 × 1.4) × (1 + 成就 + 灵脉 + 道侣) × (1 + 临时加成)",
+      lines: lines,
+      note: "灵脉加成来自九位守护者，每镇守一位永久 +15%。",
+    };
+  }
+
+  if (key === "success") {
+    const raw = r.success + state.dao / 1000 + st.bonusSucc + state.breakBonus + state.successBonus + st.successBuff;
+    const lines = [
+      statLine("境界基础", fmtPct(r.success, 1), r.name),
+      statLine("道心通明", "+" + fmtPct(state.dao / 1000, 1), "道心 " + Math.floor(state.dao)),
+      statLine("成就加成", "+" + fmtPct(achieveSum(state, "success"), 1), "永久"),
+      statLine("道侣相伴", "+" + fmtPct(st.companionSucc, 1), "永久"),
+      statLine("破境丹", "+" + fmtPct(state.breakBonus, 1), "下次突破"),
+      statLine("前辈指点", "+" + fmtPct(state.successBonus, 1), "下次突破"),
+    ].concat(buffStatLines(st.buffs.success, now));
+    lines.push(statLine("上下限", "5% ~ 95%", "合计后截断"));
+    return {
+      name: "破境成功", icon: "🎯", value: fmtPct(st.success, 1), key: key,
+      formula: "clamp(境界基础 + 道心/1000 + 成就 + 道侣 + 破境丹 + 前辈 + 临时加成, 5%, 95%)",
+      lines: lines,
+      note: "结算前合计 " + fmtPct(raw, 1) + "；破境丹与前辈指点在突破后消耗。",
+    };
+  }
+
+  if (key === "dao") {
+    return {
+      name: "道心", icon: "🌀", value: String(Math.floor(state.dao)), key: key,
+      formula: "道心影响修炼速度（/500）与破境成功率（/1000），上限 100",
+      lines: [
+        statLine("当前道心", Math.floor(state.dao) + " / " + CFG.DAO_MAX),
+        statLine("修炼速度加成", "+" + fmtPct(state.dao / 500, 1)),
+        statLine("破境成功率加成", "+" + fmtPct(state.dao / 1000, 1)),
+        statLine("来源", "突破成功 +" + CFG.DAO_PER_SUCCESS, "失败 -" + CFG.DAO_PER_FAIL),
+        statLine("恢复", "静心丹 / 奇遇", "道心受损会拖慢修行"),
+      ],
+      note: "道心越高，修炼与破境越稳；连续失败会损失道心。",
+    };
+  }
+
+  if (key === "hpMax") {
+    return {
+      name: "气血上限", icon: "❤️", value: fmt(d.hpMax), key: key,
+      formula: "(80 + 根骨 × 8) × 境界系数",
+      lines: [
+        statLine("基础气血", "80"),
+        statLine("根骨", (a.gengu || 0) + " × 8 = " + fmt((a.gengu || 0) * 8, 1)),
+        statLine("境界系数", "×" + scale.toFixed(2), "第 " + (idx + 1) + " 层，每层 +16%"),
+        statLine("合计", fmt(d.hpMax)),
+      ],
+      note: "气血决定斗法中能承受的伤害。",
+    };
+  }
+  if (key === "mpMax") {
+    return {
+      name: "法力上限", icon: "🔵", value: fmt(d.mpMax), key: key,
+      formula: "(40 + 灵根 × 5) × 境界系数",
+      lines: [
+        statLine("基础法力", "40"),
+        statLine("灵根", (a.linggen || 0) + " × 5 = " + fmt((a.linggen || 0) * 5, 1)),
+        statLine("境界系数", "×" + scale.toFixed(2), "第 " + (idx + 1) + " 层，每层 +16%"),
+        statLine("合计", fmt(d.mpMax)),
+      ],
+      note: "每回合回复 10% 法力上限，法力不足时只能以凡力应战。",
+    };
+  }
+  if (key === "spellAtk") {
+    return {
+      name: "法术强度", icon: "⚔️", value: fmt(d.spellAtk, 1), key: key,
+      formula: "(8 + 灵根 × 1.6) × 境界系数",
+      lines: [
+        statLine("基础", "8"),
+        statLine("灵根", (a.linggen || 0) + " × 1.6 = " + fmt((a.linggen || 0) * 1.6, 1)),
+        statLine("境界系数", "×" + scale.toFixed(2), "第 " + (idx + 1) + " 层"),
+        statLine("合计", fmt(d.spellAtk, 1)),
+      ],
+      note: "法术伤害 = 法术强度 × 法术倍率，再按敌方防御减免。",
+    };
+  }
+  if (key === "artifactAtk") {
+    return {
+      name: "法宝强度", icon: "🗡️", value: fmt(d.artifactAtk, 1), key: key,
+      formula: "(6 + 神识 × 1.4) × 境界系数",
+      lines: [
+        statLine("基础", "6"),
+        statLine("神识", (a.shenshi || 0) + " × 1.4 = " + fmt((a.shenshi || 0) * 1.4, 1)),
+        statLine("境界系数", "×" + scale.toFixed(2), "第 " + (idx + 1) + " 层"),
+        statLine("合计", fmt(d.artifactAtk, 1)),
+      ],
+      note: "本命法宝按速度每 2 ~ 4 回合祭出一次。",
+    };
+  }
+  if (key === "defense") {
+    return {
+      name: "防御", icon: "🛡️", value: fmt(d.defense, 1), key: key,
+      formula: "(3 + 根骨 × 1.0) × 境界系数",
+      lines: [
+        statLine("基础", "3"),
+        statLine("根骨", (a.gengu || 0) + " × 1.0 = " + fmt((a.gengu || 0) * 1.0, 1)),
+        statLine("境界系数", "×" + scale.toFixed(2), "第 " + (idx + 1) + " 层"),
+        statLine("合计", fmt(d.defense, 1)),
+        statLine("减伤公式", "防御 / (防御 + 120 + 境界 × 10)"),
+      ],
+      note: "法术/法宝的「防御加成」会在战斗中进一步提高防御。",
+    };
+  }
+  if (key === "critRate") {
+    const capped = d.critRate >= 0.6;
+    return {
+      name: "暴击率", icon: "🎯", value: fmtPct(d.critRate, 1), key: key,
+      formula: "min(60%, 5% + 幸运 × 0.35%)",
+      lines: [
+        statLine("基础", "5%"),
+        statLine("幸运", (a.xingyun || 0) + " × 0.35% = +" + fmtPct((a.xingyun || 0) * 0.0035, 1)),
+        statLine("上限", "60%", capped ? "当前已封顶" : "未触发"),
+        statLine("合计", fmtPct(d.critRate, 1)),
+      ],
+      note: "暴击时伤害 × 暴击伤害倍率。",
+    };
+  }
+  if (key === "critDmg") {
+    return {
+      name: "暴击伤害", icon: "💥", value: fmtPct(d.critDmg, 1), key: key,
+      formula: "150% + 神识 × 1.2%",
+      lines: [
+        statLine("基础", "150%"),
+        statLine("神识", (a.shenshi || 0) + " × 1.2% = +" + fmtPct((a.shenshi || 0) * 0.012, 1)),
+        statLine("合计", fmtPct(d.critDmg, 1)),
+      ],
+      note: "暴击伤害越高，暴击的那一下越重。",
+    };
+  }
+  if (key === "dodge") {
+    const capped = d.dodge >= 0.35;
+    return {
+      name: "闪避率", icon: "💨", value: fmtPct(d.dodge, 1), key: key,
+      formula: "min(35%, 幸运 × 0.25%)",
+      lines: [
+        statLine("幸运", (a.xingyun || 0) + " × 0.25% = " + fmtPct((a.xingyun || 0) * 0.0025, 1)),
+        statLine("上限", "35%", capped ? "当前已封顶" : "未触发"),
+        statLine("合计", fmtPct(d.dodge, 1)),
+      ],
+      note: "闪避成功后完全免伤；敌方同样可能闪避你的攻击。",
+    };
+  }
+  if (key === "mpCost") {
+    return {
+      name: "法术耗灵", icon: "💧", value: fmt(d.mpCost), key: key,
+      formula: "max(1, round(法力上限 × 10%))",
+      lines: [
+        statLine("法力上限", fmt(d.mpMax)),
+        statLine("基础消耗", "×10% = " + fmt(d.mpMax * 0.10, 1)),
+        statLine("取整", fmt(d.mpCost), "至少为 1"),
+        statLine("爆发法术", "基础消耗 × 2.4", "每门爆发法术单独标注"),
+      ],
+      note: "爆发类法术造成大量伤害，但消耗的法力也远高于普通法术。",
+    };
+  }
+  if (key === "highQualityChance") {
+    const w = qualityWeights(a.wuxing);
+    const total = w.reduce((x, y) => x + y, 0);
+    return {
+      name: "高品质法术", icon: "📖", value: fmtPct(d.highQualityChance, 1), key: key,
+      formula: "(四星权重 + 五星权重) / 全部权重",
+      lines: [
+        statLine("悟性", String(a.wuxing || 0)),
+        statLine("一星 ~ 五星权重", w.map((x) => x.toFixed(1)).join(" / ")),
+        statLine("四星 + 五星权重", (w[3] + w[4]).toFixed(1) + " / " + total.toFixed(1)),
+        statLine("高品质概率", fmtPct(d.highQualityChance, 1), "四星及以上"),
+      ],
+      note: "任何悟性都有机会研得五星法术；悟性只提高高品质的权重。",
+    };
+  }
+
+  return {
+    name: "属性", icon: "❔", value: "", key: key,
+    formula: "暂未收录该属性的计算说明",
+    lines: [],
+    note: buffsAll.length ? "当前临时加成 " + buffsAll.length + " 条" : "",
+  };
 }
 
 /* ------------------------------ 成就 ------------------------------ */
@@ -3692,11 +4142,11 @@ function usePill(state, id) {
       msg = "服下" + def.name + "，下次突破成功率 +" + fmtPct(def.power) + "，失败不损道心";
       break;
     case "rate":
-      applyBuff(state, "rateExp", def.power, def.duration);
+      applyBuff(state, "rateExp", def.power, def.duration, { id: "pill:" + def.id, name: def.name, icon: def.icon });
       msg = "服下" + def.name + "，修炼速度 +" + fmtPct(def.power) + "，持续 " + fmtDuration(def.duration);
       break;
     case "stone":
-      applyBuff(state, "rateStone", def.power, def.duration);
+      applyBuff(state, "rateStone", def.power, def.duration, { id: "pill:" + def.id, name: def.name, icon: def.icon });
       msg = "服下" + def.name + "，灵石产出 +" + fmtPct(def.power) + "，持续 " + fmtDuration(def.duration);
       break;
     case "dao":
@@ -3774,12 +4224,12 @@ function encounter(state) {
       break;
     }
     case "rateBuff": {
-      applyBuff(state, "rateExp", eff.power, eff.duration);
+      applyBuff(state, "rateExp", eff.power, eff.duration, { id: "enc:" + ev.id, name: ev.name, icon: ev.icon });
       detail = "修炼速度 +" + fmtPct(eff.power) + "，持续 " + fmtDuration(eff.duration);
       break;
     }
     case "stoneBuff": {
-      applyBuff(state, "rateStone", eff.power, eff.duration);
+      applyBuff(state, "rateStone", eff.power, eff.duration, { id: "enc:" + ev.id, name: ev.name, icon: ev.icon });
       detail = "灵石产出 +" + fmtPct(eff.power) + "，持续 " + fmtDuration(eff.duration);
       break;
     }
@@ -3962,7 +4412,37 @@ function migrate(raw) {
   if (!s.companions) s.companions = [];
   s.pills = (s.pills && typeof s.pills === "object") ? s.pills : {};
   s.achieve = (s.achieve && typeof s.achieve === "object") ? s.achieve : {};
-  s.buffs = Object.assign({ rateExp: null, rateStone: null, success: null }, s.buffs || {});
+  const rawBuffs = raw.buffs && typeof raw.buffs === "object" ? raw.buffs : {};
+  const normBuffs = {};
+  for (const key of BUFF_KEYS) {
+    const val = rawBuffs[key];
+    const arr = [];
+    if (Array.isArray(val)) {
+      for (const it of val) {
+        if (!it || typeof it !== "object") continue;
+        const power = Number(it.power);
+        const endAt = Number(it.endAt);
+        if (!isFinite(power) || power <= 0 || !isFinite(endAt) || endAt <= 0) continue;
+        arr.push({
+          id: String(it.id || ("legacy:" + key)),
+          name: String(it.name || BUFF_LABELS[key]),
+          icon: String(it.icon || ""),
+          power: power,
+          startAt: Number(it.startAt) || 0,
+          endAt: endAt,
+        });
+      }
+    } else if (val && typeof val === "object") {
+      /* v2.5 及以前：每个属性只存一个 buff 对象 */
+      const power = Number(val.power);
+      const endAt = Number(val.endAt);
+      if (isFinite(power) && power > 0 && isFinite(endAt) && endAt > 0) {
+        arr.push({ id: "legacy:" + key, name: BUFF_LABELS[key], icon: "", power: power, startAt: 0, endAt: endAt });
+      }
+    }
+    normBuffs[key] = arr;
+  }
+  s.buffs = normBuffs;
   s.cooldowns = Object.assign({ encounter: 0 }, s.cooldowns || {});
   s.settings = Object.assign({ muted: false }, s.settings || {});
   s.logs = Array.isArray(s.logs) ? s.logs.slice(-CFG.LOG_LIMIT) : [];
@@ -4245,7 +4725,7 @@ function makeSpell(state) {
     kind: "spell",
     name: pickOne(SPELL_NAME_A) + pickOne(SPELL_NAME_B),
     icon: main.icon,
-    main: { key: main.key, name: main.name, icon: main.icon, value: Math.round(d.spellAtk * ratio) },
+    main: { key: main.key, name: main.name, icon: main.icon, value: Math.round(d.spellAtk * ratio), mpMul: main.mpMul || 1 },
     effect: effect,
     extras: extras,
     realm: state.realmIndex | 0,
@@ -4256,7 +4736,7 @@ function makeSpell(state) {
 function makeArtifact(state) {
   const d = deriveStats(state);
   const quality = rollQuality(state.attrs);
-  const main = pickOne(SPELL_MAINS);
+  const main = pickOne(ARTIFACT_MAINS);
   const hasEffect = Math.random() < 0.5;
   const effect = hasEffect ? pickEffect(quality) : null;
   const extras = pickExtras(hasEffect ? 2 : 3, quality);
@@ -4283,16 +4763,19 @@ function percentText(v, digits) {
 }
 function spellMainLine(spell) {
   const m = spell.main;
-  const prefix = m.key === "dmg" ? "伤害 " : m.key === "heal" ? "回复 " : "护盾 ";
+  const prefix = m.key === "dmg" ? "伤害 " : m.key === "heal" ? "回复 " :
+    m.key === "burst" ? "爆发 " : "护盾 ";
   return prefix + fmt(m.value);
 }
 function itemExtraLines(item) {
-  return (item.extras || []).map((ex) => {
+  const lines = [];
+  if (item.main && item.main.mpMul > 1) lines.push("耗灵 ×" + item.main.mpMul);
+  return lines.concat((item.extras || []).map((ex) => {
     if (ex.key === "crit" || ex.key === "dodge" || ex.key === "defBonus") {
       return ex.name + " +" + percentText(ex.value, ex.value < 0.05 ? 1 : 0);
     }
     return ex.name + " +" + percentText(ex.value);
-  });
+  }));
 }
 
 /* ------------------------------ 战斗 ------------------------------ */
@@ -4371,16 +4854,17 @@ function fireItem(item, owner, foe, events, ctx, isArtifact) {
   const label = isArtifact ? "本命法宝「" + item.name + "」" : "你祭出「" + item.name + "」";
   const icon = item.icon || "✨";
   const main = item.main;
+  const isBurst = main.key === "burst";
   events.push(mkEvent(ctx, "p", isArtifact ? "artifact" : "cast",
-    label + "，光辉暴涨！", { icon: icon }));
-  if (main.key === "dmg") {
+    isBurst ? "你倾尽灵力，祭出「" + item.name + "」！" : label + "，光辉暴涨！", { icon: icon }));
+  if (main.key === "dmg" || isBurst) {
     const pierce = item.effect && item.effect.key === "pierce" ? (item.effect.params.full ? "full" : item.effect.params.pct) : 0;
     const res = strike(owner, foe, main.value, { pierce: pierce, realmIndex: ctx.realmIndex });
     if (res.miss) {
       events.push(mkEvent(ctx, "p", "miss", (isArtifact ? "法宝" : "法术") + "被对方闪避", { icon: "💨" }));
     } else {
       events.push(mkEvent(ctx, "p", "hit",
-        (res.crit ? "暴击！" : "") + "造成 " + fmt(res.dmg) + " 点伤害" + (res.absorbed ? "（护盾抵去 " + fmt(res.absorbed) + "）" : ""),
+        (isBurst ? "灵潮倾泻，" : "") + (res.crit ? "暴击！" : "") + "造成 " + fmt(res.dmg) + " 点伤害" + (res.absorbed ? "（护盾抵去 " + fmt(res.absorbed) + "）" : ""),
         { dmg: res.dmg, crit: res.crit, icon: "💥" }));
       if (item.effect && item.effect.key === "drain") {
         const heal = Math.round(res.dmg * item.effect.params.pct);
@@ -4468,12 +4952,12 @@ function simulateBattle(state, cfg) {
         const res = strike(player, enemy, player.atk * 0.55, { realmIndex: ctx.realmIndex });
         if (res.miss) events.push(mkEvent(ctx, "p", "miss", "你挥拳试探，被对方闪开", { icon: "💨" }));
         else events.push(mkEvent(ctx, "p", "hit", "法术栏空置，你以拳脚应战，造成 " + fmt(res.dmg) + " 点伤害", { dmg: res.dmg, icon: "👊" }));
-      } else if (player.mp < player.mpCost) {
+      } else if (player.mp < Math.round(player.mpCost * ((spell.main && spell.main.mpMul) || 1))) {
         const res = strike(player, enemy, player.atk * 0.45, { realmIndex: ctx.realmIndex });
         events.push(mkEvent(ctx, "p", "info", "灵力不足，你只能以凡力应对", { icon: "💧" }));
         if (!res.miss) events.push(mkEvent(ctx, "p", "hit", "造成 " + fmt(res.dmg) + " 点伤害", { dmg: res.dmg, icon: "👊" }));
       } else {
-        player.mp -= player.mpCost;
+        player.mp -= Math.round(player.mpCost * ((spell.main && spell.main.mpMul) || 1));
         fireItem(spell, player, enemy, events, ctx, false);
       }
       player.mp = Math.min(player.mpMax, player.mp + Math.round(player.mpMax * 0.10));
@@ -4791,18 +5275,18 @@ function updateCultivate(now) {
     if (UI.autoHint) UI.autoHint.innerHTML = '<span class="auto-dot"></span>静坐自修 · 修行速度 ×' + CFG.IDLE_MULT;
   }
 
-  const sig = st.rateBuff + "|" + st.stoneBuff + "|" + st.successBuff + "|" + st.breakBonus + "|" +
-    st.successBonus + "|" + Math.ceil(st.rateBuffEnd / 1000) + "|" + Math.ceil(st.stoneBuffEnd / 1000) +
-    "|" + Math.ceil(st.successBuffEnd / 1000);
+  const activeBuffs = st.buffs.rateExp.concat(st.buffs.rateStone, st.buffs.success);
+  const sig = activeBuffs.map((b) => b.id + ":" + b.power + ":" + Math.ceil(b.endAt / 1000)).join("|") +
+    "|" + st.breakBonus + "|" + st.successBonus;
   if (sig !== lastBuffSig) {
     lastBuffSig = sig;
-    const parts = [];
-    if (st.rateBuff > 0) parts.push("悟道 +" + fmtPct(st.rateBuff) + " · " + fmtDuration((st.rateBuffEnd - now) / 1000));
-    if (st.stoneBuff > 0) parts.push("聚灵 +" + fmtPct(st.stoneBuff) + " · " + fmtDuration((st.stoneBuffEnd - now) / 1000));
-    if (st.successBuff > 0) parts.push("道侣同心 +" + fmtPct(st.successBuff) + " · " + fmtDuration((st.successBuffEnd - now) / 1000));
+    const parts = activeBuffs.map((b) =>
+      (b.icon ? b.icon + " " : "") + b.name + " +" + fmtPct(b.power, 1) +
+      " · " + fmtDuration((b.endAt - now) / 1000)
+    );
     if (st.breakBonus > 0) parts.push("破境丹 +" + fmtPct(st.breakBonus));
     if (st.successBonus > 0) parts.push("前辈指点 +" + fmtPct(st.successBonus));
-    UI.buffRow.innerHTML = parts.map((p) => '<span class="buff-pill">' + p + "</span>").join("");
+    UI.buffRow.innerHTML = parts.map((p) => '<span class="buff-pill">' + esc(p) + "</span>").join("");
   }
 }
 
@@ -5150,10 +5634,11 @@ function renderJourneyLog() {
 }
 
 /* ------------------------------ 更多页 ------------------------------ */
-function attrListHTML(attrs) {
+function attrListHTML(attrs, clickable) {
   return ATTR_DEFS.map((d) => {
     const v = (attrs && attrs[d.key]) || 0;
-    return '<div class="attr-item"><div class="attr-icon">' + d.icon + "</div>" +
+    return '<div class="attr-item"' + (clickable ? ' data-action="stat-info" data-stat="' + d.key + '"' : "") + ">" +
+      '<div class="attr-icon">' + d.icon + "</div>" +
       '<div class="attr-body"><div class="attr-name">' + d.name + "</div>" +
       '<div class="attr-desc">' + d.desc + "</div></div>" +
       '<div class="attr-val">' + v + "</div></div>";
@@ -5164,7 +5649,7 @@ function renderMore() {
   const achs = Object.keys(game.achieve).length;
   const st = computeStats(game, Date.now());
   const d = st.derived;
-  if (UI.attrList) UI.attrList.innerHTML = attrListHTML(game.attrs);
+  if (UI.attrList) UI.attrList.innerHTML = attrListHTML(game.attrs, true);
   if (UI.attrTotal) UI.attrTotal.textContent = "总值 " + ATTR_KEYS.reduce((s, k) => s + (game.attrs[k] || 0), 0);
 
   const rows = [
@@ -5185,19 +5670,20 @@ function renderMore() {
 
   if (UI.combatGrid) {
     const combatRows = [
-      ["气血上限", fmt(d.hpMax)],
-      ["法力上限", fmt(d.mpMax)],
-      ["法术强度", fmt(d.spellAtk, 1)],
-      ["法宝强度", fmt(d.artifactAtk, 1)],
-      ["防御", fmt(d.defense, 1)],
-      ["暴击率", fmtPct(d.critRate, 1)],
-      ["暴击伤害", Math.round(d.critDmg * 100) + "%"],
-      ["闪避率", fmtPct(d.dodge, 1)],
-      ["法术耗灵", fmt(d.mpCost)],
-      ["高品质法术", fmtPct(d.highQualityChance, 1)],
+      ["气血上限", fmt(d.hpMax), "hpMax"],
+      ["法力上限", fmt(d.mpMax), "mpMax"],
+      ["法术强度", fmt(d.spellAtk, 1), "spellAtk"],
+      ["法宝强度", fmt(d.artifactAtk, 1), "artifactAtk"],
+      ["防御", fmt(d.defense, 1), "defense"],
+      ["暴击率", fmtPct(d.critRate, 1), "critRate"],
+      ["暴击伤害", Math.round(d.critDmg * 100) + "%", "critDmg"],
+      ["闪避率", fmtPct(d.dodge, 1), "dodge"],
+      ["法术耗灵", fmt(d.mpCost), "mpCost"],
+      ["高品质法术", fmtPct(d.highQualityChance, 1), "highQualityChance"],
     ];
     UI.combatGrid.innerHTML = combatRows.map((r) =>
-      '<div class="stat"><label>' + r[0] + "</label><b>" + r[1] + "</b></div>"
+      '<div class="stat" data-action="stat-info" data-stat="' + r[2] + '"><label>' + r[0] +
+      "</label><b>" + r[1] + "</b></div>"
     ).join("");
   }
 
@@ -5277,6 +5763,7 @@ function onClick(e) {
     case "reroll-create": doCreateReroll(); break;
     case "create-start": doCreateStart(); break;
     case "battle-skip": doBattleSkip(); break;
+    case "stat-info": openStatInfo(target.getAttribute("data-stat")); break;
     case "buy-pill": doBuyPill(id); break;
     case "use-pill": doUsePill(id); break;
     case "changelog": showChangelog(); break;
@@ -5860,6 +6347,29 @@ function pumpModal() {
   if (!UI.modalMask.classList.contains("hidden")) return;
   const opts = modalQueue.shift();
   showModal(opts);
+}
+
+function statInfoModal(key) {
+  const b = statBreakdown(game, key, Date.now());
+  const lines = (b.lines || []).map((l) =>
+    '<div class="stat-line"><div class="stat-line-main"><span class="stat-line-label">' + esc(l.label) +
+    '</span><b class="stat-line-value">' + esc(l.value) + "</b></div>" +
+    (l.note ? '<span class="stat-line-note">' + esc(l.note) + "</span>" : "") + "</div>"
+  ).join("");
+  return {
+    icon: b.icon || "📊",
+    title: b.name,
+    sub: "当前 " + esc(b.value),
+    body: '<div class="stat-formula"><span class="stat-formula-tag">计算</span><code>' + esc(b.formula) + "</code></div>" +
+      '<div class="stat-lines">' + lines + "</div>" +
+      (b.note ? '<p class="stat-note">' + esc(b.note) + "</p>" : ""),
+    buttons: [{ text: "明白了", cls: "btn-primary" }],
+  };
+}
+
+function openStatInfo(key) {
+  if (!key) return;
+  enqueueModal(statInfoModal(key));
 }
 
 function showModal(opts) {
