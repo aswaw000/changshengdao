@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v2.6.0 · built 2026-11-03T05:13:38.024Z · 单文件离线可玩 -->
+<!-- 《长生道》 v3.0.0 · built 2026-11-03T06:01:22.374Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -1691,6 +1691,446 @@ textarea.savelink {
   .realm-name { font-size: 22px; letter-spacing: 2px; }
 }
 
+/* =====================================================================
+ * v3.0 山海秘境
+ * ===================================================================== */
+body.rogue-lock { overflow: hidden; }
+
+.rogue-entry .rogue-entry-body {
+  display: flex; gap: 12px; align-items: center;
+  padding: 4px 0 12px;
+}
+.rogue-entry-icon {
+  width: 52px; height: 52px; flex: none;
+  display: grid; place-items: center;
+  font-size: 27px;
+  border-radius: 16px;
+  background: radial-gradient(circle at 30% 25%, rgba(201, 162, 255, 0.22), rgba(20, 40, 46, 0.6) 70%);
+  border: 1px solid rgba(201, 162, 255, 0.25);
+}
+.rogue-entry-info { min-width: 0; }
+.rogue-entry-title {
+  font-family: var(--font-title);
+  font-size: 17px; letter-spacing: 2px;
+  color: var(--gold-soft);
+  margin-bottom: 3px;
+}
+.rogue-entry-desc { font-size: 11.5px; line-height: 1.65; color: var(--muted); }
+
+.rogue {
+  position: fixed; inset: 0; z-index: 240;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(90% 55% at 50% 0%, rgba(23, 46, 52, 0.98), rgba(5, 9, 12, 1) 72%),
+    var(--bg);
+  animation: fadeIn 0.24s ease;
+}
+.rogue-head {
+  flex: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 14px 10px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(7, 13, 17, 0.98), rgba(7, 13, 17, 0.86));
+}
+.rogue-head-main { min-width: 0; }
+.rogue-kicker {
+  font-size: 9.5px; letter-spacing: 3px; color: var(--muted);
+  text-transform: uppercase;
+}
+.rogue-head-title {
+  font-family: var(--font-title);
+  font-size: 20px; letter-spacing: 2px;
+  color: var(--gold-soft);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rogue-head-side { display: flex; align-items: center; gap: 8px; flex: none; }
+.rogue-mini {
+  font-size: 10px; line-height: 1.5; color: var(--muted);
+  text-align: right; letter-spacing: 0.3px;
+}
+.rogue-exit {
+  flex: none;
+  padding: 6px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+  background: rgba(120, 180, 190, 0.06);
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+}
+.rogue-exit:active { transform: scale(0.96); }
+.rogue-body {
+  flex: 1; min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  width: 100%; max-width: 720px;
+  margin: 0 auto;
+  padding: 12px 12px calc(24px + env(safe-area-inset-bottom, 0px));
+}
+.rogue-body::-webkit-scrollbar { display: none; }
+
+.rg-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.rg-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 10% 0%, rgba(111, 211, 192, 0.14), transparent 60%),
+    linear-gradient(180deg, rgba(19, 34, 40, 0.92), rgba(10, 18, 23, 0.95));
+  border-color: rgba(111, 211, 192, 0.22);
+}
+.rg-hero::after {
+  content: "";
+  position: absolute; right: -30px; top: -36px;
+  width: 130px; height: 130px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(230, 194, 115, 0.14), transparent 68%);
+  pointer-events: none;
+}
+.rg-hero-top { display: flex; gap: 12px; align-items: center; }
+.rg-act-icon {
+  width: 50px; height: 50px; flex: none;
+  display: grid; place-items: center;
+  font-size: 26px;
+  border-radius: 16px;
+  background: rgba(111, 211, 192, 0.09);
+  border: 1px solid rgba(111, 211, 192, 0.22);
+}
+.rg-act-name { font-family: var(--font-title); font-size: 21px; letter-spacing: 2px; color: var(--gold-soft); }
+.rg-act-sub { font-size: 10.5px; color: var(--muted); letter-spacing: 1px; margin-top: 2px; }
+.rg-sub { font-size: 11.5px; line-height: 1.7; color: var(--muted); }
+.rg-hpbar {
+  position: relative; height: 7px; border-radius: 99px;
+  background: rgba(120, 180, 190, 0.13);
+  overflow: hidden; margin: 6px 0 3px;
+}
+.rg-hpbar i {
+  position: absolute; inset: 0 auto 0 0;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #6fd3c0, #a8e6b0);
+}
+.rg-hptext { font-size: 9.5px; color: var(--muted); letter-spacing: 0.4px; }
+.rg-res-row {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px;
+  margin-top: 10px;
+}
+.rg-res {
+  padding: 7px 4px;
+  border-radius: 10px;
+  background: rgba(6, 13, 17, 0.55);
+  border: 1px solid var(--line);
+  text-align: center;
+}
+.rg-res label { display: block; font-size: 9.5px; color: var(--muted); letter-spacing: 0.5px; }
+.rg-res b { display: block; margin-top: 2px; font-size: 12.5px; color: var(--jade); font-weight: 600; }
+.rg-res b.gold { color: var(--gold-soft); }
+
+.rg-pips { display: flex; gap: 5px; align-items: center; margin-top: 10px; }
+.rg-pip {
+  flex: 1; height: 5px; border-radius: 99px;
+  background: rgba(120, 180, 190, 0.12);
+}
+.rg-pip.on { background: linear-gradient(90deg, var(--jade-dim), var(--jade)); }
+.rg-pip.boss.on { background: linear-gradient(90deg, var(--gold-dim), var(--gold)); }
+.rg-pip-label { flex: none; font-size: 9.5px; color: var(--muted); margin-left: 4px; }
+
+.rg-tabs {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(6, 13, 17, 0.62);
+  border: 1px solid var(--line);
+  margin-bottom: 10px;
+}
+.rg-tab {
+  padding: 8px 4px;
+  border: 0; border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px; letter-spacing: 1px;
+  cursor: pointer;
+}
+.rg-tab.active { background: rgba(230, 194, 115, 0.14); color: var(--gold-soft); }
+
+.rg-path {
+  width: 100%;
+  text-align: left;
+  padding: 13px;
+  margin-bottom: 8px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(9, 18, 22, 0.72);
+  color: var(--text);
+  cursor: pointer;
+}
+.rg-path.sel {
+  border-color: rgba(230, 194, 115, 0.5);
+  background:
+    radial-gradient(100% 100% at 0% 0%, rgba(230, 194, 115, 0.12), transparent 65%),
+    rgba(12, 23, 28, 0.9);
+  box-shadow: 0 0 0 1px rgba(230, 194, 115, 0.16) inset;
+}
+.rg-path-head { display: flex; gap: 9px; align-items: center; }
+.rg-path-icon {
+  width: 38px; height: 38px; flex: none;
+  display: grid; place-items: center;
+  font-size: 20px; border-radius: 12px;
+  background: rgba(120, 180, 190, 0.08);
+  border: 1px solid var(--line);
+}
+.rg-path-name { font-family: var(--font-title); font-size: 16px; letter-spacing: 1.5px; color: var(--gold-soft); }
+.rg-path-title { font-size: 10.5px; color: var(--muted); margin-top: 1px; }
+.rg-path-desc { font-size: 11.5px; color: var(--muted); line-height: 1.65; margin-top: 8px; }
+.rg-path-passive { font-size: 11px; color: var(--jade); line-height: 1.6; margin-top: 5px; }
+.rg-path-quote { font-family: var(--font-title); font-size: 10.5px; color: rgba(230, 194, 115, 0.7); margin-top: 5px; }
+.rg-path-check {
+  margin-left: auto;
+  font-size: 10px; color: var(--gold);
+  border: 1px solid rgba(230, 194, 115, 0.35);
+  border-radius: 99px; padding: 2px 7px;
+}
+
+.rg-label {
+  display: flex; align-items: baseline; justify-content: space-between;
+  font-size: 10.5px; letter-spacing: 1.5px; color: var(--muted);
+  margin: 2px 0 7px;
+}
+.rg-diff-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.rg-diff {
+  padding: 9px 5px;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: rgba(7, 14, 18, 0.6);
+  color: var(--text);
+  cursor: pointer;
+  text-align: center;
+}
+.rg-diff.sel { border-color: rgba(111, 211, 192, 0.55); background: rgba(111, 211, 192, 0.1); }
+.rg-diff.locked { opacity: 0.42; cursor: not-allowed; }
+.rg-diff-name { font-size: 12.5px; letter-spacing: 1px; color: var(--gold-soft); }
+.rg-diff-desc { font-size: 9px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+.rg-start {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px 10px;
+  border: 1px solid rgba(230, 194, 115, 0.35);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #e6c273, #c9a04f);
+  color: #1d1608;
+  font-size: 16px; font-weight: 700; letter-spacing: 4px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(230, 194, 115, 0.18);
+}
+.rg-start:disabled { filter: grayscale(0.4); opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+.rg-start-sub { display: block; font-size: 9.5px; font-weight: 400; letter-spacing: 1px; opacity: 0.72; margin-top: 3px; }
+
+.rg-relics { display: flex; flex-wrap: wrap; gap: 5px; }
+.rg-relic {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 7px;
+  border-radius: 99px;
+  background: rgba(120, 180, 190, 0.07);
+  border: 1px solid var(--line);
+  font-size: 10px; color: var(--muted);
+}
+.rg-relic b { color: var(--text); font-weight: 500; }
+.rg-relic.rarity-3 { border-color: rgba(230, 194, 115, 0.32); }
+.rg-relic.rarity-2 { border-color: rgba(201, 162, 255, 0.28); }
+
+.rg-node-list { display: grid; gap: 8px; }
+.rg-node {
+  width: 100%;
+  display: flex; align-items: center; gap: 11px;
+  padding: 13px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(17, 30, 36, 0.9), rgba(8, 15, 19, 0.92));
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+.rg-node:active { transform: scale(0.995); }
+.rg-node.boss { border-color: rgba(230, 194, 115, 0.4); background: linear-gradient(180deg, rgba(42, 33, 18, 0.72), rgba(15, 15, 12, 0.95)); }
+.rg-node-icon {
+  width: 42px; height: 42px; flex: none;
+  display: grid; place-items: center;
+  font-size: 22px; border-radius: 13px;
+  background: rgba(120, 180, 190, 0.08);
+  border: 1px solid var(--line);
+}
+.rg-node-body { flex: 1; min-width: 0; }
+.rg-node-name { font-size: 14px; color: var(--gold-soft); letter-spacing: 1px; }
+.rg-node-desc { font-size: 10.5px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.rg-node-enemy {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-top: 5px; font-size: 10px; color: var(--danger);
+  padding: 2px 7px; border-radius: 99px;
+  background: rgba(226, 112, 112, 0.08);
+  border: 1px solid rgba(226, 112, 112, 0.2);
+}
+.rg-node-arrow { color: var(--muted); font-size: 18px; flex: none; }
+
+.rg-choice-list { display: grid; gap: 8px; }
+.rg-choice {
+  width: 100%;
+  display: flex; align-items: center; gap: 11px;
+  padding: 13px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(9, 18, 22, 0.72);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+.rg-choice:active { transform: scale(0.995); }
+.rg-choice-icon {
+  width: 42px; height: 42px; flex: none;
+  display: grid; place-items: center;
+  font-size: 21px; border-radius: 13px;
+  background: rgba(120, 180, 190, 0.07);
+  border: 1px solid var(--line);
+}
+.rg-choice-body { flex: 1; min-width: 0; }
+.rg-choice-name { font-size: 13.5px; color: var(--gold-soft); letter-spacing: 0.5px; }
+.rg-choice-desc { font-size: 10.5px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.rg-choice-tag {
+  display: inline-block; margin-top: 4px;
+  font-size: 9px; letter-spacing: 0.5px;
+  color: var(--jade);
+  padding: 1px 6px; border-radius: 99px;
+  border: 1px solid rgba(111, 211, 192, 0.22);
+}
+.rg-choice.disabled { opacity: 0.45; cursor: not-allowed; }
+.rg-choice.sold { opacity: 0.38; cursor: default; }
+
+.rg-event-text {
+  font-size: 13px; line-height: 1.9; color: var(--text);
+  padding: 2px 2px 12px;
+}
+.rg-event-result {
+  font-size: 13px; line-height: 1.9; color: var(--jade);
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(111, 211, 192, 0.06);
+  border: 1px solid rgba(111, 211, 192, 0.18);
+  margin-bottom: 12px;
+}
+
+.rg-reward-grid { display: grid; gap: 8px; }
+.rg-reward {
+  width: 100%;
+  display: flex; align-items: center; gap: 11px;
+  padding: 13px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(19, 33, 38, 0.9), rgba(9, 16, 20, 0.94));
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+.rg-reward.rarity-2 { border-color: rgba(201, 162, 255, 0.28); }
+.rg-reward.rarity-3 { border-color: rgba(230, 194, 115, 0.36); }
+
+.rg-talent-group { margin-bottom: 12px; }
+.rg-talent-group-head {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; letter-spacing: 2px; color: var(--gold-soft);
+  margin: 0 2px 6px;
+}
+.rg-talent {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 11px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(8, 16, 20, 0.66);
+  margin-bottom: 6px;
+}
+.rg-talent.owned { border-color: rgba(111, 211, 192, 0.32); background: rgba(111, 211, 192, 0.06); }
+.rg-talent.locked { opacity: 0.55; }
+.rg-talent-icon { font-size: 20px; width: 30px; text-align: center; flex: none; }
+.rg-talent-body { flex: 1; min-width: 0; }
+.rg-talent-name { font-size: 12.5px; color: var(--text); letter-spacing: 0.5px; }
+.rg-talent-desc { font-size: 10px; color: var(--muted); line-height: 1.5; margin-top: 1px; }
+.rg-talent-btn {
+  flex: none;
+  padding: 6px 9px;
+  border-radius: 9px;
+  border: 1px solid rgba(230, 194, 115, 0.32);
+  background: rgba(230, 194, 115, 0.1);
+  color: var(--gold-soft);
+  font-size: 10px;
+  cursor: pointer;
+}
+.rg-talent-btn:disabled { opacity: 0.38; cursor: not-allowed; }
+.rg-talent-btn.owned { border-color: rgba(111, 211, 192, 0.28); background: rgba(111, 211, 192, 0.08); color: var(--jade); }
+
+.rg-codex-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.rg-codex {
+  padding: 8px 5px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(7, 14, 18, 0.56);
+  text-align: center;
+}
+.rg-codex.unseen { opacity: 0.36; }
+.rg-codex.rarity-2 { border-color: rgba(201, 162, 255, 0.24); }
+.rg-codex.rarity-3 { border-color: rgba(230, 194, 115, 0.3); }
+.rg-codex-icon { font-size: 18px; }
+.rg-codex-name { font-size: 9.5px; color: var(--text); margin-top: 2px; line-height: 1.3; }
+.rg-codex-rarity { font-size: 8px; color: var(--gold-dim); letter-spacing: 1px; margin-top: 1px; }
+
+.rg-result-hero { text-align: center; padding: 12px 0 4px; }
+.rg-result-icon { font-size: 44px; line-height: 1.1; }
+.rg-result-title {
+  font-family: var(--font-title);
+  font-size: 26px; letter-spacing: 5px;
+  color: var(--gold-soft); margin-top: 4px;
+}
+.rg-result-sub { font-size: 11px; color: var(--muted); letter-spacing: 1.5px; margin-top: 3px; }
+.rg-result-stats {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px;
+  margin: 12px 0;
+}
+.rg-result-stat {
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(6, 13, 17, 0.55);
+  border: 1px solid var(--line);
+  text-align: center;
+}
+.rg-result-stat label { display: block; font-size: 9.5px; color: var(--muted); }
+.rg-result-stat b { display: block; font-size: 14px; color: var(--jade); margin-top: 1px; }
+.rg-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.rg-btn-row .btn { width: 100%; }
+.rg-wide-btn { width: 100%; margin-top: 8px; }
+
+.rg-tip {
+  font-size: 10px; line-height: 1.7; color: var(--muted);
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(120, 180, 190, 0.04);
+  border: 1px dashed var(--line);
+  margin-top: 8px;
+}
+
+@media (max-width: 360px) {
+  .rogue-head { padding-left: 10px; padding-right: 10px; }
+  .rogue-body { padding-left: 9px; padding-right: 9px; }
+  .rg-card { padding: 11px; }
+  .rg-codex-grid { gap: 4px; }
+  .rg-codex-name { font-size: 9px; }
+  .rg-relic { font-size: 9px; }
+  .rogue-mini { font-size: 9px; }
+}
+
+
 </style>
 </head>
 <body>
@@ -1883,6 +2323,21 @@ textarea.savelink {
 
     <!-- ===== 历练 ===== -->
     <section class="tab-panel" data-panel="journey">
+      <div class="card rogue-entry">
+        <div class="card-head"><span>山海秘境</span><span class="card-hint" id="rogueHint">筑基一层开启</span></div>
+        <div class="rogue-entry-body">
+          <div class="rogue-entry-icon">🌌</div>
+          <div class="rogue-entry-info">
+            <div class="rogue-entry-title">山海轮回</div>
+            <div class="rogue-entry-desc" id="rogueDesc">三途择一，携遗物深入三幕。成则带回灵息与道痕，败亦有所得。</div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-wide" id="btnRogue" data-action="open-rogue">
+          <span class="btn-main">踏入山海</span>
+          <span class="btn-sub" id="rogueSub">需筑基一层</span>
+        </button>
+      </div>
+
       <div class="card guardian-card">
         <div class="card-head"><span>灵脉守护者</span><span class="card-hint" id="guardianHint"></span></div>
         <div class="guardian-body">
@@ -1976,7 +2431,7 @@ textarea.savelink {
           <button class="menu-item danger" data-action="reset"><span>重入轮回</span><span class="menu-arrow">›</span></button>
         </div>
       </div>
-      <div class="footer-note">长生道 v<span id="verText">2.3.0</span> · 存档自动保存于本机</div>
+      <div class="footer-note">长生道 v<span id="verText">3.0.0</span> · 存档自动保存于本机</div>
     </section>
   </main>
 
@@ -1988,6 +2443,21 @@ textarea.savelink {
     <button class="tab" data-action="tab" data-tab="journey"><span class="tab-icon">🗺️</span><span class="tab-label">历练</span></button>
     <button class="tab" data-action="tab" data-tab="more"><span class="tab-icon">📜</span><span class="tab-label">更多</span></button>
   </nav>
+
+  <!-- 山海秘境浮层 -->
+  <div class="rogue hidden" id="rogue">
+    <div class="rogue-head">
+      <div class="rogue-head-main">
+        <div class="rogue-kicker" id="rogueKicker">山海秘境</div>
+        <div class="rogue-head-title" id="rogueHead">三途择一</div>
+      </div>
+      <div class="rogue-head-side">
+        <div class="rogue-mini" id="rogueMini"></div>
+        <button class="rogue-exit" data-action="rogue-close">离开</button>
+      </div>
+    </div>
+    <div class="rogue-body" id="rogueBody"></div>
+  </div>
 
   <div class="modal-mask hidden" id="modalMask">
     <div class="modal" id="modalBox"></div>
@@ -2425,7 +2895,7 @@ textarea.savelink {
           <span class="btn-main">开始修行</span>
           <span class="btn-sub" id="coverSub">自动挂机 · 闭关也在涨</span>
         </button>
-        <div class="cover-note">v<span id="coverVer">2.3.0</span> · 存档自动保存于本机</div>
+        <div class="cover-note">v<span id="coverVer">3.0.0</span> · 存档自动保存于本机</div>
       </div>
     </div>
   </div>
@@ -2440,7 +2910,7 @@ textarea.savelink {
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "2.6.0";
+const GAME_VERSION = "3.0.0";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -2470,6 +2940,11 @@ const CFG = {
   CAVE_UPGRADE_BASE: 500,       // 洞府升级基础灵石
   CAVE_UPGRADE_MUL: 1.55,       // 洞府升级费用增长
   LOG_LIMIT: 80,
+  ROGUE_UNLOCK_REALM: 9,        // 筑基后开启山海秘境
+  ROGUE_ACTS: 3,                // 秘境三幕
+  ROGUE_STEPS: 4,               // 每幕四次择路
+  ROGUE_BATTLE_ROUNDS: 20,      // 秘境战斗回合上限
+  ROGUE_START_ESSENCE: 40,      // 秘境初始灵息
 };
 
 /* ---------------------------- 境界体系 ---------------------------- */
@@ -2852,8 +3327,246 @@ const ACHIEVEMENTS = [
 const ACHIEVEMENT_MAP = {};
 ACHIEVEMENTS.forEach(a => { ACHIEVEMENT_MAP[a.id] = a; });
 
+/* ---------------------------- 山海秘境 ---------------------------- */
+/* v3.0 大型玩法：三途、遗物、事件、首领与局外道痕天赋。
+ * 秘境是独立模式，不消耗主线资源；结算后把灵息与道痕带回主线。 */
+
+const ROGUE_DIFFICULTIES = [
+  { level: 1, name: "劫数一", short: "一劫", enemy: 1.0, shard: 1.0, unlockWins: 0,
+    desc: "山海如常，适合初探。" },
+  { level: 2, name: "劫数二", short: "二劫", enemy: 1.28, shard: 1.5, unlockWins: 1,
+    desc: "妖潮渐起，遗物更丰。" },
+  { level: 3, name: "劫数三", short: "三劫", enemy: 1.6, shard: 2.2, unlockWins: 4,
+    desc: "天倾地覆，唯强者可归。" },
+];
+
+const ROGUE_PATHS = [
+  {
+    id: "sword", name: "剑心", title: "一剑破万法", icon: "🗡️", color: "#9fd4ff",
+    desc: "以攻代守，专精暴击与斩杀。",
+    passive: "攻击 +18%，暴击率 +22%，暴击伤害 +40%，造成伤害的 18% 转为气血；每 3 回合额外斩出一剑，对气血低于三成的敌人伤害 +28%。",
+    quote: "剑锋所指，山海皆开。",
+    stats: { critRate: 0.22, critDmg: 0.40, hpPct: 0.10, lifesteal: 0.18, atkPct: 0.18, execute: 0.28, echoEvery: 3, echoPct: 0.80 },
+    startRelic: "r_start_sword",
+    spells: [
+      { name: "断岳式", icon: "⚔️", main: { key: "dmg", ratio: 1.30, mpMul: 1 }, effect: { key: "pierce", params: { pct: 0.35 } }, extras: [] },
+      { name: "惊鸿式", icon: "🗡️", main: { key: "dmg", ratio: 1.15, mpMul: 1 }, effect: null, extras: [] },
+      { name: "万剑归宗", icon: "🌠", main: { key: "burst", ratio: 2.4, mpMul: 2.2 }, effect: null, extras: [] },
+    ],
+    artifact: { name: "青锋剑匣", icon: "🎴", main: { key: "dmg", ratio: 1.25 }, speed: 3, effect: { key: "pierce", params: { pct: 0.4 } }, extras: [] },
+  },
+  {
+    id: "alchemy", name: "丹心", title: "炉火照长生", icon: "⚗️", color: "#ffb27a",
+    desc: "以丹火续命，以灼烧磨敌。",
+    passive: "生命上限 +12%，每回合回复 2% 气血；攻击附带灼烧。",
+    quote: "丹成九转，山海同炉。",
+    stats: { hpPct: 0.12, healPerRound: 0.02, burnOnHit: true, burnPct: 0.18 },
+    startRelic: "r_start_alchemy",
+    spells: [
+      { name: "灼血诀", icon: "🔥", main: { key: "dmg", ratio: 1.15, mpMul: 1 }, effect: { key: "burn", params: { rounds: 3, pct: 0.4 } }, extras: [] },
+      { name: "回春诀", icon: "💚", main: { key: "heal", ratio: 0.95, mpMul: 1 }, effect: null, extras: [] },
+      { name: "九转丹火", icon: "🌋", main: { key: "burst", ratio: 2.25, mpMul: 2.2 }, effect: { key: "burn", params: { rounds: 2, pct: 0.5 } }, extras: [] },
+    ],
+    artifact: { name: "药王炉", icon: "🏺", main: { key: "heal", ratio: 0.8 }, speed: 3, effect: null, extras: [] },
+  },
+  {
+    id: "talisman", name: "符心", title: "一符镇山海", icon: "🔯", color: "#c9a2ff",
+    desc: "以符护身，以雷破阵。",
+    passive: "开场获得 15% 气血护盾，闪避 +4%；每 3 回合引落一道雷符。",
+    quote: "符落之处，万邪辟易。",
+    stats: { shieldStart: 0.15, dodge: 0.04, every3: 0.7 },
+    startRelic: "r_start_talisman",
+    spells: [
+      { name: "玄甲符", icon: "🛡️", main: { key: "shield", ratio: 1.0, mpMul: 1 }, effect: null, extras: [] },
+      { name: "雷引符", icon: "⚡", main: { key: "dmg", ratio: 1.1, mpMul: 1 }, effect: { key: "seal", params: { casts: 1 } }, extras: [] },
+      { name: "天雷破", icon: "🌩️", main: { key: "burst", ratio: 2.3, mpMul: 2.2 }, effect: { key: "pierce", params: { pct: 0.3 } }, extras: [] },
+    ],
+    artifact: { name: "镇岳符", icon: "📜", main: { key: "shield", ratio: 0.9 }, speed: 3, effect: null, extras: [] },
+  },
+];
+const ROGUE_PATH_MAP = {};
+ROGUE_PATHS.forEach((p) => { ROGUE_PATH_MAP[p.id] = p; });
+
+const ROGUE_RELICS = [
+  /* 三途初始遗物 */
+  { id: "r_start_sword", name: "剑心·青锋", icon: "🗡️", rarity: 1, start: true, path: "sword",
+    desc: "攻击 +15%，暴击率 +8%。", mods: { atkPct: 0.15, critRate: 0.08 } },
+  { id: "r_start_alchemy", name: "丹心·药囊", icon: "🧪", rarity: 1, start: true, path: "alchemy",
+    desc: "生命上限 +10%，每回合回复 2% 气血。", mods: { hpPct: 0.10, healPerRound: 0.02 } },
+  { id: "r_start_talisman", name: "符心·符甲", icon: "🔰", rarity: 1, start: true, path: "talisman",
+    desc: "开场护盾 +12% 气血，闪避 +4%。", mods: { shieldStart: 0.12, dodge: 0.04 } },
+  /* 常见 */
+  { id: "r_qingfeng", name: "青锋石", icon: "🪨", rarity: 1, desc: "攻击 +10%。", mods: { atkPct: 0.10 } },
+  { id: "r_xuangui", name: "玄龟甲", icon: "🐢", rarity: 1, desc: "生命上限 +15%。", mods: { hpPct: 0.15 } },
+  { id: "r_liuyun", name: "流云靴", icon: "👢", rarity: 1, desc: "闪避 +5%。", mods: { dodge: 0.05 } },
+  { id: "r_huichun", name: "回春藤", icon: "🌿", rarity: 1, desc: "每回合回复 2.5% 气血。", mods: { healPerRound: 0.025 } },
+  { id: "r_jingang", name: "金刚罩", icon: "🛡️", rarity: 1, desc: "开场护盾 +12% 气血。", mods: { shieldStart: 0.12 } },
+  { id: "r_lieyang", name: "烈阳珠", icon: "☀️", rarity: 1, desc: "暴击伤害 +30%。", mods: { critDmg: 0.30 } },
+  { id: "r_pojun", name: "破军符", icon: "🎯", rarity: 1, desc: "暴击率 +7%。", mods: { critRate: 0.07 } },
+  { id: "r_yuling", name: "雨灵幡", icon: "🌧️", rarity: 1, desc: "法力上限 +15%。", mods: { mpPct: 0.15 } },
+  /* 稀有 */
+  { id: "r_shouzhou", name: "守拙钟", icon: "🔔", rarity: 2, desc: "防御 +25%。", mods: { defPct: 0.25 } },
+  { id: "r_shiling", name: "噬灵剑", icon: "🩸", rarity: 2, desc: "造成伤害的 12% 转化为气血。", mods: { lifesteal: 0.12 } },
+  { id: "r_zhuoxin", name: "灼心印", icon: "🔥", rarity: 2, desc: "攻击附带灼烧，每回合造成攻击 18% 的伤害。", mods: { burnOnHit: true, burnPct: 0.18 } },
+  { id: "r_leiyin", name: "雷引符", icon: "⚡", rarity: 2, desc: "每 3 回合额外引落一道雷，造成 80% 攻击伤害。", mods: { every3: 0.8 } },
+  { id: "r_lingquan", name: "灵泉佩", icon: "💧", rarity: 2, desc: "每回合额外回复 5% 法力。", mods: { manaRegen: 0.05 } },
+  { id: "r_jingshi", name: "荆棘甲", icon: "🌵", rarity: 2, desc: "受到攻击时反弹 15% 伤害。", mods: { thorns: 0.15 } },
+  { id: "r_huixiang", name: "回响铃", icon: "🔔", rarity: 2, desc: "每 3 回合回响一次，重复 45% 攻击伤害。", mods: { echoEvery: 3, echoPct: 0.45 } },
+  { id: "r_pozhen", name: "破阵鼓", icon: "🥁", rarity: 2, desc: "攻击 +18%。", mods: { atkPct: 0.18 } },
+  /* 传说 */
+  { id: "r_juxian", name: "斩仙刃", icon: "🔪", rarity: 3, desc: "对气血低于 30% 的敌人伤害 +35%。", mods: { execute: 0.35 } },
+  { id: "r_beishui", name: "背水胆", icon: "🫀", rarity: 3, desc: "每场战斗首次濒死时，回复 30% 气血并获得护盾。", mods: { lastStand: true } },
+  { id: "r_shanhai", name: "山海图", icon: "🗺️", rarity: 3, desc: "秘境灵息 +15%，道痕 +25%。", mods: { essenceBonus: 0.15, shardBonus: 0.25 } },
+  { id: "r_taixu", name: "太虚镜", icon: "🪞", rarity: 3, desc: "法力上限 +25%，法宝祭出间隔 -1 回合。", mods: { mpPct: 0.25, artifactHaste: 1 } },
+  { id: "r_buxiu", name: "不灭灯", icon: "🕯️", rarity: 3, desc: "每局秘境可复活一次，回复 35% 气血。", mods: { revive: 1 } },
+];
+const ROGUE_RELIC_MAP = {};
+ROGUE_RELICS.forEach((r) => { ROGUE_RELIC_MAP[r.id] = r; });
+
+const ROGUE_ACTS = [
+  { id: "mountain", name: "青岚山", subtitle: "山雨欲来", icon: "⛰️", color: "#8fb8a8" },
+  { id: "sea", name: "鲸落海", subtitle: "潮下无光", icon: "🌊", color: "#78a8d4" },
+  { id: "sky", name: "九霄天", subtitle: "雷阙将倾", icon: "🌩️", color: "#b49ae0" },
+];
+
+const ROGUE_ENEMIES = [
+  /* 第一幕 · 青岚山 */
+  { id: "rm_wolf", act: 1, name: "雾隐山狼", icon: "🐺", hpMul: 0.95, atkMul: 0.58, defMul: 0.8, dodge: 0.05, desc: "雾里只剩一双绿眼。" },
+  { id: "rm_bandit", act: 1, name: "采药贼", icon: "🥷", hpMul: 1.0, atkMul: 0.60, defMul: 0.8, dodge: 0.06, desc: "腰间挂满偷来的灵草。" },
+  { id: "rm_boar", act: 1, name: "石甲野猪", icon: "🐗", hpMul: 1.15, atkMul: 0.56, defMul: 1.1, dodge: 0.02, desc: "鬃毛硬如铁刺。" },
+  { id: "rm_ape", act: 1, elite: true, name: "铁臂灵猿", icon: "🦍", hpMul: 1.55, atkMul: 0.66, defMul: 1.0, dodge: 0.05, desc: "一拳碎石的守山灵兽。" },
+  { id: "rm_rock", act: 1, boss: true, name: "山君·青岩兽", icon: "🗿", hpMul: 2.7, atkMul: 0.80, defMul: 1.15, dodge: 0.01, desc: "青岚山主，岩甲覆身，怒则山崩。" },
+  /* 第二幕 · 鲸落海 */
+  { id: "rm_snake", act: 2, name: "玄水蛇", icon: "🐍", hpMul: 1.0, atkMul: 0.62, defMul: 0.9, dodge: 0.07, desc: "鳞片映着幽蓝水光。" },
+  { id: "rm_ghost", act: 2, name: "溺魂", icon: "👻", hpMul: 0.95, atkMul: 0.68, defMul: 0.7, dodge: 0.12, desc: "沉船里未散的执念。" },
+  { id: "rm_puppet", act: 2, name: "沉船傀儡", icon: "🤖", hpMul: 1.25, atkMul: 0.58, defMul: 1.35, dodge: 0.01, desc: "以珊瑚与铁骨拼成的守卫。" },
+  { id: "rm_whale", act: 2, elite: true, name: "深海妖鲸", icon: "🐋", hpMul: 1.7, atkMul: 0.70, defMul: 1.2, dodge: 0.02, desc: "一声鲸鸣，暗流如墙。" },
+  { id: "rm_whaleboss", act: 2, boss: true, name: "海主·玄鲸", icon: "🌊", hpMul: 2.85, atkMul: 0.84, defMul: 1.15, dodge: 0.03, desc: "鲸落海的主人，背甲上长满星火。" },
+  /* 第三幕 · 九霄天 */
+  { id: "rm_sword", act: 3, name: "剑冢残灵", icon: "🗡️", hpMul: 1.0, atkMul: 0.72, defMul: 0.8, dodge: 0.14, desc: "剑意未散，仍在寻主。" },
+  { id: "rm_moth", act: 3, name: "幻魅", icon: "🦋", hpMul: 0.95, atkMul: 0.74, defMul: 0.7, dodge: 0.16, desc: "翅上鳞粉皆是幻术。" },
+  { id: "rm_golem", act: 3, name: "星陨石灵", icon: "🌑", hpMul: 1.35, atkMul: 0.64, defMul: 1.4, dodge: 0.01, desc: "自陨星中醒来的石躯。" },
+  { id: "rm_dragon", act: 3, elite: true, name: "雷狱蛟龙", icon: "🐉", hpMul: 1.85, atkMul: 0.74, defMul: 1.2, dodge: 0.05, desc: "蛟身缠雷，鳞下尽是电光。" },
+  { id: "rm_thunder", act: 3, boss: true, name: "天阙·雷劫天君", icon: "⚡", hpMul: 3.1, atkMul: 0.90, defMul: 1.18, dodge: 0.04, desc: "九霄最后一道劫，掌中雷池翻涌。" },
+];
+const ROGUE_ENEMY_MAP = {};
+ROGUE_ENEMIES.forEach((e) => { ROGUE_ENEMY_MAP[e.id] = e; });
+
+const ROGUE_EVENTS = [
+  { id: "re_spring", title: "山间灵泉", icon: "💧",
+    text: "石缝里涌出一眼灵泉，水面浮着淡淡的月白灵气。",
+    choices: [
+      { text: "俯身饮下", result: "泉水清冽，气血随之充盈。", effects: { healPct: 0.30 } },
+      { text: "以玉瓶盛走", result: "灵泉入瓶，化作一捧灵息。", effects: { essence: 45 } },
+    ] },
+  { id: "re_stele", title: "无字古碑", icon: "🪦",
+    text: "荒草间立着一块无字碑，碑面却有剑痕般的道韵流转。",
+    choices: [
+      { text: "静坐参悟", result: "道韵入心，化作道痕。", effects: { shards: 35 } },
+      { text: "以掌按碑", result: "碑中残意反冲经脉，你却抓住了一缕剑意。", effects: { damagePct: 0.08, atkPct: 0.06 } },
+    ] },
+  { id: "re_fox", title: "狐火引路", icon: "🦊",
+    text: "一只白尾玄狐在雾里回头，尾尖燃着一簇冷火。",
+    choices: [
+      { text: "随它走", result: "狐火引你到一处旧洞，洞中藏着前人遗物。", effects: { relic: true } },
+      { text: "凝神戒备", result: "狐影散去，只留下一枚温热的灵石。", effects: { essence: 35, shards: 10 } },
+    ] },
+  { id: "re_boat", title: "沉船残舱", icon: "🚢",
+    text: "半截沉船搁在礁石间，舱门被海锈封死。",
+    choices: [
+      { text: "撬开舱门", result: "舱中尽是旧年货箱，你翻出一袋灵息。", effects: { essence: 60 } },
+      { text: "拆下船骨", result: "船骨坚硬，正好用来加固经脉。", effects: { maxHpPct: 0.10 } },
+    ] },
+  { id: "re_sword", title: "剑冢", icon: "⚔️",
+    text: "万剑插地，剑柄朝向同一座孤坟。",
+    choices: [
+      { text: "拔出一剑", result: "剑鸣如龙，你的攻势更盛。", effects: { atkPct: 0.10, damagePct: 0.06 } },
+      { text: "向孤坟一拜", result: "坟前落下三缕剑意，凝成道痕。", effects: { shards: 45 } },
+    ] },
+  { id: "re_market", title: "鬼市", icon: "🏮",
+    text: "荒山夜里忽然亮起一排红灯笼，摊主们都低着头。",
+    choices: [
+      { text: "买一壶无名酒", result: "酒入喉，气血翻涌，经脉拓宽。", effects: { maxHpPct: 0.12, shards: -15 } },
+      { text: "买一枚旧符", result: "符纸泛黄，却仍有一道护身灵光。", effects: { relic: true, shards: -25 } },
+      { text: "不买，快走", result: "你退出鬼市，只带走一身冷汗。", effects: {} },
+    ] },
+  { id: "re_cave", title: "塌陷洞窟", icon: "🕳️",
+    text: "洞窟深处传来金石相击之声，像是有什么东西在挣扎。",
+    choices: [
+      { text: "深入查看", result: "你从碎石下拖出一件残破遗物，也被落石擦伤。", effects: { relic: true, damagePct: 0.12 } },
+      { text: "绕路而行", result: "你绕开塌方，顺手捡了些散落灵息。", effects: { essence: 30 } },
+    ] },
+  { id: "re_bird", title: "青鸟衔枝", icon: "🐦",
+    text: "一只青鸟落在你肩头，嘴里衔着一截发光的树枝。",
+    choices: [
+      { text: "接过树枝", result: "树枝化作清气，伤口慢慢愈合。", effects: { healPct: 0.35, shards: 15 } },
+      { text: "随它飞去", result: "青鸟引你到一处灵脉，你收下一捧道痕。", effects: { shards: 40, essence: 20 } },
+    ] },
+  { id: "re_mirror", title: "心魔镜", icon: "🪞",
+    text: "水面凝成一面镜子，镜中的你正冷冷看着你。",
+    choices: [
+      { text: "直视镜中自己", result: "心魔退散，你的道心更坚。", effects: { atkPct: 0.08, shards: 25 } },
+      { text: "击碎镜面", result: "碎片划破手掌，却也斩断了一缕杂念。", effects: { damagePct: 0.10, shards: 35 } },
+    ] },
+  { id: "re_altar", title: "荒废祭坛", icon: "🛕",
+    text: "祭坛上还剩半盏冷灯，灯芯里封着一线山海之气。",
+    choices: [
+      { text: "点亮冷灯", result: "灯火亮起，照见你此行的来路与归途。", effects: { healPct: 0.20, maxHpPct: 0.06, shards: 20 } },
+      { text: "取走灯芯", result: "山海之气入体，你的攻击带上了一丝雷意。", effects: { atkPct: 0.12, damagePct: 0.08 } },
+    ] },
+];
+
+const ROGUE_TALENTS = [
+  { id: "t_sword_1", branch: "sword", tier: 1, name: "剑心初明", icon: "🗡️", cost: 60, req: null,
+    desc: "秘境中攻击 +8%。", mods: { atkPct: 0.08 } },
+  { id: "t_sword_2", branch: "sword", tier: 2, name: "锋芒毕露", icon: "✨", cost: 120, req: "t_sword_1",
+    desc: "秘境中暴击伤害 +25%。", mods: { critDmg: 0.25 } },
+  { id: "t_sword_3", branch: "sword", tier: 3, name: "斩因", icon: "🔪", cost: 200, req: "t_sword_2",
+    desc: "对残血敌人伤害 +15%。", mods: { execute: 0.15 } },
+  { id: "t_alchemy_1", branch: "alchemy", tier: 1, name: "生生不息", icon: "🌿", cost: 60, req: null,
+    desc: "秘境中生命上限 +10%。", mods: { hpPct: 0.10 } },
+  { id: "t_alchemy_2", branch: "alchemy", tier: 2, name: "药脉", icon: "💚", cost: 120, req: "t_alchemy_1",
+    desc: "每回合额外回复 2% 气血。", mods: { healPerRound: 0.02 } },
+  { id: "t_alchemy_3", branch: "alchemy", tier: 3, name: "回天", icon: "🕯️", cost: 200, req: "t_alchemy_2",
+    desc: "每局秘境可复活一次，回复 35% 气血。", mods: { revive: 1 } },
+  { id: "t_talisman_1", branch: "talisman", tier: 1, name: "符甲", icon: "🛡️", cost: 60, req: null,
+    desc: "开场护盾 +12% 气血。", mods: { shieldStart: 0.12 } },
+  { id: "t_talisman_2", branch: "talisman", tier: 2, name: "灵机", icon: "💠", cost: 120, req: "t_talisman_1",
+    desc: "每局初始灵息 +30。", mods: { startEssence: 30 } },
+  { id: "t_talisman_3", branch: "talisman", tier: 3, name: "三才", icon: "🔯", cost: 200, req: "t_talisman_2",
+    desc: "战后奖励多一个选项。", mods: { rewardChoices: 1 } },
+];
+const ROGUE_TALENT_MAP = {};
+ROGUE_TALENTS.forEach((t) => { ROGUE_TALENT_MAP[t.id] = t; });
+
+const ROGUE_NODE_TYPES = [
+  { type: "battle", name: "斗法", icon: "⚔️", desc: "击败拦路妖物，获得灵息与遗物。" },
+  { type: "elite", name: "精英", icon: "👹", desc: "强敌镇守，奖励更丰厚。" },
+  { type: "event", name: "奇遇", icon: "🎋", desc: "山海中总有意料之外的机缘。" },
+  { type: "shop", name: "鬼市", icon: "🏮", desc: "以灵息换取遗物与补给。" },
+  { type: "rest", name: "静修", icon: "🪷", desc: "调息疗伤，或凝练灵息。" },
+  { type: "treasure", name: "遗藏", icon: "🎁", desc: "前人留下的遗物，免费取走一件。" },
+];
+const ROGUE_NODE_MAP = {};
+ROGUE_NODE_TYPES.forEach((n) => { ROGUE_NODE_MAP[n.type] = n; });
+
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "3.0.0",
+    date: "2026-11-03",
+    title: "山海·轮回",
+    items: [
+      "新增大型玩法「山海秘境」：从历练页踏入，三幕择路，一局约五到十分钟",
+      "三条道途：剑心主暴击斩杀，丹心主灼烧续航，符心主护盾雷引",
+      "秘境内有遗物、奇遇、鬼市、静修与遗藏，每局构筑不同",
+      "三幕各有一位首领，击败后带回灵息、道痕与主线灵石",
+      "新增局外成长「道痕天赋」：剑心、丹心、符心三系共九枚天赋，永久生效",
+      "新增三档劫数难度，通关一劫后逐级解锁，道痕收益随之提高",
+      "新增山海图鉴：记录已见遗物、已败首领与三途通关",
+      "v2.6.0 存档可直接续玩，秘境进度独立保存，不影响主线",
+    ],
+  },
   {
     version: "2.6.0",
     date: "2026-11-03",
@@ -4497,6 +5210,7 @@ function exportSave(state) {
   const payload = Object.assign({}, state, {
     pendingOffline: null, pendingUnlocks: [], pendingEvents: [], pendingSpell: null, pendingNotice: null,
     meta: loadMeta(),
+    rogue: loadRogueMeta(),
   });
   return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
 }
@@ -4513,6 +5227,9 @@ function importSave(text) {
         ? raw.meta.records.filter((r) => r && typeof r === "object").slice(0, 12) : [];
       saveMeta(m);
     }
+    if (state && raw.rogue && typeof raw.rogue === "object") {
+      saveRogueMeta(normalizeRogueMeta(raw.rogue));
+    }
     return state;
   } catch (e) {
     return null;
@@ -4525,6 +5242,7 @@ function resetSave() {
     localStorage.removeItem(SAVE_KEY);
     localStorage.removeItem(SAVE_BAK_KEY);
     LEGACY_KEYS.forEach((k) => localStorage.removeItem(k));
+    if (typeof clearRogueRun === "function") clearRogueRun();
   } catch (e) {}
   return true;
 }
@@ -5050,6 +5768,1408 @@ function guardianStoneBonus(state) {
   return (state.guardians || []).length * CFG.GUARDIAN_STONE_BONUS;
 }
 
+/* ===== rogue.js ===== */
+/* =====================================================================
+ * 《长生道》· rogue.js (v3.0.0)
+ * 山海秘境：局外道痕、三途、遗物、地图、战斗与结算
+ * 独立于主线存档，秘境进度保存在 changsheng-dao.rogue.v1
+ * ===================================================================== */
+
+const ROGUE_KEY = "changsheng-dao.rogue.v1";
+const ROGUE_TALENT_BRANCHES = [
+  { id: "sword", name: "剑心", icon: "🗡️", desc: "攻势与斩杀" },
+  { id: "alchemy", name: "丹心", icon: "⚗️", desc: "生机与续航" },
+  { id: "talisman", name: "符心", icon: "🔯", desc: "护盾与灵息" },
+];
+
+/* ------------------------------ 局外存档 ------------------------------ */
+function defaultRogueMeta() {
+  return {
+    schema: 1,
+    shards: 0,
+    totalShards: 0,
+    runs: 0,
+    wins: 0,
+    bestAct: 0,
+    bestShards: 0,
+    maxDiff: 1,
+    talents: {},
+    seenRelics: {},
+    bossKills: {},
+    pathWins: {},
+  };
+}
+
+function normalizeRogueMeta(raw) {
+  const m = defaultRogueMeta();
+  if (!raw || typeof raw !== "object") return m;
+  const num = (v, lo, hi) => Math.max(lo, Math.min(hi, parseInt(v, 10) || 0));
+  m.shards = num(raw.shards, 0, 9999999);
+  m.totalShards = num(raw.totalShards, 0, 999999999);
+  m.runs = num(raw.runs, 0, 999999);
+  m.wins = num(raw.wins, 0, 999999);
+  m.bestAct = num(raw.bestAct, 0, 3);
+  m.bestShards = num(raw.bestShards, 0, 9999999);
+  m.maxDiff = Math.max(1, Math.min(ROGUE_DIFFICULTIES.length, num(raw.maxDiff, 1, 3)));
+  m.talents = {};
+  if (raw.talents && typeof raw.talents === "object") {
+    Object.keys(raw.talents).forEach((id) => {
+      if (ROGUE_TALENT_MAP[id] && raw.talents[id]) m.talents[id] = 1;
+    });
+  }
+  m.seenRelics = {};
+  if (raw.seenRelics && typeof raw.seenRelics === "object") {
+    Object.keys(raw.seenRelics).forEach((id) => {
+      if (ROGUE_RELIC_MAP[id]) m.seenRelics[id] = 1;
+    });
+  }
+  m.bossKills = {};
+  if (raw.bossKills && typeof raw.bossKills === "object") {
+    Object.keys(raw.bossKills).forEach((id) => {
+      const def = ROGUE_ENEMY_MAP[id];
+      if (def && def.boss) m.bossKills[id] = num(raw.bossKills[id], 0, 9999);
+    });
+  }
+  m.pathWins = {};
+  if (raw.pathWins && typeof raw.pathWins === "object") {
+    Object.keys(raw.pathWins).forEach((id) => {
+      if (ROGUE_PATH_MAP[id]) m.pathWins[id] = num(raw.pathWins[id], 0, 9999);
+    });
+  }
+  return m;
+}
+
+function loadRogueMeta() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(ROGUE_KEY) || "null");
+    return normalizeRogueMeta(raw);
+  } catch (e) {
+    return defaultRogueMeta();
+  }
+}
+
+function saveRogueMeta(meta) {
+  try {
+    localStorage.setItem(ROGUE_KEY, JSON.stringify(meta));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function rogueMetaShards(meta) {
+  return Math.max(0, parseInt((meta || loadRogueMeta()).shards, 10) || 0);
+}
+
+function rogueTalentOwned(meta, id) {
+  return !!(meta && meta.talents && meta.talents[id]);
+}
+
+function rogueTalentAvailable(meta, talent) {
+  if (!talent || rogueTalentOwned(meta, talent.id)) return false;
+  if (talent.req && !rogueTalentOwned(meta, talent.req)) return false;
+  return true;
+}
+
+function rogueTalentMods(meta) {
+  const mods = {};
+  ROGUE_TALENTS.forEach((t) => {
+    if (rogueTalentOwned(meta, t.id) && (!t.req || rogueTalentOwned(meta, t.req))) {
+      mergeRogueMods(mods, t.mods || {});
+    }
+  });
+  return mods;
+}
+
+function buyRogueTalent(meta, id) {
+  const t = ROGUE_TALENT_MAP[id];
+  if (!t) return { ok: false, msg: "没有这枚天赋" };
+  if (rogueTalentOwned(meta, id)) return { ok: false, msg: "已经参悟过了" };
+  if (t.req && !rogueTalentOwned(meta, t.req)) return { ok: false, msg: "需先参悟前一重" };
+  if (meta.shards < t.cost) return { ok: false, msg: "道痕不足，尚差 " + (t.cost - meta.shards) };
+  meta.shards -= t.cost;
+  meta.talents[id] = 1;
+  saveRogueMeta(meta);
+  return { ok: true, talent: t };
+}
+
+/* ------------------------------ 遗物与词条 ------------------------------ */
+const ROGUE_ADD_KEYS = [
+  "atkPct", "hpPct", "defPct", "critRate", "critDmg", "dodge", "shieldStart",
+  "healPerRound", "lifesteal", "burnPct", "every3", "execute", "thorns",
+  "manaRegen", "echoPct", "essenceBonus", "shardBonus", "mpPct", "startEssence",
+  "rewardChoices", "revive", "artifactHaste",
+];
+const ROGUE_MIN_KEYS = ["echoEvery"];
+
+function mergeRogueMods(target, src) {
+  if (!src) return target;
+  ROGUE_ADD_KEYS.forEach((k) => {
+    if (typeof src[k] === "number") target[k] = (Number(target[k]) || 0) + src[k];
+  });
+  ROGUE_MIN_KEYS.forEach((k) => {
+    if (typeof src[k] === "number" && src[k] > 0) {
+      target[k] = target[k] ? Math.min(target[k], src[k]) : src[k];
+    }
+  });
+  if (src.burnOnHit) target.burnOnHit = true;
+  if (src.lastStand) target.lastStand = true;
+  return target;
+}
+
+function aggregateRogueMods(relics, extra) {
+  const mods = {};
+  mergeRogueMods(mods, extra || {});
+  (relics || []).forEach((id) => {
+    const r = ROGUE_RELIC_MAP[id];
+    if (r) mergeRogueMods(mods, r.mods || {});
+  });
+  return mods;
+}
+
+function rogueRelicPool(run, opts) {
+  opts = opts || {};
+  const owned = {};
+  (run.relics || []).forEach((id) => { owned[id] = 1; });
+  return ROGUE_RELICS.filter((r) => {
+    if (r.start || owned[r.id]) return false;
+    if (opts.rarity && r.rarity !== opts.rarity) return false;
+    if (opts.rarityMax && r.rarity > opts.rarityMax) return false;
+    if (opts.rarityMin && r.rarity < opts.rarityMin) return false;
+    return true;
+  });
+}
+
+function rollRogueRelics(run, count, opts) {
+  const pool = rogueRelicPool(run, opts).slice();
+  shuffle(pool);
+  return pool.slice(0, Math.max(0, count));
+}
+
+function addRogueRelic(run, id) {
+  if (!id || !ROGUE_RELIC_MAP[id]) return null;
+  if ((run.relics || []).indexOf(id) >= 0) return null;
+  run.relics.push(id);
+  const meta = loadRogueMeta();
+  meta.seenRelics[id] = 1;
+  saveRogueMeta(meta);
+  refreshRogueMods(run);
+  return ROGUE_RELIC_MAP[id];
+}
+
+function refreshRogueMods(run) {
+  const oldMax = run.maxHp || 0;
+  run.mods = aggregateRogueMods(run.relics, mergeRogueMods({}, run.baseMods || {}));
+  ROGUE_ADD_KEYS.forEach((k) => {
+    if (run.extraMods && typeof run.extraMods[k] === "number") {
+      run.mods[k] = (Number(run.mods[k]) || 0) + run.extraMods[k];
+    }
+  });
+  if (run.extraMods && run.extraMods.burnOnHit) run.mods.burnOnHit = true;
+  const base = run.baseStats || {};
+  const newMax = Math.max(1, Math.round((base.hpMax || 1) * (1 + (run.mods.hpPct || 0))));
+  run.maxHp = newMax;
+  run.hp = Math.min(newMax, Math.max(1, (run.hp || newMax) + Math.max(0, newMax - oldMax)));
+  return run.mods;
+}
+
+function healRogueRun(run, pct) {
+  const before = run.hp;
+  run.hp = Math.min(run.maxHp, run.hp + Math.round(run.maxHp * pct));
+  return run.hp - before;
+}
+
+function gainRogueEssence(run, amount) {
+  const bonus = 1 + ((run.mods && run.mods.essenceBonus) || 0);
+  const n = Math.max(0, Math.round((amount || 0) * bonus));
+  run.essence = Math.max(0, (run.essence || 0) + n);
+  return n;
+}
+
+function roguePathOf(run) {
+  return ROGUE_PATH_MAP[run && run.pathId] || ROGUE_PATHS[0];
+}
+
+/* ------------------------------ 创建一局 ------------------------------ */
+function createRogueRun(state, pathId, difficulty, meta) {
+  const path = ROGUE_PATH_MAP[pathId] || ROGUE_PATHS[0];
+  const m = meta || loadRogueMeta();
+  const diff = Math.max(1, Math.min(ROGUE_DIFFICULTIES.length, parseInt(difficulty, 10) || 1));
+  const base = deriveStats(state);
+  const talentMods = rogueTalentMods(m);
+  const baseMods = mergeRogueMods(mergeRogueMods({}, path.stats || {}), talentMods);
+  const run = {
+    pathId: path.id,
+    difficulty: diff,
+    act: 1,
+    step: 0,
+    boss: false,
+    phase: "map",
+    hp: 1,
+    maxHp: 1,
+    essence: Math.max(0, (CFG.ROGUE_START_ESSENCE || 40) + (baseMods.startEssence || 0)),
+    shards: 0,
+    kills: 0,
+    eliteKills: 0,
+    bossKills: 0,
+    bossDefeated: [],
+    relics: [path.startRelic].filter(Boolean),
+    baseStats: base,
+    baseMods: baseMods,
+    extraMods: {},
+    mods: {},
+    reviveUsed: 0,
+    startedAt: Date.now(),
+    currentNode: null,
+    rewards: null,
+    event: null,
+    eventResult: null,
+    shop: null,
+    treasureRelic: null,
+    result: null,
+    log: [],
+  };
+  run.mods = aggregateRogueMods(run.relics, run.baseMods);
+  run.maxHp = Math.max(1, Math.round(base.hpMax * (1 + (run.mods.hpPct || 0))));
+  run.hp = run.maxHp;
+  const meta2 = loadRogueMeta();
+  meta2.seenRelics[path.startRelic] = 1;
+  saveRogueMeta(meta2);
+  return run;
+}
+
+/* ------------------------------ 地图与节点 ------------------------------ */
+function rogueEnemyFor(run, type) {
+  const act = run.act || 1;
+  let pool = ROGUE_ENEMIES.filter((e) => e.act === act);
+  if (type === "boss") pool = pool.filter((e) => e.boss);
+  else if (type === "elite") pool = pool.filter((e) => e.elite);
+  else pool = pool.filter((e) => !e.boss && !e.elite);
+  return pickOne(pool) || ROGUE_ENEMIES[0];
+}
+
+function rogueBossNode(run) {
+  return {
+    type: "boss",
+    name: "境主",
+    icon: "👑",
+    desc: "此境之主已在前路等候，胜则山海归位。",
+    enemy: rogueEnemyFor(run, "boss"),
+    boss: true,
+  };
+}
+
+function rogueNodeChoices(run) {
+  if (run.boss || run.step >= CFG.ROGUE_STEPS) return [rogueBossNode(run)];
+  const combat = run.act >= 3 || Math.random() < 0.32 ? "elite" : "battle";
+  const others = shuffle(["event", "shop", "rest", "treasure"].slice()).slice(0, 2);
+  const types = shuffle([combat].concat(others));
+  return types.map((type) => {
+    const def = ROGUE_NODE_MAP[type];
+    return {
+      type: type,
+      name: def.name,
+      icon: def.icon,
+      desc: def.desc,
+      enemy: (type === "battle" || type === "elite") ? rogueEnemyFor(run, type) : null,
+    };
+  });
+}
+
+function createRogueShop(run) {
+  const relics = rollRogueRelics(run, 2, { rarityMax: run.act >= 2 ? 3 : 2 });
+  const items = relics.map((r) => ({
+    kind: "relic",
+    relic: r,
+    name: r.name,
+    icon: r.icon,
+    desc: r.desc,
+    cost: 35 + r.rarity * 25,
+    sold: false,
+  }));
+  items.push({ kind: "heal", name: "灵泉一盏", icon: "💧", desc: "回复 35% 气血。", cost: 35, sold: false });
+  items.push({ kind: "maxHp", name: "炼体丹", icon: "🫀", desc: "生命上限 +8%，并回复等量气血。", cost: 55, sold: false });
+  return { items: items };
+}
+
+function rollRogueRewards(run, opts) {
+  opts = opts || {};
+  const count = 3 + (run.mods.rewardChoices || 0);
+  const out = [];
+  const relics = rollRogueRelics(run, opts.boss ? 2 : 2, {
+    rarityMin: opts.boss ? 2 : (opts.elite ? 1 : 0),
+  });
+  relics.forEach((r) => out.push({ kind: "relic", relic: r }));
+  out.push({ kind: "heal", pct: opts.boss ? 0.35 : 0.25 });
+  out.push({ kind: "essence", amount: opts.boss ? 70 : 35 });
+  out.push({ kind: "maxHp", pct: 0.08 });
+  if (opts.boss) out.push({ kind: "shards", amount: 45 });
+  shuffle(out);
+  return out.slice(0, Math.max(1, Math.min(count, out.length)));
+}
+
+function applyRogueReward(run, reward) {
+  if (!reward) return "";
+  if (reward.kind === "relic" && reward.relic) {
+    addRogueRelic(run, reward.relic.id);
+    return "获得遗物「" + reward.relic.name + "」";
+  }
+  if (reward.kind === "heal") {
+    const n = healRogueRun(run, reward.pct || 0.25);
+    return "气血 +" + fmt(n);
+  }
+  if (reward.kind === "essence") {
+    run.essence += reward.amount || 35;
+    return "灵息 +" + fmt(reward.amount || 35);
+  }
+  if (reward.kind === "maxHp") {
+    run.extraMods.hpPct = (run.extraMods.hpPct || 0) + (reward.pct || 0.08);
+    refreshRogueMods(run);
+    return "生命上限 +" + Math.round((reward.pct || 0.08) * 100) + "%";
+  }
+  if (reward.kind === "shards") {
+    run.shards += reward.amount || 30;
+    return "道痕 +" + fmt(reward.amount || 30);
+  }
+  return "";
+}
+
+function rogueNodeStart(run, node) {
+  run.currentNode = node;
+  if (node.type === "battle" || node.type === "elite" || node.type === "boss") {
+    run.phase = "battle";
+  } else if (node.type === "event") {
+    run.event = pickOne(ROGUE_EVENTS);
+    run.eventResult = null;
+    run.phase = "event";
+  } else if (node.type === "shop") {
+    run.shop = createRogueShop(run);
+    run.phase = "shop";
+  } else if (node.type === "rest") {
+    run.phase = "rest";
+  } else if (node.type === "treasure") {
+    run.treasureRelic = rollRogueRelics(run, 1)[0] || null;
+    run.phase = "treasure";
+  }
+  return run.phase;
+}
+
+function rogueApplyEvent(run, choiceIndex) {
+  const ev = run.event;
+  if (!ev) return "";
+  const choice = ev.choices[choiceIndex];
+  if (!choice) return "";
+  const eff = choice.effects || {};
+  if (eff.healPct) healRogueRun(run, eff.healPct);
+  if (eff.damagePct) run.hp = Math.max(1, run.hp - Math.round(run.maxHp * eff.damagePct));
+  if (eff.essence) gainRogueEssence(run, eff.essence);
+  if (eff.shards) run.shards = Math.max(0, run.shards + eff.shards);
+  if (eff.maxHpPct) {
+    run.extraMods.hpPct = (run.extraMods.hpPct || 0) + eff.maxHpPct;
+    refreshRogueMods(run);
+  }
+  if (eff.atkPct) {
+    run.extraMods.atkPct = (run.extraMods.atkPct || 0) + eff.atkPct;
+    refreshRogueMods(run);
+  }
+  if (eff.relic) {
+    const r = rollRogueRelics(run, 1)[0];
+    if (r) addRogueRelic(run, r.id);
+  }
+  run.eventResult = choice.result || "你继续前行。";
+  return run.eventResult;
+}
+
+function buyRogueShopItem(run, index) {
+  const item = run.shop && run.shop.items[index];
+  if (!item || item.sold) return { ok: false, msg: "这件东西已经不在货架上了" };
+  if (run.essence < item.cost) return { ok: false, msg: "灵息不足，尚差 " + (item.cost - run.essence) };
+  run.essence -= item.cost;
+  item.sold = true;
+  if (item.kind === "relic") {
+    addRogueRelic(run, item.relic.id);
+    return { ok: true, msg: "购得「" + item.relic.name + "」" };
+  }
+  if (item.kind === "heal") {
+    const n = healRogueRun(run, 0.35);
+    return { ok: true, msg: n > 0 ? "饮下灵泉，气血 +" + fmt(n) : "气血已满，灵泉先收着" };
+  }
+  if (item.kind === "maxHp") {
+    run.extraMods.hpPct = (run.extraMods.hpPct || 0) + 0.08;
+    refreshRogueMods(run);
+    return { ok: true, msg: "炼体有成，生命上限提升" };
+  }
+  return { ok: true, msg: "成交" };
+}
+
+function rogueAdvance(run) {
+  const node = run.currentNode;
+  if (!node) return;
+  if (node.type === "boss") {
+    run.bossKills += 1;
+    if (node.enemy && node.enemy.boss && (run.bossDefeated || []).indexOf(node.enemy.id) < 0) {
+      run.bossDefeated = run.bossDefeated || [];
+      run.bossDefeated.push(node.enemy.id);
+    }
+    if (run.act >= CFG.ROGUE_ACTS) {
+      run.phase = "result";
+      return;
+    }
+    run.act += 1;
+    run.step = 0;
+    run.boss = false;
+  } else {
+    run.step += 1;
+    if (run.step >= CFG.ROGUE_STEPS) run.boss = true;
+  }
+  run.currentNode = null;
+  run.event = null;
+  run.eventResult = null;
+  run.shop = null;
+  run.treasureRelic = null;
+  run.rewards = null;
+  run.phase = "map";
+}
+
+/* ------------------------------ 秘境战斗 ------------------------------ */
+function buildRogueSpells(pathId, atk) {
+  const path = ROGUE_PATH_MAP[pathId] || ROGUE_PATHS[0];
+  return (path.spells || []).map((s, i) => ({
+    id: "rg_" + path.id + "_" + i,
+    name: s.name,
+    icon: s.icon,
+    main: Object.assign({}, s.main, { value: Math.max(1, Math.round(atk * (s.main.ratio || 1))) }),
+    effect: s.effect || null,
+    extras: s.extras || [],
+  }));
+}
+
+function buildRogueArtifact(pathId, artAtk) {
+  const path = ROGUE_PATH_MAP[pathId] || ROGUE_PATHS[0];
+  const a = path.artifact;
+  if (!a) return null;
+  return Object.assign({}, a, {
+    id: "rg_art_" + path.id,
+    main: Object.assign({}, a.main, { value: Math.max(1, Math.round(artAtk * (a.main.ratio || 1))) }),
+    extras: a.extras || [],
+  });
+}
+
+function simulateRogueBattle(state, run, node) {
+  const def = (node && node.enemy) || rogueEnemyFor(run, "battle");
+  const base = run.baseStats || deriveStats(state);
+  const mods = run.mods || {};
+  const diff = ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (run.difficulty || 1) - 1))];
+  const actScale = [0.90, 1.18, 1.45][Math.max(0, Math.min(2, (run.act || 1) - 1))];
+  const realmScale = 1 + Math.min(0.6, (state.realmIndex | 0) * 0.04);
+  const hpMax = run.maxHp || Math.max(1, Math.round(base.hpMax * (1 + (mods.hpPct || 0))));
+  const mpMax = Math.max(1, Math.round(base.mpMax * (1 + (mods.mpPct || 0))));
+  const atk = base.spellAtk * (1 + (mods.atkPct || 0));
+  const artAtk = base.artifactAtk * (1 + (mods.atkPct || 0));
+  const player = {
+    hp: Math.max(1, Math.min(run.hp || hpMax, hpMax)),
+    hpMax: hpMax,
+    mp: mpMax,
+    mpMax: mpMax,
+    mpCost: Math.max(1, Math.round(mpMax * 0.10)),
+    atk: atk,
+    artAtk: artAtk,
+    def: base.defense * (1 + (mods.defPct || 0)),
+    crit: Math.min(0.9, base.critRate + (mods.critRate || 0)),
+    critDmg: base.critDmg + (mods.critDmg || 0),
+    dodge: Math.min(0.6, base.dodge + (mods.dodge || 0)),
+    dmgBonus: 0,
+    defBonus: 0,
+    shield: Math.round(hpMax * (mods.shieldStart || 0)),
+    seal: 0,
+    weaken: 0,
+    burn: null,
+  };
+  const enemy = {
+    name: def.name,
+    icon: def.icon,
+    hp: Math.max(1, Math.round(base.hpMax * def.hpMul * actScale * diff.enemy * realmScale)),
+    hpMax: 1,
+    mp: 0,
+    mpMax: 0,
+    atk: base.spellAtk * def.atkMul * actScale * diff.enemy,
+    def: base.defense * (def.defMul || 1) * (1 + (state.realmIndex | 0) * 0.01),
+    crit: 0.08,
+    critDmg: 1.6,
+    dodge: def.dodge || 0.05,
+    dmgBonus: 0,
+    defBonus: 0,
+    shield: 0,
+    seal: 0,
+    weaken: 0,
+    burn: null,
+  };
+  enemy.hpMax = enemy.hp;
+  const spells = buildRogueSpells(run.pathId, atk);
+  const artifact = buildRogueArtifact(run.pathId, artAtk);
+  let artSpeed = artifact ? artifact.speed || 3 : 0;
+  if (artSpeed && mods.artifactHaste) artSpeed = Math.max(2, artSpeed - mods.artifactHaste);
+  const ctx = {
+    round: 0, player: player, enemy: enemy, playerAtk: atk,
+    realmIndex: state.realmIndex | 0, enemyIcon: enemy.icon, enemyName: enemy.name,
+  };
+  const events = [];
+  events.push(mkEvent(ctx, "p", "info", def.name + " 挡在你面前！", { icon: def.icon }));
+  const maxRounds = CFG.ROGUE_BATTLE_ROUNDS || 20;
+  let round = 0;
+  let casts = 0;
+  let win = false;
+  let timeout = false;
+  let lastStandUsed = false;
+  let echoDone = 0;
+  let every3Done = 0;
+
+  const executeBonus = () => (mods.execute && enemy.hp > 0 && enemy.hp < enemy.hpMax * 0.30 ? mods.execute : 0);
+  const withExecute = (fn) => {
+    const b = executeBonus();
+    player.dmgBonus += b;
+    try { return fn(); } finally { player.dmgBonus -= b; }
+  };
+  const extraStrike = (pct, label, icon) => {
+    if (enemy.hp <= 0) return;
+    const before = enemy.hp;
+    let res;
+    withExecute(() => { res = strike(player, enemy, atk * pct, { realmIndex: ctx.realmIndex }); });
+    if (res.miss) {
+      events.push(mkEvent(ctx, "p", "miss", label + "被对方闪开", { icon: "💨" }));
+      return;
+    }
+    events.push(mkEvent(ctx, "p", "hit", label + "造成 " + fmt(res.dmg) + " 点伤害", { dmg: res.dmg, icon: icon || "✨" }));
+    const dealt = before - enemy.hp;
+    if (dealt > 0 && mods.lifesteal) {
+      const heal = Math.round(dealt * mods.lifesteal);
+      player.hp = Math.min(player.hpMax, player.hp + heal);
+      events.push(mkEvent(ctx, "p", "heal", "噬灵回气，气血 +" + fmt(heal), { icon: "🩸" }));
+    }
+  };
+
+  const tryRevive = () => {
+    if (player.hp > 0) return;
+    if (mods.lastStand && !lastStandUsed) {
+      lastStandUsed = true;
+      player.hp = Math.round(player.hpMax * 0.30);
+      player.shield += Math.round(player.hpMax * 0.20);
+      events.push(mkEvent(ctx, "p", "heal", "背水胆发作，你自濒死中撑住一口气", { icon: "🫀" }));
+    }
+    if (player.hp <= 0 && mods.revive && (run.reviveUsed || 0) < mods.revive) {
+      run.reviveUsed = (run.reviveUsed || 0) + 1;
+      player.hp = Math.round(player.hpMax * 0.35);
+      events.push(mkEvent(ctx, "p", "heal", "不灭灯燃起，你于灯焰中重塑身形", { icon: "🕯️" }));
+    }
+  };
+
+  while (round < maxRounds && player.hp > 0 && enemy.hp > 0) {
+    round += 1;
+    ctx.round = round;
+    events.push(mkEvent(ctx, "p", "round", "第 " + round + " 回合", { icon: "⚔️" }));
+
+    /* 玩家施法 */
+    if (player.seal > 0) {
+      player.seal -= 1;
+      events.push(mkEvent(ctx, "p", "seal", "你被封印，这一手法术未能凝成", { icon: "🔒" }));
+    } else {
+      const slot = casts % 3;
+      const spell = spells[slot];
+      casts += 1;
+      if (!spell) {
+        let res;
+        withExecute(() => { res = strike(player, enemy, atk * 0.55, { realmIndex: ctx.realmIndex }); });
+        if (res.miss) events.push(mkEvent(ctx, "p", "miss", "你挥拳试探，被对方闪开", { icon: "💨" }));
+        else events.push(mkEvent(ctx, "p", "hit", "你以拳脚应战，造成 " + fmt(res.dmg) + " 点伤害", { dmg: res.dmg, icon: "👊" }));
+      } else {
+        const cost = Math.round(player.mpCost * ((spell.main && spell.main.mpMul) || 1));
+        if (player.mp < cost) {
+          let res;
+          withExecute(() => { res = strike(player, enemy, atk * 0.45, { realmIndex: ctx.realmIndex }); });
+          events.push(mkEvent(ctx, "p", "info", "灵力不足，你只能以凡力应对", { icon: "💧" }));
+          if (!res.miss) events.push(mkEvent(ctx, "p", "hit", "造成 " + fmt(res.dmg) + " 点伤害", { dmg: res.dmg, icon: "👊" }));
+        } else {
+          player.mp -= cost;
+          const before = enemy.hp;
+          withExecute(() => { fireItem(spell, player, enemy, events, ctx, false); });
+          const dealt = before - enemy.hp;
+          if (dealt > 0 && mods.lifesteal) {
+            const heal = Math.round(dealt * mods.lifesteal);
+            player.hp = Math.min(player.hpMax, player.hp + heal);
+            events.push(mkEvent(ctx, "p", "heal", "噬灵回气，气血 +" + fmt(heal), { icon: "🩸" }));
+          }
+          if (mods.burnOnHit && !enemy.burn) {
+            enemy.burn = { rounds: 3, dmg: Math.max(1, Math.round(atk * (mods.burnPct || 0.18))) };
+            events.push(mkEvent(ctx, "e", "seal", "灼心印生效：对方被灼烧 3 回合", { icon: "🔥" }));
+          }
+        }
+      }
+      player.mp = Math.min(player.mpMax, player.mp + Math.round(player.mpMax * (0.10 + (mods.manaRegen || 0))));
+    }
+    if (enemy.hp <= 0) { win = true; break; }
+
+    /* 额外斩击：道途回响 / 雷引符 */
+    if (mods.every3 && round % 3 === 0 && every3Done !== round) {
+      every3Done = round;
+      extraStrike(mods.every3, "雷引符引落一道天雷，", "⚡");
+    }
+    if (mods.echoEvery && round % mods.echoEvery === 0 && echoDone !== round) {
+      echoDone = round;
+      extraStrike(mods.echoPct || 0.45, "回响铃震荡，剑意再现，", "🔔");
+    }
+    if (enemy.hp <= 0) { win = true; break; }
+
+    /* 敌方行动 */
+    if (enemy.seal > 0) {
+      enemy.seal -= 1;
+      events.push(mkEvent(ctx, "e", "seal", enemy.name + " 被封印，攻势一滞", { icon: "🔒" }));
+    } else {
+      const weaken = enemy.weaken && enemy.weaken.rounds > 0 ? 1 - enemy.weaken.pct : 1;
+      const heavy = round % 3 === 0;
+      const healChance = def.boss ? 0.22 : def.elite ? 0.16 : 0.10;
+      if (enemy.hp < enemy.hpMax * 0.30 && Math.random() < healChance) {
+        const heal = Math.round(enemy.hpMax * 0.07);
+        enemy.hp = Math.min(enemy.hpMax, enemy.hp + heal);
+        events.push(mkEvent(ctx, "e", "heal", enemy.name + " 吞吐灵气，气血 +" + fmt(heal), { icon: "💚" }));
+      } else {
+        const raw = enemy.atk * (heavy ? 1.7 : 1.0) * weaken;
+        events.push(mkEvent(ctx, "e", "cast", enemy.name + (heavy ? " 凶性大发，全力扑杀！" : " 发起攻击"), { icon: def.icon }));
+        const res = strike(enemy, player, raw, { realmIndex: ctx.realmIndex });
+        if (res.miss) events.push(mkEvent(ctx, "e", "miss", "你侧身闪避，堪堪避开", { icon: "💨" }));
+        else if (res.dmg <= 0) events.push(mkEvent(ctx, "e", "shield", "护盾挡下 " + fmt(res.absorbed) + " 点伤害，你毫发无伤", { icon: "🛡️" }));
+        else {
+          events.push(mkEvent(ctx, "e", "hit", (res.crit ? "暴击！" : "") + "你受到 " + fmt(res.dmg) + " 点伤害" + (res.absorbed ? "（护盾抵去 " + fmt(res.absorbed) + "）" : ""),
+            { dmg: res.dmg, crit: res.crit, icon: "💢" }));
+          if (mods.thorns && res.dmg > 0) {
+            const back = Math.max(1, Math.round(res.dmg * mods.thorns));
+            enemy.hp = Math.max(0, enemy.hp - back);
+            events.push(mkEvent(ctx, "e", "burn", "荆棘甲反弹 " + fmt(back) + " 点伤害", { icon: "🌵" }));
+          }
+        }
+      }
+    }
+
+    /* 灼烧 */
+    if (enemy.burn && enemy.burn.rounds > 0) {
+      const burn = Math.max(1, enemy.burn.dmg);
+      enemy.hp = Math.max(0, enemy.hp - burn);
+      enemy.burn.rounds -= 1;
+      events.push(mkEvent(ctx, "e", "burn", enemy.name + " 被灼烧，受到 " + fmt(burn) + " 点伤害", { icon: "🔥" }));
+    }
+    if (player.burn && player.burn.rounds > 0) {
+      const burn = Math.max(1, player.burn.dmg);
+      player.hp = Math.max(0, player.hp - burn);
+      player.burn.rounds -= 1;
+      events.push(mkEvent(ctx, "p", "burn", "灼烧缠身，你受到 " + fmt(burn) + " 点伤害", { icon: "🔥" }));
+    }
+    if (enemy.weaken && enemy.weaken.rounds > 0) enemy.weaken.rounds -= 1;
+
+    /* 每回合回复 */
+    if (mods.healPerRound && player.hp > 0) {
+      const heal = Math.max(1, Math.round(player.hpMax * mods.healPerRound));
+      const real = Math.min(player.hpMax - player.hp, heal);
+      if (real > 0) {
+        player.hp += real;
+        events.push(mkEvent(ctx, "p", "heal", "药脉流转，气血 +" + fmt(real), { icon: "💚" }));
+      }
+    }
+
+    /* 法宝 */
+    if (artifact && artSpeed > 0 && round % artSpeed === 0) {
+      withExecute(() => { fireItem(artifact, player, enemy, events, ctx, true); });
+    }
+    if (enemy.hp <= 0) { win = true; break; }
+    tryRevive();
+    if (player.hp <= 0) { win = false; break; }
+  }
+
+  if (player.hp > 0 && enemy.hp > 0) {
+    timeout = true;
+    const pRatio = player.hp / player.hpMax;
+    const eRatio = enemy.hp / enemy.hpMax;
+    win = pRatio > eRatio && eRatio <= 0.7;
+    events.push(mkEvent(ctx, "p", "info",
+      win ? "斗法日久，对手气力不济，先自退去" : "斗法日久，你未能在时限内拿下对手", { icon: "🌫️" }));
+  }
+  events.push(mkEvent(ctx, "p", "end",
+    win ? (timeout ? "你逼退了 " + enemy.name : "你击败了 " + enemy.name) : "你力竭败退",
+    { icon: win ? "🌟" : "🌑" }));
+
+  return {
+    win: win,
+    timeout: timeout,
+    rounds: round,
+    events: events,
+    enemy: { name: enemy.name, icon: enemy.icon, hpMax: enemy.hpMax },
+    playerHp: Math.max(0, Math.round(player.hp)),
+    playerHpMax: player.hpMax,
+    playerMp: Math.max(0, Math.round(player.mp)),
+    playerMpMax: player.mpMax,
+    enemyHp: Math.max(0, Math.round(enemy.hp)),
+    enemyHpMax: enemy.hpMax,
+    spells: spells,
+    artifact: artifact,
+    runHp: Math.max(0, Math.round(player.hp)),
+    def: def,
+  };
+}
+
+/* ------------------------------ 结算与主线回馈 ------------------------------ */
+function rogueDepth(run) {
+  const act = Math.max(1, run.act || 1);
+  return Math.min(99, (act - 1) * (CFG.ROGUE_STEPS + 1) + (run.step || 0) + 1);
+}
+
+function finishRogueRun(state, run, win) {
+  const meta = loadRogueMeta();
+  const diff = ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (run.difficulty || 1) - 1))];
+  const bonus = 1 + (run.mods.shardBonus || 0);
+  const baseShards = Math.round((run.shards || 0) * bonus + (win ? 100 + diff.level * 40 : 0));
+  const stoneReward = Math.round(
+    ((run.kills || 0) * 18 + (run.eliteKills || 0) * 35 + (run.bossKills || 0) * 100 + (win ? 80 : 0)) *
+    (1 + (state.realmIndex | 0) * 0.12) * diff.level
+  );
+  meta.shards += baseShards;
+  meta.totalShards += baseShards;
+  meta.runs += 1;
+  meta.bestAct = Math.max(meta.bestAct || 0, run.act || 1);
+  meta.bestShards = Math.max(meta.bestShards || 0, baseShards);
+  if (win) {
+    meta.wins += 1;
+    meta.pathWins[run.pathId] = (meta.pathWins[run.pathId] || 0) + 1;
+    meta.maxDiff = Math.min(ROGUE_DIFFICULTIES.length, Math.max(meta.maxDiff || 1, ROGUE_DIFFICULTIES.filter((d) => (meta.wins || 0) >= d.unlockWins).length));
+  }
+  const bossIds = (run.bossDefeated || []).slice();
+  if (run.currentNode && run.currentNode.enemy && run.currentNode.enemy.boss && bossIds.indexOf(run.currentNode.enemy.id) < 0) {
+    bossIds.push(run.currentNode.enemy.id);
+  }
+  bossIds.forEach((id) => {
+    meta.bossKills[id] = (meta.bossKills[id] || 0) + 1;
+  });
+  run.bossKills = Math.max(run.bossKills || 0, bossIds.length);
+  saveRogueMeta(meta);
+  state.stone = (state.stone || 0) + stoneReward;
+  state.totalStone = (state.totalStone || 0) + stoneReward;
+  if (run.bossKills > 0) {
+    applyBuff(state, "rateExp", 0.15, 1800, { id: "rogue_boss", name: "山海灵息", icon: "🌌" });
+  }
+  run.result = {
+    win: !!win,
+    shards: baseShards,
+    stone: stoneReward,
+    depth: rogueDepth(run),
+    kills: run.kills || 0,
+    eliteKills: run.eliteKills || 0,
+    bossKills: run.bossKills || 0,
+    act: run.act || 1,
+    pathId: run.pathId,
+    difficulty: run.difficulty || 1,
+    meta: meta,
+  };
+  run.phase = "result";
+  return run.result;
+}
+
+/* ===== rogue_ui.js ===== */
+/* =====================================================================
+ * 《长生道》· rogue_ui.js (v3.0.0)
+ * 山海秘境界面：入口、选路、地图、事件、鬼市、静修、遗藏、结算
+ * 依赖 ui.js 中的 game / UI / rogueOpen / rogueRun 等状态，init 在末尾执行
+ * ===================================================================== */
+
+/* ------------------------------ 小工具 ------------------------------ */
+function rogueDiffOf(run) {
+  return ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (run.difficulty || 1) - 1))];
+}
+
+function roguePhaseLabel(run) {
+  if (!run) return "择路";
+  if (run.phase === "result") return run.result && run.result.win ? "山海归位" : "道途未尽";
+  if (run.phase === "battle") return "斗法";
+  if (run.phase === "reward") return "拣选战利品";
+  if (run.phase === "event") return run.eventResult ? "奇遇已了" : "奇遇";
+  if (run.phase === "shop") return "鬼市";
+  if (run.phase === "rest") return "静修";
+  if (run.phase === "treasure") return "遗藏";
+  return "择路";
+}
+
+function rogueRelicChips(run) {
+  if (!run || !run.relics || !run.relics.length) return '<div class="rg-tip">尚未拾得遗物。遗物在秘境内永久生效，出秘境即散。</div>';
+  return '<div class="rg-relics">' + run.relics.map(function (id) {
+    const r = ROGUE_RELIC_MAP[id];
+    if (!r) return "";
+    return '<span class="rg-relic rarity-' + r.rarity + '" title="' + esc(r.desc) + '">' + r.icon + ' <b>' + esc(r.name) + '</b></span>';
+  }).join("") + "</div>";
+}
+
+function rogueRewardInfo(r) {
+  if (!r) return { icon: "❔", name: "未知", desc: "", tag: "" };
+  if (r.kind === "relic" && r.relic) {
+    return { icon: r.relic.icon, name: r.relic.name, desc: r.relic.desc, tag: "遗物 · " + "★".repeat(r.relic.rarity || 1), rarity: r.relic.rarity || 1 };
+  }
+  if (r.kind === "heal") return { icon: "💧", name: "灵泉", desc: "回复 " + Math.round((r.pct || 0.25) * 100) + "% 气血。", tag: "补给" };
+  if (r.kind === "essence") return { icon: "💠", name: "灵息", desc: "获得 " + fmt(r.amount || 35) + " 灵息，可在鬼市换物。", tag: "补给" };
+  if (r.kind === "maxHp") return { icon: "🫀", name: "炼体", desc: "生命上限 +" + Math.round((r.pct || 0.08) * 100) + "%，并回复等量气血。", tag: "成长" };
+  if (r.kind === "shards") return { icon: "🧩", name: "道痕", desc: "获得 " + fmt(r.amount || 30) + " 道痕，可带回局外参悟天赋。", tag: "局外" };
+  return { icon: "🎁", name: "机缘", desc: "一件说不清来路的东西。", tag: "" };
+}
+
+/* ------------------------------ 入口 ------------------------------ */
+function renderRogueEntry() {
+  if (!UI.rogueHint || !UI.btnRogue) return;
+  const unlocked = game.realmIndex >= (CFG.ROGUE_UNLOCK_REALM || 9);
+  const meta = loadRogueMeta();
+  let sub = "三幕择路 · 一局约五到十分钟";
+  let label = "踏入山海";
+  let disabled = false;
+  if (!unlocked) {
+    label = "境界不足";
+    sub = "需 " + realmAt(CFG.ROGUE_UNLOCK_REALM || 9).name + " 方可踏入";
+    disabled = true;
+  } else if (rogueRun) {
+    if (rogueRun.phase === "result") {
+      label = "查看战果";
+      sub = "此行已终 · 道痕 " + fmt((rogueRun.result && rogueRun.result.shards) || 0);
+    } else {
+      label = "续行山海";
+      sub = "第 " + (rogueRun.act || 1) + " 幕 · 深度 " + rogueDepth(rogueRun) + " · 道痕 " + fmt(meta.shards);
+    }
+  } else {
+    sub = "道痕 " + fmt(meta.shards) + " · 已通关 " + fmt(meta.wins || 0) + " 次";
+  }
+  UI.rogueHint.textContent = "三幕择路 · 道痕 " + fmt(meta.shards);
+  UI.rogueDesc.innerHTML = "山中有三途，路有遗物、奇遇与鬼市。败则道途暂止，胜则山海归位。";
+  UI.btnRogue.disabled = disabled;
+  const main = UI.btnRogue.querySelector(".btn-main");
+  if (main) main.textContent = label;
+  UI.rogueSub.textContent = sub;
+}
+
+function openRogue() {
+  if (game.realmIndex < (CFG.ROGUE_UNLOCK_REALM || 9)) {
+    toast("需 " + realmAt(CFG.ROGUE_UNLOCK_REALM || 9).name + " 方可踏入山海");
+    return;
+  }
+  if (!rogueRun) rogueRun = loadRogueRun();
+  if (rogueRun && rogueRun.phase === "result" && !rogueRun.result) rogueRun.phase = "map";
+  rogueOpen = true;
+  rogueConfirm = false;
+  rogueBusy = false;
+  document.body.classList.add("rogue-lock");
+  UI.rogue.classList.remove("hidden");
+  renderRogue();
+}
+
+function closeRogue() {
+  if (!rogueOpen) return;
+  if (rogueRun && rogueRun.phase === "result") {
+    clearRogueRun();
+    rogueRun = null;
+  } else {
+    saveRogueRun();
+  }
+  rogueOpen = false;
+  rogueConfirm = false;
+  UI.rogue.classList.add("hidden");
+  document.body.classList.remove("rogue-lock");
+  renderRogueEntry();
+  setTimeout(pumpModal, 80);
+}
+
+/* ------------------------------ 秘境存档 ------------------------------ */
+function saveRogueRun() {
+  try {
+    if (rogueRun) localStorage.setItem(ROGUE_RUN_KEY, JSON.stringify(rogueRun));
+    else localStorage.removeItem(ROGUE_RUN_KEY);
+  } catch (e) {}
+}
+
+function clearRogueRun() {
+  try { localStorage.removeItem(ROGUE_RUN_KEY); } catch (e) {}
+}
+
+function loadRogueRun() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(ROGUE_RUN_KEY) || "null");
+    if (!raw || typeof raw !== "object") return null;
+    if (!ROGUE_PATH_MAP[raw.pathId]) return null;
+    if (!raw.baseStats || typeof raw.baseStats !== "object") return null;
+    raw.relics = Array.isArray(raw.relics) ? raw.relics.filter(function (id) { return !!ROGUE_RELIC_MAP[id]; }) : [];
+    raw.bossDefeated = Array.isArray(raw.bossDefeated) ? raw.bossDefeated.filter(function (id) { return !!ROGUE_ENEMY_MAP[id]; }) : [];
+    raw.mods = raw.mods && typeof raw.mods === "object" ? raw.mods : {};
+    raw.extraMods = raw.extraMods && typeof raw.extraMods === "object" ? raw.extraMods : {};
+    raw.hp = Math.max(1, parseInt(raw.hp, 10) || 1);
+    raw.maxHp = Math.max(raw.hp, parseInt(raw.maxHp, 10) || raw.hp);
+    raw.act = Math.max(1, Math.min(CFG.ROGUE_ACTS || 3, parseInt(raw.act, 10) || 1));
+    raw.step = Math.max(0, Math.min(CFG.ROGUE_STEPS || 4, parseInt(raw.step, 10) || 0));
+    raw.essence = Math.max(0, parseInt(raw.essence, 10) || 0);
+    raw.shards = Math.max(0, parseInt(raw.shards, 10) || 0);
+    raw.kills = Math.max(0, parseInt(raw.kills, 10) || 0);
+    raw.eliteKills = Math.max(0, parseInt(raw.eliteKills, 10) || 0);
+    raw.bossKills = Math.max(0, parseInt(raw.bossKills, 10) || 0);
+    raw.nodeChoices = null;
+    if (raw.phase === "battle") { raw.phase = "map"; raw.currentNode = null; raw.rewards = null; }
+    if (raw.phase === "reward" && !raw.rewards) raw.phase = "map";
+    if (raw.phase === "event" && !raw.event) raw.phase = "map";
+    if (raw.phase === "shop" && !raw.shop) raw.phase = "map";
+    if (raw.phase === "treasure" && !raw.treasureRelic) raw.phase = "map";
+    if (raw.phase !== "map" && raw.phase !== "reward" && raw.phase !== "event" && raw.phase !== "shop" && raw.phase !== "rest" && raw.phase !== "treasure" && raw.phase !== "result") raw.phase = "map";
+    return raw;
+  } catch (e) { return null; }
+}
+
+/* ------------------------------ 总渲染 ------------------------------ */
+function renderRogueHead() {
+  if (!UI.rogueKicker) return;
+  if (!rogueRun) {
+    UI.rogueKicker.textContent = "山海秘境";
+    UI.rogueHead.textContent = "三途择一";
+    UI.rogueMini.innerHTML = "";
+    return;
+  }
+  const act = ROGUE_ACTS[Math.max(0, Math.min(ROGUE_ACTS.length - 1, (rogueRun.act || 1) - 1))];
+  UI.rogueKicker.textContent = act.name + " · 第 " + (rogueRun.act || 1) + " 幕";
+  UI.rogueHead.textContent = roguePhaseLabel(rogueRun);
+  if (rogueRun.phase === "result") {
+    UI.rogueMini.innerHTML = "<span>此行已终</span>";
+  } else {
+    UI.rogueMini.innerHTML = "<span>❤️ " + fmt(Math.ceil(rogueRun.hp)) + " / " + fmt(rogueRun.maxHp) + "</span><span>💠 " + fmt(rogueRun.essence) + "</span>";
+  }
+}
+
+function renderRogue() {
+  if (!rogueOpen || !UI.rogueBody) return;
+  renderRogueHead();
+  if (rogueConfirm) { UI.rogueBody.innerHTML = renderRogueConfirm(); UI.rogueBody.scrollTop = 0; return; }
+  if (!rogueRun) { UI.rogueBody.innerHTML = renderRogueSelect(); UI.rogueBody.scrollTop = 0; return; }
+  let html = "";
+  const phase = rogueRun.phase;
+  if (phase === "map") html = renderRogueMap();
+  else if (phase === "reward") html = renderRogueReward();
+  else if (phase === "event") html = renderRogueEvent();
+  else if (phase === "shop") html = renderRogueShop();
+  else if (phase === "rest") html = renderRogueRest();
+  else if (phase === "treasure") html = renderRogueTreasure();
+  else if (phase === "result") html = renderRogueResult();
+  else html = renderRogueMap();
+  UI.rogueBody.innerHTML = html;
+  UI.rogueBody.scrollTop = 0;
+}
+
+/* ------------------------------ 选路 / 天赋 / 图鉴 ------------------------------ */
+function renderRogueSelect() {
+  const meta = loadRogueMeta();
+  if (!ROGUE_PATH_MAP[roguePath]) roguePath = ROGUE_PATHS[0].id;
+  const diff = ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (rogueDiff || 1) - 1))];
+  if ((meta.wins || 0) < diff.unlockWins) rogueDiff = 1;
+  let h = '<div class="rg-card rg-hero">' +
+    '<div class="rg-hero-top"><div class="rg-act-icon">🌌</div><div>' +
+    '<div class="rg-act-name">山海秘境</div>' +
+    '<div class="rg-act-sub">三幕择路 · 一局约五到十分钟 · 不出秘境不结算</div></div></div>' +
+    '<div class="rg-res-row"><div class="rg-res">道痕 <b>' + fmt(meta.shards) + '</b></div>' +
+    '<div class="rg-res">通关 <b>' + fmt(meta.wins || 0) + '</b></div>' +
+    '<div class="rg-res">最深 <b>' + fmt(meta.bestAct || 0) + ' 幕</b></div></div></div>';
+  h += '<div class="rg-tabs">' +
+    '<button class="rg-tab ' + (rogueTab === "paths" ? "active" : "") + '" data-action="rogue-tab" data-tab="paths">三途</button>' +
+    '<button class="rg-tab ' + (rogueTab === "talents" ? "active" : "") + '" data-action="rogue-tab" data-tab="talents">道痕</button>' +
+    '<button class="rg-tab ' + (rogueTab === "codex" ? "active" : "") + '" data-action="rogue-tab" data-tab="codex">图鉴</button>' +
+    "</div>";
+  if (rogueTab === "talents") {
+    h += '<div class="rg-card"><div class="rg-label"><span>道痕天赋</span><span>持有 ' + fmt(meta.shards) + ' 道痕</span></div>' +
+      '<div class="rg-tip">道痕由秘境结算带回，天赋永久生效。每系三重，需按序参悟。</div>' +
+      ROGUE_TALENT_BRANCHES.map(function (b) {
+        return '<div class="rg-talent-group"><div class="rg-talent-group-head">' + b.icon + " " + esc(b.name) + " · " + esc(b.desc) + "</div>" +
+          ROGUE_TALENTS.filter(function (t) { return t.branch === b.id; }).map(function (t) {
+            const owned = rogueTalentOwned(meta, t.id);
+            const reqOk = !t.req || rogueTalentOwned(meta, t.req);
+            const can = reqOk && !owned && meta.shards >= t.cost;
+            return '<div class="rg-talent ' + (owned ? "owned" : (reqOk ? "" : "locked")) + '">' +
+              '<div class="rg-talent-icon">' + t.icon + "</div>" +
+              '<div class="rg-talent-body"><div class="rg-talent-name">' + esc(t.name) + "</div>" +
+              '<div class="rg-talent-desc">' + esc(t.desc) + "</div></div>" +
+              (owned ? '<button class="rg-talent-btn owned" disabled>已参悟</button>' :
+                '<button class="rg-talent-btn" data-action="rogue-talent" data-id="' + t.id + '" ' + (can ? "" : "disabled") + '>' +
+                (reqOk ? t.cost + " 道痕" : "需前置") + "</button>") +
+              "</div>";
+          }).join("") + "</div>";
+      }).join("") + "</div>";
+  } else if (rogueTab === "codex") {
+    const seenCount = Object.keys(meta.seenRelics || {}).length;
+    h += '<div class="rg-card"><div class="rg-label"><span>遗物图鉴</span><span>' + seenCount + " / " + ROGUE_RELICS.length + "</span></div>" +
+      '<div class="rg-codex-grid">' + ROGUE_RELICS.map(function (r) {
+        const seen = !!(meta.seenRelics && meta.seenRelics[r.id]);
+        return '<div class="rg-codex ' + (seen ? "" : "unseen") + " rarity-" + r.rarity + '">' +
+          '<div class="rg-codex-icon">' + (seen ? r.icon : "❔") + "</div>" +
+          '<div class="rg-codex-name">' + (seen ? esc(r.name) : "未见过") + "</div>" +
+          '<div class="rg-codex-rarity">' + "★".repeat(r.rarity) + "</div></div>";
+      }).join("") + "</div></div>";
+    const bosses = ROGUE_ENEMIES.filter(function (e) { return e.boss; });
+    h += '<div class="rg-card"><div class="rg-label"><span>境主战绩</span><span>三幕境主</span></div>' +
+      '<div class="rg-codex-grid">' + bosses.map(function (e) {
+        const n = (meta.bossKills && meta.bossKills[e.id]) || 0;
+        return '<div class="rg-codex ' + (n > 0 ? "" : "unseen") + '">' +
+          '<div class="rg-codex-icon">' + (n > 0 ? e.icon : "❔") + "</div>" +
+          '<div class="rg-codex-name">' + (n > 0 ? esc(e.name) : "未逢") + "</div>" +
+          '<div class="rg-codex-rarity">' + (n > 0 ? "已斩 " + n + " 次" : "未逢") + "</div></div>";
+      }).join("") + "</div></div>";
+  } else {
+    h += '<div class="rg-label"><span>择一途</span><span>三途各有起手遗物</span></div>';
+    ROGUE_PATHS.forEach(function (p) {
+      const sel = roguePath === p.id;
+      h += '<button class="rg-path ' + (sel ? "sel" : "") + '" data-action="rogue-path" data-path="' + p.id + '">' +
+        '<div class="rg-path-head"><div class="rg-path-icon">' + p.icon + "</div>" +
+        '<div><div class="rg-path-name">' + esc(p.name) + "</div>" +
+        '<div class="rg-path-title">' + esc(p.title) + "</div></div>" +
+        (sel ? '<span class="rg-path-check">已择</span>' : "") + "</div>" +
+        '<div class="rg-path-desc">' + esc(p.desc) + "</div>" +
+        '<div class="rg-path-passive">' + esc(p.passive) + "</div>" +
+        '<div class="rg-path-quote">「' + esc(p.quote) + "」</div></button>";
+    });
+    h += '<div class="rg-label"><span>劫数</span><span>通关后解锁更高劫</span></div>' +
+      '<div class="rg-diff-row">' + ROGUE_DIFFICULTIES.map(function (d) {
+        const locked = (meta.wins || 0) < d.unlockWins;
+        const sel = rogueDiff === d.level;
+        return '<button class="rg-diff ' + (sel ? "sel" : "") + (locked ? " locked" : "") + '" data-action="rogue-diff" data-diff="' + d.level + '" ' + (locked ? "disabled" : "") + '>' +
+          '<div class="rg-diff-name">' + esc(d.name) + "</div>" +
+          '<div class="rg-diff-desc">' + (locked ? "通关 " + d.unlockWins + " 次解锁" : "敌 " + Math.round(d.enemy * 100) + "% · 道痕 " + Math.round(d.shard * 100) + "%") + "</div></button>";
+      }).join("") + "</div>";
+    h += '<button class="rg-start" data-action="rogue-start">踏入山海' +
+      '<span class="rg-start-sub">' + esc(roguePathName()) + " · " + esc(diff.name) + " · 道痕 " + fmt(meta.shards) + "</span></button>";
+  }
+  return h;
+}
+
+function roguePathName() {
+  const p = ROGUE_PATH_MAP[roguePath];
+  return p ? p.name : "剑心";
+}
+
+/* ------------------------------ 地图 ------------------------------ */
+function ensureRogueChoices() {
+  if (!rogueRun || rogueRun.phase !== "map") return;
+  if (!Array.isArray(rogueRun.nodeChoices) || !rogueRun.nodeChoices.length) {
+    rogueRun.nodeChoices = rogueNodeChoices(rogueRun);
+  }
+}
+
+function renderRogueMap() {
+  ensureRogueChoices();
+  const run = rogueRun;
+  const act = ROGUE_ACTS[Math.max(0, Math.min(ROGUE_ACTS.length - 1, (run.act || 1) - 1))];
+  const hpPct = Math.max(0, Math.min(100, (run.hp / Math.max(1, run.maxHp)) * 100));
+  let h = '<div class="rg-card rg-hero"><div class="rg-hero-top"><div class="rg-act-icon">' + act.icon + "</div><div>" +
+    '<div class="rg-act-name">' + esc(act.name) + "</div>" +
+    '<div class="rg-act-sub">' + esc(act.subtitle) + " · 深度 " + rogueDepth(run) + "</div></div></div>" +
+    '<div class="rg-hpbar"><span style="width:' + hpPct.toFixed(1) + '%"></span></div>' +
+    '<div class="rg-hptext">气血 ' + fmt(Math.ceil(run.hp)) + " / " + fmt(run.maxHp) + "</div>" +
+    '<div class="rg-res-row"><div class="rg-res">💠 灵息 <b>' + fmt(run.essence) + "</b></div>" +
+    '<div class="rg-res">🧩 道痕 <b>' + fmt(run.shards) + "</b></div>" +
+    '<div class="rg-res">⚔️ 斩敌 <b>' + fmt((run.kills || 0) + (run.eliteKills || 0)) + "</b></div></div>" +
+    '<div class="rg-pips">' + [0, 1, 2, 3].map(function (i) {
+      return '<span class="rg-pip ' + (i < (run.step || 0) ? "on" : "") + '"></span>';
+    }).join("") + '<span class="rg-pip boss ' + (run.boss ? "on" : "") + '"></span></div></div>';
+  h += '<div class="rg-label"><span>' + (run.boss ? "境主在前" : "前路三选一") + "</span><span>" + (run.boss ? "此战定三幕" : "一步一择") + "</span></div>";
+  h += '<div class="rg-node-list">' + (run.nodeChoices || []).map(function (node, i) {
+    return '<button class="rg-node ' + (node.type === "boss" ? "boss" : "") + '" data-action="rogue-node" data-index="' + i + '">' +
+      '<div class="rg-node-icon">' + node.icon + "</div>" +
+      '<div class="rg-node-body"><div class="rg-node-name">' + esc(node.name) + (node.type === "boss" ? " · 境主" : "") + "</div>" +
+      '<div class="rg-node-desc">' + esc(node.desc) + "</div>" +
+      (node.enemy ? '<div class="rg-node-enemy">' + node.enemy.icon + " " + esc(node.enemy.name) + "</div>" : "") +
+      '</div><div class="rg-node-arrow">›</div></button>';
+  }).join("") + "</div>";
+  h += '<div class="rg-card"><div class="rg-label"><span>随身遗物</span><span>' + (run.relics || []).length + " 件</span></div>" + rogueRelicChips(run) + "</div>";
+  h += '<button class="btn btn-ghost rg-wide-btn" data-action="rogue-abandon"><span class="btn-main">放弃此行</span><span class="btn-sub">所得道痕仍会结算</span></button>';
+  return h;
+}
+
+/* ------------------------------ 战斗 ------------------------------ */
+function startRogueBattle(node) {
+  const battle = simulateRogueBattle(game, rogueRun, node);
+  const title = node.type === "boss" ? "境主之战" : (node.type === "elite" ? "精英拦路" : "山道斗法");
+  playBattle(battle, {
+    title: title,
+    onDone: function () {
+      if (!rogueRun) return;
+      rogueRun.hp = Math.max(1, battle.runHp || 1);
+      if (battle.win) {
+        if (node.type === "elite") rogueRun.eliteKills = (rogueRun.eliteKills || 0) + 1;
+        else if (node.type !== "boss") rogueRun.kills = (rogueRun.kills || 0) + 1;
+        rogueRun.rewards = rollRogueRewards(rogueRun, { boss: node.type === "boss", elite: node.type === "elite" });
+        rogueRun.phase = "reward";
+        saveRogueRun();
+        renderRogue();
+      } else {
+        endRogueRun(false);
+      }
+    },
+  });
+}
+
+/* ------------------------------ 节点操作 ------------------------------ */
+function startRogueRun() {
+  const meta = loadRogueMeta();
+  const diff = ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (rogueDiff || 1) - 1))];
+  if ((meta.wins || 0) < diff.unlockWins) { toast("此劫尚未解锁"); return; }
+  rogueRun = createRogueRun(game, roguePath, rogueDiff, meta);
+  rogueConfirm = false;
+  saveRogueRun();
+  renderRogue();
+}
+
+function selectRogueNode(index) {
+  if (!rogueRun || rogueRun.phase !== "map") return;
+  ensureRogueChoices();
+  const node = (rogueRun.nodeChoices || [])[index];
+  if (!node) return;
+  const phase = rogueNodeStart(rogueRun, node);
+  saveRogueRun();
+  if (phase === "battle") startRogueBattle(node);
+  else renderRogue();
+}
+
+function chooseRogueReward(index) {
+  if (!rogueRun || rogueRun.phase !== "reward") return;
+  const reward = (rogueRun.rewards || [])[index];
+  if (!reward) return;
+  const msg = applyRogueReward(rogueRun, reward);
+  rogueRun.rewards = null;
+  if (msg) toast(msg);
+  advanceRogue();
+}
+
+function skipRogueReward() {
+  if (!rogueRun || rogueRun.phase !== "reward") return;
+  rogueRun.rewards = null;
+  advanceRogue();
+}
+
+function chooseRogueEvent(index) {
+  if (!rogueRun || rogueRun.phase !== "event" || rogueRun.eventResult) return;
+  const text = rogueApplyEvent(rogueRun, index);
+  if (!text) return;
+  saveRogueRun();
+  renderRogue();
+}
+
+function continueRogueEvent() {
+  if (!rogueRun || rogueRun.phase !== "event" || !rogueRun.eventResult) return;
+  advanceRogue();
+}
+
+function buyRogueShop(index) {
+  if (!rogueRun || rogueRun.phase !== "shop") return;
+  const res = buyRogueShopItem(rogueRun, index);
+  if (!res.ok) { toast(res.msg); return; }
+  toast(res.msg);
+  saveRogueRun();
+  renderRogue();
+}
+
+function leaveRogueNode() {
+  if (!rogueRun) return;
+  advanceRogue();
+}
+
+function doRogueRest(kind) {
+  if (!rogueRun || rogueRun.phase !== "rest") return;
+  if (kind === "essence") {
+    gainRogueEssence(rogueRun, 45);
+    toast("灵息 +45");
+  } else {
+    const n = healRogueRun(rogueRun, 0.35);
+    toast(n > 0 ? "气血 +" + fmt(n) : "气血已满");
+  }
+  advanceRogue();
+}
+
+function takeRogueTreasure() {
+  if (!rogueRun || rogueRun.phase !== "treasure") return;
+  const relic = rogueRun.treasureRelic;
+  if (relic) {
+    addRogueRelic(rogueRun, relic.id);
+    toast("获得遗物「" + relic.name + "」");
+  } else {
+    toast("遗藏已空");
+  }
+  advanceRogue();
+}
+
+function advanceRogue() {
+  if (!rogueRun) return;
+  rogueAdvance(rogueRun);
+  rogueRun.nodeChoices = null;
+  if (rogueRun.phase === "result") { endRogueRun(true); return; }
+  saveRogueRun();
+  renderRogue();
+}
+
+function endRogueRun(win) {
+  if (!rogueRun || rogueRun.phase === "result" && rogueRun.result) { renderRogue(); return; }
+  const res = finishRogueRun(game, rogueRun, win);
+  pushLog(game, "山海秘境 · " + (win ? "破境而归" : "道途未尽") + "，道痕 +" + fmt(res.shards) + "，灵石 +" + fmt(res.stone), win ? "great" : "info");
+  checkAchievements(game);
+  saveGame(game);
+  saveRogueRun();
+  rogueConfirm = false;
+  renderRogue();
+}
+
+function abandonRogueRun() {
+  if (!rogueRun) { rogueConfirm = false; renderRogue(); return; }
+  if (rogueRun.phase === "result") { closeRogue(); return; }
+  endRogueRun(false);
+}
+
+function rogueAgain() {
+  if (!rogueRun) { renderRogue(); return; }
+  const path = rogueRun.pathId;
+  const diff = rogueRun.difficulty;
+  clearRogueRun();
+  rogueRun = null;
+  const meta = loadRogueMeta();
+  const def = ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (diff || 1) - 1))];
+  const useDiff = (meta.wins || 0) >= def.unlockWins ? diff : 1;
+  roguePath = path;
+  rogueDiff = useDiff;
+  rogueRun = createRogueRun(game, path, useDiff, meta);
+  saveRogueRun();
+  renderRogue();
+}
+
+/* ------------------------------ 天赋购买 ------------------------------ */
+function buyRogueTalentUI(id) {
+  const meta = loadRogueMeta();
+  const res = buyRogueTalent(meta, id);
+  if (!res.ok) { toast(res.msg); return; }
+  toast("参悟「" + res.talent.name + "」");
+  renderRogue();
+}
+
+/* ------------------------------ 各阶段界面 ------------------------------ */
+function renderRogueReward() {
+  const run = rogueRun;
+  const node = run.currentNode || {};
+  const boss = node.type === "boss";
+  let h = '<div class="rg-card rg-hero"><div class="rg-hero-top"><div class="rg-act-icon">' + (boss ? "👑" : "🎁") + "</div><div>" +
+    '<div class="rg-act-name">' + (boss ? "境主伏诛" : "战利品") + "</div>" +
+    '<div class="rg-act-sub">' + esc((node.enemy && node.enemy.name) || "山道所获") + " · 择一带走</div></div></div>" +
+    '<div class="rg-hptext">气血 ' + fmt(Math.ceil(run.hp)) + " / " + fmt(run.maxHp) + " · 灵息 " + fmt(run.essence) + "</div></div>";
+  h += '<div class="rg-label"><span>拣选战利品</span><span>其余散入山海</span></div>';
+  h += '<div class="rg-reward-grid">' + (run.rewards || []).map(function (r, i) {
+    const info = rogueRewardInfo(r);
+    return '<button class="rg-reward ' + (info.rarity ? "rarity-" + info.rarity : "") + '" data-action="rogue-reward" data-index="' + i + '">' +
+      '<div class="rg-choice-icon">' + info.icon + "</div>" +
+      '<div class="rg-choice-name">' + esc(info.name) + "</div>" +
+      '<div class="rg-choice-desc">' + esc(info.desc) + "</div>" +
+      '<div class="rg-choice-tag">' + esc(info.tag) + "</div></button>";
+  }).join("") + "</div>";
+  h += '<button class="btn btn-ghost rg-wide-btn" data-action="rogue-skip-reward"><span class="btn-main">都不取</span><span class="btn-sub">继续前行</span></button>';
+  return h;
+}
+
+function renderRogueEvent() {
+  const run = rogueRun;
+  const ev = run.event;
+  if (!ev) return renderRogueMap();
+  let h = '<div class="rg-card rg-hero"><div class="rg-act-icon">' + (ev.icon || "🎋") + "</div>" +
+    '<div class="rg-act-name">' + esc(ev.title) + "</div>" +
+    '<div class="rg-act-sub">奇遇 · 山海偶得</div></div>';
+  h += '<div class="rg-card"><div class="rg-event-text">' + esc(ev.text) + "</div></div>";
+  if (run.eventResult) {
+    h += '<div class="rg-card"><div class="rg-event-result">' + esc(run.eventResult) + "</div></div>";
+    h += '<button class="btn btn-primary rg-wide-btn" data-action="rogue-event-continue"><span class="btn-main">继续前行</span><span class="btn-sub">奇遇已了</span></button>';
+  } else {
+    h += '<div class="rg-label"><span>如何应对</span><span>一择定因果</span></div>';
+    h += '<div class="rg-choice-list">' + (ev.choices || []).map(function (c, i) {
+      return '<button class="rg-choice" data-action="rogue-event-choice" data-index="' + i + '">' +
+        '<div class="rg-choice-icon">🎋</div>' +
+        '<div class="rg-choice-body"><div class="rg-choice-name">' + esc(c.text) + "</div></div>" +
+        '<div class="rg-node-arrow">›</div></button>';
+    }).join("") + "</div>";
+  }
+  return h;
+}
+
+function renderRogueShop() {
+  const run = rogueRun;
+  const shop = run.shop;
+  if (!shop) return renderRogueMap();
+  let h = '<div class="rg-card rg-hero"><div class="rg-act-icon">🏮</div><div class="rg-act-name">鬼市</div>' +
+    '<div class="rg-act-sub">灵息 ' + fmt(run.essence) + " · 只换不卖</div></div>";
+  h += '<div class="rg-choice-list">' + (shop.items || []).map(function (item, i) {
+    const sold = !!item.sold;
+    return '<button class="rg-choice ' + (sold ? "sold" : "") + '" data-action="rogue-shop-buy" data-index="' + i + '" ' + (sold ? "disabled" : "") + '>' +
+      '<div class="rg-choice-icon">' + item.icon + "</div>" +
+      '<div class="rg-choice-body"><div class="rg-choice-name">' + esc(item.name) + "</div>" +
+      '<div class="rg-choice-desc">' + esc(item.desc) + "</div></div>" +
+      '<div class="rg-choice-tag">' + (sold ? "已售" : item.cost + " 灵息") + "</div></button>";
+  }).join("") + "</div>";
+  h += '<button class="btn btn-primary rg-wide-btn" data-action="rogue-leave"><span class="btn-main">离开鬼市</span><span class="btn-sub">继续向山海深处</span></button>';
+  return h;
+}
+
+function renderRogueRest() {
+  const run = rogueRun;
+  const full = run.hp >= run.maxHp;
+  let h = '<div class="rg-card rg-hero"><div class="rg-act-icon">🪷</div><div class="rg-act-name">静修</div>' +
+    '<div class="rg-act-sub">气血 ' + fmt(Math.ceil(run.hp)) + " / " + fmt(run.maxHp) + " · 灵息 " + fmt(run.essence) + "</div></div>";
+  h += '<div class="rg-choice-list">' +
+    '<button class="rg-choice" data-action="rogue-rest" data-rest="heal" ' + (full ? "disabled" : "") + '>' +
+    '<div class="rg-choice-icon">💚</div><div class="rg-choice-body"><div class="rg-choice-name">调息疗伤</div>' +
+    '<div class="rg-choice-desc">回复 35% 气血。' + (full ? "（气血已满）" : "") + "</div></div></button>" +
+    '<button class="rg-choice" data-action="rogue-rest" data-rest="essence">' +
+    '<div class="rg-choice-icon">💠</div><div class="rg-choice-body"><div class="rg-choice-name">凝练灵息</div>' +
+    '<div class="rg-choice-desc">获得 45 灵息，可在鬼市换物。</div></div></button></div>';
+  return h;
+}
+
+function renderRogueTreasure() {
+  const run = rogueRun;
+  const relic = run.treasureRelic;
+  let h = '<div class="rg-card rg-hero"><div class="rg-act-icon">🎁</div><div class="rg-act-name">遗藏</div>' +
+    '<div class="rg-act-sub">前人留物 · 免费取走一件</div></div>';
+  if (relic) {
+    h += '<div class="rg-card"><div class="rg-reward-grid"><div class="rg-reward rarity-' + relic.rarity + '">' +
+      '<div class="rg-choice-icon">' + relic.icon + "</div>" +
+      '<div class="rg-choice-name">' + esc(relic.name) + "</div>" +
+      '<div class="rg-choice-desc">' + esc(relic.desc) + "</div>" +
+      '<div class="rg-choice-tag">遗物 · ' + "★".repeat(relic.rarity) + "</div></div></div></div>";
+  } else {
+    h += '<div class="rg-card"><div class="rg-tip">遗藏已空，只剩一层薄灰。</div></div>';
+  }
+  h += '<button class="btn btn-primary rg-wide-btn" data-action="rogue-treasure"><span class="btn-main">' + (relic ? "收起遗物" : "继续前行") + '</span><span class="btn-sub">' + (relic ? esc(relic.name) : "前路尚长") + "</span></button>";
+  return h;
+}
+
+function renderRogueResult() {
+  const run = rogueRun;
+  const res = run.result || {};
+  const win = !!res.win;
+  const diff = ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (res.difficulty || 1) - 1))];
+  const path = ROGUE_PATH_MAP[res.pathId] || ROGUE_PATHS[0];
+  let h = '<div class="rg-result-hero"><div class="rg-result-icon">' + (win ? "🌄" : "🌫️") + "</div>" +
+    '<div class="rg-result-title">' + (win ? "山海归位" : "道途未尽") + "</div>" +
+    '<div class="rg-result-sub">' + (win ? "三幕皆破，你带着一身道痕归来。" : "此行止于第 " + (res.act || 1) + " 幕，所得已记入道痕。") + "</div></div>";
+  h += '<div class="rg-card"><div class="rg-result-stats">' +
+    '<div class="rg-result-stat"><span>道途</span><b>' + esc(path.name) + " · " + esc(diff.name) + "</b></div>" +
+    '<div class="rg-result-stat"><span>深度</span><b>' + fmt(res.depth || 0) + "</b></div>" +
+    '<div class="rg-result-stat"><span>斩敌</span><b>' + fmt((res.kills || 0) + (res.eliteKills || 0)) + "</b></div>" +
+    '<div class="rg-result-stat"><span>境主</span><b>' + fmt(res.bossKills || 0) + "</b></div>" +
+    '<div class="rg-result-stat"><span>道痕</span><b>+' + fmt(res.shards || 0) + "</b></div>" +
+    '<div class="rg-result-stat"><span>灵石</span><b>+' + fmt(res.stone || 0) + "</b></div></div></div>";
+  if (res.bossKills > 0) h += '<div class="rg-tip">山海灵息已生效：修炼速度 +15%，持续 30 分钟。</div>';
+  h += '<div class="rg-btn-row"><button class="btn btn-primary" data-action="rogue-again"><span class="btn-main">再入山海</span><span class="btn-sub">道痕已入账</span></button>' +
+    '<button class="btn btn-ghost" data-action="rogue-close"><span class="btn-main">回到山门</span><span class="btn-sub">暂别秘境</span></button></div>';
+  return h;
+}
+
+function renderRogueConfirm() {
+  return '<div class="rg-card"><div class="rg-label"><span>放弃此行</span><span>不可撤回</span></div>' +
+    '<div class="rg-event-text">当前秘境进度会立刻结算为道痕与灵石，然后结束本局。已获得的道痕不会丢失。</div></div>' +
+    '<div class="rg-btn-row"><button class="btn btn-danger" data-action="rogue-abandon-yes"><span class="btn-main">确认放弃</span></button>' +
+    '<button class="btn btn-ghost" data-action="rogue-abandon-no"><span class="btn-main">继续前行</span></button></div>';
+}
 /* ===== ui.js ===== */
 /* =====================================================================
  * 《长生道》· ui.js (v2.1.0)
@@ -5080,6 +7200,14 @@ let lastBagSpellCount = -1;
 let lastBagCompanionCount = -1;
 let lastMarketRefresh = -1;
 let lastBondReady = null;
+let rogueOpen = false;
+let rogueRun = null;
+let roguePath = "sword";
+let rogueDiff = 1;
+let rogueTab = "paths";
+let rogueConfirm = false;
+let rogueBusy = false;
+const ROGUE_RUN_KEY = "changsheng-dao.rogue.run.v1";
 
 /* 战斗演出状态 */
 let battleOpen = false;
@@ -5114,6 +7242,7 @@ function init() {
     try { return !!localStorage.getItem(SAVE_KEY); } catch (e) { return false; }
   })();
   game = loadGame();
+  rogueRun = loadRogueRun();
   cacheDom();
   bindEvents();
   if (UI.verText) UI.verText.textContent = GAME_VERSION;
@@ -5157,6 +7286,8 @@ function cacheDom() {
     "marketSpells", "marketArts", "marketPills",
     "caveLevel", "caveBonus", "caveNext", "caveHint", "caveCost", "btnCave",
     "combatGrid",
+    "rogueEntry", "rogueHint", "rogueDesc", "btnRogue", "rogueSub",
+    "rogue", "rogueKicker", "rogueHead", "rogueMini", "rogueBody",
     "guardianHint", "guardianIcon", "guardianName", "guardianDesc", "btnGuardian", "guardianSub",
     "journeyOrb", "btnJourney", "journeySub", "journeyLog", "journeyRealm",
     "attrTotal", "attrList", "statsGrid", "achGrid", "achHint", "verText",
@@ -5727,7 +7858,7 @@ function switchTab(tab) {
   if (tab === "spells") renderSpellPage();
   if (tab === "bag") renderBag();
   if (tab === "market") renderMarket();
-  if (tab === "journey") { updateJourney(Date.now()); renderGuardian(Date.now()); renderJourneyLog(); lastJourneyCount = game.journeyLog.length; }
+  if (tab === "journey") { updateJourney(Date.now()); renderGuardian(Date.now()); renderRogueEntry(); renderJourneyLog(); lastJourneyCount = game.journeyLog.length; }
   if (tab === "more") renderMore();
   if (UI.view) UI.view.scrollTop = 0;
 }
@@ -5745,6 +7876,26 @@ function onClick(e) {
     case "break": doBreak(); break;
     case "encounter": doEncounter(); break;
     case "guardian": doGuardian(); break;
+    case "open-rogue": openRogue(); break;
+    case "rogue-close": closeRogue(); break;
+    case "rogue-path": roguePath = target.getAttribute("data-path") || "sword"; renderRogue(); break;
+    case "rogue-diff": rogueDiff = parseInt(target.getAttribute("data-diff"), 10) || 1; renderRogue(); break;
+    case "rogue-tab": rogueTab = target.getAttribute("data-tab") || "paths"; renderRogue(); break;
+    case "rogue-start": startRogueRun(); break;
+    case "rogue-talent": buyRogueTalentUI(target.getAttribute("data-id")); break;
+    case "rogue-node": selectRogueNode(parseInt(target.getAttribute("data-index"), 10)); break;
+    case "rogue-reward": chooseRogueReward(parseInt(target.getAttribute("data-index"), 10)); break;
+    case "rogue-skip-reward": skipRogueReward(); break;
+    case "rogue-event-choice": chooseRogueEvent(parseInt(target.getAttribute("data-index"), 10)); break;
+    case "rogue-event-continue": continueRogueEvent(); break;
+    case "rogue-shop-buy": buyRogueShop(parseInt(target.getAttribute("data-index"), 10)); break;
+    case "rogue-leave": leaveRogueNode(); break;
+    case "rogue-rest": doRogueRest(target.getAttribute("data-rest")); break;
+    case "rogue-treasure": takeRogueTreasure(); break;
+    case "rogue-again": rogueAgain(); break;
+    case "rogue-abandon": rogueConfirm = true; renderRogue(); break;
+    case "rogue-abandon-yes": abandonRogueRun(); break;
+    case "rogue-abandon-no": rogueConfirm = false; renderRogue(); break;
     case "research": doResearch(); break;
     case "equip-spell": doEquipSpell(id); break;
     case "unequip-spell": doUnequipSpell(slot); break;
@@ -6343,7 +8494,7 @@ function enqueueModal(opts, front) {
 
 function pumpModal() {
   if (modalQueue.length === 0) return;
-  if (coverOpen || battleOpen || creating) return;
+  if (coverOpen || battleOpen || creating || rogueOpen) return;
   if (!UI.modalMask.classList.contains("hidden")) return;
   const opts = modalQueue.shift();
   showModal(opts);
@@ -6443,7 +8594,7 @@ function spellModal(sp) {
 
 function flushPendingSpell() {
   if (!game.pendingSpell) return;
-  if (coverOpen || battleOpen || creating) return;
+  if (coverOpen || battleOpen || creating || rogueOpen) return;
   if (!UI.modalMask.classList.contains("hidden")) return;
   const sp = game.pendingSpell;
   game.pendingSpell = null;
@@ -6452,7 +8603,7 @@ function flushPendingSpell() {
 
 function flushUnlocks() {
   if (!game.pendingUnlocks.length) return;
-  if (coverOpen || battleOpen || creating) return;
+  if (coverOpen || battleOpen || creating || rogueOpen) return;
   if (!UI.modalMask.classList.contains("hidden")) return;
   const ids = game.pendingUnlocks.splice(0);
   const items = ids.map((id) => ACHIEVEMENT_MAP[id]).filter(Boolean);
