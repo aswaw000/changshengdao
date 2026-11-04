@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v3.0.0 · built 2026-11-03T06:07:50.021Z · 单文件离线可玩 -->
+<!-- 《长生道》 v3.1.0 · built 2026-11-04T01:07:29.914Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -2131,6 +2131,101 @@ body.rogue-lock { overflow: hidden; }
 }
 
 
+/* =====================================================================
+ * v3.1 百艺 · 洞天（研发 / 五府 / 万界货架 / 成就分类 / 轮回点）
+ * ===================================================================== */
+.craft-card .research-body { padding-bottom: 4px; }
+.craft-card .btn-wide { margin-top: 10px; }
+
+.facility-list { display: flex; flex-direction: column; gap: 10px; }
+.facility-item {
+  padding: 12px 12px 13px;
+  border-radius: 14px;
+  background: rgba(10, 22, 26, 0.55);
+  border: 1px solid rgba(120, 180, 190, 0.14);
+}
+.facility-head { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.facility-icon { font-size: 19px; }
+.facility-name { font-family: var(--font-title); font-size: 15px; letter-spacing: 1.5px; color: var(--gold-soft); }
+.facility-lv { margin-left: auto; font-size: 10.5px; color: var(--muted); letter-spacing: 0.5px; }
+.facility-desc { font-size: 11.5px; line-height: 1.65; color: var(--muted); margin-bottom: 8px; }
+.facility-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+.facility-line {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+  padding: 7px 9px; border-radius: 9px;
+  background: rgba(120, 180, 190, 0.05);
+  border: 1px solid rgba(120, 180, 190, 0.1);
+  font-size: 11px; color: var(--muted);
+}
+.facility-line b { color: var(--jade); font-size: 12px; }
+.facility-buy { width: 100%; }
+
+.market-shelf-list { display: flex; flex-direction: column; gap: 10px; }
+.market-shelf-no { flex: none; font-size: 10px; color: var(--muted); letter-spacing: 0.5px; }
+.market-item.shelf-empty { opacity: 0.62; }
+.market-item.shelf-locked {
+  border-style: dashed;
+  background: rgba(10, 18, 22, 0.42);
+}
+.market-item.shelf-locked .market-name { color: var(--muted); }
+.market-item.shelf-locked .btn { margin-top: 4px; }
+
+.ach-tabs {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  margin: 2px 0 12px;
+}
+.ach-tab {
+  padding: 9px 4px;
+  border-radius: 11px;
+  border: 1px solid rgba(120, 180, 190, 0.16);
+  background: rgba(10, 22, 26, 0.5);
+  color: var(--muted);
+  font-size: 12px; letter-spacing: 1px;
+  font-family: inherit;
+  transition: all 0.18s;
+}
+.ach-tab.active {
+  color: var(--gold-soft);
+  border-color: rgba(230, 194, 115, 0.4);
+  background: linear-gradient(180deg, rgba(230, 194, 115, 0.14), rgba(120, 90, 40, 0.08));
+  box-shadow: 0 0 16px rgba(230, 194, 115, 0.12);
+}
+
+.meta-shop { display: flex; flex-direction: column; gap: 9px; margin: 12px 0; }
+.meta-shop-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 11px;
+  border-radius: 13px;
+  background: rgba(10, 22, 26, 0.55);
+  border: 1px solid rgba(120, 180, 190, 0.14);
+}
+.meta-shop-item.owned { opacity: 0.78; border-color: rgba(230, 194, 115, 0.26); }
+.meta-shop-icon {
+  width: 36px; height: 36px; flex: none;
+  display: grid; place-items: center;
+  font-size: 19px; border-radius: 11px;
+  background: rgba(230, 194, 115, 0.08);
+  border: 1px solid rgba(230, 194, 115, 0.2);
+}
+.meta-shop-body { flex: 1; min-width: 0; }
+.meta-shop-name { font-size: 13px; color: var(--text); letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
+.meta-shop-cost {
+  font-size: 9.5px; color: var(--gold-soft);
+  padding: 1px 6px; border-radius: 99px;
+  border: 1px solid rgba(230, 194, 115, 0.28);
+}
+.meta-shop-desc { font-size: 11px; color: var(--muted); line-height: 1.55; margin-top: 2px; }
+.meta-shop-item .btn { flex: none; }
+.meta-buy:not(:disabled) .btn-main { color: var(--gold-soft); }
+
+@media (max-width: 360px) {
+  .facility-stats { grid-template-columns: 1fr; }
+  .meta-shop-desc { font-size: 10.5px; }
+  .meta-shop-item { align-items: flex-start; }
+  .meta-shop-item .btn { padding: 6px 8px; }
+  .ach-tab { font-size: 11px; padding: 8px 2px; }
+}
+
 </style>
 </head>
 <body>
@@ -2232,18 +2327,46 @@ body.rogue-lock { overflow: hidden; }
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-head"><span>法术栏</span><span class="card-hint" id="spellHint">在背包中装配</span></div>
-        <div class="slot-row" id="slotRow"></div>
+      <div class="card craft-card">
+        <div class="card-head"><span>炼丹</span><span class="card-hint" id="alchemyHint">丹火不熄</span></div>
+        <div class="research-body">
+          <div class="research-icon" id="alchemyIcon">⚗️</div>
+          <div class="research-info">
+            <div class="research-title" id="alchemyTitle">丹炉待燃</div>
+            <div class="research-desc" id="alchemyDesc">开炉炼丹，立得 0-3 枚任意丹药；悟性越高，成丹越多。</div>
+            <div class="research-time" id="alchemyTime"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-wide" id="btnAlchemy" data-action="alchemy">
+          <span class="btn-main">开炉炼丹</span>
+          <span class="btn-sub" id="alchemySub">冷却 30 分钟</span>
+        </button>
+      </div>
+
+      <div class="card craft-card">
+        <div class="card-head"><span>炼器</span><span class="card-hint" id="forgeHint">炉火照器</span></div>
+        <div class="research-body">
+          <div class="research-icon" id="forgeIcon">🔨</div>
+          <div class="research-info">
+            <div class="research-title" id="forgeTitle">器胚未成</div>
+            <div class="research-desc" id="forgeDesc">开炉炼器，有几率立得 0-1 件当前境界法宝；悟性越高，成器越稳。</div>
+            <div class="research-time" id="forgeTime"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-wide" id="btnForge" data-action="forge">
+          <span class="btn-main">开炉炼器</span>
+          <span class="btn-sub" id="forgeSub">冷却 30 分钟</span>
+        </button>
       </div>
 
       <div class="card tips-card">
-        <div class="card-head"><span>参研须知</span></div>
+        <div class="card-head"><span>百艺须知</span></div>
         <ul class="tips-list">
-          <li>每卷参研固定十分钟，功成时随机习得一门法术，先收入背包。</li>
-          <li>悟性只影响高品质法术出现的概率，任何悟性都有机会研得最高品质。</li>
-          <li>新术不会自动装配，需前往「背包 · 法术」装配或卸下。</li>
-          <li>灵石可加速参研，剩余时间越短，所耗灵石越少。</li>
+          <li>参研修法、炼丹、炼器各自计时；丹器冷却互不共享。</li>
+          <li>炼丹立得 0-3 枚丹药，炼器立得 0-1 件当前境界法宝。</li>
+          <li>悟性影响高品质法术与法宝概率，也提高炼丹成丹数。</li>
+          <li>法术栏已移入「背包 · 法术」，新术不会自动装配。</li>
+          <li>洞府「地脉火种」可缩短丹器冷却，「藏经阁」可加快参研。</li>
         </ul>
       </div>
     </section>
@@ -2261,6 +2384,10 @@ body.rogue-lock { overflow: hidden; }
       </div>
 
       <div class="bag-panel active" data-bag-panel="spell">
+        <div class="card">
+          <div class="card-head"><span>法术栏</span><span class="card-hint" id="spellHint">三格法术栏</span></div>
+          <div class="slot-row" id="slotRow"></div>
+        </div>
         <div class="card">
           <div class="card-head"><span>已习法术</span><span class="card-hint" id="bagSpellHint"></span></div>
           <div class="spell-list" id="bagSpellList"></div>
@@ -2295,29 +2422,13 @@ body.rogue-lock { overflow: hidden; }
         <div class="card-head"><span>坊市</span><span class="card-hint" id="marketTime">正在进货</span></div>
         <p class="market-note" id="marketNote">行商往来，每三十分钟换一批货。法术法宝品质随你的境界浮动，丹药常备。</p>
       </div>
-      <div class="card cave-card">
-        <div class="card-head"><span>洞府 · 聚灵</span><span class="card-hint" id="caveLevel">Lv.1 / 20</span></div>
-        <div class="cave-stats">
-          <div class="cave-line"><span>修炼加成</span><b id="caveBonus">+6%</b></div>
-          <div class="cave-line"><span>下一级</span><b id="caveNext">+12%</b></div>
-        </div>
-        <p class="cave-desc" id="caveHint">聚灵阵加持，等级越高，静坐自修越快。</p>
-        <button class="btn btn-primary btn-wide" id="btnCave" data-action="upgrade-cave">
-          <span class="btn-main">升级洞府</span>
-          <span class="btn-sub" id="caveCost">耗 500 灵石</span>
-        </button>
+      <div class="card">
+        <div class="card-head"><span>洞府 · 五府</span><span class="card-hint" id="caveHint">以灵石升级</span></div>
+        <div class="facility-list" id="caveFacilities"></div>
       </div>
       <div class="card">
-        <div class="card-head"><span>法术货架</span><span class="card-hint" id="marketSpellHint"></span></div>
-        <div class="spell-list" id="marketSpells"></div>
-      </div>
-      <div class="card">
-        <div class="card-head"><span>法宝货架</span><span class="card-hint" id="marketArtHint"></span></div>
-        <div class="artifact-list" id="marketArts"></div>
-      </div>
-      <div class="card">
-        <div class="card-head"><span>丹药货架</span><span class="card-hint" id="marketPillHint"></span></div>
-        <div class="pill-list" id="marketPills"></div>
+        <div class="card-head"><span>万界货架</span><span class="card-hint" id="marketShelfHint"></span></div>
+        <div class="market-shelf-list" id="marketShelves"></div>
       </div>
     </section>
 
@@ -2335,6 +2446,21 @@ body.rogue-lock { overflow: hidden; }
         <button class="btn btn-primary btn-wide" id="btnRogue" data-action="open-rogue">
           <span class="btn-main">踏入山海</span>
           <span class="btn-sub" id="rogueSub">需筑基一层</span>
+        </button>
+      </div>
+
+      <div class="card guardian-card">
+        <div class="card-head"><span>洞府受袭</span><span class="card-hint" id="raidHint">妖修窥伺</span></div>
+        <div class="guardian-body">
+          <div class="guardian-icon" id="raidIcon">🦹</div>
+          <div class="guardian-info">
+            <div class="guardian-name" id="raidName">掠山妖修</div>
+            <div class="guardian-desc" id="raidDesc"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-wide" id="btnRaid" data-action="raid">
+          <span class="btn-main">迎战来犯</span>
+          <span class="btn-sub" id="raidSub">胜得灵石</span>
         </button>
       </div>
 
@@ -2403,21 +2529,33 @@ body.rogue-lock { overflow: hidden; }
 
       <div class="card">
         <div class="card-head"><span>成就</span><span class="card-hint" id="achHint"></span></div>
+        <div class="ach-tabs" id="achTabs">
+          <button class="ach-tab active" data-action="ach-tab" data-ach="cultivation">修行</button>
+          <button class="ach-tab" data-action="ach-tab" data-ach="combat">斗法</button>
+          <button class="ach-tab" data-action="ach-tab" data-ach="collection">收集</button>
+          <button class="ach-tab" data-action="ach-tab" data-ach="fate">轮回</button>
+        </div>
         <div class="ach-grid" id="achGrid"></div>
       </div>
 
       <div class="card" id="metaCard">
         <div class="card-head"><span>轮回印记</span><span class="card-hint" id="metaHint">第 1 世</span></div>
         <div class="meta-panel">
-          <div class="meta-line">已证长生 <b id="metaClears">0</b> 世 · 后世洗髓五维各 <b id="metaBonus">+0</b></div>
+          <div class="meta-line">已证长生 <b id="metaClears">0</b> 世 · 轮回点 <b id="metaPoints">0</b></div>
+          <div class="meta-line">五维加成 <b id="metaBonus">+0</b> · 修行 <b id="metaRate">+0%</b> · 灵石 <b id="metaStone">+0%</b></div>
+          <div class="meta-shop" id="metaShop"></div>
           <div class="meta-history" id="metaHistory"><div class="meta-record muted">尚无飞升印记</div></div>
           <button class="btn btn-primary btn-wide" id="btnNextLife" data-action="next-life" hidden>
             <span class="btn-main">开启下一世</span>
             <span class="btn-sub">保留轮回印记，重走长生路</span>
           </button>
+          <button class="btn btn-ghost btn-wide" id="btnResetMeta" data-action="reset-meta">
+            <span class="btn-main">重置轮回印记</span>
+            <span class="btn-sub">退还已消费轮回点，当前存档不受影响</span>
+          </button>
           <button class="btn btn-ghost btn-wide" data-action="clear-meta">
             <span class="btn-main">清除轮回印记</span>
-            <span class="btn-sub">仅清除次数，当前存档不受影响</span>
+            <span class="btn-sub">连次数一并清空，需二次确认</span>
           </button>
         </div>
       </div>
@@ -2431,13 +2569,13 @@ body.rogue-lock { overflow: hidden; }
           <button class="menu-item danger" data-action="reset"><span>重入轮回</span><span class="menu-arrow">›</span></button>
         </div>
       </div>
-      <div class="footer-note">长生道 v<span id="verText">3.0.0</span> · 存档自动保存于本机</div>
+      <div class="footer-note">长生道 v<span id="verText">3.1.0</span> · 存档自动保存于本机</div>
     </section>
   </main>
 
   <nav class="tabbar">
     <button class="tab active" data-action="tab" data-tab="cultivate"><span class="tab-icon">🧘</span><span class="tab-label">修炼</span></button>
-    <button class="tab" data-action="tab" data-tab="spells"><span class="tab-icon">📖</span><span class="tab-label">法术</span></button>
+    <button class="tab" data-action="tab" data-tab="spells"><span class="tab-icon">📖</span><span class="tab-label">研发</span></button>
     <button class="tab" data-action="tab" data-tab="bag"><span class="tab-icon">🎒</span><span class="tab-label">背包</span></button>
     <button class="tab" data-action="tab" data-tab="market"><span class="tab-icon">🏪</span><span class="tab-label">坊市</span></button>
     <button class="tab" data-action="tab" data-tab="journey"><span class="tab-icon">🗺️</span><span class="tab-label">历练</span></button>
@@ -2895,7 +3033,7 @@ body.rogue-lock { overflow: hidden; }
           <span class="btn-main">开始修行</span>
           <span class="btn-sub" id="coverSub">自动挂机 · 闭关也在涨</span>
         </button>
-        <div class="cover-note">v<span id="coverVer">3.0.0</span> · 存档自动保存于本机</div>
+        <div class="cover-note">v<span id="coverVer">3.1.0</span> · 存档自动保存于本机</div>
       </div>
     </div>
   </div>
@@ -2910,7 +3048,7 @@ body.rogue-lock { overflow: hidden; }
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "3.0.0";
+const GAME_VERSION = "3.1.0";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -2932,13 +3070,16 @@ const CFG = {
   MAX_SPELLS: 30,               // 藏法阁上限
   MAX_ARTIFACTS: 15,            // 法宝库上限
   BATTLE_MAX_ROUNDS: 20,        // 战斗最大回合数
-  MARKET_REFRESH_SEC: 1800,     // 坊市换货间隔（秒）
-  MARKET_STOCK: 2,              // 坊市每类法术 / 法宝的货量
+  MARKET_REFRESH_SEC: 1800,     // 坊市换货基准间隔（秒）
+  MARKET_SHELVES: 9,            // 坊市货架总数（6 默认 + 3 可开启）
+  MARKET_BASE_SHELVES: 6,       // 默认开启的货架数
+  MARKET_UNLOCK_COSTS: [3000, 8000, 20000], // 开启第 7 / 8 / 9 个货架的灵石
   COMPANION_BOND_CD: 1800,      // 道侣共修共享冷却（秒）
-  CAVE_MAX_LEVEL: 20,           // 洞府最高等级
-  CAVE_BONUS_PER_LEVEL: 0.06,   // 洞府每级修炼加成
-  CAVE_UPGRADE_BASE: 500,       // 洞府升级基础灵石
+  CAVE_MAX_LEVEL: 20,           // 洞府设施最高等级
   CAVE_UPGRADE_MUL: 1.55,       // 洞府升级费用增长
+  ALCHEMY_CD: 1800,             // 炼丹基础冷却（秒）
+  FORGE_CD: 1800,               // 炼器基础冷却（秒）
+  CAVE_RAID_INTERVAL: 1200,     // 洞府受袭间隔（秒）
   LOG_LIMIT: 80,
   ROGUE_UNLOCK_REALM: 9,        // 筑基后开启山海秘境
   ROGUE_ACTS: 3,                // 秘境三幕
@@ -2946,6 +3087,38 @@ const CFG = {
   ROGUE_BATTLE_ROUNDS: 20,      // 秘境战斗回合上限
   ROGUE_START_ESSENCE: 40,      // 秘境初始灵息
 };
+
+
+/* ---------------------------- 洞府五设施 ---------------------------- */
+/* v3.1：洞府由「单一聚灵阵」改为五座设施，各自以灵石升级。
+ * 等级上限 20，费用按 1.55 倍增长；加成均为叠加式。 */
+const CAVE_FACILITIES = [
+  { id: "altar", name: "问道台", icon: "🧘", desc: "凝神静气，静坐自修更快。",
+    effect: "修行速度", per: 0.06, base: 600, cap: null, unit: "rate" },
+  { id: "library", name: "藏经阁", icon: "📚", desc: "经卷盈阁，参研法术更快。",
+    effect: "研发速度", per: 0.04, base: 700, cap: null, unit: "research" },
+  { id: "ember", name: "地脉火种", icon: "🔥", desc: "地火不熄，炼丹炼器冷却更短。",
+    effect: "丹器冷却", per: 0.03, base: 750, cap: 0.60, unit: "craft" },
+  { id: "spirit", name: "聚灵阵", icon: "💠", desc: "聚天地灵气，灵石产出更多。",
+    effect: "灵石产出", per: 0.05, base: 800, cap: null, unit: "stone" },
+  { id: "gate", name: "万界门", icon: "🚪", desc: "连通万界，坊市换货更快。",
+    effect: "换货间隔", per: 0.03, base: 900, cap: 0.60, unit: "market" },
+];
+const CAVE_FACILITY_MAP = {};
+CAVE_FACILITIES.forEach((f) => { CAVE_FACILITY_MAP[f.id] = f; });
+const CAVE_FACILITY_IDS = CAVE_FACILITIES.map((f) => f.id);
+
+/* ---------------------------- 轮回点兑换 ---------------------------- */
+const META_SHOP = [
+  { id: "attr", icon: "🪷", name: "五维齐涨", desc: "当前与后世洗髓，五维各 +1。", cost: 1, repeat: true },
+  { id: "companion", icon: "🐋", name: "鲸语归心", desc: "与沈青梧结缘，并永久带往来世。", cost: 1, repeat: false },
+  { id: "rate", icon: "⚡", name: "道行加持", desc: "修行速度永久 +3%。", cost: 1, repeat: true },
+  { id: "stone", icon: "💎", name: "灵脉加持", desc: "灵石产出永久 +3%。", cost: 1, repeat: true },
+];
+const META_SHOP_MAP = {};
+META_SHOP.forEach((m) => { META_SHOP_MAP[m.id] = m; });
+const META_RATE_STEP = 0.03;
+const META_STONE_STEP = 0.03;
 
 /* ---------------------------- 境界体系 ---------------------------- */
 /* 每个大境界：起始需求、起始速度、起始成功率、段内成长 */
@@ -3256,10 +3429,7 @@ const ENCOUNTERS = [
   { id: "chaos", name: "混沌侵袭", icon: "🌑", weight: 5, tone: "bad", minRealm: 30,
     text: "混沌之气侵蚀灵台，你闭目苦撑，神魂疲惫。", effect: { kind: "hurt", dao: 12, expRate: 0.18 } },
 
-  /* ——— 双修伴侣：不限境界，缘至则遇 ——— */
-  { id: "bondSword", name: "鲸语初遇", icon: "🐋", weight: 3, tone: "great", minRealm: 0,
-    text: "深海之滨，一名蓝发少女提裙而立。她抬眼看你，潮声与道心同时轻轻一颤。",
-    effect: { kind: "companion", companionId: "c_sword" } },
+  /* ——— 双修伴侣：不限境界，缘至则遇；沈青梧改由轮回点结缘 ——— */
   { id: "bondAlchemy", name: "丹火相逢", icon: "⚗️", weight: 3, tone: "great", minRealm: 0,
     text: "山间小炉腾起一线丹火，橘发少女正托腮守着书页与火候。见你来了，她笑着让出半张蒲团。",
     effect: { kind: "companion", companionId: "c_alchemy" } },
@@ -3290,40 +3460,75 @@ function realmStageName(index) {
 }
 
 /* ---------------------------- 成就 ---------------------------- */
-const ACHIEVEMENTS = [
-  { id: "first_break", name: "初入仙途", icon: "🌱", desc: "完成第一次突破", bonus: { rate: 0.02 } },
-  { id: "qi_full", name: "练气圆满", icon: "💨", desc: "踏入筑基境", bonus: { rate: 0.02 } },
-  { id: "gold_core", name: "金丹大道", icon: "🌕", desc: "结成金丹", bonus: { rate: 0.03 } },
-  { id: "nascent", name: "元婴出窍", icon: "👶", desc: "元婴出窍", bonus: { rate: 0.03 } },
-  { id: "spirit", name: "化神之姿", icon: "👁️", desc: "踏入化神境", bonus: { rate: 0.03 } },
-  { id: "void", name: "炼虚合道", icon: "🌌", desc: "踏入炼虚境", bonus: { rate: 0.04 } },
-  { id: "unity", name: "万法归宗", icon: "⚖️", desc: "踏入合体境", bonus: { rate: 0.04 } },
-  { id: "mahayana", name: "大乘彼岸", icon: "⛵", desc: "踏入大乘境", bonus: { rate: 0.05 } },
-  { id: "tribulation", name: "雷劫加身", icon: "⚡", desc: "踏入渡劫境", bonus: { rate: 0.05 } },
-  { id: "ascend", name: "白日飞升", icon: "🐉", desc: "渡过天劫，飞升仙界", bonus: { rate: 0.10 } },
-  { id: "rich1", name: "小有身家", icon: "💰", desc: "累计获得 10,000 灵石", bonus: { stone: 0.03 } },
-  { id: "rich2", name: "富甲一方", icon: "🏦", desc: "累计获得 1,000,000 灵石", bonus: { stone: 0.05 } },
-  { id: "rich3", name: "灵石如山", icon: "⛰️", desc: "累计获得 100,000,000 灵石", bonus: { stone: 0.08 } },
-  { id: "artifact1", name: "法宝天成", icon: "🗡️", desc: "缴获第一件法宝", bonus: { stone: 0.02 } },
-  { id: "artifact3", name: "法宝初成", icon: "🗡️", desc: "缴获 3 件法宝", bonus: { rate: 0.02 } },
-  { id: "artifact8", name: "多宝道人", icon: "🧿", desc: "缴获 8 件法宝", bonus: { rate: 0.05 } },
-  { id: "encounter10", name: "游历四方", icon: "🗺️", desc: "经历 10 次奇遇", bonus: { stone: 0.03 } },
-  { id: "encounter50", name: "见多识广", icon: "📖", desc: "经历 50 次奇遇", bonus: { stone: 0.05 } },
-  { id: "dao100", name: "道心通明", icon: "☯️", desc: "道心达到 100", bonus: { rate: 0.03 } },
-  { id: "play100h", name: "岁月如流", icon: "🌗", desc: "累计修行满 100 小时", bonus: { rate: 0.06 } },
-  { id: "break10", name: "破境如梭", icon: "🔨", desc: "累计突破 10 次", bonus: { success: 0.02 } },
-  { id: "play1h", name: "问道之心", icon: "⏳", desc: "累计修行满 1 小时", bonus: { rate: 0.02 } },
-  { id: "play24h", name: "长生久视", icon: "🕰️", desc: "累计修行满 24 小时", bonus: { rate: 0.05 } },
-  { id: "first_win", name: "初战告捷", icon: "⚔️", desc: "赢下第一场战斗", bonus: { stone: 0.02 } },
-  { id: "win10", name: "十战之姿", icon: "🛡️", desc: "累计战胜 10 名对手", bonus: { stone: 0.03 } },
-  { id: "win50", name: "百战余生", icon: "🏆", desc: "累计战胜 50 名对手", bonus: { stone: 0.05 } },
-  { id: "guardian1", name: "镇守一方", icon: "⛰️", desc: "击败一位灵脉守护者", bonus: { rate: 0.02 } },
-  { id: "guardian5", name: "灵脉在握", icon: "🌋", desc: "击败五位灵脉守护者", bonus: { stone: 0.05 } },
-  { id: "research1", name: "初窥法术", icon: "📖", desc: "研习出第一门法术", bonus: { rate: 0.02 } },
-  { id: "research10", name: "术法百家", icon: "📚", desc: "累计研习 10 门法术", bonus: { rate: 0.04 } },
-  { id: "spell3", name: "三才归位", icon: "🔯", desc: "三格法术栏皆有所载", bonus: { rate: 0.02 } },
-  { id: "equip_art", name: "御器在身", icon: "🔮", desc: "祭炼一件战斗法宝", bonus: { stone: 0.02 } },
+const ACHIEVEMENT_CATS = [
+  { id: "cultivation", name: "修行", icon: "🧘" },
+  { id: "combat", name: "斗法", icon: "⚔️" },
+  { id: "collection", name: "收集", icon: "🎒" },
+  { id: "fate", name: "轮回", icon: "🪷" },
 ];
+
+const ACHIEVEMENTS = [
+  /* ——— 修行 ——— */
+  { id: "first_break", cat: "cultivation", name: "初入仙途", icon: "🌱", desc: "完成第一次突破", bonus: { rate: 0.02 } },
+  { id: "qi_full", cat: "cultivation", name: "练气圆满", icon: "💨", desc: "踏入筑基境", bonus: { rate: 0.02 } },
+  { id: "gold_core", cat: "cultivation", name: "金丹大道", icon: "🌕", desc: "结成金丹", bonus: { rate: 0.03 } },
+  { id: "nascent", cat: "cultivation", name: "元婴出窍", icon: "👶", desc: "元婴出窍", bonus: { rate: 0.03 } },
+  { id: "spirit", cat: "cultivation", name: "化神之姿", icon: "👁️", desc: "踏入化神境", bonus: { rate: 0.03 } },
+  { id: "void", cat: "cultivation", name: "炼虚合道", icon: "🌌", desc: "踏入炼虚境", bonus: { rate: 0.04 } },
+  { id: "unity", cat: "cultivation", name: "万法归宗", icon: "⚖️", desc: "踏入合体境", bonus: { rate: 0.04 } },
+  { id: "mahayana", cat: "cultivation", name: "大乘彼岸", icon: "⛵", desc: "踏入大乘境", bonus: { rate: 0.05 } },
+  { id: "tribulation", cat: "cultivation", name: "雷劫加身", icon: "⚡", desc: "踏入渡劫境", bonus: { rate: 0.05 } },
+  { id: "dao100", cat: "cultivation", name: "道心通明", icon: "☯️", desc: "道心达到 100", bonus: { rate: 0.03 } },
+  { id: "break10", cat: "cultivation", name: "破境如梭", icon: "🔨", desc: "累计突破 10 次", bonus: { success: 0.02 } },
+  { id: "play1h", cat: "cultivation", name: "问道之心", icon: "⏳", desc: "累计修行满 1 小时", bonus: { rate: 0.02 } },
+  { id: "play24h", cat: "cultivation", name: "长生久视", icon: "🕰️", desc: "累计修行满 24 小时", bonus: { rate: 0.05 } },
+  { id: "play100h", cat: "cultivation", name: "岁月如流", icon: "🌗", desc: "累计修行满 100 小时", bonus: { rate: 0.06 } },
+  /* ——— 斗法 ——— */
+  { id: "first_win", cat: "combat", name: "初战告捷", icon: "⚔️", desc: "赢下第一场战斗", bonus: { stone: 0.02 } },
+  { id: "win10", cat: "combat", name: "十战之姿", icon: "🛡️", desc: "累计战胜 10 名对手", bonus: { stone: 0.03 } },
+  { id: "win50", cat: "combat", name: "百战余生", icon: "🏆", desc: "累计战胜 50 名对手", bonus: { stone: 0.05 } },
+  { id: "win100", cat: "combat", name: "百战不殆", icon: "🥇", desc: "累计战胜 100 名对手", bonus: { stone: 0.06 } },
+  { id: "guardian1", cat: "combat", name: "镇守一方", icon: "⛰️", desc: "击败一位灵脉守护者", bonus: { rate: 0.02 } },
+  { id: "guardian5", cat: "combat", name: "灵脉在握", icon: "🌋", desc: "击败五位灵脉守护者", bonus: { stone: 0.05 } },
+  { id: "guardian9", cat: "combat", name: "九脉归位", icon: "🐉", desc: "击败全部九位灵脉守护者", bonus: { rate: 0.06 } },
+  { id: "raid1", cat: "combat", name: "护府有功", icon: "🛡️", desc: "击退第一次洞府来犯", bonus: { stone: 0.03 } },
+  { id: "raid5", cat: "combat", name: "退敌五次", icon: "🏹", desc: "累计击退 5 次洞府来犯", bonus: { stone: 0.04 } },
+  { id: "battleExp1", cat: "combat", name: "斗法养气", icon: "🌬️", desc: "战斗累计获得 10,000 修为", bonus: { rate: 0.02 } },
+  { id: "battleExp2", cat: "combat", name: "以战养道", icon: "🔥", desc: "战斗累计获得 1,000,000 修为", bonus: { rate: 0.05 } },
+  /* ——— 收集 ——— */
+  { id: "rich1", cat: "collection", name: "小有身家", icon: "💰", desc: "累计获得 10,000 灵石", bonus: { stone: 0.03 } },
+  { id: "rich2", cat: "collection", name: "富甲一方", icon: "🏦", desc: "累计获得 1,000,000 灵石", bonus: { stone: 0.05 } },
+  { id: "rich3", cat: "collection", name: "灵石如山", icon: "⛰️", desc: "累计获得 100,000,000 灵石", bonus: { stone: 0.08 } },
+  { id: "artifact1", cat: "collection", name: "法宝天成", icon: "🗡️", desc: "缴获第一件法宝", bonus: { stone: 0.02 } },
+  { id: "artifact3", cat: "collection", name: "法宝初成", icon: "🗡️", desc: "缴获 3 件法宝", bonus: { rate: 0.02 } },
+  { id: "artifact8", cat: "collection", name: "多宝道人", icon: "🧿", desc: "缴获 8 件法宝", bonus: { rate: 0.05 } },
+  { id: "artifact15", cat: "collection", name: "藏器于身", icon: "🏺", desc: "法宝库达到 15 件", bonus: { rate: 0.04 } },
+  { id: "encounter10", cat: "collection", name: "游历四方", icon: "🗺️", desc: "经历 10 次奇遇", bonus: { stone: 0.03 } },
+  { id: "encounter50", cat: "collection", name: "见多识广", icon: "📖", desc: "经历 50 次奇遇", bonus: { stone: 0.05 } },
+  { id: "research1", cat: "collection", name: "初窥法术", icon: "📖", desc: "研习出第一门法术", bonus: { rate: 0.02 } },
+  { id: "research10", cat: "collection", name: "术法百家", icon: "📚", desc: "累计研习 10 门法术", bonus: { rate: 0.04 } },
+  { id: "research30", cat: "collection", name: "万法归心", icon: "📜", desc: "累计研习 30 门法术", bonus: { rate: 0.05 } },
+  { id: "spell3", cat: "collection", name: "三才归位", icon: "🔯", desc: "三格法术栏皆有所载", bonus: { rate: 0.02 } },
+  { id: "spell10", cat: "collection", name: "法术十全", icon: "🪄", desc: "习得 10 门法术", bonus: { rate: 0.03 } },
+  { id: "equip_art", cat: "collection", name: "御器在身", icon: "🔮", desc: "祭炼一件战斗法宝", bonus: { stone: 0.02 } },
+  { id: "companion5", cat: "collection", name: "五美同修", icon: "💞", desc: "与五位道侣皆结下缘分", bonus: { rate: 0.05, stone: 0.05 } },
+  { id: "alchemy1", cat: "collection", name: "丹成一炉", icon: "⚗️", desc: "第一次炼丹成功", bonus: { stone: 0.02 } },
+  { id: "alchemy10", cat: "collection", name: "炉火纯青", icon: "🔴", desc: "累计炼成 10 枚丹药", bonus: { stone: 0.04 } },
+  { id: "forge1", cat: "collection", name: "器成于手", icon: "🔨", desc: "第一次炼器成功", bonus: { stone: 0.02 } },
+  { id: "forge10", cat: "collection", name: "百炼成器", icon: "⚒️", desc: "累计炼成 10 件法宝", bonus: { stone: 0.04 } },
+  { id: "cave5", cat: "collection", name: "五府俱全", icon: "🏯", desc: "洞府五座设施皆达 5 级", bonus: { rate: 0.03 } },
+  { id: "cave10", cat: "collection", name: "洞天福地", icon: "⛰️", desc: "洞府五座设施皆达 10 级", bonus: { rate: 0.06 } },
+  { id: "market9", cat: "collection", name: "万界通商", icon: "🏪", desc: "开启全部九个坊市货架", bonus: { stone: 0.05 } },
+  { id: "pill50", cat: "collection", name: "丹满药囊", icon: "💊", desc: "累计服用 50 枚丹药", bonus: { rate: 0.03 } },
+  /* ——— 轮回 ——— */
+  { id: "ascend", cat: "fate", name: "白日飞升", icon: "🐉", desc: "渡过天劫，飞升仙界", bonus: { rate: 0.10 } },
+  { id: "life5", cat: "fate", name: "五世轮回", icon: "🪷", desc: "踏入第五世", bonus: { rate: 0.05 } },
+  { id: "life10", cat: "fate", name: "十世问道", icon: "🌠", desc: "踏入第十世", bonus: { rate: 0.08 } },
+  { id: "companionSword", cat: "fate", name: "鲸语归心", icon: "🐋", desc: "以轮回点与沈青梧结缘", bonus: { rate: 0.04 } },
+  { id: "rogue1", cat: "fate", name: "山海初归", icon: "⛰️", desc: "首次走出山海秘境", bonus: { stone: 0.05 } },
+];
+const ACHIEVEMENT_CAT_MAP = {};
+ACHIEVEMENT_CATS.forEach(c => { ACHIEVEMENT_CAT_MAP[c.id] = c; });
 const ACHIEVEMENT_MAP = {};
 ACHIEVEMENTS.forEach(a => { ACHIEVEMENT_MAP[a.id] = a; });
 
@@ -3552,6 +3757,23 @@ ROGUE_NODE_TYPES.forEach((n) => { ROGUE_NODE_MAP[n.type] = n; });
 
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "3.1.0",
+    date: "2026-11-04",
+    title: "百艺·洞天",
+    items: [
+      "法术栏移入背包：在「背包 · 法术」中入阵、卸下与出售",
+      "法术页改为「研发」：新增炼丹与炼器，炼丹立得 0-3 枚丹药，炼器立得 0-1 件本境界法宝",
+      "炼丹与炼器各自三十分钟冷却，互不共享；地脉火种可缩短冷却",
+      "洞府改为五座设施：问道台、藏经阁、地脉火种、聚灵阵、万界门，皆可独立升级",
+      "坊市改为九座货架：六座默认、三座以灵石开启，每架随机刷新法术、法宝或丹药",
+      "历练新增「洞府受袭」：定期可迎战来犯妖修，胜得灵石，败则随机一座设施降一级",
+      "所有战斗胜利后额外获得修为，战得越多，修为越厚",
+      "沈青梧从游历奇遇中移除，改以轮回点结缘；悟性额外提高炼丹成丹数",
+      "轮回点商店：一点可换五维 +1、沈青梧、修行速度或灵石产出永久加成，可重置或彻底清除",
+      "成就扩充并分为修行、斗法、收集、轮回四类；v3.0.0 存档可直接续玩",
+    ],
+  },
   {
     version: "3.0.0",
     date: "2026-11-03",
@@ -3939,6 +4161,7 @@ const ACHIEVE_COND = {
   artifact1: s => (s.artifacts || []).length >= 1,
   artifact3: s => (s.artifacts || []).length >= 3,
   artifact8: s => (s.artifacts || []).length >= 8,
+  artifact15: s => (s.artifacts || []).length >= 15,
   encounter10: s => s.encounterCount >= 10,
   encounter50: s => s.encounterCount >= 50,
   dao100: s => s.dao >= 100,
@@ -3949,12 +4172,33 @@ const ACHIEVE_COND = {
   first_win: s => (s.battleWins || 0) >= 1,
   win10: s => (s.battleWins || 0) >= 10,
   win50: s => (s.battleWins || 0) >= 50,
+  win100: s => (s.battleWins || 0) >= 100,
   guardian1: s => (s.guardians || []).length >= 1,
   guardian5: s => (s.guardians || []).length >= 5,
+  guardian9: s => (s.guardians || []).length >= 9,
+  raid1: s => (s.caveRaid && s.caveRaid.wins || 0) >= 1,
+  raid5: s => (s.caveRaid && s.caveRaid.wins || 0) >= 5,
+  battleExp1: s => (s.battleExpTotal || 0) >= 10000,
+  battleExp2: s => (s.battleExpTotal || 0) >= 1000000,
   research1: s => (s.researchCount || 0) >= 1,
   research10: s => (s.researchCount || 0) >= 10,
+  research30: s => (s.researchCount || 0) >= 30,
   spell3: s => (s.spellSlots || []).filter(Boolean).length >= 3,
+  spell10: s => (s.spells || []).length >= 10,
   equip_art: s => !!s.equippedArtifact,
+  companion5: s => (s.companions || []).length >= COMPANIONS.length,
+  alchemy1: s => (s.craft && s.craft.alchemyCount || 0) >= 1,
+  alchemy10: s => (s.craft && s.craft.alchemyCount || 0) >= 10,
+  forge1: s => (s.craft && s.craft.forgeCount || 0) >= 1,
+  forge10: s => (s.craft && s.craft.forgeCount || 0) >= 10,
+  cave5: s => CAVE_FACILITY_IDS.every(id => (s.cave && s.cave[id] || 1) >= 5),
+  cave10: s => CAVE_FACILITY_IDS.every(id => (s.cave && s.cave[id] || 1) >= 10),
+  market9: s => (s.market && s.market.unlocked || 6) >= 9,
+  pill50: s => (s.pillsUsed || 0) >= 50,
+  life5: s => (s.lifeNo || 1) >= 5,
+  life10: s => (s.lifeNo || 1) >= 10,
+  companionSword: s => (s.companions || []).indexOf("c_sword") >= 0,
+  rogue1: s => (s.rogueWins || 0) >= 1,
 };
 
 function defaultState() {
@@ -3975,14 +4219,19 @@ function defaultState() {
     companions: [],
     companionCd: 0,
     companionStory: {},
-    caveLevel: 1,
-    market: { refreshAt: 0, spells: [], artifacts: [] },
+    cave: { altar: 1, library: 1, ember: 1, spirit: 1, gate: 1 },
+    craft: { alchemyAt: 0, forgeAt: 0, alchemyCount: 0, forgeCount: 0 },
+    caveRaid: { nextAt: 0, wins: 0, losses: 0 },
+    market: { refreshAt: 0, unlocked: CFG.MARKET_BASE_SHELVES, shelves: [] },
     research: { active: false, startAt: 0, endAt: 0 },
     researchCount: 0,
     guardians: [],
     battleWins: 0,
     battleLosses: 0,
     guardianKills: 0,
+    battleExpTotal: 0,
+    pillsUsed: 0,
+    rogueWins: 0,
     flags: { created: false, ascended: false, ascensionRecorded: false },
     lifeNo: 1,
     pills: { juqi: 2 },
@@ -4064,30 +4313,214 @@ function companionSum(state, key) {
   return total;
 }
 
-function caveLevel(state) {
-  const lv = parseInt(state.caveLevel, 10);
-  return clamp(isFinite(lv) ? lv : 1, 1, CFG.CAVE_MAX_LEVEL);
+/* ---------------------------- 洞府五设施 ---------------------------- */
+function defaultCave() {
+  const c = {};
+  CAVE_FACILITY_IDS.forEach((id) => { c[id] = 1; });
+  return c;
+}
+
+function caveFacilityLevel(state, id) {
+  if (!state.cave || typeof state.cave !== "object") state.cave = defaultCave();
+  const raw = parseInt(state.cave[id], 10);
+  return clamp(isFinite(raw) ? raw : 1, 1, CFG.CAVE_MAX_LEVEL);
+}
+
+/* 兼容旧接口：不带 id 时取问道台等级 */
+function caveLevel(state, id) {
+  return caveFacilityLevel(state, id || "altar");
+}
+
+function caveFacilityBonus(state, id) {
+  const def = CAVE_FACILITY_MAP[id];
+  if (!def) return 0;
+  const raw = def.per * caveFacilityLevel(state, id);
+  return def.cap == null ? raw : Math.min(def.cap, raw);
 }
 
 function caveBonus(state) {
-  return CFG.CAVE_BONUS_PER_LEVEL * caveLevel(state);
+  return caveFacilityBonus(state, "altar");
 }
 
-function caveUpgradeCost(state) {
-  const lv = caveLevel(state);
+function caveStats(state) {
+  const s = {
+    levels: {}, total: 0,
+    rate: caveFacilityBonus(state, "altar"),
+    research: caveFacilityBonus(state, "library"),
+    craft: caveFacilityBonus(state, "ember"),
+    stone: caveFacilityBonus(state, "spirit"),
+    market: caveFacilityBonus(state, "gate"),
+  };
+  CAVE_FACILITY_IDS.forEach((id) => {
+    const lv = caveFacilityLevel(state, id);
+    s.levels[id] = lv;
+    s.total += lv;
+  });
+  return s;
+}
+
+function caveUpgradeCost(state, id) {
+  const def = CAVE_FACILITY_MAP[id];
+  if (!def) return 0;
+  const lv = caveFacilityLevel(state, id);
   if (lv >= CFG.CAVE_MAX_LEVEL) return 0;
-  return Math.round(CFG.CAVE_UPGRADE_BASE * Math.pow(CFG.CAVE_UPGRADE_MUL, lv - 1));
+  return Math.round(def.base * Math.pow(CFG.CAVE_UPGRADE_MUL, lv - 1));
 }
 
-function upgradeCave(state) {
-  const lv = caveLevel(state);
-  if (lv >= CFG.CAVE_MAX_LEVEL) return { ok: false, msg: "洞府已至最高等级" };
-  const cost = caveUpgradeCost(state);
+function upgradeCave(state, id) {
+  const def = CAVE_FACILITY_MAP[id];
+  if (!def) return { ok: false, msg: "没有这座设施" };
+  const lv = caveFacilityLevel(state, id);
+  if (lv >= CFG.CAVE_MAX_LEVEL) return { ok: false, msg: def.name + "已至最高等级" };
+  const cost = caveUpgradeCost(state, id);
   if (state.stone < cost) return { ok: false, msg: "灵石不足，尚缺 " + fmt(cost - state.stone) };
   state.stone -= cost;
-  state.caveLevel = lv + 1;
-  pushLog(state, "洞府升至 Lv." + state.caveLevel + " · 修炼速度 +" + fmtPct(caveBonus(state)), "gain");
-  return { ok: true, level: state.caveLevel, cost: cost, bonus: caveBonus(state) };
+  state.cave[id] = lv + 1;
+  pushLog(state, def.name + "升至 Lv." + state.cave[id] + " · " + def.effect + " +" + fmtPct(caveFacilityBonus(state, id)), "gain");
+  return { ok: true, id, name: def.name, level: state.cave[id], cost, bonus: caveFacilityBonus(state, id), def };
+}
+
+function researchDurationSec(state) {
+  const bonus = caveStats(state).research;
+  return Math.max(120, Math.round(CFG.RESEARCH_SEC / (1 + bonus)));
+}
+
+/* ---------------------------- 炼丹 / 炼器 ---------------------------- */
+function craftState(state) {
+  if (!state.craft || typeof state.craft !== "object") {
+    state.craft = { alchemyAt: 0, forgeAt: 0, alchemyCount: 0, forgeCount: 0 };
+  }
+  return state.craft;
+}
+
+function craftCooldownSec(state) {
+  const cut = caveStats(state).craft;
+  return Math.max(60, Math.round(CFG.ALCHEMY_CD * (1 - cut)));
+}
+
+function craftRemain(state, kind, now) {
+  now = now || Date.now();
+  const c = craftState(state);
+  const at = Number(kind === "forge" ? c.forgeAt : c.alchemyAt) || 0;
+  return Math.max(0, Math.ceil((at - now) / 1000));
+}
+
+function alchemyYield(attrs) {
+  const w = clamp(parseInt(attrs && attrs.wuxing, 10) || 0, 0, 200);
+  const p = clamp(0.60 + w * 0.012, 0.6, 0.99);
+  let count = 0;
+  if (Math.random() < p) count += 1;
+  if (Math.random() < Math.max(0, p - 0.55)) count += 1;
+  if (Math.random() < Math.max(0, p - 0.95)) count += 1;
+  return Math.min(3, count);
+}
+
+function doAlchemy(state, now) {
+  now = now || Date.now();
+  const c = craftState(state);
+  const remain = craftRemain(state, "alchemy", now);
+  if (remain > 0) return { ok: false, msg: "丹炉尚温，还需 " + fmtDuration(remain), remain };
+  const count = alchemyYield(state.attrs);
+  c.alchemyAt = now + craftCooldownSec(state) * 1000;
+  if (count <= 0) {
+    pushLog(state, "炼丹未成，丹炉只余一缕青烟", "fail");
+    return { ok: true, count: 0, cdUntil: c.alchemyAt, pill: null };
+  }
+  const pill = PILLS[Math.floor(Math.random() * PILLS.length)];
+  state.pills[pill.id] = (state.pills[pill.id] || 0) + count;
+  c.alchemyCount = (c.alchemyCount || 0) + count;
+  pushLog(state, "丹成一炉 · " + pill.name + " ×" + count, "success");
+  return { ok: true, count, pill, cdUntil: c.alchemyAt };
+}
+
+function forgeChance(attrs) {
+  const w = clamp(parseInt(attrs && attrs.wuxing, 10) || 0, 0, 200);
+  return clamp(0.34 + w * 0.012, 0.34, 0.86);
+}
+
+function doForge(state, now) {
+  now = now || Date.now();
+  const c = craftState(state);
+  const remain = craftRemain(state, "forge", now);
+  if (remain > 0) return { ok: false, msg: "炉火未歇，还需 " + fmtDuration(remain), remain };
+  const chance = forgeChance(state.attrs);
+  c.forgeAt = now + craftCooldownSec(state) * 1000;
+  if (Math.random() >= chance) {
+    pushLog(state, "炼器未成，法宝胚子碎作星火", "fail");
+    return { ok: true, count: 0, cdUntil: c.forgeAt, chance };
+  }
+  const art = makeArtifact(state);
+  if ((state.artifacts || []).length >= CFG.MAX_ARTIFACTS) {
+    pushLog(state, "法宝库已满，炼成的「" + art.name + "」散入山河", "fail");
+    return { ok: true, count: 0, cdUntil: c.forgeAt, chance, full: true };
+  }
+  state.artifacts.push(art);
+  c.forgeCount = (c.forgeCount || 0) + 1;
+  pushLog(state, "器成于手 · 「" + art.name + "」", "great");
+  return { ok: true, count: 1, artifact: art, cdUntil: c.forgeAt, chance };
+}
+
+/* ---------------------------- 洞府受袭 ---------------------------- */
+function ensureCaveRaid(state, now) {
+  now = now || Date.now();
+  if (!state.caveRaid || typeof state.caveRaid !== "object") {
+    state.caveRaid = { nextAt: 0, wins: 0, losses: 0 };
+  }
+  if (!state.caveRaid.nextAt) state.caveRaid.nextAt = now + CFG.CAVE_RAID_INTERVAL * 1000;
+  return state.caveRaid;
+}
+
+function caveRaidRemain(state, now) {
+  const r = ensureCaveRaid(state, now);
+  return Math.max(0, Math.ceil((r.nextAt - (now || Date.now())) / 1000));
+}
+
+function caveRaidEnemy(state) {
+  const total = caveStats(state).total;
+  return {
+    id: "cave_raider",
+    name: total >= 40 ? "撼山老妖" : (total >= 20 ? "巡山妖将" : "掠山妖修"),
+    icon: total >= 40 ? "👹" : (total >= 20 ? "🐗" : "🦹"),
+    hpMul: 1.35 + total * 0.030,
+    atkMul: 0.54 + total * 0.008,
+    defMul: 1.0,
+  };
+}
+
+function startCaveRaid(state, now) {
+  now = now || Date.now();
+  const remain = caveRaidRemain(state, now);
+  if (remain > 0) return { ok: false, remain, msg: "妖修尚未聚拢，还需 " + fmtDuration(remain) };
+  const enemy = caveRaidEnemy(state);
+  const battle = simulateBattle(state, { enemy });
+  return { ok: true, battle, enemy };
+}
+
+function resolveCaveRaid(state, win, now) {
+  now = now || Date.now();
+  const r = ensureCaveRaid(state, now);
+  r.nextAt = now + CFG.CAVE_RAID_INTERVAL * 1000;
+  if (win) {
+    const st = computeStats(state, now);
+    const reward = Math.max(20, Math.round(st.stoneRate * 240 * (1 + caveStats(state).total * 0.03)));
+    state.stone += reward;
+    state.totalStone += reward;
+    r.wins = (r.wins || 0) + 1;
+    pushLog(state, "击退来犯妖修 · 灵石 +" + fmt(reward), "great");
+    return { ok: true, win: true, stone: reward, nextAt: r.nextAt };
+  }
+  r.losses = (r.losses || 0) + 1;
+  const damaged = CAVE_FACILITY_IDS.filter((id) => caveFacilityLevel(state, id) > 1);
+  if (damaged.length) {
+    const id = damaged[Math.floor(Math.random() * damaged.length)];
+    const before = caveFacilityLevel(state, id);
+    state.cave[id] = before - 1;
+    pushLog(state, "妖修破府 · " + CAVE_FACILITY_MAP[id].name + " Lv." + before + " → Lv." + (before - 1), "fail");
+    return { ok: true, win: false, damaged: { id, name: CAVE_FACILITY_MAP[id].name, from: before, to: before - 1 } };
+  }
+  state.dao = Math.max(0, state.dao - 5);
+  pushLog(state, "妖修破府 · 设施已无可损，道心 -5", "fail");
+  return { ok: true, win: false, damaged: null, dao: 5 };
 }
 
 function companionBond(state, id) {
@@ -4119,26 +4552,35 @@ function computeStats(state, now) {
   const rateBuff = buffPower(rateList);
   const stoneBuff = buffPower(stoneList);
   const successBuff = buffPower(successList);
-  const caveLv = caveLevel(state);
-  const caveMul = 1 + caveBonus(state);
+  const cave = caveStats(state);
+  const caveLv = caveFacilityLevel(state, "altar");
+  const caveMul = 1 + cave.rate;
+  const meta = loadMeta();
+  const metaRate = Math.max(0, Number(meta.rateBonus) || 0);
+  const metaStone = Math.max(0, Number(meta.stoneBonus) || 0);
   const guardianBonus = guardianStoneBonus(state);
   const companionRate = companionSum(state, "rate");
   const companionStone = companionSum(state, "stone");
   const companionSucc = companionSum(state, "success");
-  const bonusRate = achieveSum(state, "rate") + companionRate;
-  const bonusStone = achieveSum(state, "stone") + guardianBonus + companionStone;
+  const bonusRate = achieveSum(state, "rate") + companionRate + metaRate;
+  const bonusStone = achieveSum(state, "stone") + guardianBonus + companionStone + metaStone;
   const bonusSucc = achieveSum(state, "success") + companionSucc;
   const daoRate = state.dao / 500;
   const daoSucc = state.dao / 1000;
   const rate = realm.rate * CFG.IDLE_MULT * caveMul * (1 + bonusRate + daoRate) * (1 + rateBuff);
-  const stoneRate = Math.max(0.5, realm.rate * CFG.STONE_FACTOR) * (1 + bonusStone) * (1 + stoneBuff);
+  const stoneRate = Math.max(0.5, realm.rate * CFG.STONE_FACTOR) * (1 + cave.stone) * (1 + bonusStone) * (1 + stoneBuff);
   const success = clamp(realm.success + daoSucc + bonusSucc + state.breakBonus + state.successBonus + successBuff, 0.05, 0.95);
   return {
     realm, rate, stoneRate, success,
     bonusRate, bonusStone, bonusSucc, guardianBonus,
     companionRate, companionStone, companionSucc,
+    metaRate, metaStone,
     derived: deriveStats(state),
-    caveLevel: caveLv, caveBonus: caveBonus(state), caveMul,
+    cave, caveLevel: caveLv, caveBonus: cave.rate, caveMul,
+    caveResearch: cave.research, caveCraft: cave.craft, caveStone: cave.stone, caveMarket: cave.market,
+    craftCd: craftCooldownSec(state),
+    researchSec: researchDurationSec(state),
+    raidRemain: caveRaidRemain(state, now),
     rateBuff, stoneBuff, successBuff,
     rateBuffEnd: buffEndAt(rateList),
     stoneBuffEnd: buffEndAt(stoneList),
@@ -4211,6 +4653,7 @@ function statBreakdown(state, key, now) {
       lines.push(statLine("闪避率贡献", "+" + fmtPct(v * 0.0025, 2), "幸运 × 0.25%，上限 35%"));
     } else if (key === "wuxing") {
       lines.push(statLine("高品质法术概率", fmtPct(d.highQualityChance, 1), "四星及以上"));
+      lines.push(statLine("炼丹成丹数", "0 ~ 3 枚", "悟性越高，多出一枚的机会越大"));
       lines.push(statLine("影响方式", "只提高高品质权重", "任何悟性都可能研得五星法术"));
     }
     return {
@@ -4224,14 +4667,15 @@ function statBreakdown(state, key, now) {
     const lines = [
       statLine("境界基础", fmt(r.rate, 2) + " / 秒", r.name),
       statLine("静坐自修", "×" + CFG.IDLE_MULT, "挂机修炼系数"),
-      statLine("洞府 Lv." + st.caveLevel, "×" + st.caveMul.toFixed(2), "聚灵阵 +" + fmtPct(st.caveBonus, 0)),
+      statLine("问道台 Lv." + st.caveLevel, "×" + st.caveMul.toFixed(2), "洞府 · 修行速度 +" + fmtPct(st.caveBonus, 0)),
       statLine("成就加成", "+" + fmtPct(achieveSum(state, "rate"), 1), "永久"),
       statLine("道侣相伴", "+" + fmtPct(st.companionRate, 1), "永久"),
+      statLine("轮回点加持", "+" + fmtPct(st.metaRate, 1), "轮回点兑换"),
       statLine("道心通明", "+" + fmtPct(state.dao / 500, 1), "道心 " + Math.floor(state.dao) + " / 500"),
     ].concat(buffStatLines(st.buffs.rateExp, now));
     return {
       name: "修炼速度", icon: "⚡", value: "+" + fmt(st.rate, 1) + " / 秒", key: key,
-      formula: "境界速度 × 静坐系数 × 洞府加成 × (1 + 成就 + 道侣 + 道心) × (1 + 临时加成)",
+      formula: "境界速度 × 静坐系数 × 问道台加成 × (1 + 成就 + 道侣 + 轮回 + 道心) × (1 + 临时加成)",
       lines: lines,
       note: "同一属性的不同临时加成现在会并行生效并相加，不再互相覆盖。",
     };
@@ -4243,13 +4687,15 @@ function statBreakdown(state, key, now) {
       statLine("境界基础", fmt(r.rate, 2), r.name),
       statLine("灵石系数", "×" + CFG.STONE_FACTOR, "灵石产出 = 修炼速度 × 系数"),
       statLine("保底", "≥ 0.5 / 秒", base < 0.5 ? "当前已触发保底" : "未触发"),
+      statLine("聚灵阵 Lv." + (st.cave.levels.spirit || 1), "×" + (1 + st.caveStone).toFixed(2), "洞府 · 灵石 +" + fmtPct(st.caveStone, 0)),
       statLine("成就加成", "+" + fmtPct(achieveSum(state, "stone"), 1), "永久"),
       statLine("灵脉归位", "+" + fmtPct(st.guardianBonus, 1), "已镇守 " + (state.guardians || []).length + " / " + GUARDIANS.length),
       statLine("道侣相伴", "+" + fmtPct(st.companionStone, 1), "永久"),
+      statLine("轮回点加持", "+" + fmtPct(st.metaStone, 1), "轮回点兑换"),
     ].concat(buffStatLines(st.buffs.rateStone, now));
     return {
       name: "灵石产出", icon: "💎", value: "+" + fmt(st.stoneRate, 1) + " / 秒", key: key,
-      formula: "max(0.5, 境界速度 × 1.4) × (1 + 成就 + 灵脉 + 道侣) × (1 + 临时加成)",
+      formula: "max(0.5, 境界速度 × 1.4) × 聚灵阵 × (1 + 成就 + 灵脉 + 道侣 + 轮回) × (1 + 临时加成)",
       lines: lines,
       note: "灵脉加成来自九位守护者，每镇守一位永久 +15%。",
     };
@@ -4432,6 +4878,29 @@ function statBreakdown(state, key, now) {
 }
 
 /* ------------------------------ 成就 ------------------------------ */
+function battleExpGain(state, battle) {
+  const realm = realmAt(state.realmIndex || 0);
+  let base = realm.req * 0.08 + realm.rate * 4;
+  if (battle && battle.enemy) {
+    const nm = String(battle.enemy.name || "");
+    if (nm.indexOf("守护") >= 0 || nm.indexOf("灵脉") >= 0) base *= 1.6;
+    else if (battle.timeout) base *= 0.7;
+  }
+  return Math.max(1, Math.round(base));
+}
+
+/* 所有战斗胜利后的统一修为奖励；同一场战斗只结算一次 */
+function grantBattleExp(state, battle) {
+  if (!battle || !battle.win || battle.__expGranted) return 0;
+  battle.__expGranted = true;
+  const gain = battleExpGain(state, battle);
+  state.exp += gain;
+  state.battleExpTotal = (state.battleExpTotal || 0) + gain;
+  pushLog(state, "战后悟道 · 修为 +" + fmt(gain), "gain");
+  checkAchievements(state);
+  return gain;
+}
+
 function checkAchievements(state) {
   const unlocked = [];
   for (const a of ACHIEVEMENTS) {
@@ -4589,11 +5058,12 @@ function startResearch(state) {
   if (r.active) return { ok: false, msg: "正在参研，静待功成" };
   if ((state.spells || []).length >= CFG.MAX_SPELLS) return { ok: false, msg: "藏法阁已满，先舍弃旧术" };
   const now = Date.now();
+  const duration = researchDurationSec(state);
   r.active = true;
   r.startAt = now;
-  r.endAt = now + CFG.RESEARCH_SEC * 1000;
+  r.endAt = now + duration * 1000;
   pushLog(state, "你铺开蒲团，开始参研法术……", "info");
-  return { ok: true, duration: CFG.RESEARCH_SEC };
+  return { ok: true, duration: duration };
 }
 
 function researchRemain(state, now) {
@@ -4730,62 +5200,111 @@ function marketPrice(state, kind, quality) {
   return Math.max(1, Math.round(kind === "artifact" ? base * 2.4 : base));
 }
 
+function marketRefreshSec(state) {
+  const cut = caveStats(state).market;
+  return Math.max(300, Math.round(CFG.MARKET_REFRESH_SEC * (1 - cut)));
+}
+
+function marketShelfGood(state) {
+  const r = Math.random();
+  const realm = realmAt(state.realmIndex || 0);
+  const unit = Math.max(1, realm.rate * CFG.STONE_FACTOR);
+  if (r < 0.40) {
+    const sp = makeSpell(state);
+    return { kind: "spell", item: sp, price: marketPrice(state, "spell", sp.quality) };
+  }
+  if (r < 0.75) {
+    const art = makeArtifact(state);
+    return { kind: "artifact", item: art, price: marketPrice(state, "artifact", art.quality) };
+  }
+  const pill = PILLS[Math.floor(Math.random() * PILLS.length)];
+  return { kind: "pill", pillId: pill.id, item: pill, price: Math.max(1, Math.round(unit * 42)) };
+}
+
 function refreshMarket(state, now) {
   now = now || Date.now();
-  const count = Math.max(1, CFG.MARKET_STOCK | 0);
-  const spells = [];
-  const artifacts = [];
-  for (let i = 0; i < count; i++) {
-    const sp = makeSpell(state);
-    sp.price = marketPrice(state, "spell", sp.quality);
-    spells.push(sp);
-    const art = makeArtifact(state);
-    art.price = marketPrice(state, "artifact", art.quality);
-    artifacts.push(art);
+  if (!state.market || typeof state.market !== "object") {
+    state.market = { refreshAt: 0, unlocked: CFG.MARKET_BASE_SHELVES, shelves: [] };
   }
-  state.market = {
-    refreshAt: now + CFG.MARKET_REFRESH_SEC * 1000,
-    spells: spells,
-    artifacts: artifacts,
-  };
-  return state.market;
+  const m = state.market;
+  m.unlocked = clamp(parseInt(m.unlocked, 10) || CFG.MARKET_BASE_SHELVES, CFG.MARKET_BASE_SHELVES, CFG.MARKET_SHELVES);
+  if (!Array.isArray(m.shelves)) m.shelves = [];
+  m.shelves.length = CFG.MARKET_SHELVES;
+  for (let i = 0; i < CFG.MARKET_SHELVES; i++) {
+    m.shelves[i] = i < m.unlocked ? marketShelfGood(state) : null;
+  }
+  m.refreshAt = now + marketRefreshSec(state) * 1000;
+  return m;
 }
 
 function ensureMarket(state, now) {
   now = now || Date.now();
   if (!state.market || typeof state.market !== "object") {
-    state.market = { refreshAt: 0, spells: [], artifacts: [] };
+    state.market = { refreshAt: 0, unlocked: CFG.MARKET_BASE_SHELVES, shelves: [] };
   }
   const m = state.market;
-  m.spells = Array.isArray(m.spells) ? m.spells : [];
-  m.artifacts = Array.isArray(m.artifacts) ? m.artifacts : [];
+  m.unlocked = clamp(parseInt(m.unlocked, 10) || CFG.MARKET_BASE_SHELVES, CFG.MARKET_BASE_SHELVES, CFG.MARKET_SHELVES);
+  if (!Array.isArray(m.shelves)) m.shelves = [];
+  m.shelves.length = CFG.MARKET_SHELVES;
+  for (let i = 0; i < CFG.MARKET_SHELVES; i++) if (m.shelves[i] === undefined) m.shelves[i] = null;
   if (!m.refreshAt || now >= m.refreshAt) refreshMarket(state, now);
-  return state.market;
+  return m;
+}
+
+function marketUnlockCost(state) {
+  const m = ensureMarket(state, Date.now());
+  if (m.unlocked >= CFG.MARKET_SHELVES) return 0;
+  return CFG.MARKET_UNLOCK_COSTS[m.unlocked - CFG.MARKET_BASE_SHELVES] || 0;
+}
+
+function unlockMarketShelf(state, index) {
+  const m = ensureMarket(state, Date.now());
+  const i = parseInt(index, 10);
+  if (!isFinite(i) || i < 0 || i >= CFG.MARKET_SHELVES) return { ok: false, msg: "没有这个货架" };
+  if (i !== m.unlocked) return { ok: false, msg: i < m.unlocked ? "此货架已开启" : "请按顺序开启货架" };
+  const cost = marketUnlockCost(state);
+  if ((state.stone || 0) < cost) return { ok: false, msg: "灵石不足，尚缺 " + fmt(cost - state.stone) };
+  state.stone -= cost;
+  m.unlocked += 1;
+  m.shelves[i] = marketShelfGood(state);
+  pushLog(state, "万界门开 · 第 " + (i + 1) + " 座货架启用", "gain");
+  checkAchievements(state);
+  return { ok: true, index: i, cost: cost, unlocked: m.unlocked };
+}
+
+function marketBuyShelf(state, index) {
+  const now = Date.now();
+  const m = ensureMarket(state, now);
+  const i = parseInt(index, 10);
+  const shelf = m.shelves[i];
+  if (!shelf || !shelf.item) return { ok: false, msg: "此架已空，静待换货" };
+  const price = Math.max(1, Number(shelf.price) || 1);
+  if ((state.stone || 0) < price) return { ok: false, msg: "灵石不足，尚缺 " + fmt(price - state.stone) };
+  if (shelf.kind === "spell" && (state.spells || []).length >= CFG.MAX_SPELLS) {
+    return { ok: false, msg: "藏法阁已满，先在背包舍弃旧术" };
+  }
+  if (shelf.kind === "artifact" && (state.artifacts || []).length >= CFG.MAX_ARTIFACTS) {
+    return { ok: false, msg: "法宝库已满，先在背包舍弃一件" };
+  }
+  state.stone -= price;
+  if (shelf.kind === "spell") state.spells.push(shelf.item);
+  else if (shelf.kind === "artifact") state.artifacts.push(shelf.item);
+  else {
+    const pillId = shelf.pillId || (shelf.item && shelf.item.id);
+    state.pills[pillId] = (state.pills[pillId] || 0) + 1;
+  }
+  const name = shelf.kind === "pill" ? PILL_MAP[shelf.pillId].name : shelf.item.name;
+  m.shelves[i] = null;
+  pushLog(state, "于坊市购得「" + name + "」（灵石 -" + fmt(price) + "）", "gain");
+  checkAchievements(state);
+  return { ok: true, index: i, kind: shelf.kind, item: shelf.item, price: price };
 }
 
 function marketBuy(state, kind, id) {
-  const now = Date.now();
-  const m = ensureMarket(state, now);
-  const isArtifact = kind === "artifact";
-  const list = isArtifact ? m.artifacts : m.spells;
-  const idx = list.findIndex((it) => it.id === id);
-  if (idx < 0) return { ok: false, msg: "此物已被人买走" };
-  const item = list[idx];
-  if (isArtifact && (state.artifacts || []).length >= CFG.MAX_ARTIFACTS) {
-    return { ok: false, msg: "法宝库已满，先在背包舍弃一件" };
-  }
-  if (!isArtifact && (state.spells || []).length >= CFG.MAX_SPELLS) {
-    return { ok: false, msg: "藏法阁已满，先在背包舍弃旧术" };
-  }
-  const price = Math.max(1, Number(item.price) || 1);
-  if ((state.stone || 0) < price) return { ok: false, msg: "灵石不足，尚缺 " + fmt(price - state.stone) };
-  state.stone -= price;
-  list.splice(idx, 1);
-  if (isArtifact) state.artifacts.push(item);
-  else state.spells.push(item);
-  pushLog(state, "于坊市购得「" + item.name + "」（灵石 -" + fmt(price) + "）", "gain");
-  checkAchievements(state);
-  return { ok: true, item: item, kind: kind, price: price };
+  const m = ensureMarket(state, Date.now());
+  const i = m.shelves.findIndex((s) => s && s.item && s.item.id === id);
+  if (i < 0) return { ok: false, msg: "此物已被人买走" };
+  return marketBuyShelf(state, i);
 }
 
 function rerollAttrs(state) {
@@ -4841,6 +5360,7 @@ function usePill(state, id) {
   if (!state.pills[id] || state.pills[id] <= 0) return { ok: false, msg: "丹药不足" };
   const st = computeStats(state);
   state.pills[id] -= 1;
+  state.pillsUsed = (state.pillsUsed || 0) + 1;
   if (state.pills[id] <= 0) delete state.pills[id];
   let msg = "";
   switch (def.effect) {
@@ -5099,16 +5619,49 @@ function migrate(raw) {
   s.researchCount = Math.max(0, parseInt(s.researchCount, 10) || 0);
   s.guardians = Array.isArray(raw.guardians) ? raw.guardians.filter((id) => !!GUARDIAN_MAP[id]) : [];
   const rawMarket = raw.market && typeof raw.market === "object" ? raw.market : {};
-  const normMarket = (list) => (Array.isArray(list) ? list : []).filter((it) => it && it.id && it.main).map((it) => {
-    it.price = Math.max(1, Number(it.price) || 1);
-    return it;
-  }).slice(0, 8);
+  const mUnlocked = clamp(parseInt(rawMarket.unlocked, 10) || CFG.MARKET_BASE_SHELVES, CFG.MARKET_BASE_SHELVES, CFG.MARKET_SHELVES);
+  const shelves = [];
+  if (Array.isArray(rawMarket.shelves)) {
+    for (const shelf of rawMarket.shelves.slice(0, CFG.MARKET_SHELVES)) {
+      if (!shelf || typeof shelf !== "object") { shelves.push(null); continue; }
+      const kind = shelf.kind === "artifact" ? "artifact" : (shelf.kind === "pill" ? "pill" : "spell");
+      const item = shelf.item && typeof shelf.item === "object" ? shelf.item : null;
+      const pillId = kind === "pill" && PILL_MAP[shelf.pillId] ? shelf.pillId : (kind === "pill" && item && PILL_MAP[item.id] ? item.id : null);
+      if ((kind === "pill" && !pillId) || (kind !== "pill" && (!item || !item.id || !item.main))) { shelves.push(null); continue; }
+      shelves.push({ kind, item, pillId, price: Math.max(1, Number(shelf.price) || 1) });
+    }
+  }
+  while (shelves.length < CFG.MARKET_SHELVES) shelves.push(null);
+  const legacyMarket = !Array.isArray(rawMarket.shelves);
   s.market = {
-    refreshAt: Number(rawMarket.refreshAt) || 0,
-    spells: normMarket(rawMarket.spells),
-    artifacts: normMarket(rawMarket.artifacts),
+    refreshAt: legacyMarket ? 0 : (Number(rawMarket.refreshAt) || 0),
+    unlocked: mUnlocked,
+    shelves,
   };
-  s.caveLevel = clamp(parseInt(raw.caveLevel, 10) || 1, 1, CFG.CAVE_MAX_LEVEL);
+  const rawCave = raw.cave && typeof raw.cave === "object" ? raw.cave : {};
+  s.cave = {};
+  const legacyCaveLv = clamp(parseInt(raw.caveLevel, 10) || 1, 1, CFG.CAVE_MAX_LEVEL);
+  CAVE_FACILITY_IDS.forEach((id) => {
+    const lv = id === "altar" && !isFinite(parseInt(rawCave[id], 10)) ? legacyCaveLv : (parseInt(rawCave[id], 10) || 1);
+    s.cave[id] = clamp(lv, 1, CFG.CAVE_MAX_LEVEL);
+  });
+  delete s.caveLevel;
+  const rawCraft = raw.craft && typeof raw.craft === "object" ? raw.craft : {};
+  s.craft = {
+    alchemyAt: Math.max(0, Number(rawCraft.alchemyAt) || 0),
+    forgeAt: Math.max(0, Number(rawCraft.forgeAt) || 0),
+    alchemyCount: Math.max(0, parseInt(rawCraft.alchemyCount, 10) || 0),
+    forgeCount: Math.max(0, parseInt(rawCraft.forgeCount, 10) || 0),
+  };
+  const rawRaid = raw.caveRaid && typeof raw.caveRaid === "object" ? raw.caveRaid : {};
+  s.caveRaid = {
+    nextAt: Math.max(0, Number(rawRaid.nextAt) || 0),
+    wins: Math.max(0, parseInt(rawRaid.wins, 10) || 0),
+    losses: Math.max(0, parseInt(rawRaid.losses, 10) || 0),
+  };
+  s.battleExpTotal = Math.max(0, Number(raw.battleExpTotal) || 0);
+  s.pillsUsed = Math.max(0, parseInt(raw.pillsUsed, 10) || 0);
+  s.rogueWins = Math.max(0, parseInt(raw.rogueWins, 10) || 0);
   s.companionCd = Math.max(0, Number(raw.companionCd) || 0);
   const rawStories = raw.companionStory && typeof raw.companionStory === "object" ? raw.companionStory : {};
   const storyMap = {};
@@ -5221,11 +5774,7 @@ function importSave(text) {
     const raw = JSON.parse(json);
     const state = migrate(raw);
     if (state && raw.meta && typeof raw.meta === "object") {
-      const m = defaultMeta();
-      m.clears = Math.max(0, Math.min(999, parseInt(raw.meta.clears, 10) || 0));
-      m.records = Array.isArray(raw.meta.records)
-        ? raw.meta.records.filter((r) => r && typeof r === "object").slice(0, 12) : [];
-      saveMeta(m);
+      saveMeta(normalizeMeta(raw.meta));
     }
     if (state && raw.rogue && typeof raw.rogue === "object") {
       saveRogueMeta(normalizeRogueMeta(raw.rogue));
@@ -5247,19 +5796,43 @@ function resetSave() {
   return true;
 }
 
-/* ------------------------------ 局外轮回（成仙印记） ------------------------------ */
+/* ------------------------------ 局外轮回（轮回点） ------------------------------ */
 function defaultMeta() {
-  return { schema: 1, clears: 0, records: [] };
+  return {
+    schema: 2,
+    clears: 0,
+    points: 0,
+    attrBonus: 0,
+    rateBonus: 0,
+    stoneBonus: 0,
+    companionSword: false,
+    records: [],
+  };
+}
+
+function normalizeMeta(raw) {
+  const m = defaultMeta();
+  if (!raw || typeof raw !== "object") return m;
+  m.clears = Math.max(0, Math.min(999, parseInt(raw.clears, 10) || 0));
+  if ((parseInt(raw.schema, 10) || 1) < 2) {
+    /* v3.0 及以前：每次成仙直接给五维 +1，没有轮回点 */
+    m.attrBonus = m.clears;
+    m.points = 0;
+  } else {
+    m.attrBonus = Math.max(0, Math.min(999, parseInt(raw.attrBonus, 10) || 0));
+    m.points = Math.max(0, Math.min(9999, parseInt(raw.points, 10) || 0));
+    m.rateBonus = clamp(Number(raw.rateBonus) || 0, 0, 9);
+    m.stoneBonus = clamp(Number(raw.stoneBonus) || 0, 0, 9);
+    m.companionSword = !!raw.companionSword;
+  }
+  m.records = Array.isArray(raw.records) ? raw.records.filter((r) => r && typeof r === "object").slice(0, 12) : [];
+  return m;
 }
 
 function loadMeta() {
   try {
     const raw = JSON.parse(localStorage.getItem(META_KEY) || "null");
-    if (!raw || typeof raw !== "object") return defaultMeta();
-    const meta = defaultMeta();
-    meta.clears = Math.max(0, Math.min(999, parseInt(raw.clears, 10) || 0));
-    meta.records = Array.isArray(raw.records) ? raw.records.filter((r) => r && typeof r === "object").slice(0, 12) : [];
-    return meta;
+    return normalizeMeta(raw);
   } catch (e) {
     return defaultMeta();
   }
@@ -5267,7 +5840,7 @@ function loadMeta() {
 
 function saveMeta(meta) {
   try {
-    localStorage.setItem(META_KEY, JSON.stringify(meta));
+    localStorage.setItem(META_KEY, JSON.stringify(normalizeMeta(meta)));
     return true;
   } catch (e) {
     return false;
@@ -5276,12 +5849,24 @@ function saveMeta(meta) {
 
 function metaBonus(meta) {
   const m = meta || loadMeta();
-  return Math.max(0, Math.min(999, parseInt(m.clears, 10) || 0));
+  return Math.max(0, Math.min(999, parseInt(m.attrBonus, 10) || 0));
+}
+
+function metaRateBonus(meta) { return Math.max(0, Number((meta || loadMeta()).rateBonus) || 0); }
+function metaStoneBonus(meta) { return Math.max(0, Number((meta || loadMeta()).stoneBonus) || 0); }
+
+function metaSpent(meta) {
+  const m = meta || loadMeta();
+  return (parseInt(m.attrBonus, 10) || 0) +
+    (m.companionSword ? 1 : 0) +
+    Math.round((Number(m.rateBonus) || 0) / META_RATE_STEP) +
+    Math.round((Number(m.stoneBonus) || 0) / META_STONE_STEP);
 }
 
 function recordAscension(state) {
   const meta = loadMeta();
   meta.clears = Math.max(0, Math.min(999, meta.clears + 1));
+  meta.points = Math.max(0, Math.min(9999, (meta.points || 0) + 1));
   meta.records.unshift({
     at: Date.now(),
     lifeNo: state.lifeNo || 1,
@@ -5312,6 +5897,9 @@ function freshLifeFromMeta(meta) {
   if (bonus > 0) {
     for (const key of ATTR_KEYS) s.attrs[key] = (Number(s.attrs[key]) || 0) + bonus;
   }
+  if (meta && meta.companionSword && s.companions.indexOf("c_sword") < 0) {
+    s.companions.push("c_sword");
+  }
   s.lifeNo = Math.max(1, (parseInt(meta && meta.clears, 10) || 0) + 1);
   s.createdAt = Date.now();
   s.lastTick = Date.now();
@@ -5319,6 +5907,45 @@ function freshLifeFromMeta(meta) {
   s.flags.ascended = false;
   s.flags.ascensionRecorded = false;
   return s;
+}
+
+function buyMetaOption(state, id) {
+  const def = META_SHOP_MAP[id];
+  if (!def) return { ok: false, msg: "没有这项兑换" };
+  const meta = loadMeta();
+  if ((meta.points || 0) < def.cost) return { ok: false, msg: "轮回点不足，还需 " + (def.cost - (meta.points || 0)) + " 点" };
+  if (id === "companion") {
+    if (meta.companionSword || (state.companions || []).indexOf("c_sword") >= 0) {
+      return { ok: false, msg: "已与沈青梧结缘" };
+    }
+    meta.companionSword = true;
+    if ((state.companions || []).indexOf("c_sword") < 0) state.companions.push("c_sword");
+  } else if (id === "attr") {
+    meta.attrBonus = (meta.attrBonus || 0) + 1;
+    for (const key of ATTR_KEYS) state.attrs[key] = (Number(state.attrs[key]) || 0) + 1;
+  } else if (id === "rate") {
+    meta.rateBonus = Math.min(9, (Number(meta.rateBonus) || 0) + META_RATE_STEP);
+  } else if (id === "stone") {
+    meta.stoneBonus = Math.min(9, (Number(meta.stoneBonus) || 0) + META_STONE_STEP);
+  }
+  meta.points = Math.max(0, (meta.points || 0) - def.cost);
+  saveMeta(meta);
+  pushLog(state, "轮回点兑换 · " + def.name, "great");
+  return { ok: true, meta, def };
+}
+
+/* 重置：退还所有已消费轮回点，当前这一世的属性与道侣保留 */
+function resetMeta(state) {
+  const meta = loadMeta();
+  const refund = metaSpent(meta);
+  meta.points = Math.min(9999, (meta.points || 0) + refund);
+  meta.attrBonus = 0;
+  meta.rateBonus = 0;
+  meta.stoneBonus = 0;
+  meta.companionSword = false;
+  saveMeta(meta);
+  pushLog(state, "轮回印记重置 · 退还 " + refund + " 点", "info");
+  return { ok: true, refund, meta };
 }
 
 function clearMeta() {
@@ -7191,6 +7818,7 @@ let lastTopSig = "";
 let breaking = false;
 let encountering = false;
 let challenging = false;
+let raiding = false;
 let toastTimer = 0;
 let modalQueue = [];
 let coverOpen = false;
@@ -7200,6 +7828,7 @@ let lastBagSpellCount = -1;
 let lastBagCompanionCount = -1;
 let lastMarketRefresh = -1;
 let lastBondReady = null;
+let achTab = "cultivation";
 let rogueOpen = false;
 let rogueRun = null;
 let roguePath = "sword";
@@ -7279,19 +7908,22 @@ function cacheDom() {
     "logList", "stoneText", "playTimeText", "brandSub",
     "researchHint", "researchIcon", "researchTitle", "researchDesc",
     "researchBar", "researchTime", "btnResearch", "researchSub", "btnRush", "rushSub", "slotRow", "spellHint",
+    "alchemyHint", "alchemyTitle", "alchemyDesc", "alchemyTime", "alchemyIcon", "btnAlchemy", "alchemySub",
+    "forgeHint", "forgeTitle", "forgeDesc", "forgeTime", "forgeIcon", "btnForge", "forgeSub",
     "bagHint", "bagSpellCount", "bagArtCount", "bagPillCount", "bagCompCount",
     "bagSpellHint", "bagArtHint", "bagPillHint", "bagCompHint",
     "bagSpellList", "bagArtList", "bagPillList", "bagCompList",
-    "marketTime", "marketNote", "marketSpellHint", "marketArtHint", "marketPillHint",
-    "marketSpells", "marketArts", "marketPills",
-    "caveLevel", "caveBonus", "caveNext", "caveHint", "caveCost", "btnCave",
+    "marketTime", "marketNote", "marketShelfHint", "marketShelves",
+    "caveHint", "caveFacilities",
+    "raidHint", "raidIcon", "raidName", "raidDesc", "btnRaid", "raidSub",
     "combatGrid",
     "rogueEntry", "rogueHint", "rogueDesc", "btnRogue", "rogueSub",
     "rogue", "rogueKicker", "rogueHead", "rogueMini", "rogueBody",
     "guardianHint", "guardianIcon", "guardianName", "guardianDesc", "btnGuardian", "guardianSub",
     "journeyOrb", "btnJourney", "journeySub", "journeyLog", "journeyRealm",
     "attrTotal", "attrList", "statsGrid", "achGrid", "achHint", "verText",
-    "metaClears", "metaBonus", "metaHistory", "metaHint", "btnNextLife",
+    "metaClears", "metaPoints", "metaBonus", "metaRate", "metaStone", "metaShop", "metaHistory", "metaHint",
+    "btnNextLife", "btnResetMeta", "achTabs",
     "cover", "coverBtn", "coverSub", "coverVer", "coverRealm",
     "battle", "battleTitle", "battleRound", "battleEnemyIcon", "battleEnemyName",
     "battleEnemyHp", "battleEnemyHpText", "battlePlayerHp", "battlePlayerHpText",
@@ -7329,9 +7961,11 @@ function loop() {
   step(now);
   updateTopbar(now);
   if (currentTab === "cultivate") updateCultivate(now);
-  if (currentTab === "spells") updateResearchCard(now);
-  if (currentTab === "bag") {
+  if (currentTab === "spells") {
     updateResearchCard(now);
+    updateCraftCards(now);
+  }
+  if (currentTab === "bag") {
     if ((game.spells || []).length !== lastBagSpellCount ||
         (game.companions || []).length !== lastBagCompanionCount) renderBag();
     const ready = !game.companionCd || game.companionCd <= now;
@@ -7345,7 +7979,7 @@ function loop() {
     updateCave();
     updateAffordability();
   }
-  if (currentTab === "journey") { updateJourney(now); renderGuardian(now); }
+  if (currentTab === "journey") { updateJourney(now); renderGuardian(now); updateRaid(now); }
   flushPendingSpell();
   flushUnlocks();
   if (game.logs.length !== lastLogCount) {
@@ -7433,6 +8067,7 @@ function renderLogs() {
 function updateResearchCard(now) {
   const r = game.research || {};
   const total = (game.spells || []).length;
+  const dur = researchDurationSec(game);
   if (UI.researchHint) UI.researchHint.textContent = total + " / " + CFG.MAX_SPELLS;
   if (!UI.researchTitle) return;
   if (r.active) {
@@ -7454,11 +8089,11 @@ function updateResearchCard(now) {
   } else {
     UI.researchIcon.textContent = "📖";
     UI.researchTitle.textContent = total ? "案上无卷" : "尚未开卷";
-    UI.researchDesc.textContent = "研习需静候 " + fmtDuration(CFG.RESEARCH_SEC) + "，功成时随机习得一门法术，收入背包。";
+    UI.researchDesc.textContent = "研习需静候 " + fmtDuration(dur) + "，功成时随机习得一门法术，收入背包。";
     UI.researchBar.style.width = "0%";
     UI.researchTime.textContent = "";
     UI.btnResearch.disabled = total >= CFG.MAX_SPELLS;
-    UI.researchSub.textContent = total >= CFG.MAX_SPELLS ? "藏法阁已满" : "需 " + fmtDuration(CFG.RESEARCH_SEC);
+    UI.researchSub.textContent = total >= CFG.MAX_SPELLS ? "藏法阁已满" : "需 " + fmtDuration(dur);
     if (UI.btnRush) {
       UI.btnRush.disabled = true;
       UI.rushSub.textContent = "尚未开卷";
@@ -7466,26 +8101,43 @@ function updateResearchCard(now) {
   }
 }
 
+function updateCraftCards(now) {
+  const c = craftState(game);
+  const cd = craftCooldownSec(game);
+  const craft = caveStats(game).craft;
+  const alchemyRemain = craftRemain(game, "alchemy", now);
+  const forgeRemain = craftRemain(game, "forge", now);
+  if (UI.alchemyHint) UI.alchemyHint.textContent = "丹火不熄 · 成丹 " + (game.craft.alchemyCount || 0) + " 枚";
+  if (UI.forgeHint) UI.forgeHint.textContent = "炉火照器 · 成器 " + (game.craft.forgeCount || 0) + " 件";
+  if (UI.alchemyTitle) UI.alchemyTitle.textContent = alchemyRemain > 0 ? "丹炉尚温" : "丹炉待燃";
+  if (UI.forgeTitle) UI.forgeTitle.textContent = forgeRemain > 0 ? "炉火未歇" : "器胚未成";
+  if (UI.alchemyTime) UI.alchemyTime.textContent = alchemyRemain > 0
+    ? "炉火冷却中，还需 " + fmtDuration(alchemyRemain)
+    : "随时可开炉 · 成丹 0-3 枚 · 悟性越高成丹越多";
+  if (UI.forgeTime) UI.forgeTime.textContent = forgeRemain > 0
+    ? "炉火冷却中，还需 " + fmtDuration(forgeRemain)
+    : "随时可开炉 · 成器率 " + fmtPct(forgeChance(game.attrs), 1) + " · 悟性越高越稳";
+  if (UI.btnAlchemy) {
+    UI.btnAlchemy.disabled = alchemyRemain > 0;
+    UI.alchemySub.textContent = alchemyRemain > 0
+      ? "还需 " + fmtDuration(alchemyRemain)
+      : "每次冷却 " + fmtDuration(cd) + (craft > 0 ? "（火种 -" + fmtPct(craft) + "）" : "");
+  }
+  if (UI.btnForge) {
+    UI.btnForge.disabled = forgeRemain > 0;
+    UI.forgeSub.textContent = forgeRemain > 0
+      ? "还需 " + fmtDuration(forgeRemain)
+      : "每次冷却 " + fmtDuration(cd) + (craft > 0 ? "（火种 -" + fmtPct(craft) + "）" : "");
+  }
+  if (UI.alchemyDesc) UI.alchemyDesc.textContent = "开炉炼丹，立得 0-3 枚任意丹药；当前悟性 " +
+    (game.attrs.wuxing || 0) + "，悟性越高成丹越多。";
+  if (UI.forgeDesc) UI.forgeDesc.textContent = "开炉炼器，有几率立得 0-1 件当前境界法宝；当前成器率 " +
+    fmtPct(forgeChance(game.attrs), 1) + "。";
+}
+
 function renderSpellPage() {
-  const slots = game.spellSlots || [null, null, null];
-  const spells = game.spells || [];
-  UI.slotRow.innerHTML = [0, 1, 2].map((i) => {
-    const id = slots[i];
-    const sp = id ? spells.find((s) => s.id === id) : null;
-    if (!sp) {
-      return '<div class="slot-card empty"><div class="slot-no">' + (i + 1) + "</div>" +
-        '<div class="slot-empty">空置</div></div>';
-    }
-    return '<div class="slot-card equipped"><div class="slot-no">' + (i + 1) + "</div>" +
-      '<div class="slot-icon">' + sp.icon + "</div>" +
-      '<div class="slot-name">' + esc(sp.name) + "</div>" +
-      '<div class="slot-main">' + spellMainLine(sp) + "</div>" +
-      '<div class="slot-effect">' + (sp.effect ? sp.effect.icon + " " + sp.effect.name : "无特效") + "</div>" +
-      '<div class="slot-bag-tip">卸下请前往背包</div></div>';
-  }).join("");
-  const equipped = slots.filter(Boolean).length;
-  if (UI.spellHint) UI.spellHint.textContent = "已装配 " + equipped + " / 3 · 共习得 " + spells.length + " 门";
   updateResearchCard(Date.now());
+  updateCraftCards(Date.now());
 }
 
 /* ------------------------------ 背包页 ------------------------------ */
@@ -7517,9 +8169,31 @@ function renderBag() {
   lastBagCompanionCount = comps;
 }
 
+function renderSpellSlots() {
+  if (!UI.slotRow) return;
+  const slots = game.spellSlots || [null, null, null];
+  const spells = game.spells || [];
+  UI.slotRow.innerHTML = [0, 1, 2].map((i) => {
+    const id = slots[i];
+    const sp = id ? spells.find((s) => s.id === id) : null;
+    if (!sp) {
+      return '<div class="slot-card empty"><div class="slot-no">' + (i + 1) + "</div>" +
+        '<div class="slot-empty">空置</div></div>';
+    }
+    return '<div class="slot-card equipped"><div class="slot-no">' + (i + 1) + "</div>" +
+      '<div class="slot-icon">' + sp.icon + "</div>" +
+      '<div class="slot-name">' + esc(sp.name) + "</div>" +
+      '<div class="slot-main">' + spellMainLine(sp) + "</div>" +
+      '<div class="slot-effect">' + (sp.effect ? sp.effect.icon + " " + sp.effect.name : "无特效") + "</div></div>";
+  }).join("");
+  const equipped = slots.filter(Boolean).length;
+  if (UI.spellHint) UI.spellHint.textContent = "已装配 " + equipped + " / 3 · 共习得 " + spells.length + " 门";
+}
+
 function renderBagSpells() {
   const spells = game.spells || [];
   const slots = game.spellSlots || [null, null, null];
+  renderSpellSlots();
   UI.bagSpellHint.textContent = spells.length + " / " + CFG.MAX_SPELLS + " · 三格法术栏";
   if (!spells.length) {
     UI.bagSpellList.innerHTML = '<div class="empty-tip">尚未习得法术，先开卷参研</div>';
@@ -7644,62 +8318,83 @@ function updateMarketClock(now) {
 }
 
 function updateCave() {
-  if (!UI.btnCave) return;
-  const lv = caveLevel(game);
+  if (!UI.caveFacilities) return;
+  const st = caveStats(game);
   const max = CFG.CAVE_MAX_LEVEL;
-  const bonus = caveBonus(game);
-  if (UI.caveLevel) UI.caveLevel.textContent = "Lv." + lv + " / " + max;
-  if (UI.caveBonus) UI.caveBonus.textContent = "+" + fmtPct(bonus);
-  if (lv >= max) {
-    if (UI.caveNext) UI.caveNext.textContent = "已满级";
-    if (UI.caveHint) UI.caveHint.textContent = "聚灵阵已臻圆满，静坐自修快至极处。";
-    if (UI.caveCost) UI.caveCost.textContent = "洞府已满";
-    UI.btnCave.disabled = true;
-    return;
-  }
-  const cost = caveUpgradeCost(game);
-  if (UI.caveNext) UI.caveNext.textContent = "+" + fmtPct(CFG.CAVE_BONUS_PER_LEVEL * (lv + 1));
-  if (UI.caveHint) UI.caveHint.textContent = "聚灵阵加持，等级越高，静坐自修越快。";
-  if (UI.caveCost) UI.caveCost.textContent = "耗 " + fmt(cost) + " 灵石";
-  UI.btnCave.disabled = game.stone < cost;
+  if (UI.caveHint) UI.caveHint.textContent = "五府共 Lv." + st.total + " · 以灵石升级";
+  UI.caveFacilities.innerHTML = CAVE_FACILITIES.map((def) => {
+    const lv = st.levels[def.id] || 1;
+    const bonus = caveFacilityBonus(game, def.id);
+    const maxed = lv >= max;
+    const cost = maxed ? 0 : caveUpgradeCost(game, def.id);
+    const next = maxed ? bonus : Math.min(def.cap == null ? 99 : def.cap, def.per * (lv + 1));
+    const unit = def.unit === "percent" ? "" : "";
+    return '<div class="facility-item">' +
+      '<div class="facility-head"><span class="facility-icon">' + def.icon + "</span>" +
+      '<span class="facility-name">' + def.name + "</span>" +
+      '<span class="facility-lv">Lv.' + lv + " / " + max + "</span></div>" +
+      '<div class="facility-desc">' + def.desc + "</div>" +
+      '<div class="facility-stats"><div class="facility-line"><span>' + def.effect + "</span><b>+" + fmtPct(bonus) + "</b></div>" +
+      '<div class="facility-line"><span>下一级</span><b>' + (maxed ? "已满" : "+" + fmtPct(next)) + "</b></div></div>" +
+      (maxed
+        ? '<button class="btn btn-small btn-ghost" disabled><span class="btn-main">已臻圆满</span></button>'
+        : '<button class="btn btn-small facility-buy" data-action="upgrade-cave" data-id="' + def.id +
+          '" data-price="' + cost + '"><span class="btn-main">升级 · ' + fmt(cost) + " 💎</span></button>") +
+      "</div>";
+  }).join("");
+  updateAffordability();
 }
 
-function marketItemHTML(item, kind) {
-  const isArt = kind === "artifact";
+function marketShelfHTML(shelf, index) {
+  if (!shelf || !shelf.item) {
+    return '<div class="market-item shelf-empty"><div class="market-head"><div class="market-icon">🕳️</div>' +
+      '<div class="market-body"><div class="market-name">空货架</div>' +
+      '<div class="market-sub">第 ' + (index + 1) + ' 架 · 等待下次换货</div></div></div></div>';
+  }
+  const item = shelf.item;
+  const price = Number(shelf.price) || 1;
+  const isPill = shelf.kind === "pill";
+  const isArt = shelf.kind === "artifact";
+  const sub = isPill ? "丹药 · 常备" : esc(item.realmName || "") + (isArt ? " · 法宝 · 速 " + item.speed : " · 法术");
+  const main = isPill ? esc(item.desc || "") : spellMainLine(item);
   return '<div class="market-item">' +
     '<div class="market-head"><div class="market-icon">' + item.icon + "</div>" +
     '<div class="market-body"><div class="market-name">' + esc(item.name) +
-    '<span class="quality">' + stars(item.quality) + "</span></div>" +
-    '<div class="market-sub">' + esc(item.realmName || "") + (isArt ? " · 法宝 · 速 " + item.speed : " · 法术") + "</div></div></div>" +
-    '<div class="market-line">' + spellMainLine(item) + "</div>" +
-    (item.effect ? '<div class="market-line sub">' + item.effect.icon + " " + esc(item.effect.name) + " · " + esc(item.effect.text) + "</div>" : "") +
-    '<div class="market-line sub">' + itemExtraLines(item).join(" · ") + "</div>" +
-    '<button class="btn btn-small buy market-buy" data-action="buy-market" data-kind="' + kind +
-    '" data-id="' + item.id + '" data-price="' + item.price + '"><span class="btn-main">' +
-    fmt(item.price) + " 💎</span></button></div>";
+    (isPill ? "" : '<span class="quality">' + stars(item.quality) + "</span>") + "</div>" +
+    '<div class="market-sub">' + sub + "</div></div>" +
+    '<span class="market-shelf-no">第 ' + (index + 1) + " 架</span></div>" +
+    '<div class="market-line">' + main + "</div>" +
+    (!isPill && item.effect ? '<div class="market-line sub">' + item.effect.icon + " " + esc(item.effect.name) + " · " + esc(item.effect.text) + "</div>" : "") +
+    (!isPill ? '<div class="market-line sub">' + itemExtraLines(item).join(" · ") + "</div>" : "") +
+    '<button class="btn btn-small buy market-buy" data-action="buy-shelf" data-index="' + index +
+    '" data-price="' + price + '"><span class="btn-main">' + fmt(price) + " 💎</span></button></div>";
+}
+
+function marketLockedHTML(index) {
+  const m = game.market;
+  const cost = CFG.MARKET_UNLOCK_COSTS[index - m.unlocked] || 0;
+  return '<div class="market-item shelf-locked"><div class="market-head"><div class="market-icon">🔒</div>' +
+    '<div class="market-body"><div class="market-name">第 ' + (index + 1) + ' 座货架</div>' +
+    '<div class="market-sub">尚未开启 · 需先启用前一架</div></div></div>' +
+    '<button class="btn btn-small btn-ghost" data-action="unlock-shelf" data-index="' + index +
+    '" data-price="' + cost + '"><span class="btn-main">开启 · ' + fmt(cost) + " 💎</span></button></div>";
 }
 
 function renderMarket() {
   const m = ensureMarket(game, Date.now());
-  if (UI.marketNote) UI.marketNote.textContent = "行商每 " + Math.round(CFG.MARKET_REFRESH_SEC / 60) + " 分钟换货 · 品质随境界";
-  if (UI.marketSpellHint) UI.marketSpellHint.textContent = m.spells.length + " / " + CFG.MARKET_STOCK;
-  if (UI.marketArtHint) UI.marketArtHint.textContent = m.artifacts.length + " / " + CFG.MARKET_STOCK;
-  if (UI.marketPillHint) UI.marketPillHint.textContent = "常备丹药";
-
-  UI.marketSpells.innerHTML = m.spells.length
-    ? m.spells.map((it) => marketItemHTML(it, "spell")).join("")
-    : '<div class="empty-tip">货架已空，等待行商补货</div>';
-  UI.marketArts.innerHTML = m.artifacts.length
-    ? m.artifacts.map((it) => marketItemHTML(it, "artifact")).join("")
-    : '<div class="empty-tip">货架已空，等待行商补货</div>';
-  UI.marketPills.innerHTML = PILLS.map((p) =>
-    '<div class="market-item"><div class="market-head"><div class="market-icon">' + p.icon + "</div>" +
-    '<div class="market-body"><div class="market-name">' + p.name + "</div>" +
-    '<div class="market-sub">丹药 · 常备</div></div></div>' +
-    '<div class="market-line sub">' + p.desc + "</div>" +
-    '<button class="btn btn-small buy market-buy" data-action="buy-pill" data-id="' + p.id +
-    '" data-price="' + p.price + '"><span class="btn-main">' + fmt(p.price) + " 💎</span></button></div>"
-  ).join("");
+  if (UI.marketNote) UI.marketNote.textContent = "行商每 " + fmtDuration(marketRefreshSec(game)) + " 换货 · 品质随境界；货架可逐一开启。";
+  if (UI.marketShelfHint) UI.marketShelfHint.textContent = "已开 " + m.unlocked + " / " + CFG.MARKET_SHELVES + " 架";
+  if (UI.marketShelves) {
+    UI.marketShelves.innerHTML = m.shelves.map((shelf, i) => {
+      if (i >= m.unlocked) {
+        if (i === m.unlocked) return marketLockedHTML(i);
+        return '<div class="market-item shelf-locked"><div class="market-head"><div class="market-icon">🔒</div>' +
+          '<div class="market-body"><div class="market-name">第 ' + (i + 1) + ' 座货架</div>' +
+          '<div class="market-sub">尚未开启</div></div></div></div>';
+      }
+      return marketShelfHTML(shelf, i);
+    }).join("");
+  }
   updateMarketClock(Date.now());
   updateCave();
   lastMarketRefresh = m.refreshAt;
@@ -7750,6 +8445,30 @@ function renderGuardian(now) {
   UI.guardianSub.textContent = done
     ? "灵石产出 +" + Math.round(CFG.GUARDIAN_STONE_BONUS * 100) + "% 已生效"
     : locked ? "尚需 " + realmAt(g.start).name : "胜则灵脉归位";
+}
+
+function updateRaid(now) {
+  if (!UI.btnRaid) return;
+  now = now || Date.now();
+  ensureCaveRaid(game, now);
+  const remain = caveRaidRemain(game, now);
+  const enemy = caveRaidEnemy(game);
+  const total = caveStats(game).total;
+  if (UI.raidHint) UI.raidHint.textContent = "洞府 Lv." + total + " · 已退敌 " + (game.caveRaid.wins || 0) + " 次";
+  if (UI.raidIcon) UI.raidIcon.textContent = enemy.icon;
+  if (UI.raidName) UI.raidName.textContent = remain > 0 ? "妖修窥伺" : enemy.name + " 来袭";
+  if (UI.raidDesc) {
+    UI.raidDesc.textContent = remain > 0
+      ? "山门之外妖气渐聚，约 " + fmtDuration(remain) + " 后前来叩府。"
+      : enemy.name + " 已至洞府之外。击退可得灵石，败则随机一座洞府设施降低一级。";
+  }
+  UI.btnRaid.disabled = remain > 0 || raiding;
+  UI.btnRaid.querySelector(".btn-main").textContent = remain > 0 ? "妖气未聚" : "迎战妖修";
+  if (UI.raidSub) {
+    UI.raidSub.textContent = remain > 0
+      ? "还需 " + fmtDuration(remain)
+      : "胜则灵石入账 · 败则设施受损";
+  }
 }
 
 function renderJourneyLog() {
@@ -7818,8 +8537,14 @@ function renderMore() {
     ).join("");
   }
 
-  UI.achHint.textContent = achs + " / " + ACHIEVEMENTS.length;
-  UI.achGrid.innerHTML = ACHIEVEMENTS.map((a) => {
+  if (UI.achTabs) {
+    UI.achTabs.querySelectorAll(".ach-tab").forEach((b) =>
+      b.classList.toggle("active", b.getAttribute("data-ach") === achTab));
+  }
+  const catList = ACHIEVEMENTS.filter((a) => (a.cat || "cultivation") === achTab);
+  const catDone = catList.filter((a) => !!game.achieve[a.id]).length;
+  UI.achHint.textContent = catDone + " / " + catList.length + " · 总 " + achs + " / " + ACHIEVEMENTS.length;
+  UI.achGrid.innerHTML = catList.map((a) => {
     const done = !!game.achieve[a.id];
     const bonus = Object.keys(a.bonus).map((k) =>
       ({ rate: "修炼", stone: "灵石", success: "破境" }[k] || k) + " +" + fmtPct(a.bonus[k])
@@ -7832,8 +8557,31 @@ function renderMore() {
   const meta = loadMeta();
   const bonus = metaBonus(meta);
   if (UI.metaClears) UI.metaClears.textContent = meta.clears;
+  if (UI.metaPoints) UI.metaPoints.textContent = meta.points || 0;
   if (UI.metaBonus) UI.metaBonus.textContent = "+" + bonus;
-  if (UI.metaHint) UI.metaHint.textContent = "第 " + (game.lifeNo || 1) + " 世";
+  if (UI.metaRate) UI.metaRate.textContent = "+" + fmtPct(metaRateBonus(meta));
+  if (UI.metaStone) UI.metaStone.textContent = "+" + fmtPct(metaStoneBonus(meta));
+  if (UI.metaHint) {
+    UI.metaHint.textContent = "第 " + (game.lifeNo || 1) + " 世 · 可用 " + (meta.points || 0) + " 点";
+  }
+  if (UI.metaShop) {
+    const points = meta.points || 0;
+    UI.metaShop.innerHTML = META_SHOP.map((m) => {
+      const owned = m.id === "companion" && meta.companionSword;
+      const disabled = owned || points < m.cost;
+      return '<div class="meta-shop-item' + (owned ? " owned" : "") + '">' +
+        '<span class="meta-shop-icon">' + m.icon + "</span>" +
+        '<div class="meta-shop-body"><div class="meta-shop-name">' + m.name +
+        '<span class="meta-shop-cost">' + m.cost + " 点</span></div>" +
+        '<div class="meta-shop-desc">' + m.desc + "</div></div>" +
+        '<button class="btn btn-small ' + (owned ? "btn-ghost" : "meta-buy") + '"' +
+        (disabled ? " disabled" : ' data-action="meta-buy" data-id="' + m.id + '"') + ">" +
+        '<span class="btn-main">' + (owned ? "已得" : "兑换") + "</span></button></div>";
+    }).join("");
+  }
+  if (UI.btnResetMeta) {
+    UI.btnResetMeta.hidden = !(meta.points > 0 || metaSpent(meta) > 0);
+  }
   if (UI.metaHistory) {
     const recs = (meta.records || []).slice(0, 3);
     UI.metaHistory.innerHTML = recs.length
@@ -7858,7 +8606,7 @@ function switchTab(tab) {
   if (tab === "spells") renderSpellPage();
   if (tab === "bag") renderBag();
   if (tab === "market") renderMarket();
-  if (tab === "journey") { updateJourney(Date.now()); renderGuardian(Date.now()); renderRogueEntry(); renderJourneyLog(); lastJourneyCount = game.journeyLog.length; }
+  if (tab === "journey") { updateJourney(Date.now()); renderGuardian(Date.now()); updateRaid(Date.now()); renderRogueEntry(); renderJourneyLog(); lastJourneyCount = game.journeyLog.length; }
   if (tab === "more") renderMore();
   if (UI.view) UI.view.scrollTop = 0;
 }
@@ -7897,6 +8645,12 @@ function onClick(e) {
     case "rogue-abandon-yes": abandonRogueRun(); break;
     case "rogue-abandon-no": rogueConfirm = false; renderRogue(); break;
     case "research": doResearch(); break;
+    case "alchemy": doAlchemyUI(); break;
+    case "forge": doForgeUI(); break;
+    case "raid": doRaid(); break;
+    case "ach-tab": achTab = target.getAttribute("data-ach") || "cultivation"; renderMore(); break;
+    case "meta-buy": doMetaBuy(id); break;
+    case "reset-meta": showResetMeta(); break;
     case "equip-spell": doEquipSpell(id); break;
     case "unequip-spell": doUnequipSpell(slot); break;
     case "sell-spell": doSellSpell(id); break;
@@ -7906,7 +8660,9 @@ function onClick(e) {
     case "rush-research": doRushResearch(); break;
     case "bag-tab": doBagTab(target.getAttribute("data-bag")); break;
     case "buy-market": doMarketBuy(target.getAttribute("data-kind"), id); break;
-    case "upgrade-cave": doUpgradeCave(); break;
+    case "buy-shelf": doBuyShelf(parseInt(target.getAttribute("data-index"), 10)); break;
+    case "unlock-shelf": doUnlockShelf(parseInt(target.getAttribute("data-index"), 10)); break;
+    case "upgrade-cave": doUpgradeCave(id); break;
     case "companion-bond": doCompanionBond(id); break;
     case "reroll": doReroll(); break;
     case "clear-meta": showClearMeta(); break;
@@ -7998,7 +8754,8 @@ function ascensionModal() {
     body: "<p>九霄雷落，道音长鸣。你踏碎长空，于万丈霞光中飞升而去。</p>" +
       '<div class="reward-line">第 ' + meta.clears + " 世证道 · 终局境界 " + esc(st.realm.name) + "</div>" +
       '<div class="reward-line">轮回印记 · 后世洗髓五维各 +' + bonus + "</div>" +
-      '<p style="font-size:11.5px;color:var(--muted)">开启下一世，将保留轮回印记，以更强的根骨重走长生路。</p>',
+      '<div class="reward-line">轮回点 +1 · 可在「更多 · 轮回印记」兑换加持</div>' +
+      '<p style="font-size:11.5px;color:var(--muted)">开启下一世，将保留轮回印记与轮回点，以更强的根骨重走长生路。</p>',
     buttons: [
       { text: "开启下一世", cls: "btn-primary", onClick: startNextLife },
       { text: "留在仙界", cls: "btn-ghost" },
@@ -8029,8 +8786,8 @@ function showClearMeta() {
     icon: "🧹",
     title: "清除轮回印记",
     sub: "此操作不可撤销",
-    body: "<p>清除后，已证长生的次数归零；此后新开的存档不再获得五维加成。</p>" +
-      "<p>当前存档的资质不会变化，轮回记录也会一并清除。</p>",
+    body: "<p>清除后，已证长生次数、轮回点与已兑换的永久加成一并归零；此后新开的存档不再获得任何轮回加成。</p>" +
+      "<p>当前这一世的资质与道侣不会变化，轮回记录也会一并清除。</p>",
     buttons: [
       { text: "保留印记", cls: "btn-ghost" },
       {
@@ -8229,17 +8986,123 @@ function doMarketBuy(kind, id) {
   const res = marketBuy(game, kind, id);
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
-  toast("购得「" + res.item.name + "」");
+  toast("购得「" + (res.item && res.item.name || "丹药") + "」");
   renderMarket();
 }
 
-function doUpgradeCave() {
-  const res = upgradeCave(game);
+function doBuyShelf(index) {
+  const res = marketBuyShelf(game, index);
+  if (!res.ok) { toast(res.msg); return; }
+  const name = res.kind === "pill" && res.item ? res.item.name : res.item.name;
+  saveGame(game);
+  toast("购得「" + name + "」");
+  renderMarket();
+  if (currentTab === "bag") renderBag();
+}
+
+function doUnlockShelf(index) {
+  const res = unlockMarketShelf(game, index);
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
-  toast("洞府升至 Lv." + res.level + " · 修炼速度 +" + fmtPct(res.bonus));
+  toast("第 " + (index + 1) + " 座货架已开启");
   renderMarket();
-  if (currentTab === "cultivate") updateCultivate(Date.now());
+}
+
+function doUpgradeCave(id) {
+  const res = upgradeCave(game, id || "altar");
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast(res.name + " 升至 Lv." + res.level + " · " + res.def.effect + " +" + fmtPct(res.bonus));
+  if (currentTab === "market") renderMarket();
+  else updateCultivate(Date.now());
+}
+
+function doAlchemyUI() {
+  const res = doAlchemy(game, Date.now());
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  if (!res.count) {
+    toast("炼丹未成，只余一缕青烟");
+  } else {
+    toast("丹成一炉 · " + res.pill.name + " ×" + res.count);
+  }
+  if (currentTab === "spells") updateCraftCards(Date.now());
+  if (currentTab === "bag") renderBag();
+}
+
+function doForgeUI() {
+  const res = doForge(game, Date.now());
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  if (!res.count) toast(res.full ? "法宝库已满，所炼法宝散入山河" : "炼器未成，器胚碎作星火");
+  else toast("器成于手 · 「" + res.artifact.name + "」");
+  if (currentTab === "spells") updateCraftCards(Date.now());
+  if (currentTab === "bag") renderBag();
+}
+
+function doRaid() {
+  if (raiding) return;
+  const res = startCaveRaid(game, Date.now());
+  if (!res.ok) { toast(res.msg); return; }
+  raiding = true;
+  saveGame(game);
+  playBattle(res.battle, {
+    title: res.enemy.name,
+    sub: "洞府受袭",
+    onDone: () => {
+      raiding = false;
+      const out = resolveCaveRaid(game, res.battle.win, Date.now());
+      saveGame(game);
+      const body = out.win
+        ? "<p>来犯妖修被击退，洞府重归安宁。</p><div class=\"reward-line\">灵石 +" + fmt(out.stone) + "</div>"
+        : (out.damaged
+          ? "<p>妖修破府而入，洞府设施受损。</p><div class=\"reward-line bad\">" + esc(out.damaged.name) + " Lv." + out.damaged.from + " → Lv." + out.damaged.to + "</div>"
+          : "<p>妖修破府而入，设施已无可损。</p><div class=\"reward-line bad\">道心 -5</div>");
+      enqueueModal({
+        icon: out.win ? "🛡️" : "💥",
+        title: out.win ? "击退妖修" : "洞府失守",
+        titleClass: out.win ? "success" : "fail",
+        sub: out.win ? "护府有功" : "来日再修",
+        body: body,
+        buttons: [{ text: out.win ? "清点灵石" : "稳住道心", cls: out.win ? "btn-primary" : "btn-ghost" }],
+      }, true);
+      if (currentTab === "journey") { updateRaid(Date.now()); renderJourneyLog(); }
+      updateTopbar(Date.now());
+      renderAll();
+    },
+  });
+}
+
+function doMetaBuy(id) {
+  const res = buyMetaOption(game, id);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast("轮回点兑换 · " + res.def.name);
+  renderMore();
+  updateTopbar(Date.now());
+}
+
+function showResetMeta() {
+  const meta = loadMeta();
+  const refund = metaSpent(meta);
+  enqueueModal({
+    icon: "♻️",
+    title: "重置轮回印记",
+    sub: "退还已消费轮回点",
+    body: "<p>将退还 " + refund + " 点轮回点，并撤销已兑换的五维、永久修行/灵石与沈青梧结缘。</p>" +
+      "<p>当前这一世的资质、道侣与修行进度不会变化；清除印记请使用「清除轮回印记」。</p>",
+    buttons: [
+      { text: "再想想", cls: "btn-ghost" },
+      {
+        text: "重置", cls: "btn-primary", onClick: () => {
+          const r = resetMeta(game);
+          saveGame(game);
+          renderMore();
+          toast("已重置 · 退还 " + r.refund + " 点");
+        }
+      },
+    ],
+  });
 }
 
 function doCompanionBond(id) {
@@ -8341,6 +9204,7 @@ function playBattle(battle, opts) {
     playerHpMax: battle.playerHpMax || 1,
     playerMpMax: battle.playerMpMax || 1,
     enemyHpMax: battle.enemyHpMax || 1,
+    battle: battle, expGain: 0,
   };
   UI.battleTitle.textContent = opts.title || "斗法";
   UI.battleRound.textContent = "第 1 回合";
@@ -8436,7 +9300,15 @@ function battleFinish() {
   if (!p) return;
   clearTimeout(p.timer);
   p.done = true;
-  UI.battleSkip.querySelector(".btn-main").textContent = "收下战果";
+  if (p.battle) {
+    const gain = grantBattleExp(game, p.battle);
+    if (gain > 0) {
+      p.expGain = gain;
+      p.battle.__expGranted = true;
+      saveGame(game);
+    }
+  }
+  UI.battleSkip.querySelector(".btn-main").textContent = "收下战果" + (p.expGain ? " · 修为 +" + fmt(p.expGain) : "");
 }
 
 function doBattleSkip() {
@@ -8457,6 +9329,7 @@ function closeBattle() {
   clearTimeout(p ? p.timer : 0);
   battlePlay = null;
   if (UI.battle) UI.battle.classList.add("hidden");
+  if (p && p.expGain) setTimeout(() => toast("战后悟道 · 修为 +" + fmt(p.expGain)), 500);
   if (p && p.onDone) p.onDone();
   setTimeout(pumpModal, 80);
 }
