@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v3.1.0 · built 2026-11-04T01:07:29.914Z · 单文件离线可玩 -->
+<!-- 《长生道》 v3.2.0 · built 2026-11-04T03:12:39.419Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -1294,7 +1294,7 @@ textarea.savelink {
 
 .create {
   position: fixed; inset: 0; z-index: 245;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: flex-start; justify-content: center;
   padding: 20px 16px calc(20px + env(safe-area-inset-bottom, 0px));
   background: radial-gradient(90% 70% at 50% 0%, rgba(20, 52, 54, 0.96), rgba(4, 8, 10, 0.98));
   animation: fadeIn 0.3s ease;
@@ -1302,6 +1302,7 @@ textarea.savelink {
 }
 .create-box {
   width: 100%; max-width: 380px;
+  margin: auto 0;
   padding: 22px 18px 18px;
   border-radius: 20px;
   background: linear-gradient(180deg, rgba(16, 30, 34, 0.96), rgba(9, 16, 20, 0.98));
@@ -2226,6 +2227,70 @@ body.rogue-lock { overflow: hidden; }
   .ach-tab { font-size: 11px; padding: 8px 2px; }
 }
 
+/* ===== v3.2 研发槽位 / 洗髓轮回点 / 通用天赋 ===== */
+.slot-line {
+  margin-top: 9px;
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+.slot-unlock { margin-top: 7px; }
+.slot-unlock[disabled] { opacity: 0.5; }
+.rg-talent-tree { display: flex; flex-direction: column; gap: 5px; }
+.rg-talent-lv {
+  margin-left: 6px;
+  font-size: 9.5px;
+  color: var(--jade);
+  letter-spacing: 0.5px;
+}
+.rg-talent-req {
+  margin-top: 3px;
+  font-size: 9.5px;
+  color: var(--danger, #e27070);
+  letter-spacing: 0.5px;
+}
+.meta-store-hint {
+  margin: 8px 0 4px;
+  font-size: 10.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+.create-meta {
+  margin: 12px 0 6px;
+  padding: 11px 10px;
+  border: 1px solid rgba(230, 194, 115, 0.22);
+  border-radius: 12px;
+  background: rgba(12, 24, 28, 0.66);
+}
+.create-meta[hidden] { display: none !important; }
+.create-meta-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--gold-soft);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.create-meta-head span:last-child { color: var(--jade); font-size: 11px; }
+.create-meta-line {
+  font-size: 10.5px;
+  line-height: 1.65;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+  margin-bottom: 7px;
+}
+.create-meta-shop { display: flex; flex-direction: column; gap: 6px; }
+.create-meta-actions { margin-top: 9px; border-top: 1px dashed rgba(120, 180, 190, 0.14); }
+.create-meta-actions .menu-item:first-child { border-top: none; }
+@media (max-width: 350px) {
+  .slot-line { font-size: 9.5px; }
+  .meta-store-hint { font-size: 9.5px; }
+}
+
 </style>
 </head>
 <body>
@@ -2325,6 +2390,11 @@ body.rogue-lock { overflow: hidden; }
             <span class="btn-sub" id="rushSub">尚未开卷</span>
           </button>
         </div>
+        <div class="slot-line" id="researchSlots"></div>
+        <button class="btn btn-ghost btn-wide slot-unlock" id="btnResearchSlot" data-action="unlock-research-slot">
+          <span class="btn-main">开启灵石槽</span>
+          <span class="btn-sub" id="researchSlotSub">耗 6000 灵石</span>
+        </button>
       </div>
 
       <div class="card craft-card">
@@ -2340,6 +2410,11 @@ body.rogue-lock { overflow: hidden; }
         <button class="btn btn-primary btn-wide" id="btnAlchemy" data-action="alchemy">
           <span class="btn-main">开炉炼丹</span>
           <span class="btn-sub" id="alchemySub">冷却 30 分钟</span>
+        </button>
+        <div class="slot-line" id="alchemySlots"></div>
+        <button class="btn btn-ghost btn-wide slot-unlock" id="btnAlchemySlot" data-action="unlock-alchemy-slot">
+          <span class="btn-main">开启灵石槽</span>
+          <span class="btn-sub" id="alchemySlotSub">耗 4000 灵石</span>
         </button>
       </div>
 
@@ -2357,6 +2432,11 @@ body.rogue-lock { overflow: hidden; }
           <span class="btn-main">开炉炼器</span>
           <span class="btn-sub" id="forgeSub">冷却 30 分钟</span>
         </button>
+        <div class="slot-line" id="forgeSlots"></div>
+        <button class="btn btn-ghost btn-wide slot-unlock" id="btnForgeSlot" data-action="unlock-forge-slot">
+          <span class="btn-main">开启灵石槽</span>
+          <span class="btn-sub" id="forgeSlotSub">耗 4000 灵石</span>
+        </button>
       </div>
 
       <div class="card tips-card">
@@ -2366,6 +2446,7 @@ body.rogue-lock { overflow: hidden; }
           <li>炼丹立得 0-3 枚丹药，炼器立得 0-1 件当前境界法宝。</li>
           <li>悟性影响高品质法术与法宝概率，也提高炼丹成丹数。</li>
           <li>法术栏已移入「背包 · 法术」，新术不会自动装配。</li>
+          <li>每项可再花灵石开一槽；第三槽与额外货架只在洗髓时用轮回点开启。</li>
           <li>洞府「地脉火种」可缩短丹器冷却，「藏经阁」可加快参研。</li>
         </ul>
       </div>
@@ -2420,7 +2501,7 @@ body.rogue-lock { overflow: hidden; }
     <section class="tab-panel" data-panel="market">
       <div class="card">
         <div class="card-head"><span>坊市</span><span class="card-hint" id="marketTime">正在进货</span></div>
-        <p class="market-note" id="marketNote">行商往来，每三十分钟换一批货。法术法宝品质随你的境界浮动，丹药常备。</p>
+        <p class="market-note" id="marketNote">行商往来，每三十分钟换一批货。品质随境界浮动；余下货架只在洗髓时以轮回点开启。</p>
       </div>
       <div class="card">
         <div class="card-head"><span>洞府 · 五府</span><span class="card-hint" id="caveHint">以灵石升级</span></div>
@@ -2542,20 +2623,12 @@ body.rogue-lock { overflow: hidden; }
         <div class="card-head"><span>轮回印记</span><span class="card-hint" id="metaHint">第 1 世</span></div>
         <div class="meta-panel">
           <div class="meta-line">已证长生 <b id="metaClears">0</b> 世 · 轮回点 <b id="metaPoints">0</b></div>
-          <div class="meta-line">五维加成 <b id="metaBonus">+0</b> · 修行 <b id="metaRate">+0%</b> · 灵石 <b id="metaStone">+0%</b></div>
-          <div class="meta-shop" id="metaShop"></div>
+          <div class="meta-line">仙资加成 <b id="metaBonus">+0</b> · 修行 <b id="metaRate">+0%</b> · 灵石 <b id="metaStone">+0%</b></div>
+          <div class="meta-store-hint">轮回点、仙资、货架与槽位只在洗髓时分配。</div>
           <div class="meta-history" id="metaHistory"><div class="meta-record muted">尚无飞升印记</div></div>
           <button class="btn btn-primary btn-wide" id="btnNextLife" data-action="next-life" hidden>
             <span class="btn-main">开启下一世</span>
             <span class="btn-sub">保留轮回印记，重走长生路</span>
-          </button>
-          <button class="btn btn-ghost btn-wide" id="btnResetMeta" data-action="reset-meta">
-            <span class="btn-main">重置轮回印记</span>
-            <span class="btn-sub">退还已消费轮回点，当前存档不受影响</span>
-          </button>
-          <button class="btn btn-ghost btn-wide" data-action="clear-meta">
-            <span class="btn-main">清除轮回印记</span>
-            <span class="btn-sub">连次数一并清空，需二次确认</span>
           </button>
         </div>
       </div>
@@ -2569,7 +2642,7 @@ body.rogue-lock { overflow: hidden; }
           <button class="menu-item danger" data-action="reset"><span>重入轮回</span><span class="menu-arrow">›</span></button>
         </div>
       </div>
-      <div class="footer-note">长生道 v<span id="verText">3.1.0</span> · 存档自动保存于本机</div>
+      <div class="footer-note">长生道 v<span id="verText">3.2.0</span> · 存档自动保存于本机</div>
     </section>
   </main>
 
@@ -2647,6 +2720,15 @@ body.rogue-lock { overflow: hidden; }
       <div class="create-life" id="createLife"></div>
       <div class="attr-list" id="createAttrs"></div>
       <div class="create-total">总值 <b id="createTotal">100</b></div>
+      <div class="create-meta" id="createMeta">
+        <div class="create-meta-head"><span>轮回印记 · 洗髓分配</span><span id="createMetaHead">可用 0 点</span></div>
+        <div class="create-meta-line" id="createMetaLine"></div>
+        <div class="create-meta-shop" id="createMetaShop"></div>
+        <div class="create-meta-actions">
+          <button class="menu-item" id="btnCreateResetMeta" data-action="reset-meta"><span>重置已分配印记</span><span class="menu-arrow">›</span></button>
+          <button class="menu-item danger" id="btnCreateClearMeta" data-action="clear-meta"><span>清除全部轮回印记</span><span class="menu-arrow">›</span></button>
+        </div>
+      </div>
       <button class="btn btn-ghost btn-wide" data-action="reroll-create">
         <span class="btn-main">重新推演</span>
         <span class="btn-sub">总值不变</span>
@@ -3033,7 +3115,7 @@ body.rogue-lock { overflow: hidden; }
           <span class="btn-main">开始修行</span>
           <span class="btn-sub" id="coverSub">自动挂机 · 闭关也在涨</span>
         </button>
-        <div class="cover-note">v<span id="coverVer">3.1.0</span> · 存档自动保存于本机</div>
+        <div class="cover-note">v<span id="coverVer">3.2.0</span> · 存档自动保存于本机</div>
       </div>
     </div>
   </div>
@@ -3048,7 +3130,7 @@ body.rogue-lock { overflow: hidden; }
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "3.1.0";
+const GAME_VERSION = "3.2.0";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -3073,13 +3155,19 @@ const CFG = {
   MARKET_REFRESH_SEC: 1800,     // 坊市换货基准间隔（秒）
   MARKET_SHELVES: 9,            // 坊市货架总数（6 默认 + 3 可开启）
   MARKET_BASE_SHELVES: 6,       // 默认开启的货架数
-  MARKET_UNLOCK_COSTS: [3000, 8000, 20000], // 开启第 7 / 8 / 9 个货架的灵石
+  MARKET_META_COST: 1,          // 以轮回点开启下一座货架的价格
   COMPANION_BOND_CD: 1800,      // 道侣共修共享冷却（秒）
   CAVE_MAX_LEVEL: 20,           // 洞府设施最高等级
   CAVE_UPGRADE_MUL: 1.55,       // 洞府升级费用增长
   ALCHEMY_CD: 1800,             // 炼丹基础冷却（秒）
   FORGE_CD: 1800,               // 炼器基础冷却（秒）
   CAVE_RAID_INTERVAL: 1200,     // 洞府受袭间隔（秒）
+  SPELL_MP_RATE: 0.14,          // 法术基础耗灵 = 法力上限 * 该系数
+  RESEARCH_SLOT_COST: 6000,     // 参研第二槽位的灵石价格
+  ALCHEMY_SLOT_COST: 4000,      // 丹炉第二槽位的灵石价格
+  FORGE_SLOT_COST: 4000,        // 器炉第二槽位的灵石价格
+  ROGUE_EXP_COST: 50,           // 道痕兑换修为的消耗
+  ROGUE_EXP_PCT: 0.18,          // 兑换修为 = 当前境界需求 * 该系数
   LOG_LIMIT: 80,
   ROGUE_UNLOCK_REALM: 9,        // 筑基后开启山海秘境
   ROGUE_ACTS: 3,                // 秘境三幕
@@ -3110,10 +3198,14 @@ const CAVE_FACILITY_IDS = CAVE_FACILITIES.map((f) => f.id);
 
 /* ---------------------------- 轮回点兑换 ---------------------------- */
 const META_SHOP = [
-  { id: "attr", icon: "🪷", name: "五维齐涨", desc: "当前与后世洗髓，五维各 +1。", cost: 1, repeat: true },
+  { id: "xianzi", icon: "🪷", name: "仙资", desc: "每点仙资视为全属性 +1；2 轮回点兑换 1 点。", cost: 2, repeat: true, unit: "点" },
   { id: "companion", icon: "🐋", name: "鲸语归心", desc: "与沈青梧结缘，并永久带往来世。", cost: 1, repeat: false },
   { id: "rate", icon: "⚡", name: "道行加持", desc: "修行速度永久 +3%。", cost: 1, repeat: true },
   { id: "stone", icon: "💎", name: "灵脉加持", desc: "灵石产出永久 +3%。", cost: 1, repeat: true },
+  { id: "market_shelf", icon: "🏪", name: "万界货架", desc: "坊市永久多开一座货架，最多九座。", cost: 1, repeat: true },
+  { id: "slot_research", icon: "📖", name: "参研灵台", desc: "永久多一个参研槽位，可同时参研两门法术。", cost: 1, repeat: false },
+  { id: "slot_alchemy", icon: "⚗️", name: "丹炉灵台", desc: "永久多一个炼丹槽位，丹炉可并行开火。", cost: 1, repeat: false },
+  { id: "slot_forge", icon: "🔨", name: "器炉灵台", desc: "永久多一个炼器槽位，器炉可并行开炉。", cost: 1, repeat: false },
 ];
 const META_SHOP_MAP = {};
 META_SHOP.forEach((m) => { META_SHOP_MAP[m.id] = m; });
@@ -3545,61 +3637,26 @@ const ROGUE_DIFFICULTIES = [
     desc: "天倾地覆，唯强者可归。" },
 ];
 
-const ROGUE_PATHS = [
-  {
-    id: "sword", name: "剑心", title: "一剑破万法", icon: "🗡️", color: "#9fd4ff",
-    desc: "以攻代守，专精暴击与斩杀。",
-    passive: "攻击 +18%，暴击率 +22%，暴击伤害 +40%，造成伤害的 18% 转为气血；每 3 回合额外斩出一剑，对气血低于三成的敌人伤害 +28%。",
-    quote: "剑锋所指，山海皆开。",
-    stats: { critRate: 0.22, critDmg: 0.40, hpPct: 0.10, lifesteal: 0.18, atkPct: 0.18, execute: 0.28, echoEvery: 3, echoPct: 0.80 },
-    startRelic: "r_start_sword",
-    spells: [
-      { name: "断岳式", icon: "⚔️", main: { key: "dmg", ratio: 1.30, mpMul: 1 }, effect: { key: "pierce", params: { pct: 0.35 } }, extras: [] },
-      { name: "惊鸿式", icon: "🗡️", main: { key: "dmg", ratio: 1.15, mpMul: 1 }, effect: null, extras: [] },
-      { name: "万剑归宗", icon: "🌠", main: { key: "burst", ratio: 2.4, mpMul: 2.2 }, effect: null, extras: [] },
-    ],
-    artifact: { name: "青锋剑匣", icon: "🎴", main: { key: "dmg", ratio: 1.25 }, speed: 3, effect: { key: "pierce", params: { pct: 0.4 } }, extras: [] },
-  },
-  {
-    id: "alchemy", name: "丹心", title: "炉火照长生", icon: "⚗️", color: "#ffb27a",
-    desc: "以丹火续命，以灼烧磨敌。",
-    passive: "生命上限 +12%，每回合回复 2% 气血；攻击附带灼烧。",
-    quote: "丹成九转，山海同炉。",
-    stats: { hpPct: 0.12, healPerRound: 0.02, burnOnHit: true, burnPct: 0.18 },
-    startRelic: "r_start_alchemy",
-    spells: [
-      { name: "灼血诀", icon: "🔥", main: { key: "dmg", ratio: 1.15, mpMul: 1 }, effect: { key: "burn", params: { rounds: 3, pct: 0.4 } }, extras: [] },
-      { name: "回春诀", icon: "💚", main: { key: "heal", ratio: 0.95, mpMul: 1 }, effect: null, extras: [] },
-      { name: "九转丹火", icon: "🌋", main: { key: "burst", ratio: 2.25, mpMul: 2.2 }, effect: { key: "burn", params: { rounds: 2, pct: 0.5 } }, extras: [] },
-    ],
-    artifact: { name: "药王炉", icon: "🏺", main: { key: "heal", ratio: 0.8 }, speed: 3, effect: null, extras: [] },
-  },
-  {
-    id: "talisman", name: "符心", title: "一符镇山海", icon: "🔯", color: "#c9a2ff",
-    desc: "以符护身，以雷破阵。",
-    passive: "开场获得 15% 气血护盾，闪避 +4%；每 3 回合引落一道雷符。",
-    quote: "符落之处，万邪辟易。",
-    stats: { shieldStart: 0.15, dodge: 0.04, every3: 0.7 },
-    startRelic: "r_start_talisman",
-    spells: [
-      { name: "玄甲符", icon: "🛡️", main: { key: "shield", ratio: 1.0, mpMul: 1 }, effect: null, extras: [] },
-      { name: "雷引符", icon: "⚡", main: { key: "dmg", ratio: 1.1, mpMul: 1 }, effect: { key: "seal", params: { casts: 1 } }, extras: [] },
-      { name: "天雷破", icon: "🌩️", main: { key: "burst", ratio: 2.3, mpMul: 2.2 }, effect: { key: "pierce", params: { pct: 0.3 } }, extras: [] },
-    ],
-    artifact: { name: "镇岳符", icon: "📜", main: { key: "shield", ratio: 0.9 }, speed: 3, effect: null, extras: [] },
-  },
+/* v3.2：三途取消，改为通用起手 + 道痕天赋树。 */
+const ROGUE_BASE_MODS = {
+  hpPct: 0.12, atkPct: 0.16, critRate: 0.08, critDmg: 0.12,
+  dodge: 0.03, healPerRound: 0.01, manaRegen: 0.02, startEssence: 15,
+};
+const ROGUE_START_RELIC = "r_start_wanderer";
+const ROGUE_SPELLS = [
+  { name: "破岳式", icon: "⚔️", main: { key: "dmg", ratio: 1.25, mpMul: 1 }, effect: { key: "pierce", params: { pct: 0.30 } }, extras: [] },
+  { name: "回春诀", icon: "💚", main: { key: "heal", ratio: 0.90, mpMul: 1 }, effect: null, extras: [] },
+  { name: "山海爆", icon: "🌠", main: { key: "burst", ratio: 2.35, mpMul: 2.2 }, effect: null, extras: [] },
 ];
-const ROGUE_PATH_MAP = {};
-ROGUE_PATHS.forEach((p) => { ROGUE_PATH_MAP[p.id] = p; });
+const ROGUE_ARTIFACT = {
+  name: "山海印", icon: "🎴", main: { key: "dmg", ratio: 1.15 }, speed: 3,
+  effect: { key: "pierce", params: { pct: 0.35 } }, extras: [],
+};
 
 const ROGUE_RELICS = [
-  /* 三途初始遗物 */
-  { id: "r_start_sword", name: "剑心·青锋", icon: "🗡️", rarity: 1, start: true, path: "sword",
-    desc: "攻击 +15%，暴击率 +8%。", mods: { atkPct: 0.15, critRate: 0.08 } },
-  { id: "r_start_alchemy", name: "丹心·药囊", icon: "🧪", rarity: 1, start: true, path: "alchemy",
-    desc: "生命上限 +10%，每回合回复 2% 气血。", mods: { hpPct: 0.10, healPerRound: 0.02 } },
-  { id: "r_start_talisman", name: "符心·符甲", icon: "🔰", rarity: 1, start: true, path: "talisman",
-    desc: "开场护盾 +12% 气血，闪避 +4%。", mods: { shieldStart: 0.12, dodge: 0.04 } },
+  /* 通用初始遗物 */
+  { id: "r_start_wanderer", name: "山海行囊", icon: "🎒", rarity: 1, start: true,
+    desc: "攻击 +8%，生命上限 +8%。", mods: { atkPct: 0.08, hpPct: 0.08 } },
   /* 常见 */
   { id: "r_qingfeng", name: "青锋石", icon: "🪨", rarity: 1, desc: "攻击 +10%。", mods: { atkPct: 0.10 } },
   { id: "r_xuangui", name: "玄龟甲", icon: "🐢", rarity: 1, desc: "生命上限 +15%。", mods: { hpPct: 0.15 } },
@@ -3624,6 +3681,8 @@ const ROGUE_RELICS = [
   { id: "r_shanhai", name: "山海图", icon: "🗺️", rarity: 3, desc: "秘境灵息 +15%，道痕 +25%。", mods: { essenceBonus: 0.15, shardBonus: 0.25 } },
   { id: "r_taixu", name: "太虚镜", icon: "🪞", rarity: 3, desc: "法力上限 +25%，法宝祭出间隔 -1 回合。", mods: { mpPct: 0.25, artifactHaste: 1 } },
   { id: "r_buxiu", name: "不灭灯", icon: "🕯️", rarity: 3, desc: "每局秘境可复活一次，回复 35% 气血。", mods: { revive: 1 } },
+  { id: "r_yunwen", name: "云纹佩", icon: "☁️", rarity: 2, desc: "法力上限 +12%，每回合回复 4% 法力。", mods: { mpPct: 0.12, manaRegen: 0.04 } },
+  { id: "r_xinghui", name: "星辉砂", icon: "✨", rarity: 2, desc: "暴击率 +6%，暴击伤害 +15%。", mods: { critRate: 0.06, critDmg: 0.15 } },
 ];
 const ROGUE_RELIC_MAP = {};
 ROGUE_RELICS.forEach((r) => { ROGUE_RELIC_MAP[r.id] = r; });
@@ -3721,25 +3780,43 @@ const ROGUE_EVENTS = [
     ] },
 ];
 
+/* 15 枚通用天赋，三列五阶；max=1 为一次性，max=3 可重复升级。 */
+const ROGUE_TALENT_BRANCHES = [
+  { id: "blade", name: "锋锐", icon: "⚔️", desc: "攻势与斩杀" },
+  { id: "life", name: "生生", icon: "🌿", desc: "生机与续航" },
+  { id: "mystic", name: "玄机", icon: "✨", desc: "灵息与机缘" },
+];
 const ROGUE_TALENTS = [
-  { id: "t_sword_1", branch: "sword", tier: 1, name: "剑心初明", icon: "🗡️", cost: 60, req: null,
-    desc: "秘境中攻击 +8%。", mods: { atkPct: 0.08 } },
-  { id: "t_sword_2", branch: "sword", tier: 2, name: "锋芒毕露", icon: "✨", cost: 120, req: "t_sword_1",
-    desc: "秘境中暴击伤害 +25%。", mods: { critDmg: 0.25 } },
-  { id: "t_sword_3", branch: "sword", tier: 3, name: "斩因", icon: "🔪", cost: 200, req: "t_sword_2",
-    desc: "对残血敌人伤害 +15%。", mods: { execute: 0.15 } },
-  { id: "t_alchemy_1", branch: "alchemy", tier: 1, name: "生生不息", icon: "🌿", cost: 60, req: null,
-    desc: "秘境中生命上限 +10%。", mods: { hpPct: 0.10 } },
-  { id: "t_alchemy_2", branch: "alchemy", tier: 2, name: "药脉", icon: "💚", cost: 120, req: "t_alchemy_1",
-    desc: "每回合额外回复 2% 气血。", mods: { healPerRound: 0.02 } },
-  { id: "t_alchemy_3", branch: "alchemy", tier: 3, name: "回天", icon: "🕯️", cost: 200, req: "t_alchemy_2",
+  { id: "t_blade_1", branch: "blade", tier: 1, name: "砺锋", icon: "🗡️", cost: 60, max: 1, req: null,
+    desc: "秘境攻击 +8%。", mods: { atkPct: 0.08 } },
+  { id: "t_blade_2", branch: "blade", tier: 2, name: "锋芒", icon: "✨", cost: 100, max: 3, req: "t_blade_1",
+    desc: "每级暴击率 +4%，暴击伤害 +10%。", mods: { critRate: 0.04, critDmg: 0.10 } },
+  { id: "t_blade_3", branch: "blade", tier: 3, name: "斩因", icon: "🔪", cost: 160, max: 3, req: "t_blade_2",
+    desc: "每级对残血敌人伤害 +8%。", mods: { execute: 0.08 } },
+  { id: "t_blade_4", branch: "blade", tier: 4, name: "回锋", icon: "🌀", cost: 240, max: 3, req: "t_blade_3",
+    desc: "每 3 回合额外斩击，每级伤害 +15%。", mods: { echoEvery: 3, echoPct: 0.15 } },
+  { id: "t_blade_5", branch: "blade", tier: 5, name: "背水", icon: "🫀", cost: 380, max: 1, req: "t_blade_4",
+    desc: "每场战斗首次濒死时，回复 30% 气血并获得护盾。", mods: { lastStand: true } },
+  { id: "t_life_1", branch: "life", tier: 1, name: "生根", icon: "🌱", cost: 60, max: 1, req: null,
+    desc: "秘境生命上限 +10%。", mods: { hpPct: 0.10 } },
+  { id: "t_life_2", branch: "life", tier: 2, name: "回春", icon: "💚", cost: 100, max: 3, req: "t_life_1",
+    desc: "每级每回合回复 1% 气血。", mods: { healPerRound: 0.01 } },
+  { id: "t_life_3", branch: "life", tier: 3, name: "护体", icon: "🛡️", cost: 160, max: 3, req: "t_life_2",
+    desc: "每级开场护盾 +5% 气血。", mods: { shieldStart: 0.05 } },
+  { id: "t_life_4", branch: "life", tier: 4, name: "汲血", icon: "🩸", cost: 240, max: 3, req: "t_life_3",
+    desc: "每级造成伤害的 4% 转为气血。", mods: { lifesteal: 0.04 } },
+  { id: "t_life_5", branch: "life", tier: 5, name: "不灭", icon: "🕯️", cost: 380, max: 1, req: "t_life_4",
     desc: "每局秘境可复活一次，回复 35% 气血。", mods: { revive: 1 } },
-  { id: "t_talisman_1", branch: "talisman", tier: 1, name: "符甲", icon: "🛡️", cost: 60, req: null,
-    desc: "开场护盾 +12% 气血。", mods: { shieldStart: 0.12 } },
-  { id: "t_talisman_2", branch: "talisman", tier: 2, name: "灵机", icon: "💠", cost: 120, req: "t_talisman_1",
-    desc: "每局初始灵息 +30。", mods: { startEssence: 30 } },
-  { id: "t_talisman_3", branch: "talisman", tier: 3, name: "三才", icon: "🔯", cost: 200, req: "t_talisman_2",
+  { id: "t_mystic_1", branch: "mystic", tier: 1, name: "聚灵", icon: "💠", cost: 50, max: 1, req: null,
+    desc: "每局初始灵息 +25。", mods: { startEssence: 25 } },
+  { id: "t_mystic_2", branch: "mystic", tier: 2, name: "拾遗", icon: "🧺", cost: 90, max: 3, req: "t_mystic_1",
+    desc: "每级秘境灵息获取 +8%。", mods: { essenceBonus: 0.08 } },
+  { id: "t_mystic_3", branch: "mystic", tier: 3, name: "多宝", icon: "🎁", cost: 150, max: 1, req: "t_mystic_2",
     desc: "战后奖励多一个选项。", mods: { rewardChoices: 1 } },
+  { id: "t_mystic_4", branch: "mystic", tier: 4, name: "归藏", icon: "🧩", cost: 220, max: 3, req: "t_mystic_3",
+    desc: "每级道痕获取 +10%。", mods: { shardBonus: 0.10 } },
+  { id: "t_mystic_5", branch: "mystic", tier: 5, name: "通玄", icon: "🌌", cost: 360, max: 1, req: "t_mystic_4",
+    desc: "法宝祭出间隔 -1 回合，法力上限 +20%。", mods: { artifactHaste: 1, mpPct: 0.20 } },
 ];
 const ROGUE_TALENT_MAP = {};
 ROGUE_TALENTS.forEach((t) => { ROGUE_TALENT_MAP[t.id] = t; });
@@ -3757,6 +3834,23 @@ ROGUE_NODE_TYPES.forEach((n) => { ROGUE_NODE_MAP[n.type] = n; });
 
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "3.2.0",
+    date: "2026-11-04",
+    title: "道痕·百艺",
+    items: [
+      "坊市货架改为轮回点开启：每 1 点轮回点开启一座，最多九座，仅在新轮回洗髓时选择",
+      "轮回点兑换、重置与清除全部移入洗髓界面，局内「更多」只作展示",
+      "五维齐涨改为「仙资」：2 轮回点换 1 点，每点视为全属性 +1，可累计",
+      "山海秘境取消三途，改为通用起手，新增十五枚道痕天赋树，三列五阶、需按序参悟",
+      "道痕天赋分「一次参悟」与「可再升级」两类，升级费用逐级提高",
+      "山海秘境可用 50 道痕直接兑换修为，兑换量随当前境界提高",
+      "新轮回开启时，道痕、天赋、图鉴、通关记录与秘境进度全部重置",
+      "研发三艺各新增一个灵石槽位与一个轮回点槽位，可并行参研、炼丹、炼器",
+      "法术基础耗灵提高，爆发法术的灵力压力更明显",
+      "v3.1.0 存档可直接续玩，旧三途天赋按已投入道痕全额退还",
+    ],
+  },
   {
     version: "3.1.0",
     date: "2026-11-04",
@@ -4220,10 +4314,10 @@ function defaultState() {
     companionCd: 0,
     companionStory: {},
     cave: { altar: 1, library: 1, ember: 1, spirit: 1, gate: 1 },
-    craft: { alchemyAt: 0, forgeAt: 0, alchemyCount: 0, forgeCount: 0 },
+    craft: { alchemyAt: 0, forgeAt: 0, alchemyCount: 0, forgeCount: 0, alchemyTimes: [], forgeTimes: [], unlocks: { stone: false } },
     caveRaid: { nextAt: 0, wins: 0, losses: 0 },
     market: { refreshAt: 0, unlocked: CFG.MARKET_BASE_SHELVES, shelves: [] },
-    research: { active: false, startAt: 0, endAt: 0 },
+    research: { active: false, startAt: 0, endAt: 0, slots: 1, jobs: [], unlocks: { stone: false } },
     researchCount: 0,
     guardians: [],
     battleWins: 0,
@@ -4253,6 +4347,7 @@ function defaultState() {
     pendingUnlocks: [],
     pendingEvents: [],
     pendingSpell: null,
+    pendingSpells: [],
     pendingNotice: null,
   };
 }
@@ -4387,10 +4482,14 @@ function researchDurationSec(state) {
 
 /* ---------------------------- 炼丹 / 炼器 ---------------------------- */
 function craftState(state) {
-  if (!state.craft || typeof state.craft !== "object") {
-    state.craft = { alchemyAt: 0, forgeAt: 0, alchemyCount: 0, forgeCount: 0 };
-  }
-  return state.craft;
+  if (!state.craft || typeof state.craft !== "object") state.craft = {};
+  const c = state.craft;
+  if (!Array.isArray(c.alchemyTimes)) c.alchemyTimes = [];
+  if (!Array.isArray(c.forgeTimes)) c.forgeTimes = [];
+  if (!c.unlocks || typeof c.unlocks !== "object") c.unlocks = { stone: false };
+  c.alchemyCount = Math.max(0, parseInt(c.alchemyCount, 10) || 0);
+  c.forgeCount = Math.max(0, parseInt(c.forgeCount, 10) || 0);
+  return c;
 }
 
 function craftCooldownSec(state) {
@@ -4398,11 +4497,42 @@ function craftCooldownSec(state) {
   return Math.max(60, Math.round(CFG.ALCHEMY_CD * (1 - cut)));
 }
 
-function craftRemain(state, kind, now) {
+function craftSlotCap(state, kind) {
+  const c = craftState(state);
+  const meta = loadMeta();
+  const pointSlot = kind === "forge" ? meta.slots.forge : meta.slots.alchemy;
+  return 1 + (c.unlocks.stone ? 1 : 0) + (pointSlot ? 1 : 0);
+}
+
+function craftTimes(state, kind, now) {
   now = now || Date.now();
   const c = craftState(state);
-  const at = Number(kind === "forge" ? c.forgeAt : c.alchemyAt) || 0;
-  return Math.max(0, Math.ceil((at - now) / 1000));
+  const key = kind === "forge" ? "forgeTimes" : "alchemyTimes";
+  c[key] = c[key].filter((t) => Number(t) > now).sort((a, b) => a - b);
+  return c[key];
+}
+
+function craftRemain(state, kind, now) {
+  now = now || Date.now();
+  const times = craftTimes(state, kind, now);
+  if (!times.length) return 0;
+  return Math.max(0, Math.ceil((times[0] - now) / 1000));
+}
+
+function craftSlotsUsed(state, kind, now) {
+  return craftTimes(state, kind, now).length;
+}
+
+function unlockCraftSlot(state, kind) {
+  const c = craftState(state);
+  if (kind !== "alchemy" && kind !== "forge") return { ok: false, msg: "没有这座丹炉" };
+  if (c.unlocks.stone) return { ok: false, msg: "灵石槽位已经开启" };
+  const cost = kind === "forge" ? (CFG.FORGE_SLOT_COST || 4000) : (CFG.ALCHEMY_SLOT_COST || 4000);
+  if ((state.stone || 0) < cost) return { ok: false, msg: "灵石不足，尚缺 " + fmt(cost - state.stone) };
+  state.stone -= cost;
+  c.unlocks.stone = true;
+  pushLog(state, "耗费灵石 " + fmt(cost) + "，开辟" + (kind === "forge" ? "器炉" : "丹炉") + "第二槽位", "gain");
+  return { ok: true, cost: cost, cap: craftSlotCap(state, kind) };
 }
 
 function alchemyYield(attrs) {
@@ -4418,19 +4548,22 @@ function alchemyYield(attrs) {
 function doAlchemy(state, now) {
   now = now || Date.now();
   const c = craftState(state);
-  const remain = craftRemain(state, "alchemy", now);
-  if (remain > 0) return { ok: false, msg: "丹炉尚温，还需 " + fmtDuration(remain), remain };
+  const cap = craftSlotCap(state, "alchemy");
+  const times = craftTimes(state, "alchemy", now);
+  if (times.length >= cap) return { ok: false, msg: "丹炉皆在火中，请待一炉出炉", remain: craftRemain(state, "alchemy", now), used: times.length, cap };
   const count = alchemyYield(state.attrs);
-  c.alchemyAt = now + craftCooldownSec(state) * 1000;
+  const until = now + craftCooldownSec(state) * 1000;
+  times.push(until);
+  c.alchemyAt = times[0];
   if (count <= 0) {
     pushLog(state, "炼丹未成，丹炉只余一缕青烟", "fail");
-    return { ok: true, count: 0, cdUntil: c.alchemyAt, pill: null };
+    return { ok: true, count: 0, cdUntil: until, pill: null, used: times.length, cap };
   }
   const pill = PILLS[Math.floor(Math.random() * PILLS.length)];
   state.pills[pill.id] = (state.pills[pill.id] || 0) + count;
   c.alchemyCount = (c.alchemyCount || 0) + count;
   pushLog(state, "丹成一炉 · " + pill.name + " ×" + count, "success");
-  return { ok: true, count, pill, cdUntil: c.alchemyAt };
+  return { ok: true, count, pill, cdUntil: until, used: times.length, cap };
 }
 
 function forgeChance(attrs) {
@@ -4441,23 +4574,26 @@ function forgeChance(attrs) {
 function doForge(state, now) {
   now = now || Date.now();
   const c = craftState(state);
-  const remain = craftRemain(state, "forge", now);
-  if (remain > 0) return { ok: false, msg: "炉火未歇，还需 " + fmtDuration(remain), remain };
+  const cap = craftSlotCap(state, "forge");
+  const times = craftTimes(state, "forge", now);
+  if (times.length >= cap) return { ok: false, msg: "器炉皆在火中，请待一器出炉", remain: craftRemain(state, "forge", now), used: times.length, cap };
   const chance = forgeChance(state.attrs);
-  c.forgeAt = now + craftCooldownSec(state) * 1000;
+  const until = now + craftCooldownSec(state) * 1000;
+  times.push(until);
+  c.forgeAt = times[0];
   if (Math.random() >= chance) {
     pushLog(state, "炼器未成，法宝胚子碎作星火", "fail");
-    return { ok: true, count: 0, cdUntil: c.forgeAt, chance };
+    return { ok: true, count: 0, cdUntil: until, chance, used: times.length, cap };
   }
   const art = makeArtifact(state);
   if ((state.artifacts || []).length >= CFG.MAX_ARTIFACTS) {
     pushLog(state, "法宝库已满，炼成的「" + art.name + "」散入山河", "fail");
-    return { ok: true, count: 0, cdUntil: c.forgeAt, chance, full: true };
+    return { ok: true, count: 0, cdUntil: until, chance, full: true, used: times.length, cap };
   }
   state.artifacts.push(art);
   c.forgeCount = (c.forgeCount || 0) + 1;
   pushLog(state, "器成于手 · 「" + art.name + "」", "great");
-  return { ok: true, count: 1, artifact: art, cdUntil: c.forgeAt, chance };
+  return { ok: true, count: 1, artifact: art, cdUntil: until, chance, used: times.length, cap };
 }
 
 /* ---------------------------- 洞府受袭 ---------------------------- */
@@ -4843,10 +4979,10 @@ function statBreakdown(state, key, now) {
   if (key === "mpCost") {
     return {
       name: "法术耗灵", icon: "💧", value: fmt(d.mpCost), key: key,
-      formula: "max(1, round(法力上限 × 10%))",
+      formula: "max(1, round(法力上限 × 14%))",
       lines: [
         statLine("法力上限", fmt(d.mpMax)),
-        statLine("基础消耗", "×10% = " + fmt(d.mpMax * 0.10, 1)),
+        statLine("基础消耗", "×14% = " + fmt(d.mpMax * 0.14, 1)),
         statLine("取整", fmt(d.mpCost), "至少为 1"),
         statLine("爆发法术", "基础消耗 × 2.4", "每门爆发法术单独标注"),
       ],
@@ -5029,68 +5165,119 @@ function breakThrough(state) {
   return { ok: true, success: false, chance, loss, usedPill };
 }
 
-function updateResearch(state, now) {
+function researchState(state) {
+  if (!state.research || typeof state.research !== "object") state.research = {};
   const r = state.research;
-  if (!r || !r.active) return null;
-  if (now < r.endAt) return null;
-  r.active = false;
-  const spell = makeSpell(state);
-  let stored = true;
-  if ((state.spells || []).length >= CFG.MAX_SPELLS) {
-    stored = false;
-  } else {
-    state.spells.push(spell);
-  }
-  state.researchCount = (state.researchCount || 0) + 1;
-  if (stored) {
-    pushLog(state, "研习有成 · 习得「" + spell.name + "」（" + spell.realmName + "），已收入背包", "success");
-    state.pendingSpell = spell;
-  } else {
-    pushLog(state, "藏法阁已满，新悟之法散于识海", "fail");
-  }
-  checkAchievements(state);
-  return stored ? spell : null;
+  if (!Array.isArray(r.jobs)) r.jobs = [];
+  if (!r.unlocks || typeof r.unlocks !== "object") r.unlocks = { stone: false };
+  r.jobs = r.jobs.filter((j) => j && isFinite(j.endAt));
+  return r;
 }
 
-function startResearch(state) {
-  const r = state.research;
-  if (!r) return { ok: false, msg: "研究数据异常" };
-  if (r.active) return { ok: false, msg: "正在参研，静待功成" };
-  if ((state.spells || []).length >= CFG.MAX_SPELLS) return { ok: false, msg: "藏法阁已满，先舍弃旧术" };
-  const now = Date.now();
-  const duration = researchDurationSec(state);
-  r.active = true;
-  r.startAt = now;
-  r.endAt = now + duration * 1000;
-  pushLog(state, "你铺开蒲团，开始参研法术……", "info");
-  return { ok: true, duration: duration };
+function researchSlotCap(state) {
+  researchState(state);
+  const meta = loadMeta();
+  return 1 + (state.research.unlocks.stone ? 1 : 0) + (meta.slots.research ? 1 : 0);
+}
+
+function researchJobs(state, now) {
+  updateResearch(state, now);
+  const r = researchState(state);
+  r.jobs.sort((a, b) => a.endAt - b.endAt);
+  return r.jobs;
+}
+
+function researchUsed(state, now) {
+  return researchJobs(state, now).length;
 }
 
 function researchRemain(state, now) {
-  const r = state.research;
-  if (!r || !r.active) return 0;
-  return Math.max(0, (Number(r.endAt) || 0) - (now || Date.now()));
+  now = now || Date.now();
+  const jobs = researchJobs(state, now);
+  if (!jobs.length) return 0;
+  return Math.max(0, jobs[0].endAt - now);
 }
 
-function rushResearchCost(state, now) {
-  const remain = researchRemain(state, now);
-  if (!remain) return 0;
+function unlockResearchSlot(state) {
+  const r = researchState(state);
+  if (r.unlocks.stone) return { ok: false, msg: "灵石槽位已经开启" };
+  const cost = CFG.RESEARCH_SLOT_COST || 6000;
+  if ((state.stone || 0) < cost) return { ok: false, msg: "灵石不足，尚缺 " + fmt(cost - state.stone) };
+  state.stone -= cost;
+  r.unlocks.stone = true;
+  pushLog(state, "耗费灵石 " + fmt(cost) + "，开辟研法第二槽位", "gain");
+  return { ok: true, cost: cost, cap: researchSlotCap(state) };
+}
+
+function updateResearch(state, now) {
+  now = now || Date.now();
+  const r = researchState(state);
+  const done = [];
+  const keep = [];
+  for (const job of r.jobs) {
+    if (job.endAt > now) { keep.push(job); continue; }
+    const spell = makeSpell(state);
+    let stored = true;
+    if ((state.spells || []).length >= CFG.MAX_SPELLS) stored = false;
+    else state.spells.push(spell);
+    state.researchCount = (state.researchCount || 0) + 1;
+    if (stored) {
+      pushLog(state, "研习有成 · 习得「" + spell.name + "」（" + spell.realmName + "），已收入背包", "success");
+      if (!Array.isArray(state.pendingSpells)) state.pendingSpells = [];
+      state.pendingSpells.push(spell);
+      state.pendingSpell = spell;
+      done.push(spell);
+    } else {
+      pushLog(state, "藏法阁已满，新悟之法散于识海", "fail");
+    }
+  }
+  r.jobs = keep.sort((a, b) => a.endAt - b.endAt);
+  r.active = r.jobs.length > 0;
+  r.startAt = r.jobs.length ? r.jobs[0].startAt : 0;
+  r.endAt = r.jobs.length ? r.jobs[0].endAt : 0;
+  if (done.length) checkAchievements(state);
+  return done;
+}
+
+function startResearch(state) {
+  const now = Date.now();
+  updateResearch(state, now);
+  const r = researchState(state);
+  const cap = researchSlotCap(state);
+  if (r.jobs.length >= cap) return { ok: false, msg: "所有研法槽位皆在参研", used: r.jobs.length, cap };
+  if ((state.spells || []).length + r.jobs.length >= CFG.MAX_SPELLS) return { ok: false, msg: "藏法阁已满，先舍弃旧术" };
+  const duration = researchDurationSec(state);
+  r.jobs.push({ id: "rq" + now + "_" + r.jobs.length, startAt: now, endAt: now + duration * 1000 });
+  r.active = true;
+  r.startAt = r.jobs[0].startAt;
+  r.endAt = r.jobs[0].endAt;
+  pushLog(state, "你铺开蒲团，开始参研法术……", "info");
+  return { ok: true, duration: duration, used: r.jobs.length, cap };
+}
+
+function rushResearchCost(state, now, jobId) {
+  now = now || Date.now();
+  const jobs = researchJobs(state, now);
+  const job = jobId ? jobs.find((j) => j.id === jobId) : jobs[0];
+  if (!job) return 0;
+  const remain = Math.max(0, job.endAt - now);
   const realm = realmAt(state.realmIndex || 0);
   const perSec = Math.max(0.5, realm.rate * CFG.STONE_FACTOR);
   return Math.max(1, Math.ceil((remain / 1000) * perSec * 0.9));
 }
 
-function rushResearch(state) {
+function rushResearch(state, jobId) {
   const now = Date.now();
-  const r = state.research;
-  if (!r || !r.active) return { ok: false, msg: "尚未开卷参研" };
-  const cost = rushResearchCost(state, now);
+  const jobs = researchJobs(state, now);
+  const job = jobId ? jobs.find((j) => j.id === jobId) : jobs[0];
+  if (!job) return { ok: false, msg: "尚未开卷参研" };
+  const cost = rushResearchCost(state, now, job.id);
   if ((state.stone || 0) < cost) return { ok: false, msg: "灵石不足，尚缺 " + fmt(cost - state.stone) };
   state.stone -= cost;
   pushLog(state, "耗灵石 " + fmt(cost) + " 加速参研，灵光乍现", "gain");
-  r.endAt = now;
-  const spell = updateResearch(state, now);
-  return { ok: true, cost: cost, spell: spell };
+  job.endAt = now;
+  const done = updateResearch(state, now);
+  return { ok: true, cost: cost, spell: done[0] || null };
 }
 
 function autoEquipSpell(state, spell) {
@@ -5254,22 +5441,26 @@ function ensureMarket(state, now) {
 function marketUnlockCost(state) {
   const m = ensureMarket(state, Date.now());
   if (m.unlocked >= CFG.MARKET_SHELVES) return 0;
-  return CFG.MARKET_UNLOCK_COSTS[m.unlocked - CFG.MARKET_BASE_SHELVES] || 0;
+  return CFG.MARKET_META_COST || 1;
 }
 
+/* 货架只能用轮回点开启；洗髓时通过 buyMetaOption("market_shelf") 调用 */
 function unlockMarketShelf(state, index) {
   const m = ensureMarket(state, Date.now());
   const i = parseInt(index, 10);
   if (!isFinite(i) || i < 0 || i >= CFG.MARKET_SHELVES) return { ok: false, msg: "没有这个货架" };
   if (i !== m.unlocked) return { ok: false, msg: i < m.unlocked ? "此货架已开启" : "请按顺序开启货架" };
-  const cost = marketUnlockCost(state);
-  if ((state.stone || 0) < cost) return { ok: false, msg: "灵石不足，尚缺 " + fmt(cost - state.stone) };
-  state.stone -= cost;
-  m.unlocked += 1;
+  const meta = loadMeta();
+  const cost = CFG.MARKET_META_COST || 1;
+  if ((meta.points || 0) < cost) return { ok: false, msg: "轮回点不足，需 " + cost + " 点" };
+  meta.points = Math.max(0, meta.points - cost);
+  meta.marketUnlocked = clamp(Math.max(m.unlocked, meta.marketUnlocked || 0) + 1, CFG.MARKET_BASE_SHELVES, CFG.MARKET_SHELVES);
+  saveMeta(meta);
+  m.unlocked = meta.marketUnlocked;
   m.shelves[i] = marketShelfGood(state);
-  pushLog(state, "万界门开 · 第 " + (i + 1) + " 座货架启用", "gain");
+  pushLog(state, "轮回点开市 · 第 " + (i + 1) + " 座货架启用", "gain");
   checkAchievements(state);
-  return { ok: true, index: i, cost: cost, unlocked: m.unlocked };
+  return { ok: true, index: i, cost, unlocked: m.unlocked };
 }
 
 function marketBuyShelf(state, index) {
@@ -5612,10 +5803,29 @@ function migrate(raw) {
     ? raw.artifacts.filter((a) => a && a.id && a.main).slice(-CFG.MAX_ARTIFACTS) : [];
   s.equippedArtifact = s.artifacts.some((a) => a.id === raw.equippedArtifact)
     ? raw.equippedArtifact : (s.artifacts[0] ? s.artifacts[0].id : null);
-  s.research = Object.assign({ active: false, startAt: 0, endAt: 0 }, raw.research || {});
-  if (!isFinite(s.research.endAt) || typeof s.research.active !== "boolean") {
-    s.research = { active: false, startAt: 0, endAt: 0 };
+  const rawResearch = raw.research && typeof raw.research === "object" ? raw.research : {};
+  const researchJobs = [];
+  if (Array.isArray(rawResearch.jobs)) {
+    for (const job of rawResearch.jobs.slice(0, 30)) {
+      if (!job || !isFinite(job.endAt)) continue;
+      researchJobs.push({
+        id: String(job.id || ("rq" + researchJobs.length)),
+        startAt: Math.max(0, Number(job.startAt) || 0),
+        endAt: Math.max(0, Number(job.endAt) || 0),
+      });
+    }
+  } else if (rawResearch.active && isFinite(rawResearch.endAt) && rawResearch.endAt > 0) {
+    researchJobs.push({ id: "legacy", startAt: Math.max(0, Number(rawResearch.startAt) || 0), endAt: Number(rawResearch.endAt) });
   }
+  const researchUnlocks = rawResearch.unlocks && typeof rawResearch.unlocks === "object" ? rawResearch.unlocks : {};
+  s.research = {
+    active: researchJobs.length > 0,
+    startAt: researchJobs.length ? Math.min.apply(null, researchJobs.map((j) => j.startAt)) : 0,
+    endAt: researchJobs.length ? Math.min.apply(null, researchJobs.map((j) => j.endAt)) : 0,
+    slots: 1,
+    jobs: researchJobs,
+    unlocks: { stone: !!researchUnlocks.stone },
+  };
   s.researchCount = Math.max(0, parseInt(s.researchCount, 10) || 0);
   s.guardians = Array.isArray(raw.guardians) ? raw.guardians.filter((id) => !!GUARDIAN_MAP[id]) : [];
   const rawMarket = raw.market && typeof raw.market === "object" ? raw.market : {};
@@ -5647,11 +5857,30 @@ function migrate(raw) {
   });
   delete s.caveLevel;
   const rawCraft = raw.craft && typeof raw.craft === "object" ? raw.craft : {};
+  const nowStamp = Date.now();
+  function migrateCraftTimes(list, legacyAt) {
+    const out = [];
+    if (Array.isArray(list)) {
+      for (const t of list.slice(0, 6)) {
+        const v = Number(t);
+        if (isFinite(v) && v > nowStamp) out.push(v);
+      }
+    }
+    const legacy = Number(legacyAt) || 0;
+    if (legacy > nowStamp && out.indexOf(legacy) < 0) out.push(legacy);
+    return out.sort((a, b) => a - b);
+  }
+  const craftUnlocks = rawCraft.unlocks && typeof rawCraft.unlocks === "object" ? rawCraft.unlocks : {};
+  const alchemyTimes = migrateCraftTimes(rawCraft.alchemyTimes, rawCraft.alchemyAt);
+  const forgeTimes = migrateCraftTimes(rawCraft.forgeTimes, rawCraft.forgeAt);
   s.craft = {
-    alchemyAt: Math.max(0, Number(rawCraft.alchemyAt) || 0),
-    forgeAt: Math.max(0, Number(rawCraft.forgeAt) || 0),
+    alchemyAt: alchemyTimes[0] || 0,
+    forgeAt: forgeTimes[0] || 0,
     alchemyCount: Math.max(0, parseInt(rawCraft.alchemyCount, 10) || 0),
     forgeCount: Math.max(0, parseInt(rawCraft.forgeCount, 10) || 0),
+    alchemyTimes,
+    forgeTimes,
+    unlocks: { stone: !!craftUnlocks.stone },
   };
   const rawRaid = raw.caveRaid && typeof raw.caveRaid === "object" ? raw.caveRaid : {};
   s.caveRaid = {
@@ -5716,7 +5945,8 @@ function migrate(raw) {
   s.pendingUnlocks = Array.isArray(s.pendingUnlocks) ? s.pendingUnlocks : [];
   s.pendingEvents = Array.isArray(s.pendingEvents) ? s.pendingEvents : [];
   s.pendingOffline = null;
-  s.pendingSpell = null;
+  s.pendingSpells = Array.isArray(raw.pendingSpells) ? raw.pendingSpells.filter((sp) => sp && sp.id && sp.main).slice(0, 10) : [];
+  s.pendingSpell = s.pendingSpells[0] || null;
   s.pendingNotice = null;
   s.schema = SAVE_SCHEMA;
   return s;
@@ -5791,7 +6021,8 @@ function resetSave() {
     localStorage.removeItem(SAVE_KEY);
     localStorage.removeItem(SAVE_BAK_KEY);
     LEGACY_KEYS.forEach((k) => localStorage.removeItem(k));
-    if (typeof clearRogueRun === "function") clearRogueRun();
+    if (typeof resetRogueProgress === "function") resetRogueProgress();
+    else if (typeof clearRogueRun === "function") clearRogueRun();
   } catch (e) {}
   return true;
 }
@@ -5799,13 +6030,15 @@ function resetSave() {
 /* ------------------------------ 局外轮回（轮回点） ------------------------------ */
 function defaultMeta() {
   return {
-    schema: 2,
+    schema: 3,
     clears: 0,
     points: 0,
-    attrBonus: 0,
+    xianzi: 0,
     rateBonus: 0,
     stoneBonus: 0,
     companionSword: false,
+    marketUnlocked: CFG.MARKET_BASE_SHELVES,
+    slots: { research: false, alchemy: false, forge: false },
     records: [],
   };
 }
@@ -5814,16 +6047,29 @@ function normalizeMeta(raw) {
   const m = defaultMeta();
   if (!raw || typeof raw !== "object") return m;
   m.clears = Math.max(0, Math.min(999, parseInt(raw.clears, 10) || 0));
-  if ((parseInt(raw.schema, 10) || 1) < 2) {
+  const ver = parseInt(raw.schema, 10) || 1;
+  if (ver < 2) {
     /* v3.0 及以前：每次成仙直接给五维 +1，没有轮回点 */
-    m.attrBonus = m.clears;
+    m.xianzi = m.clears;
     m.points = 0;
-  } else {
-    m.attrBonus = Math.max(0, Math.min(999, parseInt(raw.attrBonus, 10) || 0));
+  } else if (ver === 2) {
+    /* v3.1：attrBonus 即仙资前身 */
+    m.xianzi = Math.max(0, Math.min(999, parseInt(raw.attrBonus, 10) || 0));
     m.points = Math.max(0, Math.min(9999, parseInt(raw.points, 10) || 0));
     m.rateBonus = clamp(Number(raw.rateBonus) || 0, 0, 9);
     m.stoneBonus = clamp(Number(raw.stoneBonus) || 0, 0, 9);
     m.companionSword = !!raw.companionSword;
+  } else {
+    m.xianzi = Math.max(0, Math.min(999, parseInt(raw.xianzi, 10) || 0));
+    m.points = Math.max(0, Math.min(9999, parseInt(raw.points, 10) || 0));
+    m.rateBonus = clamp(Number(raw.rateBonus) || 0, 0, 9);
+    m.stoneBonus = clamp(Number(raw.stoneBonus) || 0, 0, 9);
+    m.companionSword = !!raw.companionSword;
+    m.marketUnlocked = clamp(parseInt(raw.marketUnlocked, 10) || CFG.MARKET_BASE_SHELVES, CFG.MARKET_BASE_SHELVES, CFG.MARKET_SHELVES);
+    const slots = raw.slots && typeof raw.slots === "object" ? raw.slots : {};
+    m.slots.research = !!slots.research;
+    m.slots.alchemy = !!slots.alchemy;
+    m.slots.forge = !!slots.forge;
   }
   m.records = Array.isArray(raw.records) ? raw.records.filter((r) => r && typeof r === "object").slice(0, 12) : [];
   return m;
@@ -5849,7 +6095,7 @@ function saveMeta(meta) {
 
 function metaBonus(meta) {
   const m = meta || loadMeta();
-  return Math.max(0, Math.min(999, parseInt(m.attrBonus, 10) || 0));
+  return Math.max(0, Math.min(999, parseInt(m.xianzi, 10) || 0));
 }
 
 function metaRateBonus(meta) { return Math.max(0, Number((meta || loadMeta()).rateBonus) || 0); }
@@ -5857,10 +6103,14 @@ function metaStoneBonus(meta) { return Math.max(0, Number((meta || loadMeta()).s
 
 function metaSpent(meta) {
   const m = meta || loadMeta();
-  return (parseInt(m.attrBonus, 10) || 0) +
+  return (parseInt(m.xianzi, 10) || 0) * 2 +
     (m.companionSword ? 1 : 0) +
     Math.round((Number(m.rateBonus) || 0) / META_RATE_STEP) +
-    Math.round((Number(m.stoneBonus) || 0) / META_STONE_STEP);
+    Math.round((Number(m.stoneBonus) || 0) / META_STONE_STEP) +
+    ((m.slots && m.slots.research) ? 1 : 0) +
+    ((m.slots && m.slots.alchemy) ? 1 : 0) +
+    ((m.slots && m.slots.forge) ? 1 : 0) +
+    Math.max(0, (parseInt(m.marketUnlocked, 10) || CFG.MARKET_BASE_SHELVES) - CFG.MARKET_BASE_SHELVES) * (CFG.MARKET_META_COST || 1);
 }
 
 function recordAscension(state) {
@@ -5892,15 +6142,15 @@ function ensureAscensionState(state) {
 }
 
 function freshLifeFromMeta(meta) {
+  const m = meta || loadMeta();
   const s = defaultState();
-  const bonus = metaBonus(meta);
+  const bonus = metaBonus(m);
   if (bonus > 0) {
     for (const key of ATTR_KEYS) s.attrs[key] = (Number(s.attrs[key]) || 0) + bonus;
   }
-  if (meta && meta.companionSword && s.companions.indexOf("c_sword") < 0) {
-    s.companions.push("c_sword");
-  }
-  s.lifeNo = Math.max(1, (parseInt(meta && meta.clears, 10) || 0) + 1);
+  if (m.companionSword && s.companions.indexOf("c_sword") < 0) s.companions.push("c_sword");
+  s.market.unlocked = clamp(parseInt(m.marketUnlocked, 10) || CFG.MARKET_BASE_SHELVES, CFG.MARKET_BASE_SHELVES, CFG.MARKET_SHELVES);
+  s.lifeNo = Math.max(1, (parseInt(m.clears, 10) || 0) + 1);
   s.createdAt = Date.now();
   s.lastTick = Date.now();
   s.flags.created = false;
@@ -5914,19 +6164,34 @@ function buyMetaOption(state, id) {
   if (!def) return { ok: false, msg: "没有这项兑换" };
   const meta = loadMeta();
   if ((meta.points || 0) < def.cost) return { ok: false, msg: "轮回点不足，还需 " + (def.cost - (meta.points || 0)) + " 点" };
-  if (id === "companion") {
+  if (id === "xianzi") {
+    meta.xianzi = Math.max(0, Math.min(999, (meta.xianzi || 0) + 1));
+    for (const key of ATTR_KEYS) state.attrs[key] = (Number(state.attrs[key]) || 0) + 1;
+  } else if (id === "companion") {
     if (meta.companionSword || (state.companions || []).indexOf("c_sword") >= 0) {
       return { ok: false, msg: "已与沈青梧结缘" };
     }
     meta.companionSword = true;
     if ((state.companions || []).indexOf("c_sword") < 0) state.companions.push("c_sword");
-  } else if (id === "attr") {
-    meta.attrBonus = (meta.attrBonus || 0) + 1;
-    for (const key of ATTR_KEYS) state.attrs[key] = (Number(state.attrs[key]) || 0) + 1;
   } else if (id === "rate") {
     meta.rateBonus = Math.min(9, (Number(meta.rateBonus) || 0) + META_RATE_STEP);
   } else if (id === "stone") {
     meta.stoneBonus = Math.min(9, (Number(meta.stoneBonus) || 0) + META_STONE_STEP);
+  } else if (id === "slot_research") {
+    if (meta.slots.research) return { ok: false, msg: "研法第三槽已开" };
+    meta.slots.research = true;
+    state.research = Object.assign({}, state.research, { unlocks: Object.assign({ stone: false }, state.research.unlocks), slots: researchSlotCap(state) });
+  } else if (id === "slot_alchemy") {
+    if (meta.slots.alchemy) return { ok: false, msg: "丹炉第三槽已开" };
+    meta.slots.alchemy = true;
+  } else if (id === "slot_forge") {
+    if (meta.slots.forge) return { ok: false, msg: "器炉第三槽已开" };
+    meta.slots.forge = true;
+  } else if (id === "market_shelf") {
+    if (meta.marketUnlocked >= CFG.MARKET_SHELVES) return { ok: false, msg: "九座货架已全部开启" };
+    meta.marketUnlocked = clamp(meta.marketUnlocked + 1, CFG.MARKET_BASE_SHELVES, CFG.MARKET_SHELVES);
+    state.market.unlocked = meta.marketUnlocked;
+    state.market.refreshAt = 0;
   }
   meta.points = Math.max(0, (meta.points || 0) - def.cost);
   saveMeta(meta);
@@ -5939,11 +6204,17 @@ function resetMeta(state) {
   const meta = loadMeta();
   const refund = metaSpent(meta);
   meta.points = Math.min(9999, (meta.points || 0) + refund);
-  meta.attrBonus = 0;
+  meta.xianzi = 0;
   meta.rateBonus = 0;
   meta.stoneBonus = 0;
   meta.companionSword = false;
+  meta.marketUnlocked = CFG.MARKET_BASE_SHELVES;
+  meta.slots = { research: false, alchemy: false, forge: false };
   saveMeta(meta);
+  if (state && state.market) {
+    state.market.unlocked = CFG.MARKET_BASE_SHELVES;
+    state.market.refreshAt = 0;
+  }
   pushLog(state, "轮回印记重置 · 退还 " + refund + " 点", "info");
   return { ok: true, refund, meta };
 }
@@ -6035,7 +6306,7 @@ function deriveStats(state) {
   const critDmg = 1.5 + a.shenshi * 0.012;
   const dodge = Math.min(0.35, a.xingyun * 0.0025);
   const highQualityChance = qualityChance(a.wuxing, 4);
-  const mpCost = Math.max(1, Math.round(mpMax * 0.10));
+  const mpCost = Math.max(1, Math.round(mpMax * (CFG.SPELL_MP_RATE || 0.14)));
   return { hpMax, mpMax, spellAtk, artifactAtk, defense, critRate, critDmg, dodge, highQualityChance, mpCost };
 }
 
@@ -6403,16 +6674,18 @@ function guardianStoneBonus(state) {
  * ===================================================================== */
 
 const ROGUE_KEY = "changsheng-dao.rogue.v1";
-const ROGUE_TALENT_BRANCHES = [
-  { id: "sword", name: "剑心", icon: "🗡️", desc: "攻势与斩杀" },
-  { id: "alchemy", name: "丹心", icon: "⚗️", desc: "生机与续航" },
-  { id: "talisman", name: "符心", icon: "🔯", desc: "护盾与灵息" },
-];
+const ROGUE_RUN_KEY = "changsheng-dao.rogue-run.v1";
+const ROGUE_META_SCHEMA = 2;
+const ROGUE_LEGACY_TALENT_COST = {
+  t_sword_1: 60, t_sword_2: 120, t_sword_3: 200,
+  t_alchemy_1: 60, t_alchemy_2: 120, t_alchemy_3: 200,
+  t_talisman_1: 60, t_talisman_2: 120, t_talisman_3: 200,
+};
 
 /* ------------------------------ 局外存档 ------------------------------ */
 function defaultRogueMeta() {
   return {
-    schema: 1,
+    schema: ROGUE_META_SCHEMA,
     shards: 0,
     totalShards: 0,
     runs: 0,
@@ -6423,7 +6696,6 @@ function defaultRogueMeta() {
     talents: {},
     seenRelics: {},
     bossKills: {},
-    pathWins: {},
   };
 }
 
@@ -6431,17 +6703,20 @@ function normalizeRogueMeta(raw) {
   const m = defaultRogueMeta();
   if (!raw || typeof raw !== "object") return m;
   const num = (v, lo, hi) => Math.max(lo, Math.min(hi, parseInt(v, 10) || 0));
-  m.shards = num(raw.shards, 0, 9999999);
+  m.shards = num(raw.shards, 0, 99999999);
   m.totalShards = num(raw.totalShards, 0, 999999999);
   m.runs = num(raw.runs, 0, 999999);
   m.wins = num(raw.wins, 0, 999999);
   m.bestAct = num(raw.bestAct, 0, 3);
-  m.bestShards = num(raw.bestShards, 0, 9999999);
+  m.bestShards = num(raw.bestShards, 0, 99999999);
   m.maxDiff = Math.max(1, Math.min(ROGUE_DIFFICULTIES.length, num(raw.maxDiff, 1, 3)));
   m.talents = {};
   if (raw.talents && typeof raw.talents === "object") {
     Object.keys(raw.talents).forEach((id) => {
-      if (ROGUE_TALENT_MAP[id] && raw.talents[id]) m.talents[id] = 1;
+      const def = ROGUE_TALENT_MAP[id];
+      if (!def) return;
+      const lv = Math.min(def.max || 1, Math.max(0, parseInt(raw.talents[id], 10) || 0));
+      if (lv > 0) m.talents[id] = lv;
     });
   }
   m.seenRelics = {};
@@ -6457,13 +6732,25 @@ function normalizeRogueMeta(raw) {
       if (def && def.boss) m.bossKills[id] = num(raw.bossKills[id], 0, 9999);
     });
   }
-  m.pathWins = {};
-  if (raw.pathWins && typeof raw.pathWins === "object") {
-    Object.keys(raw.pathWins).forEach((id) => {
-      if (ROGUE_PATH_MAP[id]) m.pathWins[id] = num(raw.pathWins[id], 0, 9999);
-    });
+  if ((parseInt(raw.schema, 10) || 1) < ROGUE_META_SCHEMA) {
+    let refund = 0;
+    if (raw.talents && typeof raw.talents === "object") {
+      Object.keys(raw.talents).forEach((id) => {
+        if (raw.talents[id] && ROGUE_LEGACY_TALENT_COST[id]) refund += ROGUE_LEGACY_TALENT_COST[id];
+      });
+    }
+    m.shards += refund;
   }
   return m;
+}
+
+/* v3.2：新轮回彻底清空山海秘境进度，只保留主线轮回点。 */
+function resetRogueProgress() {
+  try {
+    localStorage.removeItem(ROGUE_KEY);
+    localStorage.removeItem(ROGUE_RUN_KEY);
+  } catch (e) {}
+  return defaultRogueMeta();
 }
 
 function loadRogueMeta() {
@@ -6488,21 +6775,41 @@ function rogueMetaShards(meta) {
   return Math.max(0, parseInt((meta || loadRogueMeta()).shards, 10) || 0);
 }
 
+function rogueTalentLevel(meta, id) {
+  return Math.max(0, parseInt((meta && meta.talents && meta.talents[id]) || 0, 10) || 0);
+}
+
 function rogueTalentOwned(meta, id) {
-  return !!(meta && meta.talents && meta.talents[id]);
+  return rogueTalentLevel(meta, id) > 0;
+}
+
+function rogueTalentReqOk(meta, talent) {
+  if (!talent || !talent.req) return true;
+  const reqs = Array.isArray(talent.req) ? talent.req : [talent.req];
+  return reqs.every((id) => rogueTalentOwned(meta, id));
+}
+
+function rogueTalentMax(talent) {
+  return Math.max(1, parseInt(talent && talent.max, 10) || 1);
+}
+
+function rogueTalentCost(talent, level) {
+  const base = Math.max(1, parseInt(talent && talent.cost, 10) || 1);
+  return Math.round(base * Math.pow(1.75, Math.max(0, level || 0)));
 }
 
 function rogueTalentAvailable(meta, talent) {
-  if (!talent || rogueTalentOwned(meta, talent.id)) return false;
-  if (talent.req && !rogueTalentOwned(meta, talent.req)) return false;
-  return true;
+  if (!talent) return false;
+  if (rogueTalentLevel(meta, talent.id) >= rogueTalentMax(talent)) return false;
+  return rogueTalentReqOk(meta, talent);
 }
 
 function rogueTalentMods(meta) {
   const mods = {};
   ROGUE_TALENTS.forEach((t) => {
-    if (rogueTalentOwned(meta, t.id) && (!t.req || rogueTalentOwned(meta, t.req))) {
-      mergeRogueMods(mods, t.mods || {});
+    const lv = rogueTalentLevel(meta, t.id);
+    if (lv > 0 && rogueTalentReqOk(meta, t)) {
+      for (let i = 0; i < lv; i += 1) mergeRogueMods(mods, t.mods || {});
     }
   });
   return mods;
@@ -6511,13 +6818,16 @@ function rogueTalentMods(meta) {
 function buyRogueTalent(meta, id) {
   const t = ROGUE_TALENT_MAP[id];
   if (!t) return { ok: false, msg: "没有这枚天赋" };
-  if (rogueTalentOwned(meta, id)) return { ok: false, msg: "已经参悟过了" };
-  if (t.req && !rogueTalentOwned(meta, t.req)) return { ok: false, msg: "需先参悟前一重" };
-  if (meta.shards < t.cost) return { ok: false, msg: "道痕不足，尚差 " + (t.cost - meta.shards) };
-  meta.shards -= t.cost;
-  meta.talents[id] = 1;
+  const lv = rogueTalentLevel(meta, id);
+  const max = rogueTalentMax(t);
+  if (lv >= max) return { ok: false, msg: "已经参悟至圆满" };
+  if (!rogueTalentReqOk(meta, t)) return { ok: false, msg: "需先参悟前置天赋" };
+  const cost = rogueTalentCost(t, lv);
+  if (meta.shards < cost) return { ok: false, msg: "道痕不足，尚差 " + (cost - meta.shards) };
+  meta.shards -= cost;
+  meta.talents[id] = lv + 1;
   saveRogueMeta(meta);
-  return { ok: true, talent: t };
+  return { ok: true, talent: t, level: lv + 1, cost: cost };
 }
 
 /* ------------------------------ 遗物与词条 ------------------------------ */
@@ -6613,20 +6923,15 @@ function gainRogueEssence(run, amount) {
   return n;
 }
 
-function roguePathOf(run) {
-  return ROGUE_PATH_MAP[run && run.pathId] || ROGUE_PATHS[0];
-}
-
 /* ------------------------------ 创建一局 ------------------------------ */
-function createRogueRun(state, pathId, difficulty, meta) {
-  const path = ROGUE_PATH_MAP[pathId] || ROGUE_PATHS[0];
+function createRogueRun(state, difficulty, meta) {
   const m = meta || loadRogueMeta();
   const diff = Math.max(1, Math.min(ROGUE_DIFFICULTIES.length, parseInt(difficulty, 10) || 1));
   const base = deriveStats(state);
   const talentMods = rogueTalentMods(m);
-  const baseMods = mergeRogueMods(mergeRogueMods({}, path.stats || {}), talentMods);
+  const baseMods = mergeRogueMods(mergeRogueMods({}, ROGUE_BASE_MODS), talentMods);
   const run = {
-    pathId: path.id,
+    schema: ROGUE_META_SCHEMA,
     difficulty: diff,
     act: 1,
     step: 0,
@@ -6640,7 +6945,7 @@ function createRogueRun(state, pathId, difficulty, meta) {
     eliteKills: 0,
     bossKills: 0,
     bossDefeated: [],
-    relics: [path.startRelic].filter(Boolean),
+    relics: ROGUE_START_RELIC ? [ROGUE_START_RELIC] : [],
     baseStats: base,
     baseMods: baseMods,
     extraMods: {},
@@ -6659,9 +6964,10 @@ function createRogueRun(state, pathId, difficulty, meta) {
   run.mods = aggregateRogueMods(run.relics, run.baseMods);
   run.maxHp = Math.max(1, Math.round(base.hpMax * (1 + (run.mods.hpPct || 0))));
   run.hp = run.maxHp;
-  const meta2 = loadRogueMeta();
-  meta2.seenRelics[path.startRelic] = 1;
-  saveRogueMeta(meta2);
+  if (ROGUE_START_RELIC && ROGUE_RELIC_MAP[ROGUE_START_RELIC]) {
+    m.seenRelics[ROGUE_START_RELIC] = 1;
+    saveRogueMeta(m);
+  }
   return run;
 }
 
@@ -6859,10 +7165,9 @@ function rogueAdvance(run) {
 }
 
 /* ------------------------------ 秘境战斗 ------------------------------ */
-function buildRogueSpells(pathId, atk) {
-  const path = ROGUE_PATH_MAP[pathId] || ROGUE_PATHS[0];
-  return (path.spells || []).map((s, i) => ({
-    id: "rg_" + path.id + "_" + i,
+function buildRogueSpells(atk) {
+  return (ROGUE_SPELLS || []).map((s, i) => ({
+    id: "rg_spell_" + i,
     name: s.name,
     icon: s.icon,
     main: Object.assign({}, s.main, { value: Math.max(1, Math.round(atk * (s.main.ratio || 1))) }),
@@ -6871,12 +7176,11 @@ function buildRogueSpells(pathId, atk) {
   }));
 }
 
-function buildRogueArtifact(pathId, artAtk) {
-  const path = ROGUE_PATH_MAP[pathId] || ROGUE_PATHS[0];
-  const a = path.artifact;
+function buildRogueArtifact(artAtk) {
+  const a = ROGUE_ARTIFACT;
   if (!a) return null;
   return Object.assign({}, a, {
-    id: "rg_art_" + path.id,
+    id: "rg_artifact",
     main: Object.assign({}, a.main, { value: Math.max(1, Math.round(artAtk * (a.main.ratio || 1))) }),
     extras: a.extras || [],
   });
@@ -6898,7 +7202,7 @@ function simulateRogueBattle(state, run, node) {
     hpMax: hpMax,
     mp: mpMax,
     mpMax: mpMax,
-    mpCost: Math.max(1, Math.round(mpMax * 0.10)),
+    mpCost: Math.max(1, Math.round(mpMax * (CFG.SPELL_MP_RATE || 0.14))),
     atk: atk,
     artAtk: artAtk,
     def: base.defense * (1 + (mods.defPct || 0)),
@@ -6932,8 +7236,8 @@ function simulateRogueBattle(state, run, node) {
     burn: null,
   };
   enemy.hpMax = enemy.hp;
-  const spells = buildRogueSpells(run.pathId, atk);
-  const artifact = buildRogueArtifact(run.pathId, artAtk);
+  const spells = buildRogueSpells(atk);
+  const artifact = buildRogueArtifact(artAtk);
   let artSpeed = artifact ? artifact.speed || 3 : 0;
   if (artSpeed && mods.artifactHaste) artSpeed = Math.max(2, artSpeed - mods.artifactHaste);
   const ctx = {
@@ -7163,7 +7467,6 @@ function finishRogueRun(state, run, win) {
   meta.bestShards = Math.max(meta.bestShards || 0, baseShards);
   if (win) {
     meta.wins += 1;
-    meta.pathWins[run.pathId] = (meta.pathWins[run.pathId] || 0) + 1;
     meta.maxDiff = Math.min(ROGUE_DIFFICULTIES.length, Math.max(meta.maxDiff || 1, ROGUE_DIFFICULTIES.filter((d) => (meta.wins || 0) >= d.unlockWins).length));
   }
   const bossIds = (run.bossDefeated || []).slice();
@@ -7189,7 +7492,6 @@ function finishRogueRun(state, run, win) {
     eliteKills: run.eliteKills || 0,
     bossKills: run.bossKills || 0,
     act: run.act || 1,
-    pathId: run.pathId,
     difficulty: run.difficulty || 1,
     meta: meta,
   };
@@ -7197,10 +7499,31 @@ function finishRogueRun(state, run, win) {
   return run.result;
 }
 
+/* ------------------------------ 道痕兑换修为 ------------------------------ */
+function rogueExchangeExp(state, meta) {
+  const cost = Math.max(1, parseInt(CFG.ROGUE_EXP_COST, 10) || 50);
+  const m = meta || loadRogueMeta();
+  if ((m.shards || 0) < cost) {
+    return { ok: false, msg: "道痕不足，尚差 " + (cost - (m.shards || 0)) };
+  }
+  if (!state || state.flags.ascended) {
+    return { ok: false, msg: "此界已终，修为无处可存" };
+  }
+  const realm = realmAt(state.realmIndex);
+  const gain = Math.max(1, Math.round(realm.req * (CFG.ROGUE_EXP_PCT || 0.18)));
+  m.shards -= cost;
+  saveRogueMeta(m);
+  state.exp = (state.exp || 0) + gain;
+  pushLog(state, "道痕化道 · 修为 +" + fmt(gain) + "（耗 " + cost + " 道痕）", "great");
+  checkAchievements(state);
+  return { ok: true, gain: gain, cost: cost, shards: m.shards };
+}
+
+
 /* ===== rogue_ui.js ===== */
 /* =====================================================================
- * 《长生道》· rogue_ui.js (v3.0.0)
- * 山海秘境界面：入口、选路、地图、事件、鬼市、静修、遗藏、结算
+ * 《长生道》· rogue_ui.js (v3.2.0)
+ * 山海秘境界面：入口、道痕天赋树、启程、地图、事件、鬼市、静修、遗藏、结算
  * 依赖 ui.js 中的 game / UI / rogueOpen / rogueRun 等状态，init 在末尾执行
  * ===================================================================== */
 
@@ -7266,7 +7589,7 @@ function renderRogueEntry() {
     sub = "道痕 " + fmt(meta.shards) + " · 已通关 " + fmt(meta.wins || 0) + " 次";
   }
   UI.rogueHint.textContent = unlocked ? "三幕择路 · 道痕 " + fmt(meta.shards) : "筑基一层开启";
-  UI.rogueDesc.innerHTML = "山中有三途，路有遗物、奇遇与鬼市。败则道途暂止，胜则山海归位。";
+  UI.rogueDesc.innerHTML = "山中有三幕，路有遗物、奇遇与鬼市。道痕点天赋，败则道途暂止，胜则山海归位。";
   UI.btnRogue.disabled = disabled;
   const main = UI.btnRogue.querySelector(".btn-main");
   if (main) main.textContent = label;
@@ -7320,7 +7643,7 @@ function loadRogueRun() {
   try {
     const raw = JSON.parse(localStorage.getItem(ROGUE_RUN_KEY) || "null");
     if (!raw || typeof raw !== "object") return null;
-    if (!ROGUE_PATH_MAP[raw.pathId]) return null;
+    if ((parseInt(raw.schema, 10) || 0) < ROGUE_META_SCHEMA) return null;
     if (!raw.baseStats || typeof raw.baseStats !== "object") return null;
     raw.relics = Array.isArray(raw.relics) ? raw.relics.filter(function (id) { return !!ROGUE_RELIC_MAP[id]; }) : [];
     raw.bossDefeated = Array.isArray(raw.bossDefeated) ? raw.bossDefeated.filter(function (id) { return !!ROGUE_ENEMY_MAP[id]; }) : [];
@@ -7351,7 +7674,7 @@ function renderRogueHead() {
   if (!UI.rogueKicker) return;
   if (!rogueRun) {
     UI.rogueKicker.textContent = "山海秘境";
-    UI.rogueHead.textContent = "三途择一";
+    UI.rogueHead.textContent = "道痕择路";
     UI.rogueMini.innerHTML = "";
     return;
   }
@@ -7385,91 +7708,113 @@ function renderRogue() {
 }
 
 /* ------------------------------ 选路 / 天赋 / 图鉴 ------------------------------ */
-function renderRogueSelect() {
-  const meta = loadRogueMeta();
-  if (!ROGUE_PATH_MAP[roguePath]) roguePath = ROGUE_PATHS[0].id;
+function rogueTalentBtn(meta, t) {
+  const lv = rogueTalentLevel(meta, t.id);
+  const max = rogueTalentMax(t);
+  const reqOk = rogueTalentReqOk(meta, t.req);
+  if (lv >= max) return '<button class="rg-talent-btn owned" disabled>已满级</button>';
+  const cost = rogueTalentCost(t, lv);
+  const can = reqOk && (meta.shards || 0) >= cost;
+  const label = reqOk ? (lv > 0 ? "升级 " + cost : cost + " 道痕") : "需前置";
+  return '<button class="rg-talent-btn" data-action="rogue-talent" data-id="' + t.id + '" ' + (can ? "" : "disabled") + '>' + label + "</button>";
+}
+
+function rogueTalentNodeHTML(meta, t) {
+  const lv = rogueTalentLevel(meta, t.id);
+  const max = rogueTalentMax(t);
+  const reqOk = rogueTalentReqOk(meta, t.req);
+  const reqName = t.req && ROGUE_TALENT_MAP[t.req] ? ROGUE_TALENT_MAP[t.req].name : "";
+  const cls = lv >= max ? "owned" : (reqOk ? "" : "locked");
+  return '<div class="rg-talent ' + cls + '">' +
+    '<div class="rg-talent-icon">' + t.icon + "</div>" +
+    '<div class="rg-talent-body"><div class="rg-talent-name">' + esc(t.name) +
+    '<span class="rg-talent-lv">' + (max > 1 ? "Lv." + lv + " / " + max : (lv > 0 ? "已点" : "未点")) + "</span></div>" +
+    '<div class="rg-talent-desc">' + esc(t.desc) + "</div>" +
+    (reqOk ? "" : '<div class="rg-talent-req">需先点「' + esc(reqName) + "」</div>") +
+    "</div>" + rogueTalentBtn(meta, t) + "</div>";
+}
+
+function renderRogueTalentsTab(meta) {
+  let h = '<div class="rg-card"><div class="rg-label"><span>道痕天赋</span><span>持有 ' + fmt(meta.shards || 0) + ' 道痕</span></div>' +
+    '<div class="rg-tip">道痕由秘境结算带回，永久保留。三系各有五阶；每阶需先点亮前一阶，部分节点可反复升级。</div>' +
+    ROGUE_TALENT_BRANCHES.map(function (b) {
+      const nodes = ROGUE_TALENTS.filter(function (t) { return t.branch === b.id; });
+      return '<div class="rg-talent-group"><div class="rg-talent-group-head">' + b.icon + " " + esc(b.name) + " · " + esc(b.desc) + "</div>" +
+        '<div class="rg-talent-tree">' + nodes.map(function (t) { return rogueTalentNodeHTML(meta, t); }).join("") + "</div></div>";
+    }).join("") + "</div>";
+  const cost = CFG.ROGUE_EXP_COST || 50;
+  const gain = Math.round(realmAt(game.realmIndex || 0).req * (CFG.ROGUE_EXP_PCT || 0.18));
+  h += '<div class="rg-card"><div class="rg-label"><span>道痕化道</span><span>以道痕换修为</span></div>' +
+    '<div class="rg-tip">散去 ' + cost + ' 道痕，化作当前境界修为 +' + fmt(gain) + "。道痕不足时不可兑换。</div>" +
+    '<button class="btn btn-ghost rg-wide-btn" data-action="rogue-exchange-exp" ' + ((meta.shards || 0) < cost ? "disabled" : "") + ">" +
+    '<span class="btn-main">道痕化道</span><span class="btn-sub">耗 ' + cost + " 道痕 · 修为 +" + fmt(gain) + "</span></button></div>";
+  return h;
+}
+
+function renderRogueStartTab(meta) {
   const diff = ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (rogueDiff || 1) - 1))];
   if ((meta.wins || 0) < diff.unlockWins) rogueDiff = 1;
+  const startRelic = ROGUE_RELIC_MAP[ROGUE_START_RELIC];
+  let h = '<div class="rg-card"><div class="rg-label"><span>山海行装</span><span>每局自带</span></div>' +
+    '<div class="rg-tip">不再择三途。入山者皆负行囊，凭道痕天赋与沿途遗物走到最后。</div>' +
+    '<div class="rg-choice-list">' +
+    (startRelic ? '<div class="rg-choice"><div class="rg-choice-icon">' + startRelic.icon + '</div><div class="rg-choice-body"><div class="rg-choice-name">' + esc(startRelic.name) + '</div><div class="rg-choice-desc">' + esc(startRelic.desc) + "</div></div></div>" : "") +
+    '<div class="rg-choice"><div class="rg-choice-icon">📜</div><div class="rg-choice-body"><div class="rg-choice-name">起手三术</div><div class="rg-choice-desc">' + ROGUE_SPELLS.map(function (s) { return esc(s.name); }).join(" · ") + "</div></div></div>" +
+    '<div class="rg-choice"><div class="rg-choice-icon">' + ROGUE_ARTIFACT.icon + '</div><div class="rg-choice-body"><div class="rg-choice-name">' + esc(ROGUE_ARTIFACT.name) + '</div><div class="rg-choice-desc">每 ' + ROGUE_ARTIFACT.speed + " 回合祭出一次。</div></div></div>" +
+    "</div></div>";
+  h += '<div class="rg-label"><span>劫数</span><span>通关后解锁更高劫</span></div>' +
+    '<div class="rg-diff-row">' + ROGUE_DIFFICULTIES.map(function (d) {
+      const locked = (meta.wins || 0) < d.unlockWins;
+      const sel = rogueDiff === d.level;
+      return '<button class="rg-diff ' + (sel ? "sel" : "") + (locked ? " locked" : "") + '" data-action="rogue-diff" data-diff="' + d.level + '" ' + (locked ? "disabled" : "") + ">" +
+        '<div class="rg-diff-name">' + esc(d.name) + "</div>" +
+        '<div class="rg-diff-desc">' + (locked ? "通关 " + d.unlockWins + " 次解锁" : "敌 " + Math.round(d.enemy * 100) + "% · 道痕 " + Math.round(d.shard * 100) + "%") + "</div></button>";
+    }).join("") + "</div>";
+  h += '<button class="rg-start" data-action="rogue-start">踏入山海<span class="rg-start-sub">' + esc(diff.name) + " · 道痕 " + fmt(meta.shards || 0) + "</span></button>";
+  return h;
+}
+
+function renderRogueCodexTab(meta) {
+  const seenCount = Object.keys(meta.seenRelics || {}).length;
+  let h = '<div class="rg-card"><div class="rg-label"><span>遗物图鉴</span><span>' + seenCount + " / " + ROGUE_RELICS.length + "</span></div>" +
+    '<div class="rg-codex-grid">' + ROGUE_RELICS.map(function (r) {
+      const seen = !!(meta.seenRelics && meta.seenRelics[r.id]);
+      return '<div class="rg-codex ' + (seen ? "" : "unseen") + " rarity-" + r.rarity + '">' +
+        '<div class="rg-codex-icon">' + (seen ? r.icon : "❔") + "</div>" +
+        '<div class="rg-codex-name">' + (seen ? esc(r.name) : "未见过") + "</div>" +
+        '<div class="rg-codex-rarity">' + "★".repeat(r.rarity) + "</div></div>";
+    }).join("") + "</div></div>";
+  const bosses = ROGUE_ENEMIES.filter(function (e) { return e.boss; });
+  h += '<div class="rg-card"><div class="rg-label"><span>境主战绩</span><span>三幕境主</span></div>' +
+    '<div class="rg-codex-grid">' + bosses.map(function (e) {
+      const n = (meta.bossKills && meta.bossKills[e.id]) || 0;
+      return '<div class="rg-codex ' + (n > 0 ? "" : "unseen") + '">' +
+        '<div class="rg-codex-icon">' + (n > 0 ? e.icon : "❔") + "</div>" +
+        '<div class="rg-codex-name">' + (n > 0 ? esc(e.name) : "未逢") + "</div>" +
+        '<div class="rg-codex-rarity">' + (n > 0 ? "已斩 " + n + " 次" : "未逢") + "</div></div>";
+    }).join("") + "</div></div>";
+  return h;
+}
+
+function renderRogueSelect() {
+  const meta = loadRogueMeta();
+  if (rogueTab !== "talents" && rogueTab !== "start" && rogueTab !== "codex") rogueTab = "talents";
   let h = '<div class="rg-card rg-hero">' +
     '<div class="rg-hero-top"><div class="rg-act-icon">🌌</div><div>' +
     '<div class="rg-act-name">山海秘境</div>' +
     '<div class="rg-act-sub">三幕择路 · 一局约五到十分钟 · 不出秘境不结算</div></div></div>' +
-    '<div class="rg-res-row"><div class="rg-res">道痕 <b>' + fmt(meta.shards) + '</b></div>' +
+    '<div class="rg-res-row"><div class="rg-res">道痕 <b>' + fmt(meta.shards || 0) + '</b></div>' +
     '<div class="rg-res">通关 <b>' + fmt(meta.wins || 0) + '</b></div>' +
     '<div class="rg-res">最深 <b>' + fmt(meta.bestAct || 0) + ' 幕</b></div></div></div>';
   h += '<div class="rg-tabs">' +
-    '<button class="rg-tab ' + (rogueTab === "paths" ? "active" : "") + '" data-action="rogue-tab" data-tab="paths">三途</button>' +
     '<button class="rg-tab ' + (rogueTab === "talents" ? "active" : "") + '" data-action="rogue-tab" data-tab="talents">道痕</button>' +
+    '<button class="rg-tab ' + (rogueTab === "start" ? "active" : "") + '" data-action="rogue-tab" data-tab="start">启程</button>' +
     '<button class="rg-tab ' + (rogueTab === "codex" ? "active" : "") + '" data-action="rogue-tab" data-tab="codex">图鉴</button>' +
     "</div>";
-  if (rogueTab === "talents") {
-    h += '<div class="rg-card"><div class="rg-label"><span>道痕天赋</span><span>持有 ' + fmt(meta.shards) + ' 道痕</span></div>' +
-      '<div class="rg-tip">道痕由秘境结算带回，天赋永久生效。每系三重，需按序参悟。</div>' +
-      ROGUE_TALENT_BRANCHES.map(function (b) {
-        return '<div class="rg-talent-group"><div class="rg-talent-group-head">' + b.icon + " " + esc(b.name) + " · " + esc(b.desc) + "</div>" +
-          ROGUE_TALENTS.filter(function (t) { return t.branch === b.id; }).map(function (t) {
-            const owned = rogueTalentOwned(meta, t.id);
-            const reqOk = !t.req || rogueTalentOwned(meta, t.req);
-            const can = reqOk && !owned && meta.shards >= t.cost;
-            return '<div class="rg-talent ' + (owned ? "owned" : (reqOk ? "" : "locked")) + '">' +
-              '<div class="rg-talent-icon">' + t.icon + "</div>" +
-              '<div class="rg-talent-body"><div class="rg-talent-name">' + esc(t.name) + "</div>" +
-              '<div class="rg-talent-desc">' + esc(t.desc) + "</div></div>" +
-              (owned ? '<button class="rg-talent-btn owned" disabled>已参悟</button>' :
-                '<button class="rg-talent-btn" data-action="rogue-talent" data-id="' + t.id + '" ' + (can ? "" : "disabled") + '>' +
-                (reqOk ? t.cost + " 道痕" : "需前置") + "</button>") +
-              "</div>";
-          }).join("") + "</div>";
-      }).join("") + "</div>";
-  } else if (rogueTab === "codex") {
-    const seenCount = Object.keys(meta.seenRelics || {}).length;
-    h += '<div class="rg-card"><div class="rg-label"><span>遗物图鉴</span><span>' + seenCount + " / " + ROGUE_RELICS.length + "</span></div>" +
-      '<div class="rg-codex-grid">' + ROGUE_RELICS.map(function (r) {
-        const seen = !!(meta.seenRelics && meta.seenRelics[r.id]);
-        return '<div class="rg-codex ' + (seen ? "" : "unseen") + " rarity-" + r.rarity + '">' +
-          '<div class="rg-codex-icon">' + (seen ? r.icon : "❔") + "</div>" +
-          '<div class="rg-codex-name">' + (seen ? esc(r.name) : "未见过") + "</div>" +
-          '<div class="rg-codex-rarity">' + "★".repeat(r.rarity) + "</div></div>";
-      }).join("") + "</div></div>";
-    const bosses = ROGUE_ENEMIES.filter(function (e) { return e.boss; });
-    h += '<div class="rg-card"><div class="rg-label"><span>境主战绩</span><span>三幕境主</span></div>' +
-      '<div class="rg-codex-grid">' + bosses.map(function (e) {
-        const n = (meta.bossKills && meta.bossKills[e.id]) || 0;
-        return '<div class="rg-codex ' + (n > 0 ? "" : "unseen") + '">' +
-          '<div class="rg-codex-icon">' + (n > 0 ? e.icon : "❔") + "</div>" +
-          '<div class="rg-codex-name">' + (n > 0 ? esc(e.name) : "未逢") + "</div>" +
-          '<div class="rg-codex-rarity">' + (n > 0 ? "已斩 " + n + " 次" : "未逢") + "</div></div>";
-      }).join("") + "</div></div>";
-  } else {
-    h += '<div class="rg-label"><span>择一途</span><span>三途各有起手遗物</span></div>';
-    ROGUE_PATHS.forEach(function (p) {
-      const sel = roguePath === p.id;
-      h += '<button class="rg-path ' + (sel ? "sel" : "") + '" data-action="rogue-path" data-path="' + p.id + '">' +
-        '<div class="rg-path-head"><div class="rg-path-icon">' + p.icon + "</div>" +
-        '<div><div class="rg-path-name">' + esc(p.name) + "</div>" +
-        '<div class="rg-path-title">' + esc(p.title) + "</div></div>" +
-        (sel ? '<span class="rg-path-check">已择</span>' : "") + "</div>" +
-        '<div class="rg-path-desc">' + esc(p.desc) + "</div>" +
-        '<div class="rg-path-passive">' + esc(p.passive) + "</div>" +
-        '<div class="rg-path-quote">「' + esc(p.quote) + "」</div></button>";
-    });
-    h += '<div class="rg-label"><span>劫数</span><span>通关后解锁更高劫</span></div>' +
-      '<div class="rg-diff-row">' + ROGUE_DIFFICULTIES.map(function (d) {
-        const locked = (meta.wins || 0) < d.unlockWins;
-        const sel = rogueDiff === d.level;
-        return '<button class="rg-diff ' + (sel ? "sel" : "") + (locked ? " locked" : "") + '" data-action="rogue-diff" data-diff="' + d.level + '" ' + (locked ? "disabled" : "") + '>' +
-          '<div class="rg-diff-name">' + esc(d.name) + "</div>" +
-          '<div class="rg-diff-desc">' + (locked ? "通关 " + d.unlockWins + " 次解锁" : "敌 " + Math.round(d.enemy * 100) + "% · 道痕 " + Math.round(d.shard * 100) + "%") + "</div></button>";
-      }).join("") + "</div>";
-    h += '<button class="rg-start" data-action="rogue-start">踏入山海' +
-      '<span class="rg-start-sub">' + esc(roguePathName()) + " · " + esc(diff.name) + " · 道痕 " + fmt(meta.shards) + "</span></button>";
-  }
+  if (rogueTab === "talents") h += renderRogueTalentsTab(meta);
+  else if (rogueTab === "codex") h += renderRogueCodexTab(meta);
+  else h += renderRogueStartTab(meta);
   return h;
-}
-
-function roguePathName() {
-  const p = ROGUE_PATH_MAP[roguePath];
-  return p ? p.name : "剑心";
 }
 
 /* ------------------------------ 地图 ------------------------------ */
@@ -7538,7 +7883,7 @@ function startRogueRun() {
   const meta = loadRogueMeta();
   const diff = ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (rogueDiff || 1) - 1))];
   if ((meta.wins || 0) < diff.unlockWins) { toast("此劫尚未解锁"); return; }
-  rogueRun = createRogueRun(game, roguePath, rogueDiff, meta);
+  rogueRun = createRogueRun(game, rogueDiff, meta);
   rogueConfirm = false;
   saveRogueRun();
   renderRogue();
@@ -7650,18 +7995,27 @@ function abandonRogueRun() {
 
 function rogueAgain() {
   if (!rogueRun) { renderRogue(); return; }
-  const path = rogueRun.pathId;
   const diff = rogueRun.difficulty;
   clearRogueRun();
   rogueRun = null;
   const meta = loadRogueMeta();
   const def = ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (diff || 1) - 1))];
   const useDiff = (meta.wins || 0) >= def.unlockWins ? diff : 1;
-  roguePath = path;
   rogueDiff = useDiff;
-  rogueRun = createRogueRun(game, path, useDiff, meta);
+  rogueRun = createRogueRun(game, useDiff, meta);
   saveRogueRun();
   renderRogue();
+}
+
+/* ------------------------------ 道痕化道 ------------------------------ */
+function doRogueExchangeExp() {
+  const res = rogueExchangeExp(game, loadRogueMeta());
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast("道痕化道 · 修为 +" + fmt(res.gain));
+  renderRogue();
+  updateTopbar(Date.now());
+  if (currentTab === "cultivate") updateCultivate(Date.now());
 }
 
 /* ------------------------------ 天赋购买 ------------------------------ */
@@ -7774,12 +8128,11 @@ function renderRogueResult() {
   const res = run.result || {};
   const win = !!res.win;
   const diff = ROGUE_DIFFICULTIES[Math.max(0, Math.min(ROGUE_DIFFICULTIES.length - 1, (res.difficulty || 1) - 1))];
-  const path = ROGUE_PATH_MAP[res.pathId] || ROGUE_PATHS[0];
   let h = '<div class="rg-result-hero"><div class="rg-result-icon">' + (win ? "🌄" : "🌫️") + "</div>" +
     '<div class="rg-result-title">' + (win ? "山海归位" : "道途未尽") + "</div>" +
     '<div class="rg-result-sub">' + (win ? "三幕皆破，你带着一身道痕归来。" : "此行止于第 " + (res.act || 1) + " 幕，所得已记入道痕。") + "</div></div>";
   h += '<div class="rg-card"><div class="rg-result-stats">' +
-    '<div class="rg-result-stat"><span>道途</span><b>' + esc(path.name) + " · " + esc(diff.name) + "</b></div>" +
+    '<div class="rg-result-stat"><span>劫数</span><b>' + esc(diff.name) + "</b></div>" +
     '<div class="rg-result-stat"><span>深度</span><b>' + fmt(res.depth || 0) + "</b></div>" +
     '<div class="rg-result-stat"><span>斩敌</span><b>' + fmt((res.kills || 0) + (res.eliteKills || 0)) + "</b></div>" +
     '<div class="rg-result-stat"><span>境主</span><b>' + fmt(res.bossKills || 0) + "</b></div>" +
@@ -7823,6 +8176,7 @@ let toastTimer = 0;
 let modalQueue = [];
 let coverOpen = false;
 let creating = false;
+let createModal = false;
 let bagTab = "spell";
 let lastBagSpellCount = -1;
 let lastBagCompanionCount = -1;
@@ -7831,12 +8185,10 @@ let lastBondReady = null;
 let achTab = "cultivation";
 let rogueOpen = false;
 let rogueRun = null;
-let roguePath = "sword";
 let rogueDiff = 1;
-let rogueTab = "paths";
+let rogueTab = "talents";
 let rogueConfirm = false;
 let rogueBusy = false;
-const ROGUE_RUN_KEY = "changsheng-dao.rogue.run.v1";
 
 /* 战斗演出状态 */
 let battleOpen = false;
@@ -7908,8 +8260,11 @@ function cacheDom() {
     "logList", "stoneText", "playTimeText", "brandSub",
     "researchHint", "researchIcon", "researchTitle", "researchDesc",
     "researchBar", "researchTime", "btnResearch", "researchSub", "btnRush", "rushSub", "slotRow", "spellHint",
+    "researchSlots", "btnResearchSlot", "researchSlotSub",
     "alchemyHint", "alchemyTitle", "alchemyDesc", "alchemyTime", "alchemyIcon", "btnAlchemy", "alchemySub",
+    "alchemySlots", "btnAlchemySlot", "alchemySlotSub",
     "forgeHint", "forgeTitle", "forgeDesc", "forgeTime", "forgeIcon", "btnForge", "forgeSub",
+    "forgeSlots", "btnForgeSlot", "forgeSlotSub",
     "bagHint", "bagSpellCount", "bagArtCount", "bagPillCount", "bagCompCount",
     "bagSpellHint", "bagArtHint", "bagPillHint", "bagCompHint",
     "bagSpellList", "bagArtList", "bagPillList", "bagCompList",
@@ -7922,8 +8277,10 @@ function cacheDom() {
     "guardianHint", "guardianIcon", "guardianName", "guardianDesc", "btnGuardian", "guardianSub",
     "journeyOrb", "btnJourney", "journeySub", "journeyLog", "journeyRealm",
     "attrTotal", "attrList", "statsGrid", "achGrid", "achHint", "verText",
-    "metaClears", "metaPoints", "metaBonus", "metaRate", "metaStone", "metaShop", "metaHistory", "metaHint",
-    "btnNextLife", "btnResetMeta", "achTabs",
+    "metaClears", "metaPoints", "metaBonus", "metaRate", "metaStone", "metaHistory", "metaHint",
+    "btnNextLife", "achTabs",
+    "createMeta", "createMetaHead", "createMetaLine", "createMetaShop",
+    "btnCreateResetMeta", "btnCreateClearMeta",
     "cover", "coverBtn", "coverSub", "coverVer", "coverRealm",
     "battle", "battleTitle", "battleRound", "battleEnemyIcon", "battleEnemyName",
     "battleEnemyHp", "battleEnemyHpText", "battlePlayerHp", "battlePlayerHpText",
@@ -8064,27 +8421,56 @@ function renderLogs() {
 }
 
 /* ------------------------------ 法术页 ------------------------------ */
+function slotLineText(used, cap, base, stone, metaSlot) {
+  return "槽位 " + used + " / " + cap + " · 基础 " + base + " · 灵石槽 " + (stone ? "已开" : "未开") +
+    " · 轮回槽 " + (metaSlot ? "已开" : "未开");
+}
+
+function updateSlotButton(btn, sub, unlocked, cost, stone) {
+  if (!btn) return;
+  btn.hidden = unlocked;
+  btn.disabled = unlocked || stone < cost;
+  if (sub) {
+    sub.textContent = unlocked
+      ? "灵石槽已开"
+      : stone < cost ? "尚缺 " + fmt(cost - stone) + " 灵石" : "耗 " + fmt(cost) + " 灵石";
+  }
+}
+
 function updateResearchCard(now) {
-  const r = game.research || {};
   const total = (game.spells || []).length;
   const dur = researchDurationSec(game);
-  if (UI.researchHint) UI.researchHint.textContent = total + " / " + CFG.MAX_SPELLS;
+  const jobs = researchJobs(game, now);
+  const used = researchUsed(game, now);
+  const cap = researchSlotCap(game);
+  const meta = loadMeta();
+  if (UI.researchHint) UI.researchHint.textContent = total + " / " + CFG.MAX_SPELLS + " · 卷 " + used + "/" + cap;
+  if (UI.researchSlots) {
+    UI.researchSlots.textContent = slotLineText(used, cap, 1, game.research.unlocks && game.research.unlocks.stone, meta.slots && meta.slots.research);
+  }
+  updateSlotButton(UI.btnResearchSlot, UI.researchSlotSub,
+    !!(game.research.unlocks && game.research.unlocks.stone), CFG.RESEARCH_SLOT_COST, game.stone);
   if (!UI.researchTitle) return;
-  if (r.active) {
-    const span = Math.max(1, r.endAt - r.startAt);
-    const pct = Math.max(0, Math.min(1, (now - r.startAt) / span));
-    const remain = Math.max(0, (r.endAt - now) / 1000);
+  if (jobs.length) {
+    const first = jobs[0];
+    const span = Math.max(1, first.endAt - first.startAt);
+    const pct = Math.max(0, Math.min(1, (now - first.startAt) / span));
+    const remain = Math.max(0, (first.endAt - now) / 1000);
     UI.researchIcon.textContent = "🌀";
-    UI.researchTitle.textContent = "参研中";
-    UI.researchDesc.textContent = "心无旁骛，静待术成。功成时随机习得一门法术，收入背包。";
+    UI.researchTitle.textContent = jobs.length > 1 ? "参研中 · " + jobs.length + " 卷" : "参研中";
+    UI.researchDesc.textContent = "心无旁骛，静待术成。每卷功成各得一门法术，自动收入背包。";
     UI.researchBar.style.width = (pct * 100).toFixed(1) + "%";
-    UI.researchTime.textContent = "还剩 " + fmtDuration(remain);
-    UI.btnResearch.disabled = true;
-    UI.researchSub.textContent = "还需 " + fmtDuration(remain);
+    UI.researchTime.textContent = jobs.map((j, i) =>
+      "第" + (i + 1) + "卷 " + fmtDuration(Math.max(0, (j.endAt - now) / 1000))
+    ).join(" · ");
+    UI.btnResearch.disabled = used >= cap || total + jobs.length >= CFG.MAX_SPELLS;
+    UI.researchSub.textContent = total + jobs.length >= CFG.MAX_SPELLS
+      ? "藏法阁已满"
+      : used >= cap ? "槽位已满" : "可再开一卷 · " + fmtDuration(dur);
     const cost = rushResearchCost(game, now);
     if (UI.btnRush) {
       UI.btnRush.disabled = game.stone < cost;
-      UI.rushSub.textContent = game.stone < cost ? "尚缺 " + fmt(cost - game.stone) : "耗 " + fmt(cost) + " 灵石";
+      UI.rushSub.textContent = game.stone < cost ? "尚缺 " + fmt(cost - game.stone) : "最早一卷 · 耗 " + fmt(cost) + " 灵石";
     }
   } else {
     UI.researchIcon.textContent = "📖";
@@ -8092,8 +8478,10 @@ function updateResearchCard(now) {
     UI.researchDesc.textContent = "研习需静候 " + fmtDuration(dur) + "，功成时随机习得一门法术，收入背包。";
     UI.researchBar.style.width = "0%";
     UI.researchTime.textContent = "";
-    UI.btnResearch.disabled = total >= CFG.MAX_SPELLS;
-    UI.researchSub.textContent = total >= CFG.MAX_SPELLS ? "藏法阁已满" : "需 " + fmtDuration(dur);
+    UI.btnResearch.disabled = total >= CFG.MAX_SPELLS || used >= cap;
+    UI.researchSub.textContent = total >= CFG.MAX_SPELLS
+      ? "藏法阁已满"
+      : used >= cap ? "槽位已满" : "需 " + fmtDuration(dur);
     if (UI.btnRush) {
       UI.btnRush.disabled = true;
       UI.rushSub.textContent = "尚未开卷";
@@ -8102,37 +8490,52 @@ function updateResearchCard(now) {
 }
 
 function updateCraftCards(now) {
-  const c = craftState(game);
   const cd = craftCooldownSec(game);
   const craft = caveStats(game).craft;
-  const alchemyRemain = craftRemain(game, "alchemy", now);
-  const forgeRemain = craftRemain(game, "forge", now);
-  if (UI.alchemyHint) UI.alchemyHint.textContent = "丹火不熄 · 成丹 " + (game.craft.alchemyCount || 0) + " 枚";
-  if (UI.forgeHint) UI.forgeHint.textContent = "炉火照器 · 成器 " + (game.craft.forgeCount || 0) + " 件";
-  if (UI.alchemyTitle) UI.alchemyTitle.textContent = alchemyRemain > 0 ? "丹炉尚温" : "丹炉待燃";
-  if (UI.forgeTitle) UI.forgeTitle.textContent = forgeRemain > 0 ? "炉火未歇" : "器胚未成";
-  if (UI.alchemyTime) UI.alchemyTime.textContent = alchemyRemain > 0
-    ? "炉火冷却中，还需 " + fmtDuration(alchemyRemain)
-    : "随时可开炉 · 成丹 0-3 枚 · 悟性越高成丹越多";
-  if (UI.forgeTime) UI.forgeTime.textContent = forgeRemain > 0
-    ? "炉火冷却中，还需 " + fmtDuration(forgeRemain)
-    : "随时可开炉 · 成器率 " + fmtPct(forgeChance(game.attrs), 1) + " · 悟性越高越稳";
-  if (UI.btnAlchemy) {
-    UI.btnAlchemy.disabled = alchemyRemain > 0;
-    UI.alchemySub.textContent = alchemyRemain > 0
-      ? "还需 " + fmtDuration(alchemyRemain)
-      : "每次冷却 " + fmtDuration(cd) + (craft > 0 ? "（火种 -" + fmtPct(craft) + "）" : "");
-  }
-  if (UI.btnForge) {
-    UI.btnForge.disabled = forgeRemain > 0;
-    UI.forgeSub.textContent = forgeRemain > 0
-      ? "还需 " + fmtDuration(forgeRemain)
-      : "每次冷却 " + fmtDuration(cd) + (craft > 0 ? "（火种 -" + fmtPct(craft) + "）" : "");
-  }
-  if (UI.alchemyDesc) UI.alchemyDesc.textContent = "开炉炼丹，立得 0-3 枚任意丹药；当前悟性 " +
-    (game.attrs.wuxing || 0) + "，悟性越高成丹越多。";
-  if (UI.forgeDesc) UI.forgeDesc.textContent = "开炉炼器，有几率立得 0-1 件当前境界法宝；当前成器率 " +
-    fmtPct(forgeChance(game.attrs), 1) + "。";
+  const meta = loadMeta();
+  ["alchemy", "forge"].forEach((kind) => {
+    const isAlchemy = kind === "alchemy";
+    const used = craftSlotsUsed(game, kind, now);
+    const cap = craftSlotCap(game, kind);
+    const remain = craftRemain(game, kind, now);
+    const prefix = isAlchemy ? "alchemy" : "forge";
+    const hint = UI[prefix + "Hint"];
+    const title = UI[prefix + "Title"];
+    const desc = UI[prefix + "Desc"];
+    const time = UI[prefix + "Time"];
+    const btn = UI[isAlchemy ? "btnAlchemy" : "btnForge"];
+    const sub = UI[isAlchemy ? "alchemySub" : "forgeSub"];
+    const slots = UI[prefix + "Slots"];
+    const unlockBtn = UI[isAlchemy ? "btnAlchemySlot" : "btnForgeSlot"];
+    const unlockSub = UI[isAlchemy ? "alchemySlotSub" : "forgeSlotSub"];
+    const count = isAlchemy ? (game.craft.alchemyCount || 0) : (game.craft.forgeCount || 0);
+    if (hint) hint.textContent = (isAlchemy ? "丹火不熄 · 成丹 " : "炉火照器 · 成器 ") + count + (isAlchemy ? " 枚" : " 件");
+    if (title) title.textContent = used >= cap ? (isAlchemy ? "丹炉已满" : "器炉已满")
+      : used > 0 ? (isAlchemy ? "丹炉尚温" : "炉火未歇") : (isAlchemy ? "丹炉待燃" : "器胚未成");
+    if (time) {
+      time.textContent = used > 0
+        ? "炉中 " + used + " / " + cap + " 炉 · 最近一炉还需 " + fmtDuration(remain)
+        : "随时可开炉 · " + (isAlchemy
+          ? "成丹 0-3 枚 · 悟性越高成丹越多"
+          : "成器率 " + fmtPct(forgeChance(game.attrs), 1) + " · 悟性越高越稳");
+    }
+    if (slots) {
+      slots.textContent = slotLineText(used, cap, 1, game.craft.unlocks && game.craft.unlocks.stone, meta.slots && meta.slots[kind]);
+    }
+    updateSlotButton(unlockBtn, unlockSub, !!(game.craft.unlocks && game.craft.unlocks.stone),
+      isAlchemy ? CFG.ALCHEMY_SLOT_COST : CFG.FORGE_SLOT_COST, game.stone);
+    if (btn) {
+      btn.disabled = used >= cap;
+      sub.textContent = used >= cap
+        ? "槽位已满"
+        : "每次冷却 " + fmtDuration(cd) + (craft > 0 ? "（火种 -" + fmtPct(craft) + "）" : "");
+    }
+    if (desc) {
+      desc.textContent = isAlchemy
+        ? "开炉炼丹，立得 0-3 枚任意丹药；当前悟性 " + (game.attrs.wuxing || 0) + "，悟性越高成丹越多。"
+        : "开炉炼器，有几率立得 0-1 件当前境界法宝；当前成器率 " + fmtPct(forgeChance(game.attrs), 1) + "。";
+    }
+  });
 }
 
 function renderSpellPage() {
@@ -8371,18 +8774,15 @@ function marketShelfHTML(shelf, index) {
 }
 
 function marketLockedHTML(index) {
-  const m = game.market;
-  const cost = CFG.MARKET_UNLOCK_COSTS[index - m.unlocked] || 0;
   return '<div class="market-item shelf-locked"><div class="market-head"><div class="market-icon">🔒</div>' +
     '<div class="market-body"><div class="market-name">第 ' + (index + 1) + ' 座货架</div>' +
-    '<div class="market-sub">尚未开启 · 需先启用前一架</div></div></div>' +
-    '<button class="btn btn-small btn-ghost" data-action="unlock-shelf" data-index="' + index +
-    '" data-price="' + cost + '"><span class="btn-main">开启 · ' + fmt(cost) + " 💎</span></button></div>";
+    '<div class="market-sub">尚未开启 · 洗髓时以 ' + CFG.MARKET_META_COST + ' 轮回点开启</div></div></div>' +
+    '<button class="btn btn-small btn-ghost" disabled><span class="btn-main">洗髓时开启</span></button></div>';
 }
 
 function renderMarket() {
   const m = ensureMarket(game, Date.now());
-  if (UI.marketNote) UI.marketNote.textContent = "行商每 " + fmtDuration(marketRefreshSec(game)) + " 换货 · 品质随境界；货架可逐一开启。";
+  if (UI.marketNote) UI.marketNote.textContent = "行商每 " + fmtDuration(marketRefreshSec(game)) + " 换货 · 品质随境界；余下货架只在洗髓时以轮回点开启。";
   if (UI.marketShelfHint) UI.marketShelfHint.textContent = "已开 " + m.unlocked + " / " + CFG.MARKET_SHELVES + " 架";
   if (UI.marketShelves) {
     UI.marketShelves.innerHTML = m.shelves.map((shelf, i) => {
@@ -8564,24 +8964,6 @@ function renderMore() {
   if (UI.metaHint) {
     UI.metaHint.textContent = "第 " + (game.lifeNo || 1) + " 世 · 可用 " + (meta.points || 0) + " 点";
   }
-  if (UI.metaShop) {
-    const points = meta.points || 0;
-    UI.metaShop.innerHTML = META_SHOP.map((m) => {
-      const owned = m.id === "companion" && meta.companionSword;
-      const disabled = owned || points < m.cost;
-      return '<div class="meta-shop-item' + (owned ? " owned" : "") + '">' +
-        '<span class="meta-shop-icon">' + m.icon + "</span>" +
-        '<div class="meta-shop-body"><div class="meta-shop-name">' + m.name +
-        '<span class="meta-shop-cost">' + m.cost + " 点</span></div>" +
-        '<div class="meta-shop-desc">' + m.desc + "</div></div>" +
-        '<button class="btn btn-small ' + (owned ? "btn-ghost" : "meta-buy") + '"' +
-        (disabled ? " disabled" : ' data-action="meta-buy" data-id="' + m.id + '"') + ">" +
-        '<span class="btn-main">' + (owned ? "已得" : "兑换") + "</span></button></div>";
-    }).join("");
-  }
-  if (UI.btnResetMeta) {
-    UI.btnResetMeta.hidden = !(meta.points > 0 || metaSpent(meta) > 0);
-  }
   if (UI.metaHistory) {
     const recs = (meta.records || []).slice(0, 3);
     UI.metaHistory.innerHTML = recs.length
@@ -8626,9 +9008,9 @@ function onClick(e) {
     case "guardian": doGuardian(); break;
     case "open-rogue": openRogue(); break;
     case "rogue-close": closeRogue(); break;
-    case "rogue-path": roguePath = target.getAttribute("data-path") || "sword"; renderRogue(); break;
     case "rogue-diff": rogueDiff = parseInt(target.getAttribute("data-diff"), 10) || 1; renderRogue(); break;
-    case "rogue-tab": rogueTab = target.getAttribute("data-tab") || "paths"; renderRogue(); break;
+    case "rogue-tab": rogueTab = target.getAttribute("data-tab") || "talents"; renderRogue(); break;
+    case "rogue-exchange-exp": doRogueExchangeExp(); break;
     case "rogue-start": startRogueRun(); break;
     case "rogue-talent": buyRogueTalentUI(target.getAttribute("data-id")); break;
     case "rogue-node": selectRogueNode(parseInt(target.getAttribute("data-index"), 10)); break;
@@ -8661,7 +9043,9 @@ function onClick(e) {
     case "bag-tab": doBagTab(target.getAttribute("data-bag")); break;
     case "buy-market": doMarketBuy(target.getAttribute("data-kind"), id); break;
     case "buy-shelf": doBuyShelf(parseInt(target.getAttribute("data-index"), 10)); break;
-    case "unlock-shelf": doUnlockShelf(parseInt(target.getAttribute("data-index"), 10)); break;
+    case "unlock-research-slot": doUnlockSlot("research"); break;
+    case "unlock-alchemy-slot": doUnlockSlot("alchemy"); break;
+    case "unlock-forge-slot": doUnlockSlot("forge"); break;
     case "upgrade-cave": doUpgradeCave(id); break;
     case "companion-bond": doCompanionBond(id); break;
     case "reroll": doReroll(); break;
@@ -8770,6 +9154,8 @@ function showAscensionEnding() {
 
 function startNextLife() {
   const meta = loadMeta();
+  resetRogueProgress();
+  rogueRun = null;
   game = freshLifeFromMeta(meta);
   saveGame(game);
   lastLogCount = game.logs.length;
@@ -8782,6 +9168,7 @@ function startNextLife() {
 }
 
 function showClearMeta() {
+  if (creating) { createModal = true; UI.modalMask.classList.add("front"); }
   enqueueModal({
     icon: "🧹",
     title: "清除轮回印记",
@@ -8794,6 +9181,7 @@ function showClearMeta() {
         text: "清除", cls: "btn-danger", onClick: () => {
           clearMeta();
           renderMore();
+          if (creating) renderCreateMeta();
           toast("轮回印记已清除");
         }
       },
@@ -8928,6 +9316,14 @@ function doRushResearch() {
   flushPendingSpell();
 }
 
+function doUnlockSlot(kind) {
+  const res = kind === "research" ? unlockResearchSlot(game) : unlockCraftSlot(game, kind);
+  if (!res.ok) { toast(res.msg); return; }
+  saveGame(game);
+  toast("灵石槽已开 · 槽位 " + (res.cap || (kind === "research" ? researchSlotCap(game) : craftSlotCap(game, kind))));
+  refreshSpellViews();
+}
+
 function doEquipSpell(id) {
   const res = equipSpell(game, id);
   if (!res.ok) { toast(res.msg); return; }
@@ -9000,14 +9396,6 @@ function doBuyShelf(index) {
   if (currentTab === "bag") renderBag();
 }
 
-function doUnlockShelf(index) {
-  const res = unlockMarketShelf(game, index);
-  if (!res.ok) { toast(res.msg); return; }
-  saveGame(game);
-  toast("第 " + (index + 1) + " 座货架已开启");
-  renderMarket();
-}
-
 function doUpgradeCave(id) {
   const res = upgradeCave(game, id || "altar");
   if (!res.ok) { toast(res.msg); return; }
@@ -9078,18 +9466,25 @@ function doMetaBuy(id) {
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
   toast("轮回点兑换 · " + res.def.name);
+  if (creating) {
+    if (UI.createAttrs) UI.createAttrs.innerHTML = attrListHTML(game.attrs);
+    if (UI.createTotal) UI.createTotal.textContent = ATTR_KEYS.reduce((s, k) => s + (game.attrs[k] || 0), 0);
+    renderCreateMeta();
+  }
   renderMore();
+  if (currentTab === "market") renderMarket();
   updateTopbar(Date.now());
 }
 
 function showResetMeta() {
   const meta = loadMeta();
   const refund = metaSpent(meta);
+  if (creating) { createModal = true; UI.modalMask.classList.add("front"); }
   enqueueModal({
     icon: "♻️",
     title: "重置轮回印记",
     sub: "退还已消费轮回点",
-    body: "<p>将退还 " + refund + " 点轮回点，并撤销已兑换的五维、永久修行/灵石与沈青梧结缘。</p>" +
+    body: "<p>将退还 " + refund + " 点轮回点，并撤销已兑换的仙资、永久修行/灵石、货架、槽位与沈青梧结缘。</p>" +
       "<p>当前这一世的资质、道侣与修行进度不会变化；清除印记请使用「清除轮回印记」。</p>",
     buttons: [
       { text: "再想想", cls: "btn-ghost" },
@@ -9098,6 +9493,7 @@ function showResetMeta() {
           const r = resetMeta(game);
           saveGame(game);
           renderMore();
+          if (creating) renderCreateMeta();
           toast("已重置 · 退还 " + r.refund + " 点");
         }
       },
@@ -9160,6 +9556,45 @@ function doUsePill(id) {
 }
 
 /* ------------------------------ 创造角 ------------------------------ */
+function renderCreateMeta() {
+  if (!UI.createMeta) return;
+  const meta = loadMeta();
+  const points = meta.points || 0;
+  const spent = metaSpent(meta);
+  const visible = (meta.clears || 0) > 0 || points > 0 || spent > 0;
+  UI.createMeta.hidden = !visible;
+  if (!visible) return;
+  if (UI.createMetaHead) UI.createMetaHead.textContent = "可用 " + points + " 点";
+  if (UI.createMetaLine) {
+    const slots = meta.slots || {};
+    const slotCount = (slots.research ? 1 : 0) + (slots.alchemy ? 1 : 0) + (slots.forge ? 1 : 0);
+    UI.createMetaLine.textContent = "已证长生 " + (meta.clears || 0) + " 世 · 仙资 +" + (meta.xianzi || 0) +
+      " · 修行 +" + fmtPct(metaRateBonus(meta)) + " · 灵石 +" + fmtPct(metaStoneBonus(meta)) +
+      " · 货架 " + meta.marketUnlocked + " / " + CFG.MARKET_SHELVES + " · 轮回槽 " + slotCount + " / 3";
+  }
+  if (UI.createMetaShop) {
+    UI.createMetaShop.innerHTML = META_SHOP.map((m) => {
+      const owned = (m.id === "companion" && meta.companionSword) ||
+        (m.id === "slot_research" && meta.slots.research) ||
+        (m.id === "slot_alchemy" && meta.slots.alchemy) ||
+        (m.id === "slot_forge" && meta.slots.forge);
+      const capped = m.id === "market_shelf" && meta.marketUnlocked >= CFG.MARKET_SHELVES;
+      const disabled = owned || capped || points < m.cost;
+      const label = owned ? "已得" : capped ? "已满" : "兑换";
+      return '<div class="meta-shop-item' + (owned || capped ? " owned" : "") + '">' +
+        '<span class="meta-shop-icon">' + m.icon + "</span>" +
+        '<div class="meta-shop-body"><div class="meta-shop-name">' + m.name +
+        '<span class="meta-shop-cost">' + m.cost + " 点</span></div>" +
+        '<div class="meta-shop-desc">' + m.desc + "</div></div>" +
+        '<button class="btn btn-small ' + (disabled ? "btn-ghost" : "meta-buy") + '"' +
+        (disabled ? " disabled" : ' data-action="meta-buy" data-id="' + m.id + '"') + ">" +
+        '<span class="btn-main">' + label + "</span></button></div>";
+    }).join("");
+  }
+  if (UI.btnCreateResetMeta) UI.btnCreateResetMeta.hidden = spent <= 0;
+  if (UI.btnCreateClearMeta) UI.btnCreateClearMeta.hidden = (meta.clears || 0) <= 0;
+}
+
 function openCreate() {
   creating = true;
   if (UI.createAttrs) UI.createAttrs.innerHTML = attrListHTML(game.attrs);
@@ -9170,6 +9605,7 @@ function openCreate() {
       ? "第 " + game.lifeNo + " 世 · 轮回印记五维各 +" + bonus
       : "";
   }
+  renderCreateMeta();
   if (UI.createMask) UI.createMask.classList.remove("hidden");
 }
 
@@ -9367,7 +9803,8 @@ function enqueueModal(opts, front) {
 
 function pumpModal() {
   if (modalQueue.length === 0) return;
-  if (coverOpen || battleOpen || creating || rogueOpen) return;
+  if (battleOpen || rogueOpen) return;
+  if (!(creating && createModal) && (coverOpen || creating)) return;
   if (!UI.modalMask.classList.contains("hidden")) return;
   const opts = modalQueue.shift();
   showModal(opts);
@@ -9429,6 +9866,7 @@ function showModal(opts) {
 }
 
 function closeModal() {
+  createModal = false;
   UI.modalMask.classList.remove("front");
   UI.modalMask.classList.add("hidden");
   UI.modalBox.innerHTML = "";
@@ -9466,11 +9904,17 @@ function spellModal(sp) {
 }
 
 function flushPendingSpell() {
-  if (!game.pendingSpell) return;
+  const queue = game.pendingSpells || (game.pendingSpells = []);
+  const sp = queue[0] || game.pendingSpell;
+  if (!sp) return;
   if (coverOpen || battleOpen || creating || rogueOpen) return;
   if (!UI.modalMask.classList.contains("hidden")) return;
-  const sp = game.pendingSpell;
-  game.pendingSpell = null;
+  if (queue.length) {
+    queue.shift();
+    game.pendingSpell = queue[0] || null;
+  } else {
+    game.pendingSpell = null;
+  }
   enqueueModal(spellModal(sp));
 }
 
@@ -9610,6 +10054,7 @@ function doImport() {
   game.pendingOffline = null;
   game.pendingUnlocks = [];
   game.pendingSpell = null;
+  game.pendingSpells = [];
   saveGame(game);
   toast("存档已导入，继续问道吧");
   renderAll();
