@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v3.2.0 · built 2026-11-04T03:12:39.419Z · 单文件离线可玩 -->
+<!-- 《长生道》 v3.3.0 · built 2026-11-05T04:33:38.661Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -2291,6 +2291,41 @@ body.rogue-lock { overflow: hidden; }
   .meta-store-hint { font-size: 9.5px; }
 }
 
+/* ===== v3.3 多卷并行进度 / 五维精简 ===== */
+.research-time { display: flex; flex-direction: column; gap: 7px; margin-top: 9px; }
+.research-job {
+  padding: 7px 9px 8px;
+  border-radius: 10px;
+  background: rgba(9, 18, 22, 0.5);
+  border: 1px solid rgba(120, 180, 190, 0.12);
+}
+.research-job-head {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 10px; color: var(--muted); letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+.research-job-head span:last-child { color: var(--jade); }
+.research-job-track {
+  position: relative; height: 5px; border-radius: 99px;
+  background: rgba(120, 180, 190, 0.14); overflow: hidden;
+}
+.research-job-track i {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 0%; border-radius: 99px;
+  background: linear-gradient(90deg, #6fd3c0, #e6c273);
+  transition: width 0.4s linear;
+}
+.research-job-rush {
+  display: block; width: 100%; margin-top: 6px;
+  padding: 5px 8px; border-radius: 8px;
+  font-size: 10px; letter-spacing: 0.5px;
+  color: var(--gold-soft);
+  background: rgba(230, 194, 115, 0.08);
+  border: 1px solid rgba(230, 194, 115, 0.22);
+}
+.research-job-rush:disabled { color: var(--muted); background: rgba(120, 150, 150, 0.06); border-color: rgba(120, 160, 165, 0.14); }
+.attr-item { padding: 8px 10px; }
+
 </style>
 </head>
 <body>
@@ -2393,7 +2428,7 @@ body.rogue-lock { overflow: hidden; }
         <div class="slot-line" id="researchSlots"></div>
         <button class="btn btn-ghost btn-wide slot-unlock" id="btnResearchSlot" data-action="unlock-research-slot">
           <span class="btn-main">开启灵石槽</span>
-          <span class="btn-sub" id="researchSlotSub">耗 6000 灵石</span>
+          <span class="btn-sub" id="researchSlotSub">耗 1.2万 灵石</span>
         </button>
       </div>
 
@@ -2403,7 +2438,7 @@ body.rogue-lock { overflow: hidden; }
           <div class="research-icon" id="alchemyIcon">⚗️</div>
           <div class="research-info">
             <div class="research-title" id="alchemyTitle">丹炉待燃</div>
-            <div class="research-desc" id="alchemyDesc">开炉炼丹，立得 0-3 枚任意丹药；悟性越高，成丹越多。</div>
+            <div class="research-desc" id="alchemyDesc">开炉炼丹，立得 0-3 枚丹药，以聚气丹居多；悟性越高，成丹越多。</div>
             <div class="research-time" id="alchemyTime"></div>
           </div>
         </div>
@@ -2414,7 +2449,7 @@ body.rogue-lock { overflow: hidden; }
         <div class="slot-line" id="alchemySlots"></div>
         <button class="btn btn-ghost btn-wide slot-unlock" id="btnAlchemySlot" data-action="unlock-alchemy-slot">
           <span class="btn-main">开启灵石槽</span>
-          <span class="btn-sub" id="alchemySlotSub">耗 4000 灵石</span>
+          <span class="btn-sub" id="alchemySlotSub">耗 8000 灵石</span>
         </button>
       </div>
 
@@ -2435,7 +2470,7 @@ body.rogue-lock { overflow: hidden; }
         <div class="slot-line" id="forgeSlots"></div>
         <button class="btn btn-ghost btn-wide slot-unlock" id="btnForgeSlot" data-action="unlock-forge-slot">
           <span class="btn-main">开启灵石槽</span>
-          <span class="btn-sub" id="forgeSlotSub">耗 4000 灵石</span>
+          <span class="btn-sub" id="forgeSlotSub">耗 8000 灵石</span>
         </button>
       </div>
 
@@ -2443,7 +2478,7 @@ body.rogue-lock { overflow: hidden; }
         <div class="card-head"><span>百艺须知</span></div>
         <ul class="tips-list">
           <li>参研修法、炼丹、炼器各自计时；丹器冷却互不共享。</li>
-          <li>炼丹立得 0-3 枚丹药，炼器立得 0-1 件当前境界法宝。</li>
+          <li>炼丹立得 0-3 枚丹药，以聚气丹居多；炼器立得 0-1 件当前境界法宝。</li>
           <li>悟性影响高品质法术与法宝概率，也提高炼丹成丹数。</li>
           <li>法术栏已移入「背包 · 法术」，新术不会自动装配。</li>
           <li>每项可再花灵石开一槽；第三槽与额外货架只在洗髓时用轮回点开启。</li>
@@ -2580,8 +2615,8 @@ body.rogue-lock { overflow: hidden; }
         <ul class="tips-list">
           <li>奇遇六十余则，按境界分流：境界愈高，所遇愈奇。</li>
           <li>低境多见拾遗、灵泉；高境方有洞天、仙缘、雷劫。</li>
-          <li>路遇妖邪则自动斗法，胜负看双方根骨与法术。</li>
-          <li>战而胜之可缴获法宝与丹药，败则折损道心修为。</li>
+          <li>路遇妖邪则自动斗法，胜负看双方根骨与法术；部分劫数会逼你苦战。</li>
+          <li>寻常斗法胜则可缴获法宝丹药；苦战胜则收益寥寥，败则道心修为俱损。</li>
           <li>灵脉守护者镇守各境灵脉，胜之则灵石产出永久提升。</li>
         </ul>
       </div>
@@ -2642,7 +2677,7 @@ body.rogue-lock { overflow: hidden; }
           <button class="menu-item danger" data-action="reset"><span>重入轮回</span><span class="menu-arrow">›</span></button>
         </div>
       </div>
-      <div class="footer-note">长生道 v<span id="verText">3.2.0</span> · 存档自动保存于本机</div>
+      <div class="footer-note">长生道 v<span id="verText">3.3.0</span> · 存档自动保存于本机</div>
     </section>
   </main>
 
@@ -3115,7 +3150,7 @@ body.rogue-lock { overflow: hidden; }
           <span class="btn-main">开始修行</span>
           <span class="btn-sub" id="coverSub">自动挂机 · 闭关也在涨</span>
         </button>
-        <div class="cover-note">v<span id="coverVer">3.2.0</span> · 存档自动保存于本机</div>
+        <div class="cover-note">v<span id="coverVer">3.3.0</span> · 存档自动保存于本机</div>
       </div>
     </div>
   </div>
@@ -3130,7 +3165,7 @@ body.rogue-lock { overflow: hidden; }
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "3.2.0";
+const GAME_VERSION = "3.3.0";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -3159,13 +3194,22 @@ const CFG = {
   COMPANION_BOND_CD: 1800,      // 道侣共修共享冷却（秒）
   CAVE_MAX_LEVEL: 20,           // 洞府设施最高等级
   CAVE_UPGRADE_MUL: 1.55,       // 洞府升级费用增长
+  CAVE_COST_MUL: 0.9,           // 洞府升级费用整体折扣（v3.3 下调一成）
   ALCHEMY_CD: 1800,             // 炼丹基础冷却（秒）
   FORGE_CD: 1800,               // 炼器基础冷却（秒）
   CAVE_RAID_INTERVAL: 1200,     // 洞府受袭间隔（秒）
-  SPELL_MP_RATE: 0.14,          // 法术基础耗灵 = 法力上限 * 该系数
-  RESEARCH_SLOT_COST: 6000,     // 参研第二槽位的灵石价格
-  ALCHEMY_SLOT_COST: 4000,      // 丹炉第二槽位的灵石价格
-  FORGE_SLOT_COST: 4000,        // 器炉第二槽位的灵石价格
+  SPELL_MP_RATE: 0.12,          // 法术基础耗灵 = 法力上限 * 该系数（v3.3 回调）
+  RESEARCH_SLOT_COST: 12000,    // 参研第二槽位的灵石价格
+  ALCHEMY_SLOT_COST: 8000,      // 丹炉第二槽位的灵石价格
+  FORGE_SLOT_COST: 8000,        // 器炉第二槽位的灵石价格
+  BREAK_PITY_STEP: 0.05,        // 破境失败后每次叠加的护持概率
+  BREAK_PITY_MAX: 0.15,         // 连败护持上限
+  FIGHT_HP_BOOST: 1.18,         // 历练战斗敌方气血增强
+  FIGHT_ATK_BOOST: 1.10,        // 历练战斗敌方攻击增强
+  HARD_HP_BOOST: 1.15,          // 苦战额外气血增强
+  HARD_ATK_BOOST: 1.10,         // 苦战额外攻击增强
+  HARD_LOOT_MUL: 0.12,          // 苦战战利品掉率系数
+  HARD_EXP_MUL: 0.35,           // 苦战战后修为系数
   ROGUE_EXP_COST: 50,           // 道痕兑换修为的消耗
   ROGUE_EXP_PCT: 0.18,          // 兑换修为 = 当前境界需求 * 该系数
   LOG_LIMIT: 80,
@@ -3316,6 +3360,8 @@ const PILLS = [
 ];
 const PILL_MAP = {};
 PILLS.forEach(p => { PILL_MAP[p.id] = p; });
+/* v3.3 起，修为丹（聚气丹）在坊市与炼丹中占比更高，悟道丹最稀 */
+const PILL_WEIGHTS = { juqi: 48, pojing: 14, wudao: 8, jingxin: 16, julingdan: 14 };
 
 /* ---------------------------- 双修伴侣 ---------------------------- */
 /* 修仙者寿元悠长，五位道侣皆已数百上千岁，容貌却仍停在二十余岁。
@@ -3432,8 +3478,12 @@ const ENCOUNTERS = [
     text: "月华如练，你于溪畔枯坐一夜，忽有所悟。", effect: { kind: "rateBuff", power: 0.6, duration: 900 } },
   { id: "auction", name: "坊市拍卖", icon: "🏮", weight: 7, tone: "good", minRealm: 9, maxRealm: 11,
     text: "你在拍卖会上捡了个漏，转手便赚进一笔灵石。", effect: { kind: "stone", mult: 240 } },
-  { id: "trap", name: "误入迷阵", icon: "🌀", weight: 7, tone: "bad", minRealm: 9, maxRealm: 11,
-    text: "你误入上古迷阵，破阵而出时已过数日。", effect: { kind: "hurt", expRate: 0.08 } },
+  { id: "trap", name: "误入迷阵", icon: "🌀", weight: 7, tone: "fight", minRealm: 9, maxRealm: 11,
+    text: "你误入上古迷阵，阵眼处却有一名散修拦路。",
+    effect: { kind: "fight", enemy: "rogue", hard: true,
+      winText: "你破阵而出，顺手将那布阵的散修打退了几步。",
+      loseText: "你在阵中力竭，被那散修夺了些灵石与修为。",
+      daoLoss: 8, expLoss: 0.10, stoneLoss: 0.06 } },
   { id: "demon1", name: "心魔低语", icon: "👁️", weight: 8, tone: "bad", minRealm: 9, maxRealm: 11,
     text: "识海深处传来低语，你强压杂念，道心仍受了损。", effect: { kind: "hurt", dao: 8, expRate: 0.05 } },
 
@@ -3448,8 +3498,12 @@ const ENCOUNTERS = [
     text: "丹会上你侥幸夺魁，得赐一枚悟道丹。", effect: { kind: "pill", pillId: "wudao" } },
   { id: "scroll", name: "残卷道经", icon: "📖", weight: 7, tone: "good", minRealm: 12, maxRealm: 14,
     text: "古卷虽残，却字字珠玑，你读至天明未尽。", effect: { kind: "exp", mult: 240 } },
-  { id: "demon2", name: "心魔来袭", icon: "🩸", weight: 9, tone: "bad", minRealm: 12, maxRealm: 14,
-    text: "心魔滋生，识海翻腾，你强行压下却伤了道心。", effect: { kind: "hurt", dao: 10, expRate: 0.06 } },
+  { id: "demon2", name: "心魔来袭", icon: "🩸", weight: 9, tone: "fight", minRealm: 12, maxRealm: 14,
+    text: "心魔凝作怨魂，自识海中扑出，要与你分个高下。",
+    effect: { kind: "fight", enemy: "ghost", hard: true,
+      winText: "你斩灭心魔，识海重归清明。",
+      loseText: "心魔反噬，你道心与修为俱损。",
+      daoLoss: 12, expLoss: 0.12 } },
   { id: "rob", name: "结丹拦路", icon: "🗡️", weight: 6, tone: "bad", minRealm: 12, maxRealm: 14,
     text: "一名结丹散修拦路，你破财免灾，心中郁闷。", effect: { kind: "hurt", stoneRate: 0.08, expRate: 0.04 } },
 
@@ -3490,8 +3544,12 @@ const ENCOUNTERS = [
     text: "山石静默，你枯坐百日，忽悟破境之机。", effect: { kind: "success", power: 0.14 } },
   { id: "spring", name: "灵泉古井", icon: "⛲", weight: 5, tone: "good", minRealm: 21, maxRealm: 23,
     text: "古井之水甘冽，饮之气机源源不绝。", effect: { kind: "rateBuff", power: 1.2, duration: 1800 } },
-  { id: "beastTide", name: "妖潮过境", icon: "🐗", weight: 6, tone: "bad", minRealm: 21, maxRealm: 23,
-    text: "妖潮踏过山门，你护宗时损失惨重。", effect: { kind: "hurt", stoneRate: 0.12, expRate: 0.08 } },
+  { id: "beastTide", name: "妖潮过境", icon: "🐗", weight: 6, tone: "fight", minRealm: 21, maxRealm: 23,
+    text: "妖潮踏过山门，一尊化形妖将直奔你而来。",
+    effect: { kind: "fight", enemy: "demon", hard: true,
+      winText: "你击退妖将，妖潮退去，山门保住。",
+      loseText: "妖潮踏破山门，洞府也被波及。",
+      daoLoss: 10, expLoss: 0.10, stoneLoss: 0.12 } },
 
   /* ——— 合体 ——— */
   { id: "gate", name: "天门虚影", icon: "🚪", weight: 4, tone: "great", minRealm: 24, maxRealm: 26,
@@ -3508,8 +3566,12 @@ const ENCOUNTERS = [
     text: "一位仙人自你身旁经过，回首一笑，道意通透。", effect: { kind: "success", power: 0.15 } },
   { id: "fairyFeast", name: "仙宴请柬", icon: "🍶", weight: 4, tone: "great", minRealm: 27, maxRealm: 29,
     text: "你受邀赴一场仙宴，归来时怀里塞满灵物。", effect: { kind: "combo", stoneMult: 900, expMult: 2200 } },
-  { id: "karma", name: "因果缠身", icon: "🧵", weight: 6, tone: "bad", minRealm: 27, maxRealm: 29,
-    text: "旧日因果寻上门来，你须以道心偿还。", effect: { kind: "hurt", dao: 14, expRate: 0.15 } },
+  { id: "karma", name: "因果缠身", icon: "🧵", weight: 6, tone: "fight", minRealm: 27, maxRealm: 29,
+    text: "旧日因果化作谪仙残影，寻上门来，要你以道心偿还。",
+    effect: { kind: "fight", enemy: "fallen", hard: true,
+      winText: "你斩断旧日因果，道心反而更澄澈。",
+      loseText: "因果反噬，你道心大损，修为也散了不少。",
+      daoLoss: 18, expLoss: 0.15 } },
 
   /* ——— 渡劫 · 仙道 ——— */
   { id: "tribulation", name: "雷劫洗礼", icon: "⚡️", weight: 5, tone: "good", minRealm: 30,
@@ -3835,6 +3897,22 @@ ROGUE_NODE_TYPES.forEach((n) => { ROGUE_NODE_MAP[n.type] = n; });
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
   {
+    version: "3.3.0",
+    date: "2026-11-05",
+    title: "百艺·砺战",
+    items: [
+      "参研第二槽位涨至 12000 灵石，丹炉与器炉第二槽位涨至 8000 灵石",
+      "多卷参研改为各自独立的进度条，每卷可单独花灵石加速",
+      "洞府五府升级费用整体下调一成",
+      "坊市丹药出现概率由 25% 提高至 40%，法术与法宝各占 30%",
+      "坊市与炼丹所得丹药以聚气丹居多，悟道丹最稀",
+      "历练战斗整体增强：敌方气血 +18%、攻击 +10%；四处负面奇遇改为苦战，胜则收益大减，败则惩罚更重",
+      "五维资质只在「更多」中显示名称与数值，效果须点击详情查看",
+      "法术耗灵回调：基础系数 14% → 12%，爆发法术额外耗灵 2.4 倍 → 2.2 倍",
+      "新增破境连败护持：每次失败 +5% 成功率，最多 +15%，成功后清零；v3.2.0 存档可直接续玩",
+    ],
+  },
+  {
     version: "3.2.0",
     date: "2026-11-04",
     title: "道痕·百艺",
@@ -4074,7 +4152,7 @@ const SPELL_MAINS = [
   { key: "dmg", name: "伤害", icon: "⚔️", spellRatio: 1.15, artRatio: 1.35, weight: 1.35 },
   { key: "heal", name: "回复", icon: "💚", spellRatio: 0.85, artRatio: 0.7, weight: 1.0 },
   { key: "shield", name: "护盾", icon: "🛡️", spellRatio: 1.0, artRatio: 0.9, weight: 1.0 },
-  { key: "burst", name: "爆发", icon: "💥", spellRatio: 2.6, weight: 0.45, mpMul: 2.4 },
+  { key: "burst", name: "爆发", icon: "💥", spellRatio: 2.6, weight: 0.45, mpMul: 2.2 },
 ];
 /* 法宝没有爆发型：法宝按速度反复祭出，若再给高倍率会失衡 */
 const ARTIFACT_MAINS = SPELL_MAINS.filter((m) => m.artRatio);
@@ -4332,6 +4410,7 @@ function defaultState() {
     buffs: { rateExp: [], rateStone: [], success: [] },
     breakBonus: 0,
     successBonus: 0,
+    breakPity: 0,
     cooldowns: { encounter: 0 },
     totalStone: 120,
     successes: 0,
@@ -4459,7 +4538,7 @@ function caveUpgradeCost(state, id) {
   if (!def) return 0;
   const lv = caveFacilityLevel(state, id);
   if (lv >= CFG.CAVE_MAX_LEVEL) return 0;
-  return Math.round(def.base * Math.pow(CFG.CAVE_UPGRADE_MUL, lv - 1));
+  return Math.round(def.base * Math.pow(CFG.CAVE_UPGRADE_MUL, lv - 1) * (CFG.CAVE_COST_MUL || 1));
 }
 
 function upgradeCave(state, id) {
@@ -4559,7 +4638,7 @@ function doAlchemy(state, now) {
     pushLog(state, "炼丹未成，丹炉只余一缕青烟", "fail");
     return { ok: true, count: 0, cdUntil: until, pill: null, used: times.length, cap };
   }
-  const pill = PILLS[Math.floor(Math.random() * PILLS.length)];
+  const pill = pickPillWeighted();
   state.pills[pill.id] = (state.pills[pill.id] || 0) + count;
   c.alchemyCount = (c.alchemyCount || 0) + count;
   pushLog(state, "丹成一炉 · " + pill.name + " ×" + count, "success");
@@ -4705,7 +4784,8 @@ function computeStats(state, now) {
   const daoSucc = state.dao / 1000;
   const rate = realm.rate * CFG.IDLE_MULT * caveMul * (1 + bonusRate + daoRate) * (1 + rateBuff);
   const stoneRate = Math.max(0.5, realm.rate * CFG.STONE_FACTOR) * (1 + cave.stone) * (1 + bonusStone) * (1 + stoneBuff);
-  const success = clamp(realm.success + daoSucc + bonusSucc + state.breakBonus + state.successBonus + successBuff, 0.05, 0.95);
+  const breakPity = clamp(Number(state.breakPity) || 0, 0, CFG.BREAK_PITY_MAX);
+  const success = clamp(realm.success + daoSucc + bonusSucc + state.breakBonus + state.successBonus + successBuff + breakPity, 0.05, 0.95);
   return {
     realm, rate, stoneRate, success,
     bonusRate, bonusStone, bonusSucc, guardianBonus,
@@ -4724,6 +4804,7 @@ function computeStats(state, now) {
     buffs: { rateExp: rateList, rateStone: stoneList, success: successList },
     breakBonus: state.breakBonus,
     successBonus: state.successBonus,
+    breakPity: breakPity,
   };
 }
 
@@ -4838,7 +4919,7 @@ function statBreakdown(state, key, now) {
   }
 
   if (key === "success") {
-    const raw = r.success + state.dao / 1000 + st.bonusSucc + state.breakBonus + state.successBonus + st.successBuff;
+    const raw = r.success + state.dao / 1000 + st.bonusSucc + state.breakBonus + state.successBonus + st.successBuff + (st.breakPity || 0);
     const lines = [
       statLine("境界基础", fmtPct(r.success, 1), r.name),
       statLine("道心通明", "+" + fmtPct(state.dao / 1000, 1), "道心 " + Math.floor(state.dao)),
@@ -4846,13 +4927,14 @@ function statBreakdown(state, key, now) {
       statLine("道侣相伴", "+" + fmtPct(st.companionSucc, 1), "永久"),
       statLine("破境丹", "+" + fmtPct(state.breakBonus, 1), "下次突破"),
       statLine("前辈指点", "+" + fmtPct(state.successBonus, 1), "下次突破"),
+      statLine("连败护持", "+" + fmtPct(st.breakPity || 0, 1), "失败 " + Math.round((st.breakPity || 0) / CFG.BREAK_PITY_STEP) + " 次"),
     ].concat(buffStatLines(st.buffs.success, now));
     lines.push(statLine("上下限", "5% ~ 95%", "合计后截断"));
     return {
       name: "破境成功", icon: "🎯", value: fmtPct(st.success, 1), key: key,
-      formula: "clamp(境界基础 + 道心/1000 + 成就 + 道侣 + 破境丹 + 前辈 + 临时加成, 5%, 95%)",
+      formula: "clamp(境界基础 + 道心/1000 + 成就 + 道侣 + 破境丹 + 前辈 + 连败护持 + 临时加成, 5%, 95%)",
       lines: lines,
-      note: "结算前合计 " + fmtPct(raw, 1) + "；破境丹与前辈指点在突破后消耗。",
+      note: "结算前合计 " + fmtPct(raw, 1) + "；破境丹与前辈指点在突破后消耗；连败护持每次失败 +" + fmtPct(CFG.BREAK_PITY_STEP, 0) + "，最多 +" + fmtPct(CFG.BREAK_PITY_MAX, 0) + "，成功即清零。",
     };
   }
 
@@ -5021,6 +5103,7 @@ function battleExpGain(state, battle) {
     const nm = String(battle.enemy.name || "");
     if (nm.indexOf("守护") >= 0 || nm.indexOf("灵脉") >= 0) base *= 1.6;
     else if (battle.timeout) base *= 0.7;
+    if (battle.hard) base *= (CFG.HARD_EXP_MUL || 1);
   }
   return Math.max(1, Math.round(base));
 }
@@ -5131,6 +5214,7 @@ function breakThrough(state) {
     const oldRealm = st.realm;
     state.realmIndex += 1;
     state.successes += 1;
+    state.breakPity = 0;
     state.dao = clamp(state.dao + CFG.DAO_PER_SUCCESS, 0, CFG.DAO_MAX);
     if (!state.attrs) state.attrs = rollAttrs();
     const attrDef = ATTR_DEFS[Math.floor(Math.random() * ATTR_DEFS.length)];
@@ -5155,6 +5239,7 @@ function breakThrough(state) {
   const loss = Math.floor(req * CFG.BREAK_LOSS_RATE);
   state.exp = Math.max(0, state.exp - loss);
   state.failures += 1;
+  state.breakPity = clamp((Number(state.breakPity) || 0) + CFG.BREAK_PITY_STEP, 0, CFG.BREAK_PITY_MAX);
   if (!usedPill) {
     state.dao = clamp(state.dao - CFG.DAO_PER_FAIL, 0, CFG.DAO_MAX);
     pushLog(state, "破境失败，气血翻涌，修为倒退，道心 -" + CFG.DAO_PER_FAIL, "fail");
@@ -5396,15 +5481,15 @@ function marketShelfGood(state) {
   const r = Math.random();
   const realm = realmAt(state.realmIndex || 0);
   const unit = Math.max(1, realm.rate * CFG.STONE_FACTOR);
-  if (r < 0.40) {
+  if (r < 0.30) {
     const sp = makeSpell(state);
     return { kind: "spell", item: sp, price: marketPrice(state, "spell", sp.quality) };
   }
-  if (r < 0.75) {
+  if (r < 0.60) {
     const art = makeArtifact(state);
     return { kind: "artifact", item: art, price: marketPrice(state, "artifact", art.quality) };
   }
-  const pill = PILLS[Math.floor(Math.random() * PILLS.length)];
+  const pill = pickPillWeighted();
   return { kind: "pill", pillId: pill.id, item: pill, price: Math.max(1, Math.round(unit * 42)) };
 }
 
@@ -5593,6 +5678,11 @@ function pickWeighted(list) {
   return list[list.length - 1];
 }
 
+/* v3.3：丹药掉落改为加权，聚气丹（修为丹）占比最高 */
+function pickPillWeighted() {
+  return pickWeighted(PILLS.map((p) => ({ id: p.id, weight: PILL_WEIGHTS[p.id] || 1 })));
+}
+
 function encounter(state) {
   const now = Date.now();
   const cd = state.cooldowns.encounter || 0;
@@ -5698,18 +5788,26 @@ function encounter(state) {
 function resolveFightEncounter(state, ev, now) {
   const eff = ev.effect;
   const enemyDef = ENEMY_MAP[eff.enemy] || ENEMY_MAP.wolf;
-  const battle = simulateBattle(state, { enemy: enemyDef });
+  const hpBoost = (CFG.FIGHT_HP_BOOST || 1) * (eff.hard ? (CFG.HARD_HP_BOOST || 1) : 1);
+  const atkBoost = (CFG.FIGHT_ATK_BOOST || 1) * (eff.hard ? (CFG.HARD_ATK_BOOST || 1) : 1);
+  const enemy = Object.assign({}, enemyDef, {
+    hpMul: (enemyDef.hpMul || 1) * hpBoost,
+    atkMul: (enemyDef.atkMul || 1) * atkBoost,
+  });
+  const battle = simulateBattle(state, { enemy: enemy });
+  battle.hard = !!eff.hard;
   battle.loot = [];
+  const lootMul = battle.hard ? (CFG.HARD_LOOT_MUL || 1) : 1;
   let detail = "";
   if (battle.win) {
     state.battleWins = (state.battleWins || 0) + 1;
     detail = eff.winText;
-    if (Math.random() < 0.16) {
+    if (Math.random() < 0.16 * lootMul) {
       const art = grantArtifact(state);
       if (art) battle.loot.push({ kind: "artifact", name: art.name, icon: art.icon, id: art.id });
     }
-    if (Math.random() < 0.35) {
-      const pid = pickOne(PILLS).id;
+    if (Math.random() < 0.35 * lootMul) {
+      const pid = pickPillWeighted().id;
       state.pills[pid] = (state.pills[pid] || 0) + 1;
       const p = PILL_MAP[pid];
       if (p) battle.loot.push({ kind: "pill", name: p.name, icon: p.icon, id: pid });
@@ -5785,6 +5883,7 @@ function migrate(raw) {
   s.totalStone = Math.max(0, Number(s.totalStone) || 0);
   s.breakBonus = Math.max(0, Number(s.breakBonus) || 0);
   s.successBonus = Math.max(0, Number(s.successBonus) || 0);
+  s.breakPity = clamp(Number(s.breakPity) || 0, 0, CFG.BREAK_PITY_MAX);
   s.playTime = Math.max(0, Number(s.playTime) || 0);
   s.successes = Math.max(0, parseInt(s.successes, 10) || 0);
   s.failures = Math.max(0, parseInt(s.failures, 10) || 0);
@@ -8383,7 +8482,10 @@ function updateCultivate(now) {
   UI.rateText.textContent = "+" + fmt(st.rate, 1) + " / 秒";
   UI.stoneRateText.textContent = "+" + fmt(st.stoneRate, 1) + " / 秒";
   UI.daoText.textContent = Math.floor(game.dao);
-  UI.successText.textContent = fmtPct(st.success);
+  const succPct = st.success * 100;
+  UI.successText.textContent = (Math.abs(succPct - Math.round(succPct)) < 0.05
+    ? Math.round(succPct)
+    : succPct.toFixed(1)) + "%";
 
   const ended = !!(game.flags && game.flags.ascended);
   const ready = game.exp >= realm.req;
@@ -8460,9 +8562,19 @@ function updateResearchCard(now) {
     UI.researchTitle.textContent = jobs.length > 1 ? "参研中 · " + jobs.length + " 卷" : "参研中";
     UI.researchDesc.textContent = "心无旁骛，静待术成。每卷功成各得一门法术，自动收入背包。";
     UI.researchBar.style.width = (pct * 100).toFixed(1) + "%";
-    UI.researchTime.textContent = jobs.map((j, i) =>
-      "第" + (i + 1) + "卷 " + fmtDuration(Math.max(0, (j.endAt - now) / 1000))
-    ).join(" · ");
+    UI.researchTime.innerHTML = jobs.map((j, i) => {
+      const jobSpan = Math.max(1, j.endAt - j.startAt);
+      const jobPct = Math.max(0, Math.min(1, (now - j.startAt) / jobSpan));
+      const jobRemain = Math.max(0, (j.endAt - now) / 1000);
+      const jobCost = rushResearchCost(game, now, j.id);
+      const canRush = game.stone >= jobCost;
+      return '<div class="research-job">'
+        + '<div class="research-job-head"><span>第' + (i + 1) + '卷</span><span>' + fmtDuration(jobRemain) + '</span></div>'
+        + '<div class="research-job-track"><i style="width:' + (jobPct * 100).toFixed(1) + '%"></i></div>'
+        + '<button class="research-job-rush" data-action="rush-research" data-id="' + j.id + '"' + (canRush ? "" : " disabled") + '>'
+        + (canRush ? "加速 · " + fmt(jobCost) + " 灵石" : "尚缺 " + fmt(jobCost - game.stone) + " 灵石") + '</button>'
+        + '</div>';
+    }).join("");
     UI.btnResearch.disabled = used >= cap || total + jobs.length >= CFG.MAX_SPELLS;
     UI.researchSub.textContent = total + jobs.length >= CFG.MAX_SPELLS
       ? "藏法阁已满"
@@ -8516,7 +8628,7 @@ function updateCraftCards(now) {
       time.textContent = used > 0
         ? "炉中 " + used + " / " + cap + " 炉 · 最近一炉还需 " + fmtDuration(remain)
         : "随时可开炉 · " + (isAlchemy
-          ? "成丹 0-3 枚 · 悟性越高成丹越多"
+          ? "成丹 0-3 枚 · 聚气丹居多 · 悟性越高成丹越多"
           : "成器率 " + fmtPct(forgeChance(game.attrs), 1) + " · 悟性越高越稳");
     }
     if (slots) {
@@ -8532,7 +8644,7 @@ function updateCraftCards(now) {
     }
     if (desc) {
       desc.textContent = isAlchemy
-        ? "开炉炼丹，立得 0-3 枚任意丹药；当前悟性 " + (game.attrs.wuxing || 0) + "，悟性越高成丹越多。"
+        ? "开炉炼丹，立得 0-3 枚丹药，以聚气丹居多；当前悟性 " + (game.attrs.wuxing || 0) + "，悟性越高成丹越多。"
         : "开炉炼器，有几率立得 0-1 件当前境界法宝；当前成器率 " + fmtPct(forgeChance(game.attrs), 1) + "。";
     }
   });
@@ -8884,13 +8996,15 @@ function renderJourneyLog() {
 }
 
 /* ------------------------------ 更多页 ------------------------------ */
-function attrListHTML(attrs, clickable) {
+function attrListHTML(attrs, clickable, showDesc) {
+  const withDesc = showDesc === undefined ? true : !!showDesc;
   return ATTR_DEFS.map((d) => {
     const v = (attrs && attrs[d.key]) || 0;
     return '<div class="attr-item"' + (clickable ? ' data-action="stat-info" data-stat="' + d.key + '"' : "") + ">" +
       '<div class="attr-icon">' + d.icon + "</div>" +
       '<div class="attr-body"><div class="attr-name">' + d.name + "</div>" +
-      '<div class="attr-desc">' + d.desc + "</div></div>" +
+      (withDesc ? '<div class="attr-desc">' + d.desc + "</div>" : "") +
+      "</div>" +
       '<div class="attr-val">' + v + "</div></div>";
   }).join("");
 }
@@ -8899,7 +9013,7 @@ function renderMore() {
   const achs = Object.keys(game.achieve).length;
   const st = computeStats(game, Date.now());
   const d = st.derived;
-  if (UI.attrList) UI.attrList.innerHTML = attrListHTML(game.attrs, true);
+  if (UI.attrList) UI.attrList.innerHTML = attrListHTML(game.attrs, true, false);
   if (UI.attrTotal) UI.attrTotal.textContent = "总值 " + ATTR_KEYS.reduce((s, k) => s + (game.attrs[k] || 0), 0);
 
   const rows = [
@@ -9039,7 +9153,7 @@ function onClick(e) {
     case "equip-artifact": doEquipArtifact(id); break;
     case "unequip-artifact": doUnequipArtifact(); break;
     case "sell-artifact": doSellArtifact(id); break;
-    case "rush-research": doRushResearch(); break;
+    case "rush-research": doRushResearch(target.getAttribute("data-id")); break;
     case "bag-tab": doBagTab(target.getAttribute("data-bag")); break;
     case "buy-market": doMarketBuy(target.getAttribute("data-kind"), id); break;
     case "buy-shelf": doBuyShelf(parseInt(target.getAttribute("data-index"), 10)); break;
@@ -9307,8 +9421,8 @@ function doResearch() {
   refreshSpellViews();
 }
 
-function doRushResearch() {
-  const res = rushResearch(game);
+function doRushResearch(jobId) {
+  const res = rushResearch(game, jobId || null);
   if (!res.ok) { toast(res.msg); return; }
   saveGame(game);
   toast(res.spell ? "参研瞬息而成：「" + res.spell.name + "」" : "参研瞬息而成");
