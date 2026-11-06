@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v3.4.0 · built 2026-11-06T00:44:36.406Z · 单文件离线可玩 -->
+<!-- 《长生道》 v3.4.1 · built 2026-11-06T00:57:07.039Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -3320,7 +3320,7 @@ body.rogue-lock { overflow: hidden; }
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "3.4.0";
+const GAME_VERSION = "3.4.1";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -4210,6 +4210,15 @@ ROGUE_NODE_TYPES.forEach((n) => { ROGUE_NODE_MAP[n.type] = n; });
 
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "3.4.1",
+    date: "2026-11-06",
+    title: "丹成·小修",
+    items: [
+      "炼丹结果提示补上丹药图标与名称，研发与坊市中的聚气丹显示一致",
+      "v3.4.0 存档可直接续玩，无需迁移",
+    ],
+  },
   {
     version: "3.4.0",
     date: "2026-11-06",
@@ -10240,7 +10249,7 @@ function doAlchemyUI() {
   if (!res.count) {
     toast("炼丹未成，只余一缕青烟");
   } else {
-    toast("丹成一炉 · " + res.pill.name + " ×" + res.count);
+    toast("丹成一炉 · " + (res.pill.icon || "") + " " + res.pill.name + " ×" + res.count);
   }
   if (currentTab === "spells") updateCraftCards(Date.now());
   if (currentTab === "bag") renderBag();
