@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v3.4.3 · built 2026-11-06T10:31:10.647Z · 单文件离线可玩 -->
+<!-- 《长生道》 v3.4.4 · built 2026-11-06T13:15:08.504Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -3593,7 +3593,7 @@ body.rogue-lock { overflow: hidden; }
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "3.4.3";
+const GAME_VERSION = "3.4.4";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -4483,6 +4483,15 @@ ROGUE_NODE_TYPES.forEach((n) => { ROGUE_NODE_MAP[n.type] = n; });
 
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "3.4.4",
+    date: "2026-11-06",
+    title: "印记·小修",
+    items: [
+      "修复重置轮回印记后，当前世已保留沈青梧时无法重新兑换「鲸语归心」的问题",
+      "重置后仍可重新兑换「鲸语归心」，只恢复永久结缘印记，不会重复加入道侣；v3.4.3 存档可直接续玩",
+    ],
+  },
   {
     version: "3.4.3",
     date: "2026-11-06",
@@ -7074,7 +7083,9 @@ function buyMetaOption(state, id) {
     meta.xianzi = Math.max(0, Math.min(999, (meta.xianzi || 0) + 1));
     for (const key of ATTR_KEYS) state.attrs[key] = (Number(state.attrs[key]) || 0) + 1;
   } else if (id === "companion") {
-    if (meta.companionSword || (state.companions || []).indexOf("c_sword") >= 0) {
+    // 重置轮回印记后，当前这一世仍保留沈青梧；此时允许重新兑换，
+    // 只是把“永久结缘”重新写回轮回印记，不必再往当前世的道侣列表里塞一次。
+    if (meta.companionSword) {
       return { ok: false, msg: "已与沈青梧结缘" };
     }
     meta.companionSword = true;
