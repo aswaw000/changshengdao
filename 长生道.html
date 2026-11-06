@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v3.4.2 · built 2026-11-06T05:02:52.824Z · 单文件离线可玩 -->
+<!-- 《长生道》 v3.4.3 · built 2026-11-06T10:24:16.056Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -2585,6 +2585,124 @@ body.rogue-lock { overflow: hidden; }
   .sect-goods-head { font-size: 13px; }
 }
 
+
+/* =====================================================================
+ * 重排：修炼/研发只留当前功法 / 背包功法子页 / 更多四子页 / 坊市两子页
+ * ===================================================================== */
+.bag-tabs { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.bag-tab { padding: 9px 1px; font-size: 11px; }
+.bag-tab b { margin-left: 2px; font-size: 10.5px; }
+
+.more-tabs { grid-template-columns: repeat(4, 1fr); }
+
+.market-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  margin: 0 0 12px;
+}
+.market-tab {
+  appearance: none;
+  font-family: inherit;
+  padding: 10px 2px;
+  border-radius: 11px;
+  border: 1px solid rgba(120, 180, 190, 0.16);
+  background: rgba(10, 22, 26, 0.5);
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  transition: all 0.18s;
+}
+.market-tab.active {
+  color: var(--gold-soft);
+  border-color: rgba(230, 194, 115, 0.4);
+  background: linear-gradient(180deg, rgba(230, 194, 115, 0.14), rgba(120, 90, 40, 0.08));
+  box-shadow: 0 0 16px rgba(230, 194, 115, 0.12);
+}
+.market-panel { display: none; animation: fadeUp 0.24s ease; }
+.market-panel.active { display: block; }
+
+.sect-summary .sect-hero-top { margin-top: 2px; }
+.sect-summary .sect-desc { margin: 8px 0 0; }
+.sect-summary .sect-current { margin-top: 8px; }
+.sect-summary-link {
+  appearance: none;
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px 0 0;
+  border: 0;
+  border-top: 1px dashed rgba(120, 180, 190, 0.16);
+  background: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  text-align: right;
+}
+.sect-summary-link:active { opacity: 0.7; }
+
+.sect-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+}
+.sect-strip-crest {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  font-size: 20px;
+}
+.sect-strip-main { flex: 1; min-width: 0; }
+.sect-strip-title {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  font-family: var(--font-title);
+  font-size: 14.5px;
+  color: var(--gold-soft);
+  letter-spacing: 1px;
+}
+.sect-strip-title b {
+  font-family: var(--font-body, inherit);
+  font-weight: 400;
+  font-size: 9.5px;
+  color: var(--muted);
+  letter-spacing: 0;
+}
+.sect-strip-line {
+  margin-top: 3px;
+  font-size: 10.5px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.sect-strip-line b { color: var(--jade); font-weight: 600; }
+.sect-strip-link {
+  appearance: none;
+  flex: none;
+  border: 0;
+  background: none;
+  color: var(--jade);
+  font-family: inherit;
+  font-size: 10.5px;
+  letter-spacing: 0.3px;
+  padding: 4px 0 4px 2px;
+}
+.sect-strip-link:active { opacity: 0.7; }
+
+@media (max-width: 360px) {
+  .bag-tabs { gap: 3px; }
+  .bag-tab { font-size: 9.5px; padding: 8px 0; }
+  .bag-tab b { font-size: 9px; margin-left: 1px; }
+  .market-tab { font-size: 11px; padding: 9px 1px; }
+  .sect-strip { gap: 8px; padding: 10px; }
+  .sect-strip-crest { width: 32px; height: 32px; font-size: 17px; }
+  .sect-strip-title { font-size: 13px; }
+  .sect-strip-title b { font-size: 8.5px; }
+  .sect-strip-line { font-size: 9.5px; }
+  .sect-strip-link { font-size: 9px; letter-spacing: 0; }
+}
+
 </style>
 </head>
 <body>
@@ -2655,6 +2773,24 @@ body.rogue-lock { overflow: hidden; }
         <div class="auto-hint" id="autoHint"><span class="auto-dot"></span>静坐自修 · 修行速度 ×0.9</div>
       </div>
 
+      <div class="card sect-summary" id="cultSectCard">
+        <div class="card-head"><span>玄元门 · 当前功法</span><span class="card-hint" id="cultSectTier">练气批</span></div>
+        <div class="sect-hero-top">
+          <div class="sect-crest">⛩️</div>
+          <div class="sect-hero-text">
+            <div class="sect-name">玄元门</div>
+            <div class="sect-rank" id="cultSectRank">尚未拜入</div>
+          </div>
+        </div>
+        <p class="sect-desc" id="cultSectDesc">东域三大玄门之一。门规只问道心，不问出身；外门弟子亦可听经、领丹、借法器。</p>
+        <div class="sect-current" id="cultSectCurrent"></div>
+        <button class="btn btn-primary btn-wide sect-join-btn" id="btnCultJoin" data-action="join-sect">
+          <span class="btn-main">拜入玄元门</span>
+          <span class="btn-sub" id="cultJoinSub">耗 600 灵石</span>
+        </button>
+        <button class="sect-summary-link" data-action="open-bag-technique">功法传承详情与切换 ›</button>
+      </div>
+
       <details class="card fold-card" id="logFold">
         <summary class="fold-summary">
           <div class="card-head"><span>道途见闻</span><span class="card-hint">最新在上 · 点击展开</span></div>
@@ -2688,25 +2824,13 @@ body.rogue-lock { overflow: hidden; }
         </button>
       </div>
 
-      <div class="card sect-merge">
-        <div class="card-head"><span>功法传承</span><span class="card-hint" id="sectTechHint">同时只修一门</span></div>
-        <div class="sect-hero-top">
-          <div class="sect-crest">⛩️</div>
-          <div class="sect-hero-text">
-            <div class="sect-name">玄元门</div>
-            <div class="sect-rank" id="sectRank">尚未拜入</div>
-          </div>
-          <div class="sect-tier-badge" id="sectTierBadge">练气批</div>
+      <div class="card sect-strip">
+        <div class="sect-crest sect-strip-crest">⛩️</div>
+        <div class="sect-strip-main">
+          <div class="sect-strip-title"><span>玄元门</span><b id="techStripRank">尚未拜入</b></div>
+          <div class="sect-strip-line" id="techNow">拜入宗门可修习功法，加快静坐自修。</div>
         </div>
-        <p class="sect-desc" id="sectDesc">东域三大玄门之一。门规只问道心，不问出身；外门弟子亦可听经、领丹、借法器。</p>
-        <div class="sect-current" id="sectCurrent"></div>
-        <button class="btn btn-primary btn-wide sect-join-btn" id="btnJoinSect" data-action="join-sect">
-          <span class="btn-main">拜入玄元门</span>
-          <span class="btn-sub" id="sectJoinSub">耗 600 灵石</span>
-        </button>
-        <div id="sectMain" class="hidden">
-          <div class="sect-tech-list" id="sectTechList"></div>
-        </div>
+        <button class="sect-strip-link" data-action="open-bag-technique">功法传承 ›</button>
       </div>
 
       <div class="card craft-card">
@@ -2754,15 +2878,22 @@ body.rogue-lock { overflow: hidden; }
 
     <!-- ===== 坊市 ===== -->
     <section class="tab-panel" data-panel="market">
-      <div class="card">
-        <div class="card-head"><span>坊市</span><span class="card-hint" id="marketTime">正在进货</span></div>
-        <p class="market-note" id="marketNote">行商往来，每三十分钟换一批货。品质随境界浮动；余下货架只在洗髓时以轮回点开启。</p>
+      <div class="market-tabs" id="marketTabs">
+        <button class="market-tab active" data-action="market-tab" data-market="wanjie">万界货架</button>
+        <button class="market-tab" data-action="market-tab" data-market="sect">宗门货架</button>
       </div>
-      <div class="card">
-        <div class="card-head"><span>万界 · 宗门货架</span><span class="card-hint" id="marketShelfHint"></span></div>
-        <div class="market-shelf-list" id="marketShelves"></div>
-        <div class="sect-goods-block">
-          <div class="sect-goods-head"><span>宗门货架 · 玄元门</span><span class="card-hint" id="sectTierHint"></span></div>
+
+      <div class="market-panel active" data-market-panel="wanjie">
+        <div class="card">
+          <div class="card-head"><span>万界货架</span><span class="card-hint" id="marketTime">正在进货</span></div>
+          <p class="market-note" id="marketNote">行商往来，每三十分钟换一批货。品质随境界浮动；余下货架只在洗髓时以轮回点开启。</p>
+          <div class="market-shelf-list" id="marketShelves"></div>
+        </div>
+      </div>
+
+      <div class="market-panel" data-market-panel="sect">
+        <div class="card">
+          <div class="card-head"><span>宗门货架 · 玄元门</span><span class="card-hint" id="sectTierHint"></span></div>
           <div class="sect-tiers" id="sectTiers"></div>
           <div class="sect-goods" id="sectGoods"></div>
         </div>
@@ -2807,14 +2938,13 @@ body.rogue-lock { overflow: hidden; }
     <!-- ===== 更多 ===== -->
     <section class="tab-panel" data-panel="more">
       <div class="more-tabs" id="moreTabs">
-        <button class="more-tab active" data-action="more-tab" data-more="home">背包·洞府</button>
-        <button class="more-tab" data-action="more-tab" data-more="guard">守护·资质</button>
-        <button class="more-tab" data-action="more-tab" data-more="combat">战斗·成就</button>
-        <button class="more-tab" data-action="more-tab" data-more="meta">轮回</button>
-        <button class="more-tab" data-action="more-tab" data-more="save">存档</button>
+        <button class="more-tab active" data-action="more-tab" data-more="bag">背包</button>
+        <button class="more-tab" data-action="more-tab" data-more="cave">洞府</button>
+        <button class="more-tab" data-action="more-tab" data-more="attr">资质</button>
+        <button class="more-tab" data-action="more-tab" data-more="records">记录</button>
       </div>
 
-      <div class="more-panel active" data-more-panel="home">
+      <div class="more-panel active" data-more-panel="bag">
         <div class="card bag-switch-card">
           <div class="card-head"><span>背包</span><span class="card-hint" id="bagHint">装备与服用</span></div>
           <div class="bag-tabs">
@@ -2822,6 +2952,7 @@ body.rogue-lock { overflow: hidden; }
             <button class="bag-tab" data-action="bag-tab" data-bag="artifact">法宝 <b id="bagArtCount">0</b></button>
             <button class="bag-tab" data-action="bag-tab" data-bag="pill">丹药 <b id="bagPillCount">0</b></button>
             <button class="bag-tab" data-action="bag-tab" data-bag="companion">道侣 <b id="bagCompCount">0</b></button>
+            <button class="bag-tab" data-action="bag-tab" data-bag="technique">功法 <b id="bagTechCount">0</b></button>
           </div>
         </div>
 
@@ -2857,13 +2988,36 @@ body.rogue-lock { overflow: hidden; }
           </div>
         </div>
 
+        <div class="bag-panel" data-bag-panel="technique">
+          <div class="card sect-merge">
+            <div class="card-head"><span>功法传承</span><span class="card-hint" id="sectTechHint">同时只修一门</span></div>
+            <div class="sect-hero-top">
+              <div class="sect-crest">⛩️</div>
+              <div class="sect-hero-text">
+                <div class="sect-name">玄元门</div>
+                <div class="sect-rank" id="sectRank">尚未拜入</div>
+              </div>
+              <div class="sect-tier-badge" id="sectTierBadge">练气批</div>
+            </div>
+            <p class="sect-desc" id="sectDesc">东域三大玄门之一。门规只问道心，不问出身；外门弟子亦可听经、领丹、借法器。</p>
+            <div class="sect-current" id="sectCurrent"></div>
+            <button class="btn btn-primary btn-wide sect-join-btn" id="btnJoinSect" data-action="join-sect">
+              <span class="btn-main">拜入玄元门</span>
+              <span class="btn-sub" id="sectJoinSub">耗 600 灵石</span>
+            </button>
+            <div id="sectMain" class="hidden">
+              <div class="sect-tech-list" id="sectTechList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="more-panel" data-more-panel="cave">
         <div class="card">
           <div class="card-head"><span>洞府 · 五府</span><span class="card-hint" id="caveHint">以灵石升级</span></div>
           <div class="facility-list" id="caveFacilities"></div>
         </div>
-      </div>
 
-      <div class="more-panel" data-more-panel="guard">
         <div class="card guardian-card">
           <div class="card-head"><span>洞府受袭</span><span class="card-hint" id="raidHint">妖修窥伺</span></div>
           <div class="guardian-body">
@@ -2893,7 +3047,9 @@ body.rogue-lock { overflow: hidden; }
             <span class="btn-sub" id="guardianSub">胜则灵脉归位</span>
           </button>
         </div>
+      </div>
 
+      <div class="more-panel" data-more-panel="attr">
         <div class="card">
           <div class="card-head"><span>五维资质</span><span class="card-hint" id="attrTotal">总值 100</span></div>
           <div class="attr-list" id="attrList"></div>
@@ -2902,14 +3058,14 @@ body.rogue-lock { overflow: hidden; }
             <span class="btn-sub">总值不变，随机重排</span>
           </button>
         </div>
-      </div>
 
-      <div class="more-panel" data-more-panel="combat">
         <div class="card">
           <div class="card-head"><span>战斗属性</span><span class="card-hint">随境界与资质 · 点击查看</span></div>
           <div class="stat-grid stat-grid-2" id="combatGrid"></div>
         </div>
+      </div>
 
+      <div class="more-panel" data-more-panel="records">
         <div class="card">
           <div class="card-head"><span>成就</span><span class="card-hint" id="achHint"></span></div>
           <div class="ach-tabs" id="achTabs">
@@ -2925,9 +3081,7 @@ body.rogue-lock { overflow: hidden; }
           <div class="card-head"><span>道途统计</span></div>
           <div class="stat-grid stat-grid-2" id="statsGrid"></div>
         </div>
-      </div>
 
-      <div class="more-panel" data-more-panel="meta">
         <div class="card" id="metaCard">
           <div class="card-head"><span>轮回印记</span><span class="card-hint" id="metaHint">第 1 世</span></div>
           <div class="meta-panel">
@@ -2941,9 +3095,7 @@ body.rogue-lock { overflow: hidden; }
             </button>
           </div>
         </div>
-      </div>
 
-      <div class="more-panel" data-more-panel="save">
         <div class="card">
           <div class="card-head"><span>版本与存档</span></div>
           <div class="menu-list">
@@ -3441,7 +3593,7 @@ body.rogue-lock { overflow: hidden; }
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "3.4.2";
+const GAME_VERSION = "3.4.3";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -4331,6 +4483,19 @@ ROGUE_NODE_TYPES.forEach((n) => { ROGUE_NODE_MAP[n.type] = n; });
 
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "3.4.3",
+    date: "2026-11-06",
+    title: "重排·归位",
+    items: [
+      "修炼页与研发页只保留当前主修功法摘要，九门功法与宗门货架不再挤在研发页",
+      "功法传承并入「更多 · 背包」第五页，可在此拜入玄元门、改修功法、查看九门进度",
+      "背包固定五页：法术、法宝、丹药、道侣、功法，修炼与研发的功法入口可一键跳转",
+      "更多页收为四页：背包与洞府、洞府与守护、资质与战斗、记录与存档",
+      "洞府升级、洞府受袭、灵脉守护合为一页；五维资质与战斗属性合为一页",
+      "成就、道途统计、轮回印记、版本与存档合为一页；坊市拆为万界货架与宗门货架两子页；v3.4.2 存档可直接续玩",
+    ],
+  },
   {
     version: "3.4.2",
     date: "2026-11-06",
@@ -8969,7 +9134,10 @@ let coverOpen = false;
 let creating = false;
 let createModal = false;
 let bagTab = "spell";
-let moreTab = "home";
+let moreTab = "bag";
+let marketTab = "wanjie";
+let lastCultSectSig = "";
+let lastTechStripSig = "";
 let lastBagSpellCount = -1;
 let lastBagCompanionCount = -1;
 let lastMarketRefresh = -1;
@@ -9057,7 +9225,9 @@ function cacheDom() {
     "alchemySlots", "btnAlchemySlot", "alchemySlotSub",
     "forgeHint", "forgeTitle", "forgeDesc", "forgeTime", "forgeIcon", "btnForge", "forgeSub",
     "forgeSlots", "btnForgeSlot", "forgeSlotSub",
-    "bagHint", "bagSpellCount", "bagArtCount", "bagPillCount", "bagCompCount",
+    "bagHint", "bagSpellCount", "bagArtCount", "bagPillCount", "bagCompCount", "bagTechCount",
+    "cultSectTier", "cultSectRank", "cultSectDesc", "cultSectCurrent", "btnCultJoin", "cultJoinSub",
+    "techStripRank", "techNow",
     "bagSpellHint", "bagArtHint", "bagPillHint", "bagCompHint",
     "bagSpellList", "bagArtList", "bagPillList", "bagCompList",
     "marketTime", "marketNote", "marketShelfHint", "marketShelves",
@@ -9115,6 +9285,7 @@ function loop() {
   if (currentTab === "spells") {
     updateResearchCard(now);
     updateCraftCards(now);
+    updateTechStrip();
   }
   if (currentTab === "market") {
     const market = ensureMarket(game, now);
@@ -9122,7 +9293,7 @@ function loop() {
     else updateMarketClock(now);
     updateAffordability();
   }
-  if (currentTab === "more" && moreTab === "home") {
+  if (currentTab === "more" && moreTab === "bag") {
     if ((game.spells || []).length !== lastBagSpellCount ||
         (game.companions || []).length !== lastBagCompanionCount) renderBag();
     const ready = !game.companionCd || game.companionCd <= now;
@@ -9130,7 +9301,7 @@ function loop() {
     lastBondReady = ready;
     updateAffordability();
   }
-  if (currentTab === "more" && moreTab === "guard") updateRaid(now);
+  if (currentTab === "more" && moreTab === "cave") updateRaid(now);
   if (currentTab === "journey") updateJourney(now);
   flushPendingSpell();
   flushUnlocks();
@@ -9194,6 +9365,7 @@ function updateCultivate(now) {
     UI.breakSub.textContent = ready ? "道基已足" : "尚差 " + fmt(realm.req - game.exp);
     if (UI.autoHint) UI.autoHint.innerHTML = '<span class="auto-dot"></span>静坐自修 · 修行速度 ×' + CFG.IDLE_MULT;
   }
+  updateCultSect();
 
   const activeBuffs = st.buffs.rateExp.concat(st.buffs.rateStone, st.buffs.success);
   const sig = activeBuffs.map((b) => b.id + ":" + b.power + ":" + Math.ceil(b.endAt / 1000)).join("|") +
@@ -9334,7 +9506,7 @@ function updateCraftCards(now) {
 function renderSpellPage() {
   updateResearchCard(Date.now());
   updateCraftCards(Date.now());
-  renderSect();
+  renderTechStrip();
 }
 
 /* ------------------------------ 背包页 ------------------------------ */
@@ -9347,12 +9519,14 @@ function renderBag() {
   const arts = game.artifacts || [];
   const pills = pillTotal();
   const comps = (game.companions || []).length;
+  const techs = sectState(game).techs.length;
   if (UI.bagSpellCount) UI.bagSpellCount.textContent = spells.length;
   if (UI.bagArtCount) UI.bagArtCount.textContent = arts.length;
   if (UI.bagPillCount) UI.bagPillCount.textContent = pills;
   if (UI.bagCompCount) UI.bagCompCount.textContent = comps;
+  if (UI.bagTechCount) UI.bagTechCount.textContent = techs;
   if (UI.bagHint) UI.bagHint.textContent = "法术 " + spells.length + " 门 · 法宝 " + arts.length +
-    " 件 · 丹药 " + pills + " 枚 · 道侣 " + comps + " 位";
+    " 件 · 丹药 " + pills + " 枚 · 道侣 " + comps + " 位 · 功法 " + techs + " 门";
   document.querySelectorAll(".bag-tab").forEach((b) =>
     b.classList.toggle("active", b.getAttribute("data-bag") === bagTab));
   document.querySelectorAll("[data-bag-panel]").forEach((p) =>
@@ -9362,6 +9536,7 @@ function renderBag() {
   renderBagArts();
   renderBagPills();
   renderBagCompanions();
+  renderSect();
   lastBagSpellCount = spells.length;
   lastBagCompanionCount = comps;
 }
@@ -9581,9 +9756,27 @@ function marketLockedHTML(index) {
     '<button class="btn btn-small btn-ghost" disabled><span class="btn-main">洗髓时开启</span></button></div>';
 }
 
+function paintMarketTab() {
+  document.querySelectorAll(".market-tab").forEach((b) => {
+    b.classList.toggle("active", b.getAttribute("data-market") === marketTab);
+  });
+  document.querySelectorAll("[data-market-panel]").forEach((p) => {
+    p.classList.toggle("active", p.getAttribute("data-market-panel") === marketTab);
+  });
+}
+
+function switchMarketTab(id) {
+  if (["wanjie", "sect"].indexOf(id) < 0) id = "wanjie";
+  marketTab = id;
+  paintMarketTab();
+  if (id === "sect") renderSect();
+  if (UI.view) UI.view.scrollTop = 0;
+}
+
 function renderMarket() {
   const m = ensureMarket(game, Date.now());
-  if (UI.marketNote) UI.marketNote.textContent = "行商每 " + fmtDuration(marketRefreshSec(game)) + " 换货 · 品质随境界；余下货架只在洗髓时以轮回点开启。";
+  if (UI.marketNote) UI.marketNote.textContent = "已开 " + m.unlocked + " / " + CFG.MARKET_SHELVES +
+    " 架 · 行商每 " + fmtDuration(marketRefreshSec(game)) + " 换货 · 品质随境界；余下货架只在洗髓时以轮回点开启。";
   if (UI.marketShelfHint) UI.marketShelfHint.textContent = "已开 " + m.unlocked + " / " + CFG.MARKET_SHELVES + " 架";
   if (UI.marketShelves) {
     UI.marketShelves.innerHTML = m.shelves.map((shelf, i) => {
@@ -9599,6 +9792,7 @@ function renderMarket() {
   updateMarketClock(Date.now());
   lastMarketRefresh = m.refreshAt;
   renderSect();
+  paintMarketTab();
   updateAffordability();
 }
 
@@ -9707,6 +9901,59 @@ function sectTierNow() {
   return sectTierIndex(game);
 }
 
+function sectSummarySig() {
+  const s = sectState(game);
+  return [s.joined, s.tech, s.techs.length, sectTierIndex(game)].join("|");
+}
+
+function renderCultSect() {
+  if (!UI.cultSectRank) return;
+  const s = sectState(game);
+  const tier = sectTierIndex(game);
+  const def = SECT.tiers[tier];
+  const tech = sectActiveTech(game);
+  UI.cultSectTier.textContent = def.name + "批";
+  UI.cultSectRank.textContent = s.joined ? (SECT.ranks[tier] || "弟子") : "尚未拜入";
+  UI.btnCultJoin.hidden = s.joined;
+  UI.cultSectDesc.hidden = s.joined;
+  if (s.joined) {
+    UI.cultSectCurrent.innerHTML = "当前主修 <b>" + esc(tech ? tech.name : "无") + "</b>" +
+      (tech ? " · 修行 +" + fmtPct(tech.rate, 0) : "") +
+      " · 已习 " + s.techs.length + " / " + SECT.tiers.length + " 门";
+  } else {
+    UI.cultSectCurrent.innerHTML = "拜入即得《玄元心经》，修行速度 +" +
+      fmtPct(SECT.tiers[0].tech.rate, 0) + "；每破一层大境界开放一批货品。";
+    if (UI.cultJoinSub) UI.cultJoinSub.textContent = "耗 " + fmt(SECT.joinCost) + " 灵石";
+  }
+  lastCultSectSig = sectSummarySig();
+}
+
+function updateCultSect() {
+  if (!UI.cultSectRank) return;
+  if (sectSummarySig() !== lastCultSectSig) renderCultSect();
+}
+
+function renderTechStrip() {
+  if (!UI.techNow) return;
+  const s = sectState(game);
+  const tier = sectTierIndex(game);
+  const tech = sectActiveTech(game);
+  UI.techStripRank.textContent = s.joined
+    ? (SECT.ranks[tier] || "弟子") + " · " + SECT.tiers[tier].name + "批"
+    : "尚未拜入";
+  UI.techNow.innerHTML = s.joined
+    ? "当前主修 <b>" + esc(tech ? tech.name : "无") + "</b>" +
+      (tech ? " · 修行 +" + fmtPct(tech.rate, 0) : "") +
+      " · 已习 " + s.techs.length + " / " + SECT.tiers.length + " 门"
+    : "拜入宗门可修习功法，加快静坐自修。";
+  lastTechStripSig = sectSummarySig();
+}
+
+function updateTechStrip() {
+  if (!UI.techNow) return;
+  if (sectSummarySig() !== lastTechStripSig) renderTechStrip();
+}
+
 function renderSect() {
   if (!UI.sectRank) return;
   const s = sectState(game);
@@ -9734,6 +9981,9 @@ function renderSect() {
     if (UI.sectTierHint) UI.sectTierHint.textContent = "尚未拜入";
     if (UI.sectTiers) UI.sectTiers.innerHTML = "";
     if (UI.sectGoods) UI.sectGoods.innerHTML = '<div class="empty-hint">拜入玄元门后，可在此以灵石购入功法、丹药与固定三星法术法宝。</div>';
+    if (UI.bagTechCount) UI.bagTechCount.textContent = s.techs.length;
+    renderCultSect();
+    renderTechStrip();
     lastSectSig = sectSig();
     return;
   }
@@ -9794,6 +10044,9 @@ function renderSect() {
     tierDef.artifact.price, !!s.bought[sectGoodKey(sectTierSel, "artifact", 0)], "购入", !unlocked));
 
   UI.sectGoods.innerHTML = goods.join("") || '<div class="empty-hint">这一批暂无货品</div>';
+  if (UI.bagTechCount) UI.bagTechCount.textContent = s.techs.length;
+  renderCultSect();
+  renderTechStrip();
   updateAffordability();
   lastSectSig = sectSig();
 }
@@ -9936,8 +10189,8 @@ function renderMore() {
 
 /* ------------------------------ Tab 切换 ------------------------------ */
 function switchTab(tab) {
-  if (tab === "bag") { tab = "more"; moreTab = "home"; }
-  else if (tab === "sect") tab = "spells";
+  if (tab === "bag") { tab = "more"; moreTab = "bag"; }
+  else if (tab === "sect") { tab = "more"; moreTab = "bag"; bagTab = "technique"; }
   currentTab = tab;
   document.querySelectorAll(".tab").forEach((b) => {
     b.classList.toggle("active", b.getAttribute("data-tab") === tab);
@@ -9954,7 +10207,7 @@ function switchTab(tab) {
 }
 
 function switchMoreTab(id) {
-  if (["home", "guard", "combat", "meta", "save"].indexOf(id) < 0) id = "home";
+  if (["bag", "cave", "attr", "records"].indexOf(id) < 0) id = "bag";
   moreTab = id;
   document.querySelectorAll(".more-tab").forEach((b) => {
     b.classList.toggle("active", b.getAttribute("data-more") === id);
@@ -9963,8 +10216,8 @@ function switchMoreTab(id) {
     p.classList.toggle("active", p.getAttribute("data-more-panel") === id);
   });
   renderMore();
-  if (id === "home") { renderBag(); updateCave(); }
-  if (id === "guard") { renderGuardian(Date.now()); updateRaid(Date.now()); }
+  if (id === "bag") renderBag();
+  if (id === "cave") { updateCave(); renderGuardian(Date.now()); updateRaid(Date.now()); }
   if (UI.view) UI.view.scrollTop = 0;
 }
 
@@ -9978,6 +10231,8 @@ function onClick(e) {
   switch (action) {
     case "tab": switchTab(target.getAttribute("data-tab")); break;
     case "more-tab": switchMoreTab(target.getAttribute("data-more")); break;
+    case "market-tab": switchMarketTab(target.getAttribute("data-market")); break;
+    case "open-bag-technique": bagTab = "technique"; switchTab("bag"); break;
     case "enter": enterGame(); break;
     case "break": doBreak(); break;
     case "encounter": doEncounter(); break;
@@ -10354,7 +10609,7 @@ function doSellArtifact(id) {
 }
 
 function doBagTab(tab) {
-  if (["spell", "artifact", "pill", "companion"].indexOf(tab) < 0) return;
+  if (["spell", "artifact", "pill", "companion", "technique"].indexOf(tab) < 0) return;
   bagTab = tab;
   renderBag();
 }
