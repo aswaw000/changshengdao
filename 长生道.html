@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v3.3.0 · built 2026-11-05T04:33:38.661Z · 单文件离线可玩 -->
+<!-- 《长生道》 v3.4.0 · built 2026-11-06T00:44:36.406Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -2326,6 +2326,120 @@ body.rogue-lock { overflow: hidden; }
 .research-job-rush:disabled { color: var(--muted); background: rgba(120, 150, 150, 0.06); border-color: rgba(120, 160, 165, 0.14); }
 .attr-item { padding: 8px 10px; }
 
+
+/* ===== v3.4 宗门 ===== */
+.tabbar { grid-template-columns: repeat(7, 1fr); padding-left: 4px; padding-right: 4px; }
+.tab { padding: 7px 0; font-size: 10px; letter-spacing: 0.5px; }
+.tab-icon { font-size: 18px; }
+
+.sect-hero { padding-bottom: 12px; }
+.sect-hero-top { display: flex; align-items: center; gap: 10px; }
+.sect-crest {
+  flex: none; width: 42px; height: 42px; border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 23px;
+  background: rgba(230, 194, 115, 0.08);
+  border: 1px solid rgba(230, 194, 115, 0.24);
+}
+.sect-hero-text { min-width: 0; flex: 1; }
+.sect-name { font-family: var(--font-title); font-size: 19px; color: var(--gold-soft); letter-spacing: 2px; }
+.sect-rank { margin-top: 2px; font-size: 11px; color: var(--muted); letter-spacing: 0.5px; }
+.sect-tier-badge {
+  flex: none; font-size: 10px; color: var(--jade);
+  border: 1px solid rgba(111, 211, 192, 0.25);
+  border-radius: 99px; padding: 3px 8px;
+}
+.sect-desc { margin: 9px 0 0; font-size: 12px; color: var(--muted); line-height: 1.7; }
+.sect-current {
+  margin-top: 9px; padding: 8px 10px;
+  border-radius: 10px; border: 1px dashed rgba(120, 180, 190, 0.18);
+  font-size: 11px; color: var(--muted); line-height: 1.65;
+}
+.sect-current b { color: var(--jade); font-weight: 600; }
+.sect-join-btn { margin-top: 10px; }
+
+.sect-tech-list { display: flex; flex-direction: column; gap: 7px; }
+.sect-tech {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: rgba(7, 14, 18, 0.45);
+}
+.sect-tech.active { border-color: rgba(230, 194, 115, 0.42); background: rgba(230, 194, 115, 0.06); }
+.sect-tech.locked { opacity: 0.6; }
+.sect-tech-icon { flex: none; font-size: 19px; }
+.sect-tech-body { flex: 1; min-width: 0; }
+.sect-tech-name { font-size: 13px; color: var(--text); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.sect-tech-desc { margin-top: 3px; font-size: 10.5px; color: var(--muted); line-height: 1.55; }
+.sect-tech-meta { margin-top: 3px; font-size: 9.5px; color: rgba(125, 149, 160, 0.9); letter-spacing: 0.3px; }
+.sect-tech .btn { flex: none; }
+.sect-tag {
+  font-size: 9px; color: var(--gold); letter-spacing: 0.5px;
+  border: 1px solid rgba(230, 194, 115, 0.32); border-radius: 99px; padding: 1px 6px;
+}
+.sect-tag.muted { color: var(--muted); border-color: rgba(120, 160, 165, 0.18); }
+.sect-tech-lock { flex: none; font-size: 9.5px; color: var(--muted); }
+
+.sect-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
+.sect-tier {
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  padding: 7px 3px; border-radius: 9px;
+  border: 1px solid var(--line);
+  background: rgba(7, 14, 18, 0.5);
+  color: var(--text);
+}
+.sect-tier span { font-size: 11.5px; letter-spacing: 1px; }
+.sect-tier small { font-size: 8.5px; color: var(--muted); }
+.sect-tier.active { border-color: rgba(230, 194, 115, 0.48); background: rgba(230, 194, 115, 0.08); }
+.sect-tier.active span { color: var(--gold-soft); }
+.sect-tier.locked { opacity: 0.46; }
+
+.sect-goods { display: flex; flex-direction: column; gap: 8px; }
+.sect-good {
+  display: grid; grid-template-columns: 36px 1fr; gap: 8px;
+  padding: 10px;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: rgba(7, 14, 18, 0.45);
+}
+.sect-good.bought { opacity: 0.72; }
+.sect-good.locked { opacity: 0.55; }
+.sect-good-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px;
+  background: rgba(120, 180, 190, 0.07);
+  border: 1px solid var(--line);
+}
+.sect-good-body { min-width: 0; }
+.sect-good-head { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.sect-good-name { font-size: 13px; color: var(--text); }
+.sect-good-type { font-size: 9px; color: var(--muted); border: 1px solid var(--line); border-radius: 99px; padding: 1px 5px; }
+.sect-good-desc { margin-top: 3px; font-size: 10.5px; color: var(--muted); line-height: 1.6; }
+.sect-good-line { margin-top: 4px; font-size: 10.5px; color: var(--jade); line-height: 1.55; }
+.sect-buy {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 8px 8px;
+  border-radius: 9px;
+  border: 1px solid rgba(230, 194, 115, 0.24);
+  background: rgba(230, 194, 115, 0.07);
+  color: var(--gold-soft);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+.sect-buy:disabled { color: var(--muted); background: rgba(120, 150, 150, 0.05); border-color: rgba(120, 160, 165, 0.14); }
+.sect-buy.done { color: var(--muted); }
+
+@media (max-width: 360px) {
+  .tab-icon { font-size: 16px; }
+  .tab { font-size: 9px; letter-spacing: 0; }
+  .sect-name { font-size: 17px; }
+  .sect-good { grid-template-columns: 32px 1fr; }
+  .sect-good-icon { width: 32px; height: 32px; font-size: 17px; }
+}
+
 </style>
 </head>
 <body>
@@ -2548,6 +2662,46 @@ body.rogue-lock { overflow: hidden; }
       </div>
     </section>
 
+    <!-- ===== 宗门 ===== -->
+    <section class="tab-panel" data-panel="sect">
+      <div class="card sect-hero">
+        <div class="sect-hero-top">
+          <div class="sect-crest">⛩️</div>
+          <div class="sect-hero-text">
+            <div class="sect-name">玄元门</div>
+            <div class="sect-rank" id="sectRank">尚未拜入</div>
+          </div>
+          <div class="sect-tier-badge" id="sectTierBadge">练气批</div>
+        </div>
+        <p class="sect-desc" id="sectDesc">东域三大玄门之一。门规只问道心，不问出身；外门弟子亦可听经、领丹、借法器。</p>
+        <div class="sect-current" id="sectCurrent"></div>
+        <button class="btn btn-primary sect-join-btn" id="btnJoinSect" data-action="join-sect">
+          <span class="btn-main">拜入玄元门</span>
+          <span class="btn-sub" id="sectJoinSub">耗 600 灵石</span>
+        </button>
+      </div>
+      <div id="sectMain" class="hidden">
+        <div class="card">
+          <div class="card-head"><span>功法传承</span><span class="card-hint" id="sectTechHint">同时只修一门</span></div>
+          <div class="sect-tech-list" id="sectTechList"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span>宗门货架</span><span class="card-hint" id="sectTierHint">每破一层大境界开放一批</span></div>
+          <div class="sect-tiers" id="sectTiers"></div>
+          <div class="sect-goods" id="sectGoods"></div>
+        </div>
+        <div class="card tips-card">
+          <div class="card-head"><span>门规</span><span class="card-hint">货品不随轮回改变</span></div>
+          <ul class="tips-list">
+            <li>每突破一层大境界，宗门货架开放一批新货，九批货品固定不变。</li>
+            <li>功法同时只修一门，购买更高阶功法后自动替换为主修。</li>
+            <li>固定法术与法宝均为三星，词条固定，数值随当前境界成长。</li>
+            <li>丹药按组出售，比坊市零买更稳；宗门货品售出概不退货。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== 历练 ===== -->
     <section class="tab-panel" data-panel="journey">
       <div class="card rogue-entry">
@@ -2677,7 +2831,7 @@ body.rogue-lock { overflow: hidden; }
           <button class="menu-item danger" data-action="reset"><span>重入轮回</span><span class="menu-arrow">›</span></button>
         </div>
       </div>
-      <div class="footer-note">长生道 v<span id="verText">3.3.0</span> · 存档自动保存于本机</div>
+      <div class="footer-note">长生道 v<span id="verText">3.4.0</span> · 存档自动保存于本机</div>
     </section>
   </main>
 
@@ -2686,6 +2840,7 @@ body.rogue-lock { overflow: hidden; }
     <button class="tab" data-action="tab" data-tab="spells"><span class="tab-icon">📖</span><span class="tab-label">研发</span></button>
     <button class="tab" data-action="tab" data-tab="bag"><span class="tab-icon">🎒</span><span class="tab-label">背包</span></button>
     <button class="tab" data-action="tab" data-tab="market"><span class="tab-icon">🏪</span><span class="tab-label">坊市</span></button>
+    <button class="tab" data-action="tab" data-tab="sect"><span class="tab-icon">⛩️</span><span class="tab-label">宗门</span></button>
     <button class="tab" data-action="tab" data-tab="journey"><span class="tab-icon">🗺️</span><span class="tab-label">历练</span></button>
     <button class="tab" data-action="tab" data-tab="more"><span class="tab-icon">📜</span><span class="tab-label">更多</span></button>
   </nav>
@@ -3150,7 +3305,7 @@ body.rogue-lock { overflow: hidden; }
           <span class="btn-main">开始修行</span>
           <span class="btn-sub" id="coverSub">自动挂机 · 闭关也在涨</span>
         </button>
-        <div class="cover-note">v<span id="coverVer">3.3.0</span> · 存档自动保存于本机</div>
+        <div class="cover-note">v<span id="coverVer">3.4.0</span> · 存档自动保存于本机</div>
       </div>
     </div>
   </div>
@@ -3165,7 +3320,7 @@ body.rogue-lock { overflow: hidden; }
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "3.3.0";
+const GAME_VERSION = "3.4.0";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -3362,6 +3517,165 @@ const PILL_MAP = {};
 PILLS.forEach(p => { PILL_MAP[p.id] = p; });
 /* v3.3 起，修为丹（聚气丹）在坊市与炼丹中占比更高，悟道丹最稀 */
 const PILL_WEIGHTS = { juqi: 48, pojing: 14, wudao: 8, jingxin: 16, julingdan: 14 };
+
+/* ---------------------------- 宗门：玄元门 ----------------------------
+ * 大境界每突破一层，开放一批固定货品；货品表不随轮回改变。
+ * 功法只可同时修习一门，购买更高阶功法后自动替换。 */
+const SECT = {
+  id: "xuanyuan",
+  name: "玄元门",
+  icon: "⛩️",
+  joinCost: 600,
+  desc: "东域三大玄门之一，山门以玄元古阵护持。门规只问道心，不问出身；外门弟子亦可听经、领丹、借法器。",
+  motto: "玄元一气，万法归宗。",
+  ranks: ["外门弟子", "内门弟子", "真传弟子", "执事", "长老", "峰主", "副掌教", "掌教", "太上长老"],
+  tiers: [
+    {
+      tier: 0, name: "练气", rank: "外门弟子",
+      tech: { id: "sect_t0", name: "玄元心经", icon: "📜", rate: 0.10, price: 0,
+        desc: "玄元门入门心法，以意引气，周天自转。修行速度 +10%。" },
+      pills: [
+        { id: "juqi", count: 5, price: 120 },
+        { id: "jingxin", count: 1, price: 80 },
+      ],
+      spell: { id: "sect_s0", name: "青元剑气", icon: "⚔️", price: 300,
+        main: { key: "dmg", ratio: 1.05 }, effect: { key: "burn", tier: 1 },
+        extras: ["crit", "dmgBonus"], desc: "外门弟子人人可学的青元剑气，剑上带一缕炉火。" },
+      artifact: { id: "sect_a0", name: "玄元木剑", icon: "🗡️", price: 450, speed: 3,
+        main: { key: "dmg", ratio: 1.20 }, effect: { key: "drain", tier: 1 },
+        extras: ["crit", "defBonus"], desc: "以玄元山桃木削成，剑身温养着一丝生气。" },
+    },
+    {
+      tier: 1, name: "筑基", rank: "内门弟子",
+      tech: { id: "sect_t1", name: "玄元引气篇", icon: "📜", rate: 0.16, price: 1800,
+        desc: "引山门地脉入体，气机绵长。修行速度 +16%。" },
+      pills: [
+        { id: "juqi", count: 8, price: 420 },
+        { id: "pojing", count: 1, price: 260 },
+      ],
+      spell: { id: "sect_s1", name: "玄元罡风", icon: "🌪️", price: 900,
+        main: { key: "dmg", ratio: 1.10 }, effect: { key: "weaken", tier: 1 },
+        extras: ["critDmg", "dmgBonus"], desc: "袖中罡风，吹散敌方法诀，也吹得人站不稳。" },
+      artifact: { id: "sect_a1", name: "玄元玉符", icon: "🔮", price: 1400, speed: 2,
+        main: { key: "shield", ratio: 0.90 }, effect: { key: "seal", tier: 1 },
+        extras: ["dodge", "defBonus"], desc: "内门弟子所佩玉符，遇险自鸣，结出一层清光。" },
+    },
+    {
+      tier: 2, name: "金丹", rank: "真传弟子",
+      tech: { id: "sect_t2", name: "玄元照神诀", icon: "📜", rate: 0.22, price: 5200,
+        desc: "以金丹为镜，照见周天窍穴。修行速度 +22%。" },
+      pills: [
+        { id: "juqi", count: 10, price: 900 },
+        { id: "wudao", count: 1, price: 520 },
+      ],
+      spell: { id: "sect_s2", name: "玄元照神咒", icon: "💥", price: 2200,
+        main: { key: "burst", ratio: 2.20 }, effect: { key: "burn", tier: 1 },
+        extras: ["crit", "critDmg", "dmgBonus"], desc: "金丹真火化作一咒，出时满室皆明。" },
+      artifact: { id: "sect_a2", name: "玄元照神镜", icon: "🪞", price: 3400, speed: 3,
+        main: { key: "dmg", ratio: 1.25 }, effect: { key: "weaken", tier: 1 },
+        extras: ["critDmg", "dmgBonus"], desc: "镜面照神，也照出对手法诀里的破绽。" },
+    },
+    {
+      tier: 3, name: "元婴", rank: "执事",
+      tech: { id: "sect_t3", name: "玄元太清章", icon: "📜", rate: 0.28, price: 14000,
+        desc: "元婴坐镇紫府，太清之气自行流转。修行速度 +28%。" },
+      pills: [
+        { id: "pojing", count: 2, price: 2200 },
+        { id: "jingxin", count: 2, price: 1200 },
+      ],
+      spell: { id: "sect_s3", name: "玄元太清印", icon: "🛡️", price: 5600,
+        main: { key: "shield", ratio: 1.00 }, effect: { key: "seal", tier: 2 },
+        extras: ["defBonus", "dodge", "crit"], desc: "太清印落下，敌方法诀尚未出口便被封回。" },
+      artifact: { id: "sect_a3", name: "玄元太清钟", icon: "🔔", price: 8200, speed: 3,
+        main: { key: "heal", ratio: 0.75 }, effect: { key: "drain", tier: 1 },
+        extras: ["defBonus", "dodge"], desc: "钟声一响，气血自回；钟声再响，敌血自流。" },
+    },
+    {
+      tier: 4, name: "化神", rank: "长老",
+      tech: { id: "sect_t4", name: "玄元洞玄经", icon: "📜", rate: 0.34, price: 36000,
+        desc: "神游洞玄，身外有身。修行速度 +34%。" },
+      pills: [
+        { id: "wudao", count: 1, price: 5200 },
+        { id: "julingdan", count: 2, price: 2800 },
+      ],
+      spell: { id: "sect_s4", name: "玄元洞玄雷", icon: "⚡", price: 14000,
+        main: { key: "burst", ratio: 2.30 }, effect: { key: "pierce", tier: 1 },
+        extras: ["crit", "critDmg", "dmgBonus"], desc: "洞玄雷自识海起，落地时已到敌人面前。" },
+      artifact: { id: "sect_a4", name: "玄元洞玄珠", icon: "🔮", price: 20000, speed: 2,
+        main: { key: "dmg", ratio: 1.30 }, effect: { key: "burn", tier: 2 },
+        extras: ["crit", "critDmg", "dmgBonus"], desc: "珠内藏着一小片洞玄天，火光昼夜不熄。" },
+    },
+    {
+      tier: 5, name: "炼虚", rank: "峰主",
+      tech: { id: "sect_t5", name: "玄元炼虚篇", icon: "📜", rate: 0.40, price: 90000,
+        desc: "炼虚成实，借假修真。修行速度 +40%。" },
+      pills: [
+        { id: "juqi", count: 15, price: 12000 },
+        { id: "pojing", count: 2, price: 6800 },
+      ],
+      spell: { id: "sect_s5", name: "玄元炼虚斩", icon: "⚔️", price: 34000,
+        main: { key: "dmg", ratio: 1.25 }, effect: { key: "drain", tier: 2 },
+        extras: ["crit", "critDmg", "dmgBonus"], desc: "一剑斩虚，斩中的是敌人气机，也是他的寿数。" },
+      artifact: { id: "sect_a5", name: "玄元炼虚幡", icon: "🏳️", price: 48000, speed: 4,
+        main: { key: "shield", ratio: 1.05 }, effect: { key: "weaken", tier: 2 },
+        extras: ["dodge", "crit", "defBonus"], desc: "幡面绘着半座玄元山，风过时山影会动。" },
+    },
+    {
+      tier: 6, name: "合体", rank: "副掌教",
+      tech: { id: "sect_t6", name: "玄元合真经", icon: "📜", rate: 0.46, price: 220000,
+        desc: "身与道合，真一不二。修行速度 +46%。" },
+      pills: [
+        { id: "wudao", count: 2, price: 30000 },
+        { id: "jingxin", count: 3, price: 16000 },
+      ],
+      spell: { id: "sect_s6", name: "玄元合真诀", icon: "💚", price: 82000,
+        main: { key: "heal", ratio: 0.95 }, effect: { key: "burn", tier: 2 },
+        extras: ["defBonus", "dmgBonus", "crit"], desc: "合真之气入体，伤处生新肉，敌身起旧火。" },
+      artifact: { id: "sect_a6", name: "玄元合真鼎", icon: "🏺", price: 120000, speed: 3,
+        main: { key: "heal", ratio: 0.80 }, effect: { key: "drain", tier: 2 },
+        extras: ["defBonus", "defBonus", "dodge"], desc: "鼎中一炉合真丹，丹香所至，伤势自平。" },
+    },
+    {
+      tier: 7, name: "大乘", rank: "掌教",
+      tech: { id: "sect_t7", name: "玄元大乘典", icon: "📜", rate: 0.52, price: 520000,
+        desc: "大乘之基，万法归一。修行速度 +52%。" },
+      pills: [
+        { id: "pojing", count: 3, price: 72000 },
+        { id: "julingdan", count: 3, price: 38000 },
+      ],
+      spell: { id: "sect_s7", name: "玄元大乘诏", icon: "💥", price: 200000,
+        main: { key: "burst", ratio: 2.35 }, effect: { key: "weaken", tier: 2 },
+        extras: ["crit", "critDmg", "dmgBonus"], desc: "一诏出，如掌教亲临，山海皆静。" },
+      artifact: { id: "sect_a7", name: "玄元大乘尺", icon: "📏", price: 290000, speed: 3,
+        main: { key: "dmg", ratio: 1.35 }, effect: { key: "pierce", tier: 2 },
+        extras: ["critDmg", "dmgBonus"], desc: "量天尺，量的是道行深浅，也量敌命长短。" },
+    },
+    {
+      tier: 8, name: "渡劫", rank: "太上长老",
+      tech: { id: "sect_t8", name: "玄元渡厄真经", icon: "📜", rate: 0.58, price: 1200000,
+        desc: "渡厄不渡人，雷劫亦作阶梯。修行速度 +58%。" },
+      pills: [
+        { id: "juqi", count: 20, price: 180000 },
+        { id: "wudao", count: 3, price: 90000 },
+      ],
+      spell: { id: "sect_s8", name: "玄元渡厄经", icon: "⚔️", price: 480000,
+        main: { key: "dmg", ratio: 1.35 }, effect: { key: "pierce", tier: 2 },
+        extras: ["crit", "critDmg", "dmgBonus"], desc: "经声一起，天雷化作剑气，专破护体罡气。" },
+      artifact: { id: "sect_a8", name: "玄元渡厄环", icon: "💫", price: 700000, speed: 4,
+        main: { key: "dmg", ratio: 1.40 }, effect: { key: "seal", tier: 2 },
+        extras: ["crit", "dodge", "dmgBonus"], desc: "环上刻着九道雷纹，转一圈便少一道。" },
+    },
+  ],
+};
+const SECT_TECH_MAP = {};
+const SECT_GOOD_MAP = {};
+SECT.tiers.forEach((t) => {
+  SECT_TECH_MAP[t.tech.id] = t.tech;
+  SECT_GOOD_MAP["t" + t.tier + ":tech"] = t.tech;
+  (t.pills || []).forEach((p, i) => { SECT_GOOD_MAP["t" + t.tier + ":pill:" + i] = p; });
+  SECT_GOOD_MAP["t" + t.tier + ":spell"] = t.spell;
+  SECT_GOOD_MAP["t" + t.tier + ":artifact"] = t.artifact;
+});
 
 /* ---------------------------- 双修伴侣 ---------------------------- */
 /* 修仙者寿元悠长，五位道侣皆已数百上千岁，容貌却仍停在二十余岁。
@@ -3897,6 +4211,21 @@ ROGUE_NODE_TYPES.forEach((n) => { ROGUE_NODE_MAP[n.type] = n; });
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
   {
+    version: "3.4.0",
+    date: "2026-11-06",
+    title: "玄元·宗门",
+    items: [
+      "新增宗门「玄元门」：耗 600 灵石拜入，即得《玄元心经》，修行速度 +10%",
+      "宗门功法共九阶，自练气至渡劫每批一阶，最高《玄元渡厄真经》+58%",
+      "每破一层大境界开放一批固定货品，共九批，货品表每次轮回完全相同",
+      "每批含一阶功法、两组丹药、一件固定三星法术与一件固定三星法宝",
+      "宗门法术与法宝词条固定、数值随当前境界成长，购买后直接入背包",
+      "功法同时只修一门，购入更高阶功法后自动替换主修，也可在宗门页随时改修",
+      "新增「宗门」页：查看门派职位、已习功法、九批货架与往期货品",
+      "修复聚气丹在研发结果、坊市货架中不显示名称与图像的问题，旧档坏货架会被自动修补，v3.3.0 存档可直接续玩",
+    ],
+  },
+  {
     version: "3.3.0",
     date: "2026-11-05",
     title: "百艺·砺战",
@@ -4392,6 +4721,7 @@ function defaultState() {
     companionCd: 0,
     companionStory: {},
     cave: { altar: 1, library: 1, ember: 1, spirit: 1, gate: 1 },
+    sect: defaultSect(),
     craft: { alchemyAt: 0, forgeAt: 0, alchemyCount: 0, forgeCount: 0, alchemyTimes: [], forgeTimes: [], unlocks: { stone: false } },
     caveRaid: { nextAt: 0, wins: 0, losses: 0 },
     market: { refreshAt: 0, unlocked: CFG.MARKET_BASE_SHELVES, shelves: [] },
@@ -4552,6 +4882,163 @@ function upgradeCave(state, id) {
   state.cave[id] = lv + 1;
   pushLog(state, def.name + "升至 Lv." + state.cave[id] + " · " + def.effect + " +" + fmtPct(caveFacilityBonus(state, id)), "gain");
   return { ok: true, id, name: def.name, level: state.cave[id], cost, bonus: caveFacilityBonus(state, id), def };
+}
+
+
+/* ---------------------------- 宗门 ---------------------------- */
+function defaultSect() {
+  return { joined: false, techs: [], tech: "", bought: {} };
+}
+
+function normalizeSect(raw) {
+  const s = { joined: false, techs: [], tech: "", bought: {} };
+  if (!raw || typeof raw !== "object") return s;
+  s.joined = !!raw.joined;
+  if (Array.isArray(raw.techs)) {
+    raw.techs.forEach((id) => {
+      if (SECT_TECH_MAP[id] && s.techs.indexOf(id) < 0) s.techs.push(id);
+    });
+  }
+  if (SECT_TECH_MAP[raw.tech]) s.tech = raw.tech;
+  if (s.joined) {
+    if (!s.techs.length) s.techs.push(SECT.tiers[0].tech.id);
+    if (!s.tech) s.tech = s.techs[0];
+    s.bought[sectGoodKey(0, "tech", 0)] = true;
+  }
+  if (raw.bought && typeof raw.bought === "object") {
+    Object.keys(raw.bought).slice(0, 200).forEach((k) => {
+      if (raw.bought[k]) s.bought[k] = true;
+    });
+  }
+  return s;
+}
+
+function sectState(state) {
+  if (!state.sect || typeof state.sect !== "object") state.sect = defaultSect();
+  const s = state.sect;
+  s.joined = !!s.joined;
+  if (!Array.isArray(s.techs)) s.techs = [];
+  s.techs = s.techs.filter((id) => !!SECT_TECH_MAP[id]);
+  if (!SECT_TECH_MAP[s.tech]) s.tech = s.techs[0] || "";
+  if (!s.bought || typeof s.bought !== "object") s.bought = {};
+  if (s.joined && !s.techs.length) {
+    s.techs.push(SECT.tiers[0].tech.id);
+    s.tech = SECT.tiers[0].tech.id;
+  }
+  return s;
+}
+
+/* 当前大境界对应的宗门批次（0 练气 … 8 渡劫）；仙道沿用渡劫批次 */
+function sectTierIndex(state) {
+  const tier = realmAt(state.realmIndex || 0).tier || 0;
+  return clamp(tier, 0, SECT.tiers.length - 1);
+}
+
+function sectActiveTech(state) {
+  const s = sectState(state);
+  return s.joined && SECT_TECH_MAP[s.tech] ? SECT_TECH_MAP[s.tech] : null;
+}
+
+function sectRate(state) {
+  const tech = sectActiveTech(state);
+  return tech ? tech.rate : 0;
+}
+
+function sectGoodKey(tier, kind, index) {
+  return tier + ":" + kind + ":" + index;
+}
+
+function sectJoin(state) {
+  const s = sectState(state);
+  if (s.joined) return { ok: false, msg: "你已是玄元门弟子" };
+  const cost = SECT.joinCost;
+  if ((state.stone || 0) < cost) return { ok: false, msg: "灵石不足，尚缺 " + fmt(cost - state.stone) };
+  state.stone -= cost;
+  const t0 = SECT.tiers[0].tech;
+  state.sect = {
+    joined: true,
+    techs: [t0.id],
+    tech: t0.id,
+    bought: { [sectGoodKey(0, "tech", 0)]: true },
+  };
+  pushLog(state, "拜入玄元门 · 得授《" + t0.name + "》，修行速度 +" + fmtPct(t0.rate), "great");
+  checkAchievements(state);
+  return { ok: true, cost: cost, tech: t0 };
+}
+
+function sectSetTech(state, id) {
+  const s = sectState(state);
+  if (!s.joined) return { ok: false, msg: "尚未拜入玄元门" };
+  if (s.techs.indexOf(id) < 0 || !SECT_TECH_MAP[id]) return { ok: false, msg: "尚未习得这门功法" };
+  s.tech = id;
+  pushLog(state, "改修「" + SECT_TECH_MAP[id].name + "」 · 修行速度 +" + fmtPct(SECT_TECH_MAP[id].rate), "info");
+  return { ok: true, tech: SECT_TECH_MAP[id] };
+}
+
+function sectTierGoods(tier) {
+  return SECT.tiers[tier] || null;
+}
+
+function sectBuy(state, tier, kind, index) {
+  const s = sectState(state);
+  if (!s.joined) return { ok: false, msg: "先拜入玄元门" };
+  const t = parseInt(tier, 10);
+  const i = parseInt(index, 10) || 0;
+  const def = sectTierGoods(t);
+  if (!def) return { ok: false, msg: "没有这一批货品" };
+  const maxTier = sectTierIndex(state);
+  if (t > maxTier) return { ok: false, msg: "突破至「" + def.name + "」后方可购买此批" };
+
+  let good = null;
+  let name = "";
+  let price = 0;
+  if (kind === "tech") {
+    good = def.tech;
+    name = good.name;
+    price = good.price;
+    if (s.techs.indexOf(good.id) >= 0) return { ok: false, msg: "此功法已经习得" };
+  } else if (kind === "spell") {
+    good = def.spell;
+    name = good.name;
+    price = good.price;
+    if ((state.spells || []).length >= CFG.MAX_SPELLS) return { ok: false, msg: "藏法阁已满，先在背包舍弃旧术" };
+  } else if (kind === "artifact") {
+    good = def.artifact;
+    name = good.name;
+    price = good.price;
+    if ((state.artifacts || []).length >= CFG.MAX_ARTIFACTS) return { ok: false, msg: "法宝库已满，先在背包舍弃一件" };
+  } else if (kind === "pill") {
+    good = (def.pills || [])[i];
+    const pill = good && PILL_MAP[good.id];
+    if (!pill) return { ok: false, msg: "没有这味丹药" };
+    name = pill.name + " ×" + good.count;
+    price = good.price;
+  } else {
+    return { ok: false, msg: "未知货品" };
+  }
+
+  const key = sectGoodKey(t, kind, i);
+  if (s.bought[key]) return { ok: false, msg: "此物已购" };
+  if ((state.stone || 0) < price) return { ok: false, msg: "灵石不足，尚缺 " + fmt(price - state.stone) };
+
+  state.stone -= price;
+  let made = null;
+  if (kind === "tech") {
+    s.techs.push(good.id);
+    s.tech = good.id;
+  } else if (kind === "pill") {
+    state.pills[good.id] = (state.pills[good.id] || 0) + good.count;
+  } else if (kind === "spell") {
+    made = makeSectSpell(state, good);
+    state.spells.push(made);
+  } else if (kind === "artifact") {
+    made = makeSectArtifact(state, good);
+    state.artifacts.push(made);
+  }
+  s.bought[key] = true;
+  pushLog(state, "玄元门 · 购得「" + name + "」（灵石 -" + fmt(price) + "）", "gain");
+  checkAchievements(state);
+  return { ok: true, tier: t, kind: kind, name: name, price: price, item: made, tech: kind === "tech" ? good : null };
 }
 
 function researchDurationSec(state) {
@@ -4782,7 +5269,9 @@ function computeStats(state, now) {
   const bonusSucc = achieveSum(state, "success") + companionSucc;
   const daoRate = state.dao / 500;
   const daoSucc = state.dao / 1000;
-  const rate = realm.rate * CFG.IDLE_MULT * caveMul * (1 + bonusRate + daoRate) * (1 + rateBuff);
+  const sectBonus = sectRate(state);
+  const sectTech = sectActiveTech(state);
+  const rate = realm.rate * CFG.IDLE_MULT * caveMul * (1 + bonusRate + daoRate + sectBonus) * (1 + rateBuff);
   const stoneRate = Math.max(0.5, realm.rate * CFG.STONE_FACTOR) * (1 + cave.stone) * (1 + bonusStone) * (1 + stoneBuff);
   const breakPity = clamp(Number(state.breakPity) || 0, 0, CFG.BREAK_PITY_MAX);
   const success = clamp(realm.success + daoSucc + bonusSucc + state.breakBonus + state.successBonus + successBuff + breakPity, 0.05, 0.95);
@@ -4791,6 +5280,7 @@ function computeStats(state, now) {
     bonusRate, bonusStone, bonusSucc, guardianBonus,
     companionRate, companionStone, companionSucc,
     metaRate, metaStone,
+    sectRate: sectBonus, sectTech: sectTech, sectTier: sectTierIndex(state),
     derived: deriveStats(state),
     cave, caveLevel: caveLv, caveBonus: cave.rate, caveMul,
     caveResearch: cave.research, caveCraft: cave.craft, caveStone: cave.stone, caveMarket: cave.market,
@@ -4888,11 +5378,12 @@ function statBreakdown(state, key, now) {
       statLine("成就加成", "+" + fmtPct(achieveSum(state, "rate"), 1), "永久"),
       statLine("道侣相伴", "+" + fmtPct(st.companionRate, 1), "永久"),
       statLine("轮回点加持", "+" + fmtPct(st.metaRate, 1), "轮回点兑换"),
+      statLine(st.sectTech ? "宗门功法 · " + st.sectTech.name : "宗门功法", "+" + fmtPct(st.sectRate, 1), st.sectTech ? "玄元门 · 当前主修" : "尚未拜入玄元门"),
       statLine("道心通明", "+" + fmtPct(state.dao / 500, 1), "道心 " + Math.floor(state.dao) + " / 500"),
     ].concat(buffStatLines(st.buffs.rateExp, now));
     return {
       name: "修炼速度", icon: "⚡", value: "+" + fmt(st.rate, 1) + " / 秒", key: key,
-      formula: "境界速度 × 静坐系数 × 问道台加成 × (1 + 成就 + 道侣 + 轮回 + 道心) × (1 + 临时加成)",
+      formula: "境界速度 × 静坐系数 × 问道台加成 × (1 + 成就 + 道侣 + 轮回 + 宗门功法 + 道心) × (1 + 临时加成)",
       lines: lines,
       note: "同一属性的不同临时加成现在会并行生效并相加，不再互相覆盖。",
     };
@@ -5212,6 +5703,7 @@ function breakThrough(state) {
   if (roll < chance) {
     state.exp = Math.max(0, state.exp - req);
     const oldRealm = st.realm;
+    const oldSectTier = sectTierIndex(state);
     state.realmIndex += 1;
     state.successes += 1;
     state.breakPity = 0;
@@ -5224,6 +5716,8 @@ function breakThrough(state) {
     state.stone += reward;
     state.totalStone += reward;
     const newRealm = realmAt(state.realmIndex);
+    const newSectTier = sectTierIndex(state);
+    const sectUnlock = state.sect && state.sect.joined && newSectTier > oldSectTier ? SECT.tiers[newSectTier] : null;
     const ascended = state.realmIndex === MAX_MORTAL_INDEX + 1;
     if (ascended) {
       state.flags.ascended = true;
@@ -5233,7 +5727,7 @@ function breakThrough(state) {
       pushLog(state, "破境成功 · " + newRealm.name + "（灵石 +" + fmt(reward) + " · 资质 +1 " + attrDef.name + "）", "success");
     }
     checkAchievements(state);
-    return { ok: true, success: true, oldRealm, realm: newRealm, reward, chance, ascended, attrGain };
+    return { ok: true, success: true, oldRealm, realm: newRealm, reward, chance, ascended, attrGain, sectUnlock };
   }
 
   const loss = Math.floor(req * CFG.BREAK_LOSS_RATE);
@@ -5569,7 +6063,9 @@ function marketBuyShelf(state, index) {
     const pillId = shelf.pillId || (shelf.item && shelf.item.id);
     state.pills[pillId] = (state.pills[pillId] || 0) + 1;
   }
-  const name = shelf.kind === "pill" ? PILL_MAP[shelf.pillId].name : shelf.item.name;
+  const name = shelf.kind === "pill"
+    ? ((PILL_MAP[shelf.pillId] || shelf.item || {}).name || "丹药")
+    : shelf.item.name;
   m.shelves[i] = null;
   pushLog(state, "于坊市购得「" + name + "」（灵石 -" + fmt(price) + "）", "gain");
   checkAchievements(state);
@@ -5680,7 +6176,7 @@ function pickWeighted(list) {
 
 /* v3.3：丹药掉落改为加权，聚气丹（修为丹）占比最高 */
 function pickPillWeighted() {
-  return pickWeighted(PILLS.map((p) => ({ id: p.id, weight: PILL_WEIGHTS[p.id] || 1 })));
+  return pickWeighted(PILLS.map((p) => Object.assign({ weight: PILL_WEIGHTS[p.id] || 1 }, p)));
 }
 
 function encounter(state) {
@@ -5893,6 +6389,7 @@ function migrate(raw) {
   s.attrs = normalizeAttrs(raw.attrs) || rollAttrs();
   s.companions = Array.isArray(raw.companions)
     ? Array.from(new Set(raw.companions.filter((id) => !!COMPANION_MAP[id]))) : [];
+  s.sect = normalizeSect(raw.sect);
   s.spells = Array.isArray(raw.spells)
     ? raw.spells.filter((sp) => sp && sp.id && sp.main).slice(-CFG.MAX_SPELLS) : [];
   const slots = Array.isArray(raw.spellSlots) ? raw.spellSlots.slice(0, 3) : [];
@@ -5937,7 +6434,9 @@ function migrate(raw) {
       const item = shelf.item && typeof shelf.item === "object" ? shelf.item : null;
       const pillId = kind === "pill" && PILL_MAP[shelf.pillId] ? shelf.pillId : (kind === "pill" && item && PILL_MAP[item.id] ? item.id : null);
       if ((kind === "pill" && !pillId) || (kind !== "pill" && (!item || !item.id || !item.main))) { shelves.push(null); continue; }
-      shelves.push({ kind, item, pillId, price: Math.max(1, Number(shelf.price) || 1) });
+      /* v3.3 曾把加权丹药写成了 {id,weight}，读到旧货架时补回完整丹药数据 */
+      const good = kind === "pill" ? PILL_MAP[pillId] : item;
+      shelves.push({ kind, item: good, pillId, price: Math.max(1, Number(shelf.price) || 1) });
     }
   }
   while (shelves.length < CFG.MARKET_SHELVES) shelves.push(null);
@@ -6427,6 +6926,56 @@ function realmTag(state) {
   const r = realmAt(state.realmIndex || 0);
   return r ? r.name : "练气一层";
 }
+
+/* 宗门固定货品：三品、固定词条，只有数值随境界成长 */
+function sectEffectOf(good) {
+  const def = SPELL_EFFECTS.find((x) => x.key === (good.effect && good.effect.key));
+  if (!def) return null;
+  const tier = clamp(Number(good.effect.tier) || 1, 1, def.tiers.length);
+  const t = def.tiers[tier - 1];
+  return { key: def.key, name: def.name, icon: def.icon, tier: tier, text: t.text, params: t };
+}
+function sectExtrasOf(keys) {
+  return (keys || []).map((key) => {
+    const def = SPELL_EXTRAS.find((x) => x.key === key);
+    if (!def) return null;
+    return { key: def.key, name: def.name, icon: def.icon, tier: 3, value: def.values[2] };
+  }).filter(Boolean);
+}
+function makeSectSpell(state, good) {
+  const d = deriveStats(state);
+  const mainDef = SPELL_MAINS.find((m) => m.key === (good.main && good.main.key)) || SPELL_MAINS[0];
+  const ratio = Number(good.main && good.main.ratio) || mainDef.spellRatio || 1;
+  return {
+    id: nextUid("sp"), kind: "spell",
+    name: good.name, icon: good.icon,
+    main: { key: mainDef.key, name: mainDef.name, icon: mainDef.icon, value: Math.round(d.spellAtk * ratio), mpMul: mainDef.mpMul || 1 },
+    effect: sectEffectOf(good),
+    extras: sectExtrasOf(good.extras),
+    realm: state.realmIndex | 0,
+    realmName: realmTag(state),
+    quality: 3,
+    sect: true,
+  };
+}
+function makeSectArtifact(state, good) {
+  const d = deriveStats(state);
+  const mainDef = ARTIFACT_MAINS.find((m) => m.key === (good.main && good.main.key)) || ARTIFACT_MAINS[0];
+  const ratio = Number(good.main && good.main.ratio) || mainDef.artRatio || 1;
+  return {
+    id: nextUid("art"), kind: "artifact",
+    name: good.name, icon: good.icon,
+    main: { key: mainDef.key, name: mainDef.name, icon: mainDef.icon, value: Math.round(d.artifactAtk * ratio) },
+    effect: sectEffectOf(good),
+    extras: sectExtrasOf(good.extras),
+    speed: clamp(Number(good.speed) || 3, 2, 4),
+    realm: state.realmIndex | 0,
+    realmName: realmTag(state),
+    quality: 3,
+    sect: true,
+  };
+}
+
 function makeSpell(state) {
   const d = deriveStats(state);
   const quality = rollQuality(state.attrs);
@@ -8368,6 +8917,8 @@ function cacheDom() {
     "bagSpellHint", "bagArtHint", "bagPillHint", "bagCompHint",
     "bagSpellList", "bagArtList", "bagPillList", "bagCompList",
     "marketTime", "marketNote", "marketShelfHint", "marketShelves",
+    "sectRank", "sectTierBadge", "sectCurrent", "btnJoinSect", "sectJoinSub",
+    "sectMain", "sectTechHint", "sectTechList", "sectTiers", "sectTierHint", "sectGoods",
     "caveHint", "caveFacilities",
     "raidHint", "raidIcon", "raidName", "raidDesc", "btnRaid", "raidSub",
     "combatGrid",
@@ -8435,6 +8986,7 @@ function loop() {
     updateCave();
     updateAffordability();
   }
+  if (currentTab === "sect") updateSect();
   if (currentTab === "journey") { updateJourney(now); renderGuardian(now); updateRaid(now); }
   flushPendingSpell();
   flushUnlocks();
@@ -8866,9 +9418,16 @@ function marketShelfHTML(shelf, index) {
       '<div class="market-body"><div class="market-name">空货架</div>' +
       '<div class="market-sub">第 ' + (index + 1) + ' 架 · 等待下次换货</div></div></div></div>';
   }
-  const item = shelf.item;
-  const price = Number(shelf.price) || 1;
   const isPill = shelf.kind === "pill";
+  const item = isPill
+    ? ((shelf.item && shelf.item.name) ? shelf.item : PILL_MAP[shelf.pillId])
+    : shelf.item;
+  if (!item) {
+    return '<div class="market-item shelf-empty"><div class="market-head"><div class="market-icon">🕳️</div>' +
+      '<div class="market-body"><div class="market-name">空货架</div>' +
+      '<div class="market-sub">第 ' + (index + 1) + ' 架 · 等待下次换货</div></div></div></div>';
+  }
+  const price = Number(shelf.price) || 1;
   const isArt = shelf.kind === "artifact";
   const sub = isPill ? "丹药 · 常备" : esc(item.realmName || "") + (isArt ? " · 法宝 · 速 " + item.speed : " · 法术");
   const main = isPill ? esc(item.desc || "") : spellMainLine(item);
@@ -9009,6 +9568,155 @@ function attrListHTML(attrs, clickable, showDesc) {
   }).join("");
 }
 
+
+/* ------------------------------ 宗门 ------------------------------ */
+let sectTierSel = null;
+let lastSectSig = "";
+
+function sectTierNow() {
+  return sectTierIndex(game);
+}
+
+function renderSect() {
+  if (!UI.sectRank) return;
+  const s = sectState(game);
+  const nowTier = sectTierNow();
+  const maxTier = s.joined ? nowTier : 0;
+  if (sectTierSel === null || sectTierSel === undefined) sectTierSel = maxTier;
+  sectTierSel = clamp(parseInt(sectTierSel, 10) || 0, 0, SECT.tiers.length - 1);
+
+  const def = SECT.tiers[nowTier];
+  UI.sectRank.textContent = s.joined ? (SECT.ranks[nowTier] || "弟子") : "尚未拜入";
+  UI.sectTierBadge.textContent = def.name + "批";
+  const tech = sectActiveTech(game);
+  UI.sectCurrent.innerHTML = s.joined
+    ? ('当前主修 <b>' + (tech ? tech.name : "无") + '</b>' +
+       (tech ? ' · 修行 +' + fmtPct(tech.rate, 0) : '') +
+       ' · 宗门批次 ' + (maxTier + 1) + ' / ' + SECT.tiers.length)
+    : ('拜入即得《玄元心经》，修行速度 +' + fmtPct(SECT.tiers[0].tech.rate, 0) + '；此后每破一层大境界开放一批货品。');
+
+  UI.btnJoinSect.hidden = s.joined;
+  if (!s.joined) {
+    UI.btnJoinSect.disabled = (game.stone || 0) < SECT.joinCost;
+    if (UI.sectJoinSub) UI.sectJoinSub.textContent = "耗 " + fmt(SECT.joinCost) + " 灵石";
+  }
+  UI.sectMain.classList.toggle("hidden", !s.joined);
+  if (!s.joined) { lastSectSig = sectSig(); return; }
+
+  if (UI.sectTechHint) UI.sectTechHint.textContent = "已习得 " + s.techs.length + " / " + SECT.tiers.length + " 门 · 同时只修一门";
+  UI.sectTechList.innerHTML = SECT.tiers.map((t) => {
+    const tch = t.tech;
+    const owned = s.techs.indexOf(tch.id) >= 0;
+    const active = s.tech === tch.id;
+    const locked = t.tier > maxTier;
+    return '<div class="sect-tech' + (active ? " active" : "") + (owned ? "" : " locked") + '">' +
+      '<div class="sect-tech-icon">' + tch.icon + '</div>' +
+      '<div class="sect-tech-body">' +
+        '<div class="sect-tech-name">' + tch.name +
+          (active ? '<span class="sect-tag">主修</span>' : (owned ? '<span class="sect-tag muted">已习</span>' : '<span class="sect-tag muted">未习</span>')) +
+        '</div>' +
+        '<div class="sect-tech-desc">' + tch.desc + '</div>' +
+        '<div class="sect-tech-meta">' + t.name + '批 · ' + (tch.price ? fmt(tch.price) + ' 灵石' : '入门即授') + (locked ? ' · 未开放' : '') + '</div>' +
+      '</div>' +
+      (owned
+        ? '<button class="btn btn-ghost btn-small" data-action="sect-tech" data-id="' + tch.id + '"' + (active ? ' disabled' : '') + '>' + (active ? '主修中' : '改修') + '</button>'
+        : '<span class="sect-tech-lock">' + (locked ? '未开放' : '货架购得') + '</span>') +
+    '</div>';
+  }).join("");
+
+  UI.sectTierHint.textContent = "已开放至 " + SECT.tiers[maxTier].name + "批 · 当前查看 " + SECT.tiers[sectTierSel].name + "批";
+  UI.sectTiers.innerHTML = SECT.tiers.map((t) => {
+    const unlocked = t.tier <= maxTier;
+    return '<button class="sect-tier' + (sectTierSel === t.tier ? " active" : "") + (unlocked ? "" : " locked") +
+      '" data-action="sect-tier" data-tier="' + t.tier + '">' +
+      '<span>' + t.name + '</span><small>' + (unlocked ? SECT.ranks[t.tier] : '未开放') + '</small></button>';
+  }).join("");
+
+  const tierDef = SECT.tiers[sectTierSel];
+  const unlocked = sectTierSel <= maxTier;
+  const goods = [];
+  const techGood = tierDef.tech;
+  const techOwned = s.techs.indexOf(techGood.id) >= 0;
+  goods.push(goodsCard(sectTierSel, "tech", 0, techGood, "功法", techGood.name, techGood.desc,
+    "修行速度 +" + fmtPct(techGood.rate, 0) + " · 同时只修一门",
+    techGood.price, s.bought[sectGoodKey(sectTierSel, "tech", 0)] || techOwned, techOwned ? "已习得" : "购入", !unlocked));
+
+  (tierDef.pills || []).forEach((p, i) => {
+    const pill = PILL_MAP[p.id];
+    if (!pill) return;
+    goods.push(goodsCard(sectTierSel, "pill", i, pill, "丹药", pill.name + " ×" + p.count,
+      pill.desc, "宗门整组出售 · 比坊市零买更稳", p.price,
+      !!s.bought[sectGoodKey(sectTierSel, "pill", i)], "购入", !unlocked));
+  });
+
+  const demoSpell = makeSectSpell(game, tierDef.spell);
+  goods.push(goodsCard(sectTierSel, "spell", 0, demoSpell, "固定三星法术", tierDef.spell.name,
+    tierDef.spell.desc, spellMainLine(demoSpell) + " · " + itemExtraLines(demoSpell).join(" · "),
+    tierDef.spell.price, !!s.bought[sectGoodKey(sectTierSel, "spell", 0)], "购入", !unlocked));
+
+  const demoArt = makeSectArtifact(game, tierDef.artifact);
+  goods.push(goodsCard(sectTierSel, "artifact", 0, demoArt, "固定三星法宝", tierDef.artifact.name,
+    tierDef.artifact.desc, spellMainLine(demoArt) + " · 速 " + demoArt.speed + " · " + itemExtraLines(demoArt).join(" · "),
+    tierDef.artifact.price, !!s.bought[sectGoodKey(sectTierSel, "artifact", 0)], "购入", !unlocked));
+
+  UI.sectGoods.innerHTML = goods.join("") || '<div class="empty-hint">这一批暂无货品</div>';
+  lastSectSig = sectSig();
+}
+
+function goodsCard(tier, kind, index, item, type, name, desc, line, price, bought, buyLabel, locked) {
+  const affordable = (game.stone || 0) >= price;
+  const disabled = bought || locked || !affordable;
+  const btnText = bought ? "已购" : (locked ? "未开放" : (affordable ? buyLabel : "灵石不足"));
+  return '<div class="sect-good' + (bought ? " bought" : "") + (locked ? " locked" : "") + '">' +
+    '<div class="sect-good-icon">' + (item.icon || "📦") + '</div>' +
+    '<div class="sect-good-body">' +
+      '<div class="sect-good-head"><span class="sect-good-name">' + name + '</span>' +
+        '<span class="sect-good-type">' + type + '</span></div>' +
+      '<div class="sect-good-desc">' + desc + '</div>' +
+      '<div class="sect-good-line">' + line + '</div>' +
+    '</div>' +
+    '<button class="btn btn-small sect-buy' + (bought || locked ? " done" : "") + '" data-action="sect-buy" data-tier="' + tier +
+      '" data-kind="' + kind + '" data-index="' + index + '"' + (disabled ? ' disabled' : '') + '>' +
+      '💎 ' + fmt(price) + ' · ' + btnText + '</button>' +
+  '</div>';
+}
+
+function sectSig() {
+  const s = sectState(game);
+  return [game.stone, s.joined, s.tech, s.techs.length, Object.keys(s.bought).length,
+    sectTierIndex(game), sectTierSel, (game.spells || []).length, (game.artifacts || []).length].join("|");
+}
+
+function updateSect() {
+  if (!UI.sectRank) return;
+  const sig = sectSig();
+  if (sig !== lastSectSig) renderSect();
+}
+
+function doJoinSect() {
+  const res = sectJoin(game);
+  if (!res.ok) { toast(res.msg); return; }
+  toast("拜入玄元门 · 得授《" + res.tech.name + "》");
+  saveGame(game);
+  renderSect();
+}
+
+function doSectTech(id) {
+  const res = sectSetTech(game, id);
+  if (!res.ok) { toast(res.msg); return; }
+  toast("改修「" + res.tech.name + "」");
+  saveGame(game);
+  renderSect();
+}
+
+function doSectBuy(tier, kind, index) {
+  const res = sectBuy(game, tier, kind, index);
+  if (!res.ok) { toast(res.msg); return; }
+  toast("购得「" + res.name + "」");
+  saveGame(game);
+  renderSect();
+}
+
 function renderMore() {
   const achs = Object.keys(game.achieve).length;
   const st = computeStats(game, Date.now());
@@ -9102,6 +9810,7 @@ function switchTab(tab) {
   if (tab === "spells") renderSpellPage();
   if (tab === "bag") renderBag();
   if (tab === "market") renderMarket();
+  if (tab === "sect") renderSect();
   if (tab === "journey") { updateJourney(Date.now()); renderGuardian(Date.now()); updateRaid(Date.now()); renderRogueEntry(); renderJourneyLog(); lastJourneyCount = game.journeyLog.length; }
   if (tab === "more") renderMore();
   if (UI.view) UI.view.scrollTop = 0;
@@ -9161,6 +9870,10 @@ function onClick(e) {
     case "unlock-alchemy-slot": doUnlockSlot("alchemy"); break;
     case "unlock-forge-slot": doUnlockSlot("forge"); break;
     case "upgrade-cave": doUpgradeCave(id); break;
+    case "join-sect": doJoinSect(); break;
+    case "sect-tech": doSectTech(id); break;
+    case "sect-buy": doSectBuy(parseInt(target.getAttribute("data-tier"), 10), target.getAttribute("data-kind"), parseInt(target.getAttribute("data-index"), 10)); break;
+    case "sect-tier": sectTierSel = parseInt(target.getAttribute("data-tier"), 10); renderSect(); break;
     case "companion-bond": doCompanionBond(id); break;
     case "reroll": doReroll(); break;
     case "clear-meta": showClearMeta(); break;
@@ -9217,7 +9930,8 @@ function doBreak() {
           : "灵台清明，气机如潮。你自凡尘之中，又向上一步。") + "</p>" +
           '<div class="reward-line">灵石 +' + fmt(res.reward) + "</div>" +
           (res.attrGain ? '<div class="reward-line">' + res.attrGain.icon + " 资质 +1 · " +
-            esc(res.attrGain.name) + "</div>" : ""),
+            esc(res.attrGain.name) + "</div>" : "") +
+          (res.sectUnlock ? '<div class="reward-line">⛩️ 玄元门 · ' + esc(res.sectUnlock.name) + "批货架已开放</div>" : ""),
         buttons: [{ text: "继续修行", cls: "btn-primary" }],
       });
     } else {
