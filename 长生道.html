@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <title>长生道 · 挂机修仙</title>
-<!-- 《长生道》 v3.4.4 · built 2026-11-06T13:15:08.504Z · 单文件离线可玩 -->
+<!-- 《长生道》 v3.4.6 · built 2026-11-14T13:48:02.156Z · 单文件离线可玩 -->
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230a0f13' stroke='%23e6c273' stroke-width='3'/%3E%3Cpath d='M32 4a28 28 0 0 1 0 56 14 14 0 0 1 0-28 14 14 0 0 0 0-28z' fill='%23e6c273'/%3E%3Ccircle cx='32' cy='18' r='4.5' fill='%230a0f13'/%3E%3Ccircle cx='32' cy='46' r='4.5' fill='%23e6c273'/%3E%3C/svg%3E">
 <style>
@@ -3593,7 +3593,7 @@ body.rogue-lock { overflow: hidden; }
 
 const GAME_TITLE = "长生道";
 const GAME_SUBTITLE = "一介凡骨，问道长生";
-const GAME_VERSION = "3.4.4";
+const GAME_VERSION = "3.4.6";
 const SAVE_SCHEMA = 2;
 
 /* ---------------------------- 全局常数 ---------------------------- */
@@ -3670,7 +3670,7 @@ const CAVE_FACILITY_IDS = CAVE_FACILITIES.map((f) => f.id);
 
 /* ---------------------------- 轮回点兑换 ---------------------------- */
 const META_SHOP = [
-  { id: "xianzi", icon: "🪷", name: "仙资", desc: "每点仙资视为全属性 +1；2 轮回点兑换 1 点。", cost: 2, repeat: true, unit: "点" },
+  { id: "xianzi", icon: "🪷", name: "仙资", desc: "每点仙资视为全属性 +1；2 轮回点兑换 1 点，重置印记时扣回。", cost: 2, repeat: true, unit: "点" },
   { id: "companion", icon: "🐋", name: "鲸语归心", desc: "与沈青梧结缘，并永久带往来世。", cost: 1, repeat: false },
   { id: "rate", icon: "⚡", name: "道行加持", desc: "修行速度永久 +3%。", cost: 1, repeat: true },
   { id: "stone", icon: "💎", name: "灵脉加持", desc: "灵石产出永久 +3%。", cost: 1, repeat: true },
@@ -3860,8 +3860,8 @@ const SECT = {
         main: { key: "shield", ratio: 1.00 }, effect: { key: "seal", tier: 2 },
         extras: ["defBonus", "dodge", "crit"], desc: "太清印落下，敌方法诀尚未出口便被封回。" },
       artifact: { id: "sect_a3", name: "玄元太清钟", icon: "🔔", price: 8200, speed: 3,
-        main: { key: "heal", ratio: 0.75 }, effect: { key: "drain", tier: 1 },
-        extras: ["defBonus", "dodge"], desc: "钟声一响，气血自回；钟声再响，敌血自流。" },
+        main: { key: "heal", ratio: 0.75 }, effect: { key: "burn", tier: 1 },
+        extras: ["defBonus", "dodge"], desc: "钟声一响，气血自回；钟声再响，敌血自燃。" },
     },
     {
       tier: 4, name: "化神", rank: "长老",
@@ -3905,8 +3905,8 @@ const SECT = {
         main: { key: "heal", ratio: 0.95 }, effect: { key: "burn", tier: 2 },
         extras: ["defBonus", "dmgBonus", "crit"], desc: "合真之气入体，伤处生新肉，敌身起旧火。" },
       artifact: { id: "sect_a6", name: "玄元合真鼎", icon: "🏺", price: 120000, speed: 3,
-        main: { key: "heal", ratio: 0.80 }, effect: { key: "drain", tier: 2 },
-        extras: ["defBonus", "defBonus", "dodge"], desc: "鼎中一炉合真丹，丹香所至，伤势自平。" },
+        main: { key: "heal", ratio: 0.80 }, effect: { key: "weaken", tier: 2 },
+        extras: ["defBonus", "defBonus", "dodge"], desc: "鼎中一炉合真丹，丹香所至，伤势自平；余烟缠敌，其势自衰。" },
     },
     {
       tier: 7, name: "大乘", rank: "掌教",
@@ -4483,6 +4483,26 @@ ROGUE_NODE_TYPES.forEach((n) => { ROGUE_NODE_MAP[n.type] = n; });
 
 /* ---------------------------- 更新日志 ---------------------------- */
 const CHANGELOG = [
+  {
+    version: "3.4.6",
+    date: "2026-11-14",
+    title: "特效·清源",
+    items: [
+      "修复「回复 / 护盾」类法术、法宝搭配「噬灵」「破罡」时特效不生效的问题：随机生成不再出现该组合，旧档中的无效特效会在读档时清除",
+      "玄元门「玄元太清钟」的噬灵改为灼脉，「玄元合真鼎」的噬灵改为衰神，两件固定法宝的特效现在都能正常结算",
+      "导入存档时会清空当前未结束的山海秘境局，避免与旧档串档；v3.4.5 存档可直接续玩",
+    ],
+  },
+  {
+    version: "3.4.5",
+    date: "2026-11-14",
+    title: "仙资·明算",
+    items: [
+      "修复仙资重置漏洞：重置轮回印记时，已兑换的仙资会从当前世五维资质中逐项扣回（每项不低于 1），不再能反复兑换刷取属性",
+      "修复属性详情中法术耗灵仍显示「法力上限 ×14%」「爆发 ×2.4」的过期文案，改为按当前 12% 与 2.2 倍显示",
+      "清理 v3.4.2 重排后残留的旧页签刷新分支；v3.4.4 存档可直接续玩",
+    ],
+  },
   {
     version: "3.4.4",
     date: "2026-11-06",
@@ -5867,14 +5887,17 @@ function statBreakdown(state, key, now) {
     };
   }
   if (key === "mpCost") {
+    const mpRate = CFG.SPELL_MP_RATE || 0.12;
+    const burstMain = SPELL_MAINS.find((m) => m.key === "burst") || {};
+    const burstMul = burstMain.mpMul || 2.2;
     return {
       name: "法术耗灵", icon: "💧", value: fmt(d.mpCost), key: key,
-      formula: "max(1, round(法力上限 × 14%))",
+      formula: "max(1, round(法力上限 × " + fmtPct(mpRate, 0) + "))",
       lines: [
         statLine("法力上限", fmt(d.mpMax)),
-        statLine("基础消耗", "×14% = " + fmt(d.mpMax * 0.14, 1)),
+        statLine("基础消耗", "×" + fmtPct(mpRate, 0) + " = " + fmt(d.mpMax * mpRate, 1)),
         statLine("取整", fmt(d.mpCost), "至少为 1"),
-        statLine("爆发法术", "基础消耗 × 2.4", "每门爆发法术单独标注"),
+        statLine("爆发法术", "基础消耗 × " + burstMul, "每门爆发法术单独标注"),
       ],
       note: "爆发类法术造成大量伤害，但消耗的法力也远高于普通法术。",
     };
@@ -6683,6 +6706,18 @@ function normalizeAttrs(raw) {
   return sum >= ATTR_TOTAL && sum <= 1000000 ? attrs : null;
 }
 
+/* v3.4.6：噬灵 / 破罡依赖实际伤害，回复与护盾类主效果无法触发；
+ * 旧档、旧货架与待领取法术里的无效组合在读档时清掉，避免面板继续显示假特效。 */
+function fixItemEffect(item) {
+  if (!item || typeof item !== "object" || !item.main) return item;
+  const mainKey = item.main.key;
+  if ((mainKey === "heal" || mainKey === "shield") && item.effect &&
+      (item.effect.key === "drain" || item.effect.key === "pierce")) {
+    item.effect = null;
+  }
+  return item;
+}
+
 function migrate(raw) {
   if (!raw || typeof raw !== "object") return null;
   if ((raw.schema || 0) < SAVE_SCHEMA) return null;
@@ -6708,12 +6743,12 @@ function migrate(raw) {
     ? Array.from(new Set(raw.companions.filter((id) => !!COMPANION_MAP[id]))) : [];
   s.sect = normalizeSect(raw.sect);
   s.spells = Array.isArray(raw.spells)
-    ? raw.spells.filter((sp) => sp && sp.id && sp.main).slice(-CFG.MAX_SPELLS) : [];
+    ? raw.spells.filter((sp) => sp && sp.id && sp.main).map(fixItemEffect).slice(-CFG.MAX_SPELLS) : [];
   const slots = Array.isArray(raw.spellSlots) ? raw.spellSlots.slice(0, 3) : [];
   while (slots.length < 3) slots.push(null);
   s.spellSlots = slots.map((id) => (id && s.spells.some((sp) => sp.id === id) ? id : null));
   s.artifacts = Array.isArray(raw.artifacts)
-    ? raw.artifacts.filter((a) => a && a.id && a.main).slice(-CFG.MAX_ARTIFACTS) : [];
+    ? raw.artifacts.filter((a) => a && a.id && a.main).map(fixItemEffect).slice(-CFG.MAX_ARTIFACTS) : [];
   s.equippedArtifact = s.artifacts.some((a) => a.id === raw.equippedArtifact)
     ? raw.equippedArtifact : (s.artifacts[0] ? s.artifacts[0].id : null);
   const rawResearch = raw.research && typeof raw.research === "object" ? raw.research : {};
@@ -6752,7 +6787,7 @@ function migrate(raw) {
       const pillId = kind === "pill" && PILL_MAP[shelf.pillId] ? shelf.pillId : (kind === "pill" && item && PILL_MAP[item.id] ? item.id : null);
       if ((kind === "pill" && !pillId) || (kind !== "pill" && (!item || !item.id || !item.main))) { shelves.push(null); continue; }
       /* v3.3 曾把加权丹药写成了 {id,weight}，读到旧货架时补回完整丹药数据 */
-      const good = kind === "pill" ? PILL_MAP[pillId] : item;
+      const good = kind === "pill" ? PILL_MAP[pillId] : fixItemEffect(item);
       shelves.push({ kind, item: good, pillId, price: Math.max(1, Number(shelf.price) || 1) });
     }
   }
@@ -6860,7 +6895,7 @@ function migrate(raw) {
   s.pendingUnlocks = Array.isArray(s.pendingUnlocks) ? s.pendingUnlocks : [];
   s.pendingEvents = Array.isArray(s.pendingEvents) ? s.pendingEvents : [];
   s.pendingOffline = null;
-  s.pendingSpells = Array.isArray(raw.pendingSpells) ? raw.pendingSpells.filter((sp) => sp && sp.id && sp.main).slice(0, 10) : [];
+  s.pendingSpells = Array.isArray(raw.pendingSpells) ? raw.pendingSpells.filter((sp) => sp && sp.id && sp.main).map(fixItemEffect).slice(0, 10) : [];
   s.pendingSpell = s.pendingSpells[0] || null;
   s.pendingNotice = null;
   s.schema = SAVE_SCHEMA;
@@ -7116,10 +7151,12 @@ function buyMetaOption(state, id) {
   return { ok: true, meta, def };
 }
 
-/* 重置：退还所有已消费轮回点，当前这一世的属性与道侣保留 */
+/* 重置：退还所有已消费轮回点，当前这一世的道侣与修行进度保留；
+ * 仙资是直接加到五维上的，重置时必须逐项扣回，否则可反复兑换刷资质。 */
 function resetMeta(state) {
   const meta = loadMeta();
   const refund = metaSpent(meta);
+  const xianzi = Math.max(0, Math.min(999, parseInt(meta.xianzi, 10) || 0));
   meta.points = Math.min(9999, (meta.points || 0) + refund);
   meta.xianzi = 0;
   meta.rateBonus = 0;
@@ -7128,12 +7165,22 @@ function resetMeta(state) {
   meta.marketUnlocked = CFG.MARKET_BASE_SHELVES;
   meta.slots = { research: false, alchemy: false, forge: false };
   saveMeta(meta);
+  if (state && state.attrs && xianzi > 0) {
+    /* 只在资质确实包含这笔仙资时扣回，避免旧档 / 异常档被扣到基准值以下 */
+    const total = ATTR_KEYS.reduce((n, k) => n + (Number(state.attrs[k]) || 0), 0);
+    if (total >= ATTR_TOTAL + ATTR_KEYS.length * xianzi) {
+      for (const key of ATTR_KEYS) {
+        const cur = Number(state.attrs[key]);
+        state.attrs[key] = Math.max(1, (isFinite(cur) ? cur : 1) - xianzi);
+      }
+    }
+  }
   if (state && state.market) {
     state.market.unlocked = CFG.MARKET_BASE_SHELVES;
     state.market.refreshAt = 0;
   }
-  pushLog(state, "轮回印记重置 · 退还 " + refund + " 点", "info");
-  return { ok: true, refund, meta };
+  pushLog(state, "轮回印记重置 · 退还 " + refund + " 点" + (xianzi > 0 ? " · 仙资 -" + xianzi : ""), "info");
+  return { ok: true, refund, meta, xianzi };
 }
 
 function clearMeta() {
@@ -7235,8 +7282,12 @@ function pickExtras(count, quality) {
     return { key: def.key, name: def.name, icon: def.icon, tier: tier, value: def.values[tier - 1] };
   });
 }
-function pickEffect(quality) {
-  const def = pickOne(SPELL_EFFECTS);
+function pickEffect(quality, mainKey) {
+  /* 噬灵 / 破罡依赖实际伤害，回复与护盾类主效果无法触发，生成时直接排除 */
+  const pool = (mainKey === "heal" || mainKey === "shield")
+    ? SPELL_EFFECTS.filter((d) => d.key !== "drain" && d.key !== "pierce")
+    : SPELL_EFFECTS;
+  const def = pickOne(pool);
   const tier = clamp(quality + randInt(-1, 1), 1, def.tiers.length);
   const t = def.tiers[tier - 1];
   return { key: def.key, name: def.name, icon: def.icon, tier: tier, text: t.text, params: t };
@@ -7300,7 +7351,7 @@ function makeSpell(state) {
   const quality = rollQuality(state.attrs);
   const main = pickWeighted(SPELL_MAINS);
   const hasEffect = Math.random() < 0.6;
-  const effect = hasEffect ? pickEffect(quality) : null;
+  const effect = hasEffect ? pickEffect(quality, main.key) : null;
   const extras = pickExtras(hasEffect ? 3 : 4, quality);
   const ratio = main.spellRatio;
   return {
@@ -7321,7 +7372,7 @@ function makeArtifact(state) {
   const quality = rollQuality(state.attrs);
   const main = pickOne(ARTIFACT_MAINS);
   const hasEffect = Math.random() < 0.5;
-  const effect = hasEffect ? pickEffect(quality) : null;
+  const effect = hasEffect ? pickEffect(quality, main.key) : null;
   const extras = pickExtras(hasEffect ? 2 : 3, quality);
   const speedRoll = Math.random() + Math.max(0, quality - 3) * 0.1;
   const speed = speedRoll > 0.84 ? 4 : speedRoll > 0.46 ? 3 : 2;
@@ -7474,8 +7525,6 @@ function fireItem(item, owner, foe, events, ctx, isArtifact) {
     } else if (eff.key === "weaken") {
       foe.weaken = { rounds: 2, pct: eff.params.pct };
       events.push(mkEvent(ctx, "p", "seal", "衰神生效：对方伤害 -" + percentText(eff.params.pct), { icon: "🌀" }));
-    } else if (eff.key === "pierce" && main.key !== "dmg") {
-      events.push(mkEvent(ctx, "p", "info", "破罡蓄势，下一击可破防", { icon: "🗡️" }));
     }
   }
 }
@@ -9711,7 +9760,6 @@ function updateCave() {
     const maxed = lv >= max;
     const cost = maxed ? 0 : caveUpgradeCost(game, def.id);
     const next = maxed ? bonus : Math.min(def.cap == null ? 99 : def.cap, def.per * (lv + 1));
-    const unit = def.unit === "percent" ? "" : "";
     return '<div class="facility-item">' +
       '<div class="facility-head"><span class="facility-icon">' + def.icon + "</span>" +
       '<span class="facility-name">' + def.name + "</span>" +
@@ -10640,7 +10688,6 @@ function doBuyShelf(index) {
   saveGame(game);
   toast("购得「" + name + "」");
   renderMarket();
-  if (currentTab === "more" && moreTab === "home") renderBag();
 }
 
 function doUpgradeCave(id) {
@@ -10662,7 +10709,6 @@ function doAlchemyUI() {
     toast("丹成一炉 · " + (res.pill.icon || "") + " " + res.pill.name + " ×" + res.count);
   }
   if (currentTab === "spells") updateCraftCards(Date.now());
-  if (currentTab === "more" && moreTab === "home") renderBag();
 }
 
 function doForgeUI() {
@@ -10672,7 +10718,6 @@ function doForgeUI() {
   if (!res.count) toast(res.full ? "法宝库已满，所炼法宝散入山河" : "炼器未成，器胚碎作星火");
   else toast("器成于手 · 「" + res.artifact.name + "」");
   if (currentTab === "spells") updateCraftCards(Date.now());
-  if (currentTab === "more" && moreTab === "home") renderBag();
 }
 
 function doRaid() {
@@ -10701,7 +10746,6 @@ function doRaid() {
         body: body,
         buttons: [{ text: out.win ? "清点灵石" : "稳住道心", cls: out.win ? "btn-primary" : "btn-ghost" }],
       }, true);
-      if (currentTab === "more" && moreTab === "guard") updateRaid(Date.now());
       updateTopbar(Date.now());
       renderAll();
     },
@@ -10714,8 +10758,7 @@ function doMetaBuy(id) {
   saveGame(game);
   toast("轮回点兑换 · " + res.def.name);
   if (creating) {
-    if (UI.createAttrs) UI.createAttrs.innerHTML = attrListHTML(game.attrs);
-    if (UI.createTotal) UI.createTotal.textContent = ATTR_KEYS.reduce((s, k) => s + (game.attrs[k] || 0), 0);
+    refreshCreateAttrs();
     renderCreateMeta();
   }
   renderMore();
@@ -10732,7 +10775,7 @@ function showResetMeta() {
     title: "重置轮回印记",
     sub: "退还已消费轮回点",
     body: "<p>将退还 " + refund + " 点轮回点，并撤销已兑换的仙资、永久修行/灵石、货架、槽位与沈青梧结缘。</p>" +
-      "<p>当前这一世的资质、道侣与修行进度不会变化；清除印记请使用「清除轮回印记」。</p>",
+      "<p>仙资会从当前世五维资质中各扣回相应点数（每项不低于 1）；道侣与修行进度不变。清除印记请使用「清除轮回印记」。</p>",
     buttons: [
       { text: "再想想", cls: "btn-ghost" },
       {
@@ -10740,8 +10783,8 @@ function showResetMeta() {
           const r = resetMeta(game);
           saveGame(game);
           renderMore();
-          if (creating) renderCreateMeta();
-          toast("已重置 · 退还 " + r.refund + " 点");
+          if (creating) { refreshCreateAttrs(); renderCreateMeta(); }
+          toast("已重置 · 退还 " + r.refund + " 点" + (r.xianzi ? " · 仙资 -" + r.xianzi : ""));
         }
       },
     ],
@@ -10803,6 +10846,12 @@ function doUsePill(id) {
 }
 
 /* ------------------------------ 创造角 ------------------------------ */
+function refreshCreateAttrs() {
+  if (!creating) return;
+  if (UI.createAttrs) UI.createAttrs.innerHTML = attrListHTML(game.attrs);
+  if (UI.createTotal) UI.createTotal.textContent = ATTR_KEYS.reduce((s, k) => s + (game.attrs[k] || 0), 0);
+}
+
 function renderCreateMeta() {
   if (!UI.createMeta) return;
   const meta = loadMeta();
@@ -11297,6 +11346,9 @@ function doImport() {
   if (!s) { toast("存档格式有误，无法导入"); return false; }
   game = s;
   ensureAscensionState(game);
+  /* 导出包不含当前秘境局，导入后清掉旧局，避免旧档的进度串到新档 */
+  clearRogueRun();
+  rogueRun = null;
   const report = advance(game, Date.now());
   game.pendingOffline = null;
   game.pendingUnlocks = [];
